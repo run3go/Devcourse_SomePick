@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import profileImage from "../../assets/images/profile_image.png";
 import profileImage2 from "../../assets/images/profile_image2.png";
 import Button from "../../components/common/Button";
@@ -6,6 +7,7 @@ import PostCard from "../../components/common/PostCard";
 import ProfileCard from "../../components/profile/ProfileCard";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   return (
     <main className="relative flex justify-center mb-[150px]">
       {/* 팔로우 모달창 */}
@@ -64,9 +66,15 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="flex gap-7 mt-[22px]">
-            <Button className="w-[264px] h-[38px] gap-2">
+            <Button className="w-[177px] h-[38px] gap-2">
               <Icon width="24px" height="23px" left="-67px" top="-398px" />
               <span className="inline-block leading-[1]">팔로우하기</span>
+            </Button>
+            <Button
+              className="w-[177px] h-[38px]"
+              onClick={() => navigate("/profile/edit")}
+            >
+              <span className="leading-[1]">프로필 정보 변경</span>
             </Button>
             {/* 솔로인 경우 */}
             {/* <Button className="w-[177px] h-[38px] gap-2">

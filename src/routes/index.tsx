@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import PostsPage from "./pages/PostsPage";
+import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import SignUpPage from "./pages/SignUpPage";
 import TodayFortunePage from "./pages/TodayFortunePage";
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/post/create/:id?",
         Component: PostCreatePage,
+      },
+      {
+        path: "/profile/edit",
+        Component: ProfileEditPage,
       },
       {
         path: "/profile/:id",

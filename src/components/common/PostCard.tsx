@@ -3,7 +3,7 @@ import Icon from "./Icon";
 
 export default function PostCard() {
   return (
-    <div className="flex flex-col gap-3 w-full p-5 border-1 border-[var(--sub-pink-color)] rounded-2xl hover:border-[var(--main-pink-color)] hover:shadow-[0_3px_8px_0_rgba(255,102,179,0.24)]">
+    <div className="flex flex-col gap-3 w-full p-5 border-1 border-[var(--sub-pink-color)] cursor-pointer rounded-2xl hover:border-[var(--main-pink-color)] hover:shadow-[0_3px_8px_0_rgba(255,102,179,0.24)]">
       <span className="text-[var(--sub-pink-color)] text-sm font-semibold">
         연애백과
       </span>
