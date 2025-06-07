@@ -1,7 +1,40 @@
+import BackButton from "../../components/common/BackButton";
+import DefaultButton from "../../components/common/DefaultButton";
+
 export default function PostCreatePage() {
   return (
     <>
-      <h1>PostCreatePage Component</h1>
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col gap-5">
+          <BackButton />
+          <div className="flex flex-col w-[1080px] h-[778px] border border-[var(--primary-pink)] rounded-2xl px-12.5 py-7.5">
+            <div className="border-b border-[var(--gray-700)] w-full pb-5 mb-5">
+              <label className="text-xl">
+                제목
+                <input
+                  type="text"
+                  placeholder="제목을 작성해주세요"
+                  className="ml-7 placeholder:text-[var(--gray-500)] focus:outline-none"
+                />
+              </label>
+            </div>
+
+            <textarea
+              placeholder="당신의 이야기를 자유롭게 들려주세요"
+              className="placeholder:text-[var(--gray-500)] h-[487px] focus:outline-none resize-none"
+            />
+
+            <div className="flex justify-center items-center size-18 bg-[var(--primary-pink)] rounded-2xl cursor-pointer">
+              <div className="sprite-add-image-icon" />
+              <input type="file" accept="image/*" className="hidden" />
+            </div>
+
+            <div className="flex justify-center">
+              <DefaultButton text="저장" className="w-[252px]" />
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
