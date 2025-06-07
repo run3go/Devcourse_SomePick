@@ -24,10 +24,10 @@ export default function PostCreatePage() {
               className="placeholder:text-[var(--gray-500)] h-[487px] focus:outline-none resize-none"
             />
 
-            <div className="flex justify-center items-center size-18 bg-[var(--primary-pink)] rounded-2xl cursor-pointer">
+            <label className="flex justify-center items-center size-18 bg-[var(--primary-pink)] rounded-2xl cursor-pointer hover:bg-[var(--primary-pink-tone)]">
               <div className="sprite-add-image-icon" />
               <input type="file" accept="image/*" className="hidden" />
-            </div>
+            </label>
 
             <div className="flex justify-center">
               <DefaultButton text="저장" className="w-[252px]" />
