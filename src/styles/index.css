@@ -1,1 +1,61 @@
 @import "./tailwind.css";
+
+:root {
+  --black: #000000;
+  --gray-700: #666666;
+  --gray-500: #969696;
+  --gray-300: #d9d9d9;
+  --gray-300-50: #d9d9d980;
+  --gray-300-59: #d9d9d995;
+  --grey-100: #f8f8f8;
+  --white: #ffffff;
+
+  --primary-pink: #ffc7ed;
+  --primary-pink-tone: #ff9fd6;
+  --primary-pink-point: #ff66b3;
+  --primary-pink-point-50: #ff66b380;
+
+  --red: #e94235;
+}
+
+.sprite-email-icon {
+  background: url("../assets/images/icons.png") no-repeat -55px -760px;
+  width: 26px;
+  height: 20px;
+}
+
+.sprite-lock-icon {
+  background: url("../assets/images/icons.png") no-repeat -111px -756px;
+  width: 28px;
+  height: 28px;
+}
+
+.sprite-add-ProfileImg-icon {
+  background: url("../assets/images/icons.png") no-repeat -647px -755px;
+  width: 30px;
+  height: 30px;
+}
+
+.sprite-back-icon {
+  background: url("../assets/images/icons.png") no-repeat -277px -765px;
+  width: 12px;
+  height: 10px;
+}
+
+.sprite-selectbox-icon {
+  background: url("../assets/images/icons.png") no-repeat -693px -762px;
+  width: 16px;
+  height: 16px;
+}
+
+.sprite-pre-tag-icon {
+  background: url("../assets/images/icons.png") no-repeat -759px -764px;
+  width: 12px;
+  height: 12px;
+}
+
+.sprite-add-image-icon {
+  background: url("../assets/images/icons.png") no-repeat -323px -762px;
+  width: 16px;
+  height: 16px;
+}
