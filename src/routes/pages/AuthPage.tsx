@@ -14,6 +14,7 @@ export default function AuthPage() {
             src={bg}
             alt="배경 이미지"
             className="h-full w-full object-cover"
+            draggable="false"
           />
           <p
             className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer"
