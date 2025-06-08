@@ -1,6 +1,7 @@
 import whiteLogo from "../../assets/images/logo_white.png";
 import "../../styles/icons.css";
 
+// footer
 export default function Footer() {
   return (
     <>
