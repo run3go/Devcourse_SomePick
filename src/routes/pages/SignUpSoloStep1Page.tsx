@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
 import DefaultButton from "../../components/common/DefaultButton";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
-import SignupInput from "../../components/signup/signupInput";
+import SignupInput from "../../components/signup/SignupInput";
 import SignupSteps from "../../components/signup/SignupSteps";
 
 export default function SignUpSoloStep1Page() {
@@ -12,7 +12,7 @@ export default function SignUpSoloStep1Page() {
     <>
       <div className="relative h-screen">
         <BackButton className="absolute left-87 top-40" />
-        <p className="absolute left-144 top-26">Step2</p>
+        <p className="absolute left-144 top-20">Step2</p>
 
         <div className="flex w-full h-full flex-col justify-center items-center">
           <p className="text-[36px] font-medium cursor-default mb-9">
@@ -34,9 +34,19 @@ export default function SignUpSoloStep1Page() {
               </div>
             </div>
 
-            <div className="flex gap-10">
-              <SignupInput label="닉네임" type="text" name="userName" />
-              <SignupInput label="생년월일" type="number" name="birthDate" />
+            <div className="flex justify-between items-end">
+              <SignupInput
+                label="닉네임"
+                type="text"
+                name="userName"
+                className="w-[223px]"
+              />
+              <SignupInput
+                label="생년월일"
+                type="number"
+                name="birthDate"
+                className="w-[223px]"
+              />
             </div>
             <SignupInput label="이메일" type="email" name="email" />
             <SignupInput label="비밀번호" type="password" name="password" />
@@ -46,7 +56,11 @@ export default function SignUpSoloStep1Page() {
               name="confirmPw"
             />
 
-            <DefaultButton text="다음" className="w-full" onClick={() => navigate("solo/2")}/>
+            <DefaultButton
+              text="다음"
+              className="w-full"
+              onClick={() => navigate("/auth/signup/solo/2")}
+            />
           </div>
         </div>
       </div>

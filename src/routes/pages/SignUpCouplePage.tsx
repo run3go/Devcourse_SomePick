@@ -9,7 +9,7 @@ export default function SignUpCouplePage() {
     <>
       <div className="relative h-screen">
         <BackButton className="absolute left-87 top-45" />
-        <p className="absolute left-158 top-26.5">Step2</p>
+        <p className="absolute left-158 top-21">Step2</p>
 
         <div className="flex h-full flex-col justify-center items-center">
           <p className="text-[36px] font-medium cursor-default mb-9">

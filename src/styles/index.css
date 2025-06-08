@@ -18,6 +18,11 @@
   --red: #e94235;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .sprite-email-icon {
   background: url("../assets/images/icons.png") no-repeat -55px -760px;
   width: 26px;
@@ -43,7 +48,7 @@
 }
 
 .sprite-selectbox-icon {
-  background: url("../assets/images/icons.png") no-repeat -693px -762px;
+  background: url("../assets/images/icons.png") no-repeat -714px -762px;
   width: 16px;
   height: 16px;
 }
