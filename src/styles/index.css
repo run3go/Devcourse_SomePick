@@ -1,1 +1,28 @@
 @import "./tailwind.css";
+
+:root {
+  --main-font: "inter";
+
+  --main-pink-color: #ff66b3;
+  --sub-pink-color: #ffc7ed;
+  --hover-pink-color: #ff9fd6;
+
+  --main-gray-color: #f3f3f3;
+  --sub-gray-color: #969696;
+}
+
+body {
+  @apply text-base font-(family-name:--main-font);
+}
+
+.days-wrap div:nth-child(7n + 1) {
+  @apply text-[var(--main-pink-color)];
+}
+
+.circle-bg::before {
+  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--sub-pink-color)] rounded-full z-[-1];
+}
+
+.gray-circle-bg:hover::before {
+  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+}
