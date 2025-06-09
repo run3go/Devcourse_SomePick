@@ -4,8 +4,8 @@ export default function Notifications() {
   return (
     <div
       className={twMerge(
-        "w-[450px] h-[353px] p-[10px] border border-[var(--sub-pink-color)] rounded-[20px]",
-        "bg-[#f6f6f6] absolute right-0 top-[40px] text-[var(--sub-gray-color)]",
+        "w-[450px] h-[353px] p-[10px] border border-[var(--primary-pink)] rounded-[20px]",
+        "bg-[#f6f6f6] absolute right-0 top-[40px] text-[var(--gray-50)]",
         "flex flex-col items-stretch gap-[10px]"
         // 알림이 전혀 없을 경우
         // "h-[295px]"

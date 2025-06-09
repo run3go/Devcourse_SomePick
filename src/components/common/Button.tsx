@@ -6,8 +6,8 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       className={twMerge(
-        "bg-[var(--sub-pink-color)] rounded-2xl flex items-center justify-center",
-        "cursor-pointer hover:bg-[var(--hover-pink-color)] disabled:bg-[#d9d9d9] disabled:cursor-default",
+        "bg-[var(--primary-pink)] rounded-2xl flex items-center justify-center transition-colors duration-150",
+        "cursor-pointer hover:bg-[var(--primary-pink-tone)] disabled:bg-[#d9d9d9] disabled:cursor-default",
         props.className
       )}
       disabled={props.disabled}

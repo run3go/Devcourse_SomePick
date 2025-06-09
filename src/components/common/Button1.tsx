@@ -29,7 +29,7 @@ export default function Button({
         ${width} ${height}
         ${text}
         bg-[#FFC7ED]
-        hover:bg-[#FF9fd6]
+        hover:bg-[--primary-pink-tone]
         transition-colors duration-150
         cursor-pointer
       `}

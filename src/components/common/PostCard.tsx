@@ -3,8 +3,8 @@ import Icon from "./Icon";
 
 export default function PostCard() {
   return (
-    <div className="flex flex-col gap-3 w-full p-5 border-1 border-[var(--sub-pink-color)] cursor-pointer rounded-2xl hover:border-[var(--main-pink-color)] hover:shadow-[0_3px_8px_0_rgba(255,102,179,0.24)]">
-      <span className="text-[var(--sub-pink-color)] text-sm font-semibold">
+    <div className="flex flex-col gap-3 w-full p-5 border-1 border-[var(--primary-pink)] cursor-pointer rounded-2xl hover:border-[var(--primary-pink-point)] hover:shadow-[0_3px_8px_0_rgba(255,102,179,0.24)]">
+      <span className="text-[var(--primary-pink)] text-sm font-semibold">
         연애백과
       </span>
       <div className="flex justify-between">
@@ -16,7 +16,7 @@ export default function PostCard() {
               alt="프로필 이미지"
             />
             <span>차은우</span>
-            <span className="text-[var(--sub-gray-color)]">2025.06.04</span>
+            <span className="text-[var(--gray-50)]">2025.06.04</span>
           </div>
           <h4 className="text-xl mb-3">
             장거리 연애 1년째… 솔직히 좀 지치네요😢

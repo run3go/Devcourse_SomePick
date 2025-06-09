@@ -15,10 +15,7 @@ export default function Icon({
 }) {
   return (
     <div
-      className={twMerge(
-        "bg-no-repeat bg-[url('/images/spriteImage.png')]",
-        className
-      )}
+      className={twMerge("bg-no-repeat bg-[url('/emoji.png')]", className)}
       style={{ width, height, backgroundPosition: `${left} ${top}` }}
     />
   );

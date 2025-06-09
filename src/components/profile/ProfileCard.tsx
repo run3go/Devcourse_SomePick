@@ -37,14 +37,16 @@ export default function ProfileCard({
         {isEdited && (
           <div className="group absolute flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer hover:bg-[rgba(0,0,0,0.5)]">
             <div className="hidden group-hover:flex justify-center items-center w-[75px] h-[75px] bg-[#eaeaea] rounded-full">
-              <div className="w-[25px] h-[2px] bg-[var(--sub-gray-color)]" />
+              <div className="w-[25px] h-[2px] bg-[var(--gray-50)]" />
             </div>
           </div>
         )}
         {isCouple && (
           <span className="text-xl mt-[15px]">
             <strong
-              className={twMerge(isPartner && "text-[var(--main-pink-color)]")}
+              className={twMerge(
+                isPartner && "text-[var(--primary-pink-point)]"
+              )}
             >
               {nickname}
             </strong>

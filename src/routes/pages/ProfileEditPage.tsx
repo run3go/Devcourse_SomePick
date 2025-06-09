@@ -73,7 +73,7 @@ export default function ProfileEditPage() {
   return (
     <main className="relative flex justify-center mb-[150px]">
       <div className="flex items-center flex-col w-270">
-        <div className="w-full bg-[var(--main-gray-color)] text-center py-[18px]">
+        <div className="w-full bg-[var(--gray-200)] text-center py-[18px]">
           <h2 className="font-bold text-2xl">My Profile</h2>
         </div>
 
@@ -90,21 +90,21 @@ export default function ProfileEditPage() {
         <div className="flex items-center gap-[18px] mt-[42px] mb-[37px]">
           <div className="flex items-center gap-2">
             <Icon width="10px" height="9px" left="-49px" top="-405px" />
-            <span className="font-semibold text-[var(--main-pink-color)] leading-[1]">
+            <span className="font-semibold text-[var(--primary-pink-point)] leading-[1]">
               한줄 소개
             </span>
           </div>
-          <input className="box-border w-[730px] py-[23px] border-3 border-[var(--main-gray-color)] rounded-[20px] pl-[30px]" />
+          <input className="box-border w-[730px] py-[23px] border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px]" />
         </div>
         <Button className="w-[264px] h-[38px]">커플로 전환하기</Button>
         <div className="flex flex-col w-full mb-[137px] mt-[132px]">
-          <h3 className="mb-[55px] text-2xl font-bold border-l-8 border-[var(--sub-pink-color)] px-4 py-[10px]">
+          <h3 className="mb-[55px] text-2xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
             내 정보
           </h3>
-          <div className="flex gap-[20px] p-10 border-3 border-[var(--main-gray-color)] rounded-[20px]">
+          <div className="flex gap-[20px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
             <ul className="flex flex-col gap-7">
               <li className="flex items-center gap-8">
-                <span className=" w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className=" w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   닉네임
                 </span>
                 <input
@@ -113,7 +113,7 @@ export default function ProfileEditPage() {
                 />
               </li>
               <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   나이
                 </span>
                 <input
@@ -122,19 +122,19 @@ export default function ProfileEditPage() {
                 />
               </li>
               <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   직업
                 </span>
                 <select className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"></select>
               </li>
               <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   지역
                 </span>
                 <select className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"></select>
               </li>
               <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   키
                 </span>
                 <input
@@ -143,7 +143,7 @@ export default function ProfileEditPage() {
                 />
               </li>
               <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   MBTI
                 </span>
                 <input
@@ -152,14 +152,14 @@ export default function ProfileEditPage() {
                 />
               </li>
             </ul>
-            <ul className="flex flex-col gap-[38px] border-l border-[var(--sub-gray-color)] pl-10">
+            <ul className="flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
               <li className="flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   나를 표현하는 키워드
                 </span>
-                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--sub-pink-color)] rounded-[30px]">
+                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
                   {keywords.map((keyword) => (
-                    <li className="hover:bg-[var(--sub-pink-color)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--sub-pink-color)] rounded-[50px]">
+                    <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
                       <span className="text-xs">{keyword}</span>
                     </li>
                   ))}
@@ -169,12 +169,12 @@ export default function ProfileEditPage() {
                 </ul>
               </li>
               <li className="relative flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   나의 관심사
                 </span>
-                <ul className="flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--sub-pink-color)] rounded-[30px]">
+                <ul className="flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
                   {interests.map((interest) => (
-                    <li className="hover:bg-[var(--sub-pink-color)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--sub-pink-color)] rounded-[50px]">
+                    <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
                       <span className="text-xs">{interest}</span>
                     </li>
                   ))}
@@ -184,12 +184,12 @@ export default function ProfileEditPage() {
                 </ul>
               </li>
               <li className="flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--main-gray-color)] rounded-2xl">
+                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
                   나의 이상형
                 </span>
-                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--sub-pink-color)] rounded-[30px]">
+                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
                   {keywords.map((keyword) => (
-                    <li className="hover:bg-[var(--sub-pink-color)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--sub-pink-color)] rounded-[50px]">
+                    <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
                       <span className="text-xs">{keyword}</span>
                     </li>
                   ))}
