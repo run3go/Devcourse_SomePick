@@ -11,7 +11,7 @@ export default function NotFoundPage() {
         </p>
 
         <button
-          className="border bg-[#FFC7ED] text-white hover:bg-[#FF9FD6] hover:shadow-xl transition
+          className="border bg-[#FFC7ED] text-white hover:bg-[--primary-pink-tone] hover:shadow-xl transition
       duration-300 ease-in-out text-[24px] cursor-pointer shadow-md shadow-[#FFC7ED] border-[#FFC7ED] rounded-[20px] w-[300px] h-[70px]"
         >
           <span className="font-bold">홈</span>으로 돌아가기

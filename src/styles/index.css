@@ -1,28 +1,120 @@
 @import "./tailwind.css";
 
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_regular.ttf") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_bold.ttf") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_extrabold.ttf") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@layer utilities {
+  .box-shadow-custom {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .hover\:button-shadow-custom:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
 :root {
+  --black: #000000;
+  --gray-700: #666666;
+  --gray-500: #969696;
+  --gray-300: #d9d9d9;
+  --gray-300-50: #d9d9d980;
+  --gray-300-59: #d9d9d995;
+  --gray-200: #f3f3f3;
+  --gray-100: #f8f8f8;
+  --white: #ffffff;
+
+  --primary-pink: #ffc7ed;
+  --primary-pink-tone: #ff9fd6;
+  --primary-pink-point: #ff66b3;
+  --primary-pink-point-50: #ff66b380;
+
+  --red: #e94235;
+
   --main-font: "inter";
-
-  --main-pink-color: #ff66b3;
-  --sub-pink-color: #ffc7ed;
-  --hover-pink-color: #ff9fd6;
-
-  --main-gray-color: #f3f3f3;
-  --sub-gray-color: #969696;
 }
 
 body {
-  @apply text-base font-(family-name:--main-font);
+  @apply text-base font-(family-name:--main-font) text-[var(--gray-700)];
+  font-family: "NPSfontBold";
+}
+
+.notification_item {
+  @apply py-[10px] border border-[var(--primary-pink)] rounded-[20px] bg-white hover:text-black cursor-pointer hover:border-[var(--primary-pink-point)];
+}
+
+.notification_list::-webkit-scrollbar {
+  display: none;
 }
 
 .days-wrap div:nth-child(7n + 1) {
-  @apply text-[var(--main-pink-color)];
+  @apply text-[var(--primary-pink-point)];
 }
 
 .circle-bg::before {
-  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--sub-pink-color)] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--primary-pink)] rounded-full z-[-1];
 }
 
 .gray-circle-bg:hover::before {
   @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sprite-email-icon {
+  background: url("../assets/images/icons.png") no-repeat -55px -760px;
+  width: 26px;
+  height: 20px;
+}
+
+.sprite-lock-icon {
+  background: url("../assets/images/icons.png") no-repeat -111px -756px;
+  width: 28px;
+  height: 28px;
+}
+
+.sprite-add-ProfileImg-icon {
+  background: url("../assets/images/icons.png") no-repeat -647px -755px;
+  width: 30px;
+  height: 30px;
+}
+
+.sprite-back-icon {
+  background: url("../assets/images/icons.png") no-repeat -277px -765px;
+  width: 12px;
+  height: 10px;
+}
+
+.sprite-selectbox-icon {
+  background: url("../assets/images/icons.png") no-repeat -714px -762px;
+  width: 16px;
+  height: 16px;
+}
+
+.sprite-pre-tag-icon {
+  background: url("../assets/images/icons.png") no-repeat -759px -764px;
+  width: 12px;
+  height: 12px;
+}
+
+.sprite-add-image-icon {
+  background: url("../assets/images/icons.png") no-repeat -323px -762px;
+  width: 16px;
+  height: 16px;
 }
