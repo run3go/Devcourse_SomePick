@@ -12,7 +12,7 @@ export default function Header() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   return (
     <>
-      <div className="flex justify-center items-center bg-[#FCD8ED] fixed w-full z-100 h-[66px]">
+      <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">
         <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
@@ -65,42 +65,50 @@ export default function Header() {
             >
               오늘의 운세
             </NavLink>
-            {/* 비로그인일 경우 */}
-            {/* <NavLink to={"/auth/login"}>로그인/회원가입</NavLink> */}
-            <div className="flex gap-[35px] text-[var(--gray-700)]">
-              {/* 솔로인 경우 */}
-              <Link to={"/message"}>
-                <Icon
-                  width="27px"
-                  height="27px"
-                  left="-361px"
-                  top="-228px"
-                  className="cursor-pointer"
-                />
-              </Link>
-              <div>
-                <Icon
-                  width="28px"
-                  height="27px"
-                  left="-436px"
-                  top="-228px"
-                  className="cursor-pointer"
-                  onClick={() => setIsNotificationOpen((state) => !state)}
-                />
-                {isNotificationOpen && <Notifications />}
-              </div>
-              <div>
-                <Icon
-                  width="23px"
-                  height="28px"
-                  left="-516px"
-                  top="-225px"
-                  className="cursor-pointer"
-                  onClick={() => setIsModalOpen((state) => !state)}
-                />
-                {isModalOpen && <HeaderModal />}
-              </div>
+          </div>
+          <div className="flex gap-[35px] text-[var(--gray-700)] w-[150px]">
+            <Link to={"/message"}>
+              <Icon
+                width="27px"
+                height="27px"
+                left="-361px"
+                top="-228px"
+                className="cursor-pointer"
+              />
+            </Link>
+            <div>
+              <Icon
+                width="28px"
+                height="27px"
+                left="-436px"
+                top="-228px"
+                className="cursor-pointer"
+                onClick={() => setIsNotificationOpen((state) => !state)}
+              />
+              {isNotificationOpen && <Notifications />}
             </div>
+            <div>
+              <Icon
+                width="23px"
+                height="28px"
+                left="-516px"
+                top="-225px"
+                className="cursor-pointer"
+                onClick={() => setIsModalOpen((state) => !state)}
+              />
+              {isModalOpen && <HeaderModal />}
+            </div>
+            {/* <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/auth/login"}
+            >
+              로그인/회원가입
+            </NavLink> */}
           </div>
         </div>
       </div>
