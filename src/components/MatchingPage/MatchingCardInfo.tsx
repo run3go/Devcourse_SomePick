@@ -2,7 +2,17 @@ import image from "../../assets/images/image 8.png";
 import Icon from "../common/Icon";
 import Button from "../common/Button";
 
-export default function MathingCardInfo() {
+export default function MatchingCardInfo() {
+  const keywords = [
+    "잘생김",
+    "예쁨",
+    "귀여움",
+    "성격 좋음",
+    "감성적인",
+    "패셔니스타",
+    "착함",
+    "똑똑함",
+  ];
   return (
     <div
       className="
@@ -56,6 +66,16 @@ export default function MathingCardInfo() {
           <span>서울</span>
           <span>공무원</span>
         </div>
+        <ul className="flex flex-wrap justify-center gap-[10px] w-[400px]">
+          {keywords.map((keyword) => (
+            <li
+              key={keyword}
+              className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
+            >
+              <span className="text-[20px] text-black">{keyword}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
