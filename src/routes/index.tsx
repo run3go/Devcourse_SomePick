@@ -11,8 +11,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import PostsPage from "./pages/PostsPage";
+import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import SignUpPage from "./pages/SignUpPage";
+import SignUpCouplePage from "./pages/SignUpCouplePage";
+import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
+import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
 
 const router = createBrowserRouter([
@@ -34,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/post/create/:id?",
         Component: PostCreatePage,
+      },
+      {
+        path: "/profile/edit",
+        Component: ProfileEditPage,
       },
       {
         path: "/profile/:id",
@@ -68,24 +76,24 @@ const router = createBrowserRouter([
     Component: AuthPage,
     children: [
       {
-        path: "/login",
+        path: "login",
         Component: LoginPage,
       },
       {
-        path: "/signup",
+        path: "signup",
         Component: SignUpPage,
       },
       {
-        path: "/signup/solo/1",
-        Component: SignUpPage,
+        path: "signup/solo/1",
+        Component: SignUpSoloStep1Page,
       },
       {
-        path: "/signup/solo/2",
-        Component: SignUpPage,
+        path: "signup/solo/2",
+        Component: SignUpSoloStep2Page,
       },
       {
-        path: "/signup/couple",
-        Component: SignUpPage,
+        path: "signup/couple",
+        Component: SignUpCouplePage,
       },
     ],
   },

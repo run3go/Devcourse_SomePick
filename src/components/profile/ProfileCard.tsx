@@ -1,0 +1,74 @@
+import { twMerge } from "tailwind-merge";
+import Icon from "../common/Icon";
+
+export default function ProfileCard({
+  nickname,
+  image,
+  isPartner = false,
+  isCouple = false,
+  isMain = false,
+  isEdited = false,
+}: {
+  nickname?: string;
+  image: string | null;
+  isPartner?: boolean;
+  isCouple?: boolean;
+  isMain?: boolean;
+  isEdited?: boolean;
+}) {
+  if (image) {
+    return (
+      <div className="group relative p-[18px] flex flex-col justify-center items-center w-[330px] shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl">
+        {isMain && (
+          <Icon
+            width="37px"
+            height="78px"
+            left="-164px"
+            top="-449px"
+            className="absolute top-0 left-6 z-50"
+          />
+        )}
+        <img
+          draggable="false"
+          className={twMerge("w-[300px] h-[373px] rounded-2xl object-cover")}
+          src={image}
+          alt={isMain ? "메인 이미지" : "서브 이미지"}
+        />
+        {isEdited && (
+          <div className="group absolute flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer hover:bg-[rgba(0,0,0,0.5)]">
+            <div className="hidden group-hover:flex justify-center items-center w-[75px] h-[75px] bg-[#eaeaea] rounded-full">
+              <div className="w-[25px] h-[2px] bg-[var(--sub-gray-color)]" />
+            </div>
+          </div>
+        )}
+        {isCouple && (
+          <span className="text-xl mt-[15px]">
+            <strong
+              className={twMerge(isPartner && "text-[var(--main-pink-color)]")}
+            >
+              {nickname}
+            </strong>
+            님
+          </span>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div className="relative p-[18px] flex flex-col justify-center items-center w-[330px] shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl">
+        {isMain && (
+          <Icon
+            width="37px"
+            height="78px"
+            left="-164px"
+            top="-449px"
+            className="absolute top-0 left-6"
+          />
+        )}
+        <div className="flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover bg-[#EAEAEA] cursor-pointer hover:bg-[#cfcfcf]">
+          <Icon width="44px" height="44px" left="-136px" top="-387px" />
+        </div>
+      </div>
+    );
+  }
+}
