@@ -1,12 +1,19 @@
+import { useNavigate } from "react-router";
 import "../../styles/icons.css";
 import useFadeIn from "../common/useFadeIn";
-// import MainBannerImg from "../../assets/images/banner.png";
 import SomepickLanding from "./SomepickLanding";
 export default function Service() {
   const fadeIn = useFadeIn();
+  const navigate = useNavigate();
   return (
     <>
-      <SomepickLanding />
+      <SomepickLanding
+        title="SOMEPICK"
+        subtitle="연애의 시작부터 끝까지"
+        button="지금 시작하기"
+        onClick={() => navigate("/auth/login")}
+        backGround="linear-gradient(to bottom right, #ffc7ed, #ffeef9)"
+      />
       <div {...fadeIn}>
         <div className="mt-[200px] flex-col flex items-center justify-center">
           <p className="mb-[10px] text-[24px] text-[var(--primary-pink)] font-bold">

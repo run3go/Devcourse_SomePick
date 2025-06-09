@@ -1,8 +1,22 @@
 import "../../styles/SomepickLanding.css";
-
-const SomepickLanding = () => {
+const SomepickLanding = ({
+  title,
+  subtitle,
+  button,
+  onClick,
+  backGround,
+}: {
+  title: string;
+  subtitle: string;
+  button: string;
+  onClick: () => void;
+  backGround: string;
+}) => {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center overflow-hidden relative bg-gradient-to-br from-pink-200 via-pink-100 to-pink-200">
+    <div
+      className="min-h-screen flex flex-col justify-center items-center overflow-hidden relative"
+      style={{ background: backGround }}
+    >
       <div className="blob-container">
         <svg
           className="blob blob-1"
@@ -55,10 +69,10 @@ const SomepickLanding = () => {
       </div>
 
       <div className="relative z-10 text-center text-[var(--white)]">
-        <p className="subtitle">연애의 시작부터 끝까지</p>
-        <h1 className="main-title">SOMEPICK</h1>
-        <button className="cta-button" onClick={() => {}}>
-          지금 시작하기
+        <p className="subtitle">{subtitle}</p>
+        <h1 className="main-title">{title}</h1>
+        <button className="cta-button" onClick={onClick}>
+          {button}
         </button>
       </div>
     </div>

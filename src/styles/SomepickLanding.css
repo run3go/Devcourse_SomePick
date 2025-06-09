@@ -27,7 +27,7 @@
 }
 
 .blob-3 {
-  fill: #ffc7ed;
+  fill: var(--primary-pink);
   animation-duration: 18s;
 }
 
@@ -45,7 +45,7 @@
 
 .main-title {
   font-weight: bold;
-  color: white;
+  color: var(--white);
   font-size: 8vw;
   margin-bottom: 1rem;
   animation: glow 3s ease-in-out infinite alternate;
@@ -54,16 +54,16 @@
 
 .subtitle {
   font-size: 1.5rem;
-  color: white;
+  color: var(--white);
   animation: fadeIn 1s ease-in-out;
 }
 
 .cta-button {
-  background: linear-gradient(45deg, #ffc7ed, #ffc7ed);
+  background: linear-gradient(45deg, var(--primary-pink), var(--primary-pink));
   border: none;
   padding: 15px 40px;
   border-radius: 50px;
-  color: white;
+  color: var(--white);
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;

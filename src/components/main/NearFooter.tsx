@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router";
 import useFadeIn from "../common/useFadeIn";
+
 export default function NearFooter() {
   const fadeIn = useFadeIn();
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -24,6 +27,7 @@ export default function NearFooter() {
           에서 시작해요!
         </p>
         <button
+          onClick={() => navigate("/auth/login")}
           className="mt-[40px] border bg-[var(--primary-pink)] text-white hover:bg-[var(--primary-pink-tone)] hover:shadow-lg transition
             duration-300 ease-in-out text-[24px] cursor-pointer shadow-[var(--primary-pink)] border-[var(--primary-pink)] rounded-[20px] w-[300px] h-[70px]"
         >
