@@ -1,6 +1,5 @@
 @import "./tailwind.css";
 
-:root {
 @layer utilities {
   .box-shadow-custom {
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
@@ -8,7 +7,7 @@
   .hover\:button-shadow-custom:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   }
-
+}
 :root {
   --black: #000000;
   --gray-700: #666666;
@@ -25,7 +24,7 @@
   --primary-pink-point-50: #ff66b380;
 
   --red: #e94235;
-  
+
   --main-font: "inter";
 
   --main-pink-color: #ff66b3;
@@ -46,7 +45,7 @@ body {
 
 .notification_list::-webkit-scrollbar {
   display: none;
-
+}
 .days-wrap div:nth-child(7n + 1) {
   @apply text-[var(--main-pink-color)];
 }
@@ -57,7 +56,7 @@ body {
 
 .gray-circle-bg:hover::before {
   @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
-
+}
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
