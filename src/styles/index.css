@@ -1,1 +1,16 @@
 @import "./tailwind.css";
+
+:root {
+  --main-font: "inter";
+
+  --main-pink-color: #ff66b3;
+  --sub-pink-color: #ffc7ed;
+  --hover-pink-color: #ff9fd6;
+
+  --main-gray-color: #f3f3f3;
+  --sub-gray-color: #969696;
+}
+
+body {
+  @apply text-base font-(family-name:--main-font);
+}
