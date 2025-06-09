@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { personalityTags, interestTags } from "./data/tagData";
+import Icon from "../common/Icon";
 
 export default function TagGroup({
   title,
@@ -31,7 +32,7 @@ export default function TagGroup({
         <p>{title}</p>
         <p className="text-[var(--gray-500)] text-sm mb-3">4개~8개 선택</p>
         <div className="flex justify-center items-center w-19 h-7 border border-[var(--primary-pink)] border-dashed rounded-[50px]">
-          <div className="sprite-pre-tag-icon"></div>
+          <Icon width="12px" height="12px" left="-759px" top="-764px" />
         </div>
         <div className="flex flex-wrap gap-2 w-77 h-57 mt-13 border border-[var(--primary-pink)] rounded-4xl p-4 overflow-y-auto scrollbar-hide">
           {tags.map((tag) => (

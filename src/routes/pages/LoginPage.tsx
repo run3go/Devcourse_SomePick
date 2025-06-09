@@ -13,18 +13,9 @@ export default function LoginPage() {
         <div className="w-[41%] flex items-center flex-col">
           <p className="text-[36px] mb-10 cursor-default">Welcome Back!</p>
 
-          <LoginInput
-            icon="sprite-email-icon"
-            type="email"
-            placeholder="Email"
-            className="mb-3"
-          />
+          <LoginInput type="email" placeholder="Email" className="mb-3" />
 
-          <LoginInput
-            icon="sprite-lock-icon"
-            type="password"
-            placeholder="Password"
-          />
+          <LoginInput type="password" placeholder="Password" />
 
           <Button className="w-full h-12.5 rounded-full mt-9">Login</Button>
 
