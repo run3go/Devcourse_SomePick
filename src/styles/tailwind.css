@@ -26,3 +26,13 @@
   background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
   background-position: -463px -762px;
 }
+.white-heart {
+  @apply w-[26px] h-[24px] bg-no-repeat;
+  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-position: -564px -227px;
+}
+.white-user {
+  @apply w-[22px] h-[28px] bg-no-repeat;
+  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-position: -621px -224px;
+}
