@@ -17,7 +17,7 @@ export default function AuthPage() {
             draggable="false"
           />
           <p
-            className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer"
+            className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer text-[var(--black)]"
             onClick={() => navigate("/")}
           >
             somepick

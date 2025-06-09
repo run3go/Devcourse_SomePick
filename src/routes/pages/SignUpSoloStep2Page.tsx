@@ -1,5 +1,5 @@
 import BackButton from "../../components/common/BackButton";
-import DefaultButton from "../../components/common/DefaultButton";
+import Button from "../../components/common/Button";
 import SelectBox from "../../components/signup/SelectBox";
 import SignupInput from "../../components/signup/SignupInput";
 import TagGroup from "../../components/signup/TagGroup";
@@ -46,10 +46,9 @@ export default function SignUpSoloStep2Page() {
           <TagGroup title="나의 이상형" tagName="personality" />
         </div>
 
-        <DefaultButton
-          text="이제 소개팅 할 준비가 다 되었어요!"
-          className="w-[490px]"
-        />
+        <Button className="mt-9 w-[490px] h-12.5 rounded-full">
+          이제 소개팅 할 준비가 다 되었어요!
+        </Button>
       </div>
     </>
   );

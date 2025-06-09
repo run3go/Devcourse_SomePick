@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
-import DefaultButton from "../../components/common/DefaultButton";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
+import Button from "../../components/common/Button";
 
 export default function SignUpSoloStep1Page() {
   const navigate = useNavigate();
@@ -47,11 +47,12 @@ export default function SignUpSoloStep1Page() {
           <SignupInput label="비밀번호" type="password" name="password" />
           <SignupInput label="비밀번호 확인" type="password" name="confirmPw" />
 
-          <DefaultButton
-            text="다음"
-            className="w-full"
+          <Button
+            className="mt-9 w-full h-12.5 rounded-full"
             onClick={() => navigate("/auth/signup/solo/2")}
-          />
+          >
+            다음
+          </Button>
         </div>
       </div>
     </>

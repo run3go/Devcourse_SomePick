@@ -1,5 +1,5 @@
 import BackButton from "../../components/common/BackButton";
-import DefaultButton from "../../components/common/DefaultButton";
+import Button from "../../components/common/Button";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
 
@@ -7,9 +7,7 @@ export default function SignUpCouplePage() {
   return (
     <>
       <div className="flex h-full flex-col justify-center items-center">
-        <p className="text-[36px] font-medium cursor-default mb-9">
-          Welcome to SomePick!
-        </p>
+        <p className="text-[36px] cursor-default mb-9">Welcome to SomePick!</p>
 
         <div className="w-[490px]">
           <BackButton className="mb-10" />
@@ -32,7 +30,7 @@ export default function SignUpCouplePage() {
             name="loverEmail"
           />
 
-          <DefaultButton text="가입 완료" />
+          <Button className="mt-9 w-full h-12.5 rounded-full">가입 완료</Button>
         </div>
       </div>
     </>
