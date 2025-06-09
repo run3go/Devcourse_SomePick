@@ -1,11 +1,13 @@
+import { useState } from "react";
 import MatchingCard from "../../components/MatchingPage/MatchingCard";
-import MathingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import MatchingImage from "../../assets/images/MatchingImage.png";
 import Button from "../../components/common/Button";
 import LeftBtn from "../../assets/images/Left.png";
 import RightBtn from "../../assets/images/right.png";
+import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 
 export default function MatchingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
       <div className="flex flex-col items-center justify-center space-y-8 p-6">
@@ -37,6 +39,7 @@ export default function MatchingPage() {
             imageWidth="w-full"
             imageHeight="h-full"
             text="text-[18px]"
+            disableFlip={true}
           />
 
           <div className="relative flex items-center">
@@ -62,75 +65,52 @@ export default function MatchingPage() {
             imageWidth="w-full"
             imageHeight="h-full"
             text="text-[18px]"
+            disableFlip={true}
           />
         </div>
         {/* 하단 안내 텍스트 */}
-        <MathingCardInfo />
-        <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px]">
+
+        <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px] text-black">
           <span className="text-[#969696] text-[24px]">추천 상대가 마음에 안드신다면,</span>
           다른 소개팅 상대들도 만나보세요!
         </h2>
         {/* 추천 카드 */}
-
         <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 w-[1500px]">
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
-          <MatchingCard
-            width="w-[300px]"
-            height="h-[450px]"
-            imageWidth="w-full"
-            imageHeight="h-full"
-            text="text-[18px]"
-          />
+          {[...Array(5)].map((_, i) => (
+            <MatchingCard
+              key={i}
+              width="w-[300px]"
+              height="h-[450px]"
+              imageWidth="w-full"
+              imageHeight="h-full"
+              text="text-[18px]"
+              disableFlip={true}
+              onClick={() => setIsModalOpen(true)}
+            />
+          ))}
         </div>
       </div>
+      {/* 추천카드 모달 */}
+      {isModalOpen && (
+        <div
+          className="
+            fixed inset-0 flex items-center justify-center
+            z-50
+            backdrop-blur-sm
+          "
+        >
+          <div className="absolute inset-0" onClick={() => setIsModalOpen(false)} />
+          <div
+            className="
+              relative z-10
+              max-w-md w-full
+            "
+            onClick={(e) => e.stopPropagation()}
+          >
+            <MatchingCardInfo />
+          </div>
+        </div>
+      )}
     </>
   );
 }
