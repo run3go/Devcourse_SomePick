@@ -31,6 +31,13 @@ body {
   @apply text-base font-(family-name:--main-font);
 }
 
+.notification_item {
+  @apply py-[10px] border border-[var(--sub-pink-color)] rounded-[20px] bg-white hover:text-black cursor-pointer hover:border-[var(--main-pink-color)];
+}
+
+.notification_list::-webkit-scrollbar {
+  display: none;
+
 .days-wrap div:nth-child(7n + 1) {
   @apply text-[var(--main-pink-color)];
 }
