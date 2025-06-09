@@ -1,7 +1,7 @@
 import MatchingCard from "../../components/MatchingPage/MatchingCard";
 import MathingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import MatchingImage from "../../assets/images/MatchingImage.png";
-import Button from "../../components/common/Button1";
+import Button from "../../components/common/Button";
 import LeftBtn from "../../assets/images/Left.png";
 import RightBtn from "../../assets/images/right.png";
 
@@ -17,14 +17,14 @@ export default function MatchingPage() {
         </div>
         {/* 필터 버튼 그룹 */}
         <div className="flex space-x-8">
-          <Button width="w-[300px]" height="h-[50px]" borderRadius="100px" text="text-20px">
-            관심사
+          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+            <span className="inline-block leading-[1]">관심사</span>
           </Button>
-          <Button width="w-[300px]" height="h-[50px]" borderRadius="100px" text="text-20px">
-            지역
+          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+            <span className="inline-block leading-[1]">지역</span>
           </Button>
-          <Button width="w-[300px]" height="h-[50px]" borderRadius="100px" text="text-20px">
-            MBTI
+          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+            <span className="inline-block leading-[1]">MBTI</span>
           </Button>
         </div>
         {/* 매칭 카드 리스트 */}
