@@ -10,9 +10,7 @@ export default function SignUpSoloStep1Page() {
   return (
     <>
       <div className="flex w-full h-full flex-col justify-center items-center">
-        <p className="text-[36px] font-medium cursor-default mb-9">
-          Welcome to SomePick!
-        </p>
+        <p className="text-[36px] cursor-default mb-9">Welcome to SomePick!</p>
 
         <div className="w-[490px]">
           <BackButton className="mb-7" />
@@ -43,7 +41,12 @@ export default function SignUpSoloStep1Page() {
               className="w-[223px]"
             />
           </div>
-          <SignupInput label="이메일" type="email" name="email" />
+          <SignupInput
+            label="이메일"
+            type="email"
+            name="email"
+            placeholder="user@email.com"
+          />
           <SignupInput label="비밀번호" type="password" name="password" />
           <SignupInput label="비밀번호 확인" type="password" name="confirmPw" />
 

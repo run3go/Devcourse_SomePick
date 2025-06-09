@@ -11,7 +11,12 @@ export default function LoginPage() {
     <>
       <div className="flex justify-center items-center h-screen">
         <div className="w-[41%] flex items-center flex-col">
-          <p className="text-[36px] mb-10 cursor-default">Welcome Back!</p>
+          <div className=" mb-10 cursor-default text-center w-[600px]">
+            <div className="text-[36px]">Welcome Back!</div>
+            <div className="text-[24px]">
+              오늘은 왠지 좋은 일이 생길 것 같아요😉
+            </div>
+          </div>
 
           <LoginInput type="email" placeholder="Email" className="mb-3" />
 

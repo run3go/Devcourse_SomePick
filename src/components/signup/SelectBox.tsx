@@ -28,7 +28,7 @@ export default function SelectBox({ type }: SelectBoxProps) {
             control: (baseStyles, state) => ({
               ...baseStyles,
               borderRadius: "100px",
-              width: "142px",
+              width: "220px",
               height: "50px",
               paddingRight: "10px",
               paddingLeft: "10px",
