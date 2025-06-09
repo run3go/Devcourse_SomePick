@@ -1,7 +1,13 @@
+import ChatRequest from "../../components/message/ChatRequest";
+// import ChatWaiting from "../../components/message/ChatWaiting";
+// import ChatRoom from "../../components/message/ChatRoom";
+
 export default function MessageDetailPage() {
   return (
     <>
-      <h1>MessageDetailPage Component</h1>
+      <ChatRequest />
+      {/* <ChatWaiting /> */}
+      {/* <ChatRoom /> */}
     </>
   );
 }
