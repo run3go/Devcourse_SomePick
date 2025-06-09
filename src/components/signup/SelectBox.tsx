@@ -18,7 +18,7 @@ export default function SelectBox({ type }: SelectBoxProps) {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <p className="ml-1.5">{titleGroup[type]}</p>
+        <p className="ml-5 mb-1">{titleGroup[type]}</p>
 
         <Select
           options={options}
@@ -28,7 +28,7 @@ export default function SelectBox({ type }: SelectBoxProps) {
             control: (baseStyles, state) => ({
               ...baseStyles,
               borderRadius: "100px",
-              width: "304px",
+              width: "142px",
               height: "50px",
               paddingRight: "10px",
               paddingLeft: "10px",
@@ -74,6 +74,7 @@ export default function SelectBox({ type }: SelectBoxProps) {
                 ? "var(--gray-300-50)"
                 : "white",
               color: "black",
+              paddingLeft: "20px",
             }),
             indicatorSeparator: () => ({
               display: "none",

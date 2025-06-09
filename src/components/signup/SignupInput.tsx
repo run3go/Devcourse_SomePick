@@ -1,5 +1,4 @@
 import { twMerge } from "tailwind-merge";
-import DefaultButton from "../common/DefaultButton";
 
 interface InputProps {
   label: string;
@@ -17,15 +16,9 @@ export default function SignupInput({
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex justify-between items-end mx-1.5">
-          <label htmlFor={name}>{label}</label>
-          {name === "userName" ? (
-            <DefaultButton
-              text="중복 확인"
-              className="w-18 h-6 mb-1 text-[12px]"
-            />
-          ) : null}
-        </div>
+        <label htmlFor={name} className="ml-5 mb-1">
+          {label}
+        </label>
 
         <input
           type={type}
@@ -35,7 +28,10 @@ export default function SignupInput({
             className
           )}
           {...(name === "height" ? { min: 130, max: 299, step: 1 } : {})}
-          {...(name === "intro" ? { maxlength: "30" } : {})}
+          {...(name === "intro" ? { maxlength: 30 } : {})}
+          {...(name === "userName"
+            ? { autoComplete: "off", minLength: 2, maxLength: 5 }
+            : {})}
         />
       </div>
     </>
