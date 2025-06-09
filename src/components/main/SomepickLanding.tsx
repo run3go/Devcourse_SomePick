@@ -1,114 +1,8 @@
+import "../../styles/SomepickLanding.css";
+
 const SomepickLanding = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center overflow-hidden relative bg-gradient-to-br from-pink-200 via-pink-100 to-pink-200">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
-        
-        .blob-container {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        
-        .blob {
-          width: 30%;
-          animation: rotate infinite linear;
-          mix-blend-mode: multiply;
-          margin: 0 -8%;
-          opacity: 0.8;
-        }
-        
-        .blob-1 {
-          fill: #FFE6EB;
-          animation-duration: 15s;
-        }
-        
-        .blob-2 {
-          fill: #FFF4FB;
-          animation-duration: 20s;
-          animation-direction: reverse;
-        }
-        
-        .blob-3 {
-          fill: #FFC7ED;
-          animation-duration: 18s;
-        }
-        
-        .blob-4 {
-          fill: #E7E6F9;
-          animation-duration: 22s;
-          animation-direction: reverse;
-        }
-        
-        @keyframes rotate {
-          100% { transform: rotate(360deg); }
-        }
-        
-        .main-title {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 700;
-          color: white;
-          letter-spacing: 0.3em;
-          font-size: 8vw;
-          margin-bottom: 1rem;
-          animation: glow 3s ease-in-out infinite alternate;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .subtitle {
-          font-family: 'Noto Sans KR', sans-serif;
-          font-size: 1.5rem;
-          font-weight: 400;
-          margin-bottom: 2rem;
-          color: white;
-          animation: fadeIn 1s ease-in-out;
-        }
-        
-        .cta-button {
-          background: linear-gradient(45deg, #FFC7ED, #FFC7ED);
-          border: none;
-          padding: 15px 40px;
-          border-radius: 50px;
-          color: white;
-          font-family: 'Noto Sans KR', sans-serif;
-          font-size: 1.1rem;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
-          animation: pulse 2s infinite;
-        }
-        
-        .cta-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 35px rgba(233, 30, 99, 0.4);
-          background: linear-gradient(45deg, #FF9FD6, #FF9FD6);
-        }
-        
-        @keyframes fadeIn {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 0.9; transform: translateY(0); }
-        }
-        
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-        
-        @media (max-width: 768px) {
-          .main-title { font-size: 12vw; }
-          .subtitle { font-size: 1.2rem; }
-          .cta-button { 
-            padding: 12px 30px; 
-            font-size: 1rem; 
-          }
-        }
-      `}</style>
-
       <div className="blob-container">
         <svg
           className="blob blob-1"
@@ -160,9 +54,9 @@ const SomepickLanding = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 text-center text-white">
-        <h1 className="main-title">SOMEPICK</h1>
+      <div className="relative z-10 text-center text-[var(--white)]">
         <p className="subtitle">연애의 시작부터 끝까지</p>
+        <h1 className="main-title">SOMEPICK</h1>
         <button className="cta-button" onClick={() => {}}>
           지금 시작하기
         </button>

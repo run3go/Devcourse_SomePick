@@ -44,7 +44,7 @@ export default function ShowCalendar() {
                     <li className="overflow-hidden text-ellipsis text-nowrap pl-[13px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
                       은우랑 데이트
                     </li>
-                    <li className="overflow-hidden text-ellipsis text-nowrap pl-[13px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
+                    <li className="overflow-hidden text-ellipsis text-nowrap bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
                       부산 가기
                     </li>
                   </ul>

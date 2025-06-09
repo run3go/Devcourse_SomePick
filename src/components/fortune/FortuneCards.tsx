@@ -20,11 +20,11 @@ export default function FortuneCards() {
   };
   return (
     <>
-      <div className="flex justify-center space-x-4 mt-[50px]">
+      <div className="flex justify-center space-x-4 mt-[30px]">
         {frontCards.map((front, idx) => (
           <div
             key={idx}
-            className={`relative cursor-pointer w-[440px] h-[661px] ${styles["fade-up"]}
+            className={`relative cursor-pointer w-[350px] h-[526px] ${styles["fade-up"]}
             transition-transform duration-300 ease-in-out hover:-translate-y-6`}
             style={{ perspective: "1000px" }}
             onClick={() => flipHandler(idx)}
