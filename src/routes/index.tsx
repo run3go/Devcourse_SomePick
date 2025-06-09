@@ -68,29 +68,29 @@ const router = createBrowserRouter([
     Component: AuthPage,
     children: [
       {
-        path: "/login",
+        path: "login",
         Component: LoginPage,
       },
       {
-        path: "/signup",
+        path: "signup",
         Component: SignUpPage,
       },
       {
-        path: "/signup/solo/1",
+        path: "signup/solo/1",
         Component: SignUpPage,
       },
       {
-        path: "/signup/solo/2",
+        path: "signup/solo/2",
         Component: SignUpPage,
       },
       {
-        path: "/signup/couple",
+        path: "signup/couple",
         Component: SignUpPage,
       },
     ],
   },
   {
-    path: "/*",
+    path: "*",
     Component: NotFoundPage,
   },
 ]);

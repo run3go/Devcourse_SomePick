@@ -52,3 +52,79 @@ export default tseslint.config({
   },
 })
 ```
+
+```
+3_project
+├─ eslint.config.js
+├─ index.html
+├─ package.json
+├─ public
+│  ├─ emoji.png
+│  └─ vite.svg
+├─ README.md
+├─ src
+│  ├─ apis
+│  ├─ App.tsx
+│  ├─ assets
+│  │  └─ images
+│  │     ├─ 1.png
+│  │     ├─ 1a0c54a2-c7e0-4eda-bb9c-fe6a1658b9d5.jpg
+│  │     ├─ 2.png
+│  │     ├─ 3.png
+│  │     ├─ back1.png
+│  │     ├─ back2.png
+│  │     ├─ banner.png
+│  │     ├─ banner2.png
+│  │     ├─ calendar.png
+│  │     ├─ couple1.png
+│  │     ├─ logo.png
+│  │     ├─ logo_white.png
+│  │     ├─ PINK.png
+│  │     ├─ taro.png
+│  │     ├─ tarotarotaro.png
+│  │     └─ taro_couple.png
+│  ├─ components
+│  │  ├─ fortune
+│  │  │  └─ Fortune.tsx
+│  │  └─ main
+│  ├─ hooks
+│  ├─ main.tsx
+│  ├─ routes
+│  │  ├─ index.tsx
+│  │  ├─ layouts
+│  │  │  ├─ Footer.tsx
+│  │  │  ├─ Header.tsx
+│  │  │  └─ RootLayout.tsx
+│  │  ├─ loader
+│  │  └─ pages
+│  │     ├─ AuthPage.tsx
+│  │     ├─ CalendarPage.tsx
+│  │     ├─ LoginPage.tsx
+│  │     ├─ MainPage.tsx
+│  │     ├─ MatchingPage.tsx
+│  │     ├─ MessageDetailPage.tsx
+│  │     ├─ MessagePage.tsx
+│  │     ├─ NotFoundPage.tsx
+│  │     ├─ PostCreatePage.tsx
+│  │     ├─ PostDetailPage.tsx
+│  │     ├─ PostsPage.tsx
+│  │     ├─ ProfilePage.tsx
+│  │     ├─ SignUpPage.tsx
+│  │     └─ TodayFortunePage.tsx
+│  ├─ stores
+│  │  └─ authstore.ts
+│  ├─ styles
+│  │  ├─ icons.css
+│  │  ├─ index.css
+│  │  └─ tailwind.css
+│  ├─ types
+│  │  └─ type.d.ts
+│  ├─ utils
+│  │  └─ supabase.ts
+│  └─ vite-env.d.ts
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.node.json
+└─ vite.config.ts
+
+```
