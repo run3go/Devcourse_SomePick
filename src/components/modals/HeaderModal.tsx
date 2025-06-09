@@ -6,7 +6,7 @@ export default function HeaderModal() {
       <li
         className={twMerge(
           "basis-1/3 flex justify-center items-center border-b border-[var(--primary-pink)]",
-          "rounded-t-[20px] hover:text-black cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
+          "rounded-t-[20px] hover:text-black cursor-pointer hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
         )}
       >
         마이 페이지
@@ -14,7 +14,7 @@ export default function HeaderModal() {
       <li
         className={twMerge(
           "basis-1/3 flex justify-center items-center border-b border-[var(--primary-pink)]",
-          "hover:text-black cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
+          "hover:text-black cursor-pointer hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
         )}
       >
         로그아웃
@@ -22,7 +22,7 @@ export default function HeaderModal() {
       <li
         className={twMerge(
           "basis-1/3 flex justify-center items-center",
-          "rounded-b-[20px] hover:text-black cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
+          "rounded-b-[20px] hover:text-black cursor-pointer hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
         )}
       >
         다크모드

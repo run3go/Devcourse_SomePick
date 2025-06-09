@@ -11,7 +11,7 @@ export default function Notifications() {
         // "h-[295px]"
       )}
     >
-      <div className="relative flex w-full justify-center">
+      <div className="relative flex w-full justify-end">
         <span className="absolute left-[10px] top-[7px]">알림</span>
         <button
           className={twMerge("notification_item px-[18px] cursor-pointer")}
