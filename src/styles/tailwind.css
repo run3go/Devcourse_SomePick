@@ -1,38 +1,37 @@
 @import "tailwindcss";
 
-/* 돋보기 아이콘 */
 .btn-search-icon {
   @apply ml-2 w-[20px] h-[20px] bg-no-repeat cursor-pointer;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -169px -760px;
 }
 .toggle-icon {
   @apply ml-2 w-[16px] h-[16px] bg-no-repeat cursor-pointer;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -371px -762px;
 }
 .btn-write {
   @apply w-[38px] h-[38px] bg-no-repeat cursor-pointer;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -787px -751px;
 }
 .heart {
   @apply w-[18px] h-[16px] bg-no-repeat;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -415px -762px;
 }
 .comment {
   @apply w-[16px] h-[16px] bg-no-repeat;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -463px -762px;
 }
 .white-heart {
   @apply w-[26px] h-[24px] bg-no-repeat;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -564px -227px;
 }
 .white-user {
   @apply w-[22px] h-[28px] bg-no-repeat;
-  background-image: url("../assets/images/imoji.png"); /* 경로 맞게 조정 */
+  background-image: url("../assets/images/imoji.png");
   background-position: -621px -224px;
 }
