@@ -1,5 +1,5 @@
 import image from "../../assets/images/image 8.png";
-import Button from "../common/Button";
+import Button from "../common/Button1";
 
 export default function MathingCardInfo() {
   return (

@@ -1,7 +1,7 @@
 import MatchingCard from "../../components/MatchingPage/MatchingCard";
 import MathingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import MatchingImage from "../../assets/images/MatchingImage.png";
-import Button from "../../components/common/Button";
+import Button from "../../components/common/Button1";
 import LeftBtn from "../../assets/images/Left.png";
 import RightBtn from "../../assets/images/right.png";
 

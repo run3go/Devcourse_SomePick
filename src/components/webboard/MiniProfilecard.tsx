@@ -1,4 +1,4 @@
-import Button from "../common/Button";
+import Button from "../common/Button1";
 import image from "../../assets/images/KakaoTalk_20241210_084712919.jpg";
 
 export default function MiniProfilecard() {
