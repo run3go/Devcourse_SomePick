@@ -1,6 +1,7 @@
 @import "./tailwind.css";
 
 :root {
+
   --black: #000000;
   --gray-700: #666666;
   --gray-500: #969696;
@@ -16,6 +17,15 @@
   --primary-pink-point-50: #ff66b380;
 
   --red: #e94235;
+  
+  --main-font: "inter";
+
+  --main-pink-color: #ff66b3;
+  --sub-pink-color: #ffc7ed;
+  --hover-pink-color: #ff9fd6;
+
+  --main-gray-color: #f3f3f3;
+  --sub-gray-color: #969696;
 }
 
 .scrollbar-hide {
@@ -63,4 +73,8 @@
   background: url("../assets/images/icons.png") no-repeat -323px -762px;
   width: 16px;
   height: 16px;
+}
+
+body {
+  @apply text-base font-(family-name:--main-font);
 }
