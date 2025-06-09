@@ -8,7 +8,19 @@ export default function PostCreatePage() {
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-5">
           <BackButton />
-          <div className="flex flex-col w-[1080px] [height:calc(100vh-250px)] border border-[var(--primary-pink)] rounded-2xl px-12.5 py-7.5">
+
+          <div className="text-center">
+            <p className="text-[30px] font-bold">연애백과</p>
+            {/* <p className="text-[30px] font-bold">자유게시판</p> */}
+            <p className="text-[20px]">
+              연애에 대한 모든 이야기, 자유롭게 공유해요!
+            </p>
+            {/* <p className="text-[20px]">
+              잡담부터 고민까지, 자유롭게 얘기해봐요!
+            </p> */}
+          </div>
+
+          <div className="flex flex-col w-[1080px] [height:calc(100vh-340px)] border border-[var(--primary-pink)] rounded-2xl px-12.5 py-7.5">
             <div className="border-b border-[var(--gray-700)] w-full pb-5 mb-5">
               <label className="text-xl">
                 제목
