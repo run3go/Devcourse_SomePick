@@ -61,16 +61,16 @@ body {
   display: none;
 }
 
-.days-wrap div:nth-child(7n + 1) {
+.days-wrap > div:nth-child(7n + 1) {
   @apply text-[var(--primary-pink-point)];
 }
 
 .circle-bg::before {
-  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--primary-pink)] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] -top-[70%] left-1/2 -translate-x-1/2  bg-[var(--primary-pink)] rounded-full z-[-1];
 }
 
 .gray-circle-bg:hover::before {
-  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] -top-[70%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 }
 .scrollbar-hide {
   -ms-overflow-style: none;
