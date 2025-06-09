@@ -1,7 +1,6 @@
 @import "./tailwind.css";
 
 :root {
-
   --black: #000000;
   --gray-700: #666666;
   --gray-500: #969696;
@@ -27,6 +26,21 @@
   --main-gray-color: #f3f3f3;
   --sub-gray-color: #969696;
 }
+
+body {
+  @apply text-base font-(family-name:--main-font);
+}
+
+.days-wrap div:nth-child(7n + 1) {
+  @apply text-[var(--main-pink-color)];
+}
+
+.circle-bg::before {
+  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--sub-pink-color)] rounded-full z-[-1];
+}
+
+.gray-circle-bg:hover::before {
+  @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -73,8 +87,4 @@
   background: url("../assets/images/icons.png") no-repeat -323px -762px;
   width: 16px;
   height: 16px;
-}
-
-body {
-  @apply text-base font-(family-name:--main-font);
 }
