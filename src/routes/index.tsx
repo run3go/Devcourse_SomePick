@@ -98,7 +98,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/*",
+    path: "*",
     Component: NotFoundPage,
   },
 ]);

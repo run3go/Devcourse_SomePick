@@ -1,5 +1,6 @@
 @import "./tailwind.css";
 
+:root {
 @layer utilities {
   .box-shadow-custom {
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
