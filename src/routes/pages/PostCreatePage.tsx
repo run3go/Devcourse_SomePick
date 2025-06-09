@@ -1,5 +1,6 @@
 import BackButton from "../../components/common/BackButton";
-import DefaultButton from "../../components/common/DefaultButton";
+import Button from "../../components/common/Button";
+import Icon from "../../components/common/Icon";
 
 export default function PostCreatePage() {
   return (
@@ -7,7 +8,7 @@ export default function PostCreatePage() {
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-5">
           <BackButton />
-          <div className="flex flex-col w-[1080px] h-[778px] border border-[var(--primary-pink)] rounded-2xl px-12.5 py-7.5">
+          <div className="flex flex-col w-[1080px] [height:calc(100vh-250px)] border border-[var(--primary-pink)] rounded-2xl px-12.5 py-7.5">
             <div className="border-b border-[var(--gray-700)] w-full pb-5 mb-5">
               <label className="text-xl">
                 제목
@@ -25,12 +26,14 @@ export default function PostCreatePage() {
             />
 
             <label className="flex justify-center items-center size-18 bg-[var(--primary-pink)] rounded-2xl cursor-pointer hover:bg-[var(--primary-pink-tone)]">
-              <div className="sprite-add-image-icon" />
+              <Icon width="16px" height="16px" left="-323px" top="-762px" />
               <input type="file" accept="image/*" className="hidden" />
             </label>
 
             <div className="flex justify-center">
-              <DefaultButton text="저장" className="w-[252px]" />
+              <Button className="w-[252px] mt-9 h-12.5 rounded-full">
+                저장
+              </Button>
             </div>
           </div>
         </div>
