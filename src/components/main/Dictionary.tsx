@@ -18,7 +18,7 @@ export default function Dictionary() {
           <p className="text-[40px] font-bold">연애 백과 펼치기</p>
         </div>
 
-        <div className="relative w-full flex flex-col items-center mt-[45px]">
+        <div className="relative w-full flex flex-col items-center mt-[10px]">
           <img src={ballon} alt="말풍선" className="z-10" />
           <div
             className="absolute z-20 text-[16px] font-bold text-[var(--gray-700)]"

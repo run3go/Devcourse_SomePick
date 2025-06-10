@@ -2,7 +2,19 @@ import { useNavigate } from "react-router";
 import useFadeIn from "../common/useFadeIn";
 import SomepickLanding from "./SomepickLanding";
 import Icon from "../common/Icon";
-export default function Service() {
+
+type Props = {
+  onClickDictionary: () => void;
+  onClickMeeting: () => void;
+  onClickCalendar: () => void;
+  onClickFortune: () => void;
+};
+export default function Service({
+  onClickDictionary,
+  onClickMeeting,
+  onClickCalendar,
+  onClickFortune,
+}: Props) {
   const fadeIn = useFadeIn();
   const navigate = useNavigate();
   return (
@@ -23,6 +35,7 @@ export default function Service() {
         </div>
         <div className="flex gap-[50px] justify-center mt-[60px]">
           <div
+            onClick={onClickDictionary}
             className="flex flex-col items-center justify-center border rounded-[20px] bg-[#FFE6EB] border-[#FFE6EB]
        w-[300px] h-[400px] shadow-lg shadow-black/25 cursor-pointer"
           >
@@ -43,6 +56,7 @@ export default function Service() {
             </div>
           </div>
           <div
+            onClick={onClickMeeting}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[var(--primary-pink)] border-[var(--primary-pink)]
        w-[300px] h-[400px] mt-[80px] shadow-lg shadow-black/25 cursor-pointer"
           >
@@ -63,6 +77,7 @@ export default function Service() {
             </div>
           </div>
           <div
+            onClick={onClickCalendar}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#FFF4FB] border-[#FFF4FB]
        w-[300px] h-[400px] shadow-lg shadow-black/25 cursor-pointer"
           >
@@ -83,6 +98,7 @@ export default function Service() {
             </div>
           </div>
           <div
+            onClick={onClickFortune}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#E7E6F9] border-[#E7E6F9]
        w-[300px] h-[400px] mt-[80px] shadow-lg shadow-black/25 cursor-pointer"
           >
