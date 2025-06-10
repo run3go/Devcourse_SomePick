@@ -1,17 +1,18 @@
 import { useLoaderData, useNavigate } from "react-router";
 import Button from "../../components/common/Button";
-import PostCard from "../../components/common/PostCard";
 import CoupleProfile from "../../components/profile/CoupleProfile";
 import ProfileTags from "../../components/profile/ProfileTags";
 import SoloProfile from "../../components/profile/SoloProfile";
+import { default as PostCard } from "../../components/webboard/PostCard";
 import { useAuthStore } from "../../stores/authstore";
 
 export default function ProfilePage() {
-  const userProfile: ProfileData = useLoaderData();
+  const {
+    userProfile,
+    posts,
+  }: { userProfile: ProfileData; posts: PostData[] } = useLoaderData();
   const session = useAuthStore((state) => state.session);
   const navigate = useNavigate();
-  console.log(userProfile);
-
   const isMyProfile = session?.user.id === userProfile.id;
 
   const {
@@ -35,6 +36,7 @@ export default function ProfilePage() {
     ["키", height],
     ["MBTI", mbti],
   ];
+
   return (
     <main className="relative flex justify-center mb-[150px] mt-[50px]">
       {/* 팔로우 모달창 */}
@@ -82,13 +84,14 @@ export default function ProfilePage() {
             <span className="leading-[1]">프로필 정보 변경</span>
           </Button>
         )}
-        <div className="w-full flex flex-col gap-[55px] mt-[127px]">
+        <div className="w-full flex flex-col gap-[40px] mt-[127px]">
           <h3 className="text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
             <span className="text-[var(--primary-pink-tone)]">{nickname}</span>
             님이 쓴 게시물
           </h3>
-          <PostCard />
-          <PostCard />
+          {posts.map((post) => (
+            <PostCard key={post.id} className="w-full" post={post} isProfile />
+          ))}
         </div>
       </div>
     </main>

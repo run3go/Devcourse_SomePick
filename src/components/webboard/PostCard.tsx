@@ -1,52 +1,78 @@
-import image from "../../assets/images/KakaoTalk_20241210_084712919.jpg";
+import { useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 
-export default function Postcard() {
+export default function Postcard({
+  className,
+  post,
+  isProfile = false,
+}: {
+  className?: string;
+  post: PostData;
+  isProfile?: boolean;
+}) {
+  const navigate = useNavigate();
   return (
     <div
-      className="flex items-stretch w-[1360px] h-[280px]
-                 border-2 rounded-xl border-[#FFC7ED]
-                 hover:border-[#FF66B3] hover:shadow-lg
-                 transition-all duration-200
-                 bg-white cursor-pointer p-8"
+      onClick={() => navigate(`/post/detail/${post.id}`)}
+      className={twMerge(
+        "flex items-stretch w-[1360px] h-[280px] border-2 rounded-xl border-[#FFC7ED]",
+        "hover:border-[#FF66B3] hover:shadow-lg transition-all duration-200",
+        "bg-white cursor-pointer p-8",
+        className
+      )}
     >
       <div className="flex-1  flex flex-col">
+        {isProfile && (
+          <span className="text-sm text-[var(--primary-pink)] font-bold mb-4">
+            {post.channel.description}
+          </span>
+        )}
         <div className="space-y-2">
           {/* 프로필 */}
           <div className="flex items-center">
             <img
-              src={image}
+              src={post.author.main_image}
               alt="사진"
               className="w-[44px] h-[40px] rounded-full object-cover mr-2"
             />
             <div className="flex flex-col">
-              <span className="font-medium">이현우</span>
+              <span className="font-medium">{post.author.nickname}</span>
               <span className="text-[#969696]">2025.06.07</span>
             </div>
           </div>
 
           {/* 제목 */}
-          <h2 className="text-lg font-bold">안녕하세요 이현우에요</h2>
+          <h2 className="text-lg font-bold">{post.title}</h2>
 
           {/* 본문 */}
-          <p className="leading-relaxed overflow-hidden line-clamp-4">제가 진짜 좀 힘들어요</p>
+          <p className="leading-relaxed line-clamp-2">{post.contents}</p>
         </div>
 
         {/* 좋아요 댓글 */}
         <div className="flex items-center space-x-6 mt-auto">
           <div className="flex items-center">
             <span className="heart mr-1" />
-            <span>10</span>
+            <span>{post.likes.length}</span>
           </div>
           <div className="flex items-center">
             <span className="comment mr-1" />
-            <span>71</span>
+            <span>{post.comments.length}</span>
           </div>
         </div>
       </div>
 
       {/* 우측 이미지 */}
       <div className="p-4 flex-shrink-0 self-center">
-        <img src={image} alt="Post" className="w-[241px] h-[214px] object-cover rounded-lg" />
+        {post.image && (
+          <img
+            src={post.image}
+            alt="Post"
+            className={twMerge(
+              "w-[241px] h-[214px] object-cover rounded-[16px]",
+              isProfile && "w-[150px] h-[150px]"
+            )}
+          />
+        )}
       </div>
     </div>
   );
