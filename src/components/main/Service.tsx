@@ -17,6 +17,7 @@ export default function Service({
 }: Props) {
   const fadeIn = useFadeIn();
   const navigate = useNavigate();
+
   return (
     <>
       <SomepickLanding

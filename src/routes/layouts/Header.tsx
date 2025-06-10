@@ -11,6 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -126,7 +127,7 @@ export default function Header() {
                   />
                   {isModalOpen && (
                     <div ref={outsideRef}>
-                      <HeaderModal />
+                      <HeaderModal onClose={() => setIsModalOpen(false)} />
                     </div>
                   )}
                 </div>

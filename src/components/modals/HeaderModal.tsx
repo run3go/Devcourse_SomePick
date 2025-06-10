@@ -3,7 +3,11 @@ import supabase from "../../utils/supabase";
 import { useAuthStore } from "../../stores/authstore";
 import type { Session } from "@supabase/supabase-js";
 import { useNavigate } from "react-router";
-export default function HeaderModal() {
+
+interface HeaderModalPropds {
+  onClose: () => void;
+}
+export default function HeaderModal({ onClose }: HeaderModalPropds) {
   const setLogout = useAuthStore((state) => state.setLogout);
   const session = useAuthStore<Session | null>((state) => state.session);
   // console.log("안녕", session?.user.id);
@@ -20,6 +24,7 @@ export default function HeaderModal() {
   const handleMyProfile = () => {
     if (session?.user.id) {
       navigate(`/profile/${session.user.id}`);
+      onClose();
     }
   };
   return (
