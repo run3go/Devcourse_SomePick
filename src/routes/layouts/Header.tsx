@@ -17,7 +17,10 @@ export default function Header() {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (isNotificationOpen || (isModalOpen && outsideRef.current)) {
+      if (
+        outsideRef.current &&
+        !outsideRef.current.contains(e.target as Node)
+      ) {
         e.preventDefault();
         setIsNotificationOpen(false);
         setIsModalOpen(false);
