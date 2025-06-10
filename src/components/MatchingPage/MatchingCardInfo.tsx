@@ -1,18 +1,23 @@
 import image from "../../assets/images/image 8.png";
 import Icon from "../common/Icon";
 import Button from "../common/Button";
+import type { Database } from "../../types/supabase";
+type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
-export default function MatchingCardInfo() {
-  const keywords = [
-    "잘생김",
-    "예쁨",
-    "귀여움",
-    "성격 좋음",
-    "감성적인",
-    "패셔니스타",
-    "착함",
-    "똑똑함",
-  ];
+interface MatchingCardInfoProps {
+  profile: Profiles;
+}
+
+export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
+  const keywords =
+    profile.keywords && profile.keywords.length > 0
+      ? profile.keywords
+      : ["키워드 정보가 없습니다."];
+
+  const interests =
+    profile.interests && profile.interests.length > 0
+      ? profile.interests
+      : ["관심사 정보가 없습니다."];
 
   const handleSendHeart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -35,12 +40,12 @@ export default function MatchingCardInfo() {
           <img src={image} alt="프로필 이미지" className="w-full h-full object-cover" />
           {/* 한줄소개 */}
         </div>
-        <p className="text-[24px] text-center">여기에 한줄 소개가 들어갑니다.</p>
+        <p className="text-[24px] text-center">{profile.description}</p>
       </div>
 
       {/* 하단 */}
       <div className="w-full h-[400px] bg-white flex flex-col items-center justify-center gap-[40px]">
-        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">차은우</h2>
+        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">{profile.nickname}</h2>
         <div className="flex gap-[30px]">
           {/* 하트 보내기 버튼 */}
           <Button
@@ -62,22 +67,34 @@ export default function MatchingCardInfo() {
         </div>
         {/* 정보 */}
         <div className="text-[20px] text-[#969696] flex gap-11">
-          <span>만25세</span>
-          <span>180cm</span>
-          <span>서울</span>
-          <span>공무원</span>
+          <span>만{profile.age}세</span>
+          <span>{profile.height}cm</span>
+          <span>{profile.location}</span>
+          <span>{profile.job}</span>
         </div>
         {/* 키워드 */}
-        <ul className="flex flex-wrap justify-center gap-[10px] w-[450px]">
-          {keywords.map((keyword) => (
-            <li
-              key={keyword}
-              className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
-            >
-              <span className="text-[20px] text-black">{keyword}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="w-[450px] flex flex-col items-center space-y-3">
+          <ul className="flex flex-wrap justify-center gap-[10px]">
+            {keywords.map((keyword, idx) => (
+              <li
+                key={`${keyword}-${idx}`}
+                className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
+              >
+                <span className="text-[20px] text-black">{keyword}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="flex flex-wrap justify-center gap-[10px]">
+            {interests.map((interest, idx) => (
+              <li
+                key={`${interest}-${idx}`}
+                className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
+              >
+                <span className="text-[20px] text-black">{interest}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
