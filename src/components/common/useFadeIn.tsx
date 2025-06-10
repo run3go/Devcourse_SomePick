@@ -3,22 +3,26 @@ import { useRef, useEffect, useCallback } from "react";
 export default function useFadeIn() {
   const domRef = useRef<HTMLDivElement | null>(null);
 
-  const handleScroll = useCallback(([entry]: IntersectionObserverEntry[]) => {
-    const { current } = domRef;
-    if (!current) return;
+  const handleScroll = useCallback(
+    ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      const { current } = domRef;
+      if (!current) return;
 
-    if (entry.isIntersecting) {
-      current.style.transitionProperty = "opacity, transform";
-      current.style.transitionDuration = "1s";
-      current.style.transitionTimingFunction = "cubic-bezier(0, 0, 0.2, 1)";
-      current.style.transitionDelay = "0s";
-      current.style.opacity = "1";
-      current.style.transform = "translate3d(0, 0, 0)";
-    } else {
-      current.style.opacity = "0";
-      current.style.transform = "translate3d(0, 20%, 0)";
-    }
-  }, []);
+      if (entry.isIntersecting) {
+        current.style.transitionProperty = "opacity, transform";
+        current.style.transitionDuration = "1s";
+        current.style.transitionTimingFunction = "cubic-bezier(0, 0, 0.2, 1)";
+        current.style.transitionDelay = "0s";
+        current.style.opacity = "1";
+        current.style.transform = "translate3d(0, 0, 0)";
+        observer.unobserve(current);
+      } else {
+        current.style.opacity = "0";
+        current.style.transform = "translate3d(0, 20%, 0)";
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const { current } = domRef;
@@ -26,7 +30,6 @@ export default function useFadeIn() {
 
     const observer = new IntersectionObserver(handleScroll, {
       threshold: 0.1,
-      rootMargin: "0px",
     });
 
     observer.observe(current);

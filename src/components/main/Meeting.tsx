@@ -1,6 +1,7 @@
 import Tags from "./Tags";
 import MatchingCard from "../MatchingPage/MatchingCard";
 import useFadeIn from "../common/useFadeIn";
+import Icon from "../common/Icon";
 export default function Meeting() {
   const fadeIn = useFadeIn();
   return (
@@ -22,7 +23,14 @@ export default function Meeting() {
           <div className="flex flex-col items-center text-center">
             <Tags />
             <div className="flex items-center mb-[10px] mt-[40px]">
-              <div className="iconB mr-[10px]"></div>
+              <div className="mr-[10px]">
+                <Icon
+                  width="30px"
+                  height="30px"
+                  left="-171px"
+                  top="-330.09px"
+                />
+              </div>
               <p className="text-[24px] font-bold">내가 원하는 소개팅 상대</p>
             </div>
             <p className="text-[16px] text-[var(--gray-500)]">

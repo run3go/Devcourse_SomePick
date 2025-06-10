@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
-import "../../styles/icons.css";
 import useFadeIn from "../common/useFadeIn";
 import SomepickLanding from "./SomepickLanding";
+import Icon from "../common/Icon";
 export default function Service() {
   const fadeIn = useFadeIn();
   const navigate = useNavigate();
@@ -32,7 +32,15 @@ export default function Service() {
             <p className="mb-[10px] text-[32px] text-[var(--gray-700)] font-bold">
               연애 백과
             </p>
-            <div className="iconDictionary shadow-lg rounded-bl-[15px]"></div>
+            <div className="shadow-lg rounded-bl-[15px]">
+              <Icon
+                width="100px"
+                height="113.69px"
+                left="-457.42px"
+                top="-38px"
+                className="hover:cursor-pointer"
+              />
+            </div>
           </div>
           <div
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[var(--primary-pink)] border-[var(--primary-pink)]
@@ -44,7 +52,15 @@ export default function Service() {
             <p className="mb-[10px] text-[32px] text-[var(--gray-700)] font-bold">
               소개팅 서비스
             </p>
-            <div className="iconLetter shadow-lg rounded-b-[15px]"></div>
+            <div className="shadow-lg rounded-b-[15px]">
+              <Icon
+                width="120.25px"
+                height="94.25px"
+                left="-183px"
+                top="-47px"
+                className="hover:cursor-pointer"
+              />
+            </div>
           </div>
           <div
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#FFF4FB] border-[#FFF4FB]
@@ -56,7 +72,15 @@ export default function Service() {
             <p className="mb-[10px] text-[32px] text-[var(--gray-700)] font-bold">
               커플 캘린더
             </p>
-            <div className="iconCalendar shadow-lg rounded-b-[10px]"></div>
+            <div className="shadow-lg rounded-b-[10px]">
+              <Icon
+                width="112px"
+                height="117.9px"
+                left="-41px"
+                top="-36px"
+                className="hover:cursor-pointer"
+              />
+            </div>
           </div>
           <div
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#E7E6F9] border-[#E7E6F9]
@@ -68,7 +92,15 @@ export default function Service() {
             <p className="mb-[10px] text-[32px] text-[var(--gray-700)] font-bold">
               감성 운세
             </p>
-            <div className="iconBall drop-shadow-lg"></div>
+            <div className="drop-shadow-lg">
+              <Icon
+                width="94.16px"
+                height="105px"
+                left="-333.25px"
+                top="-42px"
+                className="hover:cursor-pointer"
+              />
+            </div>
           </div>
         </div>
       </div>
