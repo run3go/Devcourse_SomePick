@@ -4,6 +4,7 @@ import womanImg from "../../assets/images/woman.png";
 import ballon from "../../assets/images/balloon.png";
 import "../../styles/icons.css";
 import useFadeIn from "../common/useFadeIn";
+import Icon from "../common/Icon";
 
 export default function Dictionary() {
   const fadeIn = useFadeIn();
@@ -17,7 +18,7 @@ export default function Dictionary() {
           <p className="text-[40px] font-bold">연애 백과 펼치기</p>
         </div>
 
-        <div className="relative w-full flex flex-col items-center mt-[45px]">
+        <div className="relative w-full flex flex-col items-center mt-[10px]">
           <img src={ballon} alt="말풍선" className="z-10" />
           <div
             className="absolute z-20 text-[16px] font-bold text-[var(--gray-700)]"
@@ -97,7 +98,7 @@ export default function Dictionary() {
             편지도 꼭 쓰기!
           </div>
           <div className="absolute top-[115px] z-0 flex flex-col items-center gap-[40px]">
-            <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center bg-white shadow-md">
+            <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center shadow-md">
               <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                 <img
                   src={coupleImg}
@@ -124,7 +125,7 @@ export default function Dictionary() {
             </div>
 
             <div className="flex gap-[50px]">
-              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center bg-white shadow-md">
+              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
                 <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                   <img
                     src={manImg}
@@ -152,7 +153,7 @@ export default function Dictionary() {
                 </button>
               </div>
 
-              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center bg-white shadow-md">
+              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
                 <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                   <img
                     src={womanImg}
@@ -185,7 +186,15 @@ export default function Dictionary() {
 
         <div className="flex flex-col items-center text-center mt-[-20px]">
           <div className="flex items-center mb-[10px]">
-            <div className="iconA mr-[10px]"></div>
+            <div className="mr-[10px]">
+              <Icon
+                width="30px"
+                height="30px"
+                left="-291px"
+                top="-330.09px"
+                className="hover:cursor-pointer"
+              ></Icon>
+            </div>
             <p className="text-[24px] font-bold">
               사랑, 커플에게도 솔로에게도 어려워요.
             </p>

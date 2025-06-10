@@ -1,5 +1,6 @@
 import FortuneCards from "../fortune/FortuneCards";
 import useFadeIn from "../common/useFadeIn";
+import Icon from "../common/Icon";
 export default function MainFortune() {
   const fadeIn = useFadeIn();
   return (
@@ -17,7 +18,14 @@ export default function MainFortune() {
         </div>
         <div className="flex flex-col items-center text-center mt-[-30px]">
           <div className="flex items-center mb-[10px]">
-            <div className="iconE mr-[10px]"></div>
+            <div className="mr-[10px]">
+              <Icon
+                width="30px"
+                height="30px"
+                left="-231px"
+                top="-330.09px"
+              ></Icon>
+            </div>
             <p className="text-[24px] font-bold">내 연애운을 확인해요.</p>
           </div>
           <p className="text-[16px] text-[var(--gray-500)]">

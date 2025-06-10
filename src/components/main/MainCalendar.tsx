@@ -1,5 +1,6 @@
 import ShowCalendar from "../calendar/ShowCalendar";
 import useFadeIn from "../common/useFadeIn";
+import Icon from "../common/Icon";
 export default function MainCalender() {
   const fadeIn = useFadeIn();
   return (
@@ -19,7 +20,14 @@ export default function MainCalender() {
             </div>
             <div className="flex flex-col text-left mt-[30px]">
               <div className="flex items-center mb-[10px]">
-                <div className="iconC mr-[10px]"></div>
+                <div className="mr-[10px]">
+                  <Icon
+                    width="40px"
+                    height="40px"
+                    left="-41px"
+                    top="-325.09px"
+                  />
+                </div>
                 <p className="text-[24px] font-bold">일정 확인</p>
               </div>
               <p className="text-[16px]">
@@ -29,29 +37,37 @@ export default function MainCalender() {
           </div>
 
           <div className="flex flex-col items-start]">
-            <div className="w-[650px] h-[500px] bg-[#FFF2FB] flex flex-col shadow-lg rounded-[20px]">
-              <p className="mt-[35px] ml-[30px] mb-[35px] text-[24px]">
+            <div className="w-[650px] h-[500px] border border-[var(--primary-pink)] flex flex-col shadow-lg rounded-[20px]">
+              <p className="mt-[35px] ml-[30px] mb-[35px] text-[24px] text-[var(--primary-pink-point)]">
                 선택된 날짜 - 6월 19일
               </p>
-              <div className="border-0 ml-[30px] mb-[25px] bg-[#ffffff] rounded-[20px] w-[585px] h-[62px]">
+              <div className="ml-[30px] mb-[25px]">
                 <p className="text-[20px] text-[var(--gray-500)] ml-[15px] mt-[15px]">
                   제목
                 </p>
               </div>
-              <div className="ml-[30px] mb-[25px] border-0 bg-[#ffffff] rounded-[20px] w-[585px] h-[206px]">
+              <hr className="ml-[30px] w-[90%] mb-[20px] border-[var(--primary-pink)]" />
+              <div className="ml-[30px] mb-[25px] h-[200px]">
                 <p className="text-[20px] text-[var(--gray-500)] ml-[15px] mt-[15px]">
-                  내용
+                  메모
                 </p>
               </div>
               <div className="flex justify-end mr-[35px]">
-                <button className="w-[178px] h-[45px] bg-[var(--primary-pink)] rounded-[15px]">
+                <button className="w-[178px] h-[45px] bg-[var(--primary-pink)] rounded-[30px]">
                   일정 추가하기
                 </button>
               </div>
             </div>
             <div className="flex flex-col text-left mt-[40px]">
               <div className="flex items-center mb-[10px]">
-                <div className="iconD mr-[10px]"></div>
+                <div className="mr-[10px]">
+                  <Icon
+                    width="30px"
+                    height="30px"
+                    left="-111px"
+                    top="-330.09px"
+                  />
+                </div>
                 <p className="text-[24px] font-bold">일정 작성</p>
               </div>
               <p className="text-[16px] text-[var(--gray-500)]">
