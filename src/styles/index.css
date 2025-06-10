@@ -89,6 +89,14 @@ body {
   @apply w-full;
 }
 
+.user-info {
+  @apply text-[var(--primary-pink-point)] font-bold inline-block w-[90px];
+}
+
+.user-info-input {
+  @apply px-[15px] w-[131px] h-[38px] border border-[var(--gray-300)] rounded-[10px] focus:border-0 focus:outline-[var(--primary-pink)] focus:outline-1;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
