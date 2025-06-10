@@ -40,7 +40,7 @@ export default function ProfileCard({
             (isCouple || isEdited) && "w-[300px] h-[373px]"
           )}
           src={image}
-          alt={isMain ? "메인 이미지" : "서브 이미지"}
+          alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
         />
         {isEdited && (
           <div className="group absolute flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer hover:bg-[rgba(0,0,0,0.5)]">

@@ -8,8 +8,10 @@ import Notifications from "../../components/modals/Notifications";
 
 export default function Header() {
   const navigate = useNavigate();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
   return (
     <>
       <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">

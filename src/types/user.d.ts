@@ -34,6 +34,50 @@ type ProfileUpdatePayload = Partial<{
   keywords: string[];
   interests: string[];
   ideal_types: string[];
-  partner_email: string;
+  partner_nickname: string;
   status: "solo" | "couple";
 }>;
+
+type ProfileData = {
+  id: string;
+  age: number;
+  gender: "male" | "female";
+  nickname: string;
+  main_image: string;
+  sub_image: string;
+  job: string | null;
+  height: number | null;
+  location: string | null;
+  mbti: string | null;
+  description: string | null;
+  keywords: string[] | null;
+  interests: string[] | null;
+  ideal_types: string[] | null;
+  partner_nickname: string | null;
+  couple_id: string | null;
+  couple: {
+    user1: UserData;
+    user2: UserData;
+  };
+  status: "solo" | "couple";
+};
+
+type SoloProfile = SoloOptions & {
+  id: string;
+};
+
+type CoupleProfile = CoupleOptions & {
+  id: string;
+  couple_id: string;
+  partner_nickname: string;
+  couple: {
+    user1: UserData;
+    user2: UserData;
+  };
+};
+
+type UserData = {
+  id: string;
+  main_image: string;
+  nickname: string;
+};

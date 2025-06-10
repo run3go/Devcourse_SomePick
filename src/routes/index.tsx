@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
+import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
 import CalendarPage from "./pages/CalendarPage";
 import LoginPage from "./pages/LoginPage";
@@ -13,8 +14,8 @@ import PostDetailPage from "./pages/PostDetailPage";
 import PostsPage from "./pages/PostsPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
-import SignUpPage from "./pages/SignUpPage";
 import SignUpCouplePage from "./pages/SignUpCouplePage";
+import SignUpPage from "./pages/SignUpPage";
 import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile/:id",
+        loader: getUserProfile,
         Component: ProfilePage,
       },
       {
