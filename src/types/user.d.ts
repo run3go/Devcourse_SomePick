@@ -78,6 +78,6 @@ type CoupleProfile = CoupleOptions & {
 
 type UserData = {
   id: string;
-  main_image: string;
-  nickname: string;
+  main_image: string | null;
+  nickname: string | null;
 };

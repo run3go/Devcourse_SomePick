@@ -1,24 +1,121 @@
+import { useState } from "react";
+import { useLoaderData } from "react-router";
+import { twMerge } from "tailwind-merge";
+import { followUser, unfollowUser } from "../../apis/follow";
+import { sendHeart } from "../../apis/matching";
+import { useAuthStore } from "../../stores/authstore";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
+import FollowModal from "./FollowModal";
 import ProfileCard from "./ProfileCard";
 
 export default function SoloProfile({
   soloProfile,
   isMyProfile,
+  scrollRef,
 }: {
   soloProfile: ProfileData;
   isMyProfile: boolean;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const { description, main_image, sub_image, nickname } = soloProfile;
+  const { description, main_image, sub_image, nickname, id } = soloProfile;
+  const { session } = useAuthStore();
+  const {
+    posts,
+    followers,
+    followings,
+  }: { posts: PostData[]; followers: UserData[]; followings: UserData[] } =
+    useLoaderData();
+  const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
+  const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
+  const [followerList, setFollowerList] = useState(followers);
 
+  const [isFollowing, setIsFollwing] = useState(
+    followerList.some((user) => user.id === session?.user.id)
+  );
+  const scrollToPosts = () => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const handleFollowUser = async () => {
+    try {
+      if (!session) return;
+      setIsFollwing(true);
+      setFollowerList((list) => [
+        ...list,
+        {
+          id: session?.user.id,
+          main_image: session?.user.user_metadata.main_image,
+          nickname: session?.user.user_metadata.nickname,
+        },
+      ]);
+      await followUser(id);
+    } catch (e) {
+      console.error(e);
+      setIsFollwing(false);
+      setFollowerList((list) =>
+        list.filter((item) => item.id !== session?.user.id)
+      );
+    }
+  };
+  const handleUnfollowUser = async () => {
+    try {
+      setIsFollwing(false);
+      setFollowerList((list) =>
+        list.filter((item) => item.id !== session?.user.id)
+      );
+      await unfollowUser(id);
+    } catch (e) {
+      if (!session) return;
+      console.error(e);
+      setIsFollwing(true);
+      setFollowerList((list) => [
+        ...list,
+        {
+          id: session.user.id,
+          main_image: session.user.user_metadata.main_image,
+          nickname: session.user.user_metadata.nickname,
+        },
+      ]);
+    }
+  };
+  const handleSendHeart = async () => {
+    const error = await sendHeart(id);
+    if (error && error.code === "23505") {
+      alert("이미 하트를 보낸 상대입니다.");
+    }
+  };
   return (
     <div className="w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px]">
+      {isFollowerModalOpen && (
+        <>
+          <div
+            onClick={() => setIsFollowerModalOpen(false)}
+            className="fixed inset-0 bg-black opacity-30 z-100"
+          />
+          <FollowModal users={followerList} type="팔로워" />
+        </>
+      )}
+      {isFollowingModalOpen && (
+        <>
+          <div
+            onClick={() => setIsFollowingModalOpen(false)}
+            className="fixed inset-0 bg-black opacity-30 z-100"
+          />
+          <FollowModal users={followings} type="팔로잉" />
+        </>
+      )}
       <div className="w-full text-center">
         <h2 className="font-bold text-2xl">
-          {/* 나의 프로필일 경우 */}
-          {/* My Profile */}
-          <span className="text-[var(--primary-pink-tone)]">{nickname}</span>
-          님의 Profile
+          {isMyProfile ? (
+            "My Profile"
+          ) : (
+            <>
+              <span className="text-[var(--primary-pink-tone)]">
+                {nickname}
+              </span>
+              님의 Profile
+            </>
+          )}
         </h2>
       </div>
       <div className="flex justify-around">
@@ -26,42 +123,88 @@ export default function SoloProfile({
           <ProfileCard image={main_image} isMain />
           <ProfileCard image={sub_image} />
         </div>
-        <div className="flex flex-col gap-[70px] justify-center w-100">
+        <div className="flex flex-col gap-[40px] justify-center w-100">
           <div className="flex flex-col items-center">
             <div className="w-full flex justify-evenly gap-[29px] mt-[38px] font-semibold text-xl">
-              <div className="group flex flex-col items-center gap-2 cursor-pointer">
+              <div
+                onClick={() => setIsFollowerModalOpen(true)}
+                className="group flex flex-col items-center gap-2 cursor-pointer"
+              >
                 <span className="group-hover:text-black">팔로워</span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
-                  19
+                  {followerList.length}
                 </span>
               </div>
-              <div className="group flex flex-col items-center gap-2 cursor-pointer">
+              <div
+                onClick={() => setIsFollowingModalOpen(true)}
+                className="group flex flex-col items-center gap-2 cursor-pointer"
+              >
                 <span className="group-hover:text-black">팔로잉</span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
-                  2
+                  {followings.length}
                 </span>
               </div>
-              <div className="group flex flex-col items-center gap-2 cursor-pointer">
+              <div
+                onClick={scrollToPosts}
+                className="group flex flex-col items-center gap-2 cursor-pointer"
+              >
                 <span className="group-hover:text-black">게시글</span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
-                  9
+                  {posts.length}
                 </span>
               </div>
             </div>
-            {isMyProfile && (
+            {!isMyProfile && (
               <div className="flex gap-7 mt-[22px]">
-                <Button className="w-[177px] h-[38px] gap-2">
-                  <Icon width="24px" height="23px" left="-67px" top="-398px" />
-                  <span className="inline-block leading-[1]">팔로우하기</span>
-                </Button>
-                <Button className="w-[177px] h-[38px] gap-2">
-                  <Icon width="23px" height="21px" left="-99px" top="-399px" />
-                  <span className="inline-block leading-[1]">하트 보내기</span>
-                </Button>
+                {isFollowing ? (
+                  <Button
+                    onClick={() => handleUnfollowUser()}
+                    className="w-[177px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]"
+                  >
+                    <Icon
+                      width="24px"
+                      height="23px"
+                      left="-67px"
+                      top="-398px"
+                    />
+                    <span className="inline-block leading-[1]">
+                      팔로우 취소
+                    </span>
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleFollowUser()}
+                    className="w-[177px] h-[38px] gap-2"
+                  >
+                    <Icon
+                      width="24px"
+                      height="23px"
+                      left="-67px"
+                      top="-398px"
+                    />
+                    <span className="inline-block leading-[1]">팔로우</span>
+                  </Button>
+                )}
+                {
+                  <Button
+                    onClick={handleSendHeart}
+                    className="w-[177px] h-[38px] gap-2"
+                  >
+                    <Icon
+                      width="23px"
+                      height="21px"
+                      left="-99px"
+                      top="-399px"
+                    />
+                    <span className="inline-block leading-[1]">
+                      하트 보내기
+                    </span>
+                  </Button>
+                }
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-[18px]">
+          <div className={twMerge("flex flex-col gap-[18px]")}>
             <div className="flex items-center gap-2">
               <Icon width="10px" height="9px" left="-49px" top="-405px" />
               <span className="font-semibold text-[var(--primary-pink-tone)]">

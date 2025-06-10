@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import Button from "../../components/common/Button";
 import CoupleProfile from "../../components/profile/CoupleProfile";
@@ -10,11 +11,14 @@ export default function ProfilePage() {
   const {
     userProfile,
     posts,
-  }: { userProfile: ProfileData; posts: PostData[] } = useLoaderData();
+  }: {
+    userProfile: ProfileData;
+    posts: PostData[];
+  } = useLoaderData();
   const session = useAuthStore((state) => state.session);
   const navigate = useNavigate();
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const isMyProfile = session?.user.id === userProfile.id;
-
   const {
     nickname,
     age,
@@ -39,17 +43,19 @@ export default function ProfilePage() {
 
   return (
     <main className="relative flex justify-center mb-[150px] mt-[50px]">
-      {/* 팔로우 모달창 */}
-      {/* <div className="fixed inset-0 bg-black opacity-30 z-50" />
-      <FollowModal /> */}
       <div className="flex items-center flex-col w-270">
         {status === "couple" ? (
           <CoupleProfile
             coupleProfile={userProfile}
             isMyProfile={isMyProfile}
+            scrollRef={scrollRef}
           />
         ) : (
-          <SoloProfile soloProfile={userProfile} isMyProfile={isMyProfile} />
+          <SoloProfile
+            soloProfile={userProfile}
+            isMyProfile={isMyProfile}
+            scrollRef={scrollRef}
+          />
         )}
         {status === "solo" && (
           <div className="flex flex-col w-full">
@@ -84,7 +90,10 @@ export default function ProfilePage() {
             <span className="leading-[1]">프로필 정보 변경</span>
           </Button>
         )}
-        <div className="w-full flex flex-col gap-[40px] mt-[127px]">
+        <div
+          ref={scrollRef}
+          className="w-full flex flex-col gap-[40px] mt-[127px]"
+        >
           <h3 className="text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
             <span className="text-[var(--primary-pink-tone)]">{nickname}</span>
             님이 쓴 게시물

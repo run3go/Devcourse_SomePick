@@ -25,16 +25,15 @@ export const sendHeart = async (receiverId: string) => {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("matchings")
       .insert([{ user_id: session.user.id, matching_user_id: receiverId }])
       .select("*")
       .single();
     if (error) {
       console.log("하트 보내기 실패:", error.message);
-      return;
+      return error;
     }
-    return data;
   } catch (e) {
     console.error(e);
   }
