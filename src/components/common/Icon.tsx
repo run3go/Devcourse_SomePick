@@ -6,17 +6,20 @@ export default function Icon({
   left,
   top,
   className,
+  onClick,
 }: {
   width: string;
   height: string;
   left: string;
   top: string;
   className?: string;
+  onClick?: () => void;
 }) {
   return (
     <div
       className={twMerge("bg-no-repeat bg-[url('/emoji.png')]", className)}
       style={{ width, height, backgroundPosition: `${left} ${top}` }}
+      onClick={onClick}
     />
   );
 }

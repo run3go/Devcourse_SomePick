@@ -17,6 +17,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignUpCouplePage from "./pages/SignUpCouplePage";
 import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
+import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
 
 const router = createBrowserRouter([
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: "signup/solo/2",
         Component: SignUpSoloStep2Page,
+      },
+      {
+        path: "signup/solo/3",
+        Component: SignUpSoloStep3Page,
       },
       {
         path: "signup/couple",
