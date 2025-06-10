@@ -68,7 +68,7 @@ export default function MatchingCardInfo() {
           <span>공무원</span>
         </div>
         {/* 키워드 */}
-        <ul className="flex flex-wrap justify-center gap-[10px] w-[400px]">
+        <ul className="flex flex-wrap justify-center gap-[10px] w-[450px]">
           {keywords.map((keyword) => (
             <li
               key={keyword}
