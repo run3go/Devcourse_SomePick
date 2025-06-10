@@ -1,28 +1,32 @@
 import Tags from "./Tags";
 import MatchingCard from "../MatchingPage/MatchingCard";
 import useFadeIn from "../common/useFadeIn";
+import Icon from "../common/Icon";
 export default function Meeting() {
   const fadeIn = useFadeIn();
   return (
     <>
       <div {...fadeIn}>
         <div className="mt-[300px] flex flex-col items-center justify-center">
-          <p className="mb-[10px] text-[24px] text-[var(--gray-500)] font-bold">
-            솔로라면?
-          </p>
-          <p className="text-[40px] font-bold">
-            특별한 인연을 만날 수 있는 소개팅
-          </p>
+          <p className="mb-[10px] text-[24px] text-[var(--gray-500)] font-bold">솔로라면?</p>
+          <p className="text-[40px] font-bold">특별한 인연을 만날 수 있는 소개팅</p>
         </div>
 
         <div className="flex justify-center items-start gap-[30px] mt-[40px]">
           <div className="scale-[0.9] mt-[-38px]">
-            <MatchingCard />
+            <MatchingCard flipOnHover={true} />
           </div>
           <div className="flex flex-col items-center text-center">
             <Tags />
             <div className="flex items-center mb-[10px] mt-[40px]">
-              <div className="iconB mr-[10px]"></div>
+              <div className="mr-[10px]">
+                <Icon
+                  width="30px"
+                  height="30px"
+                  left="-171px"
+                  top="-330.09px"
+                />
+              </div>
               <p className="text-[24px] font-bold">내가 원하는 소개팅 상대</p>
             </div>
             <p className="text-[16px] text-[var(--gray-500)]">

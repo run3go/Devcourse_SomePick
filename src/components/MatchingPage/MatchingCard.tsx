@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import image from "../../assets/images/image 8.png";
 import MatchingCardInfo from "./MatchingCardInfo";
 
 interface MatchingCardProps {
   blurClass?: string;
-  disableFlip?: boolean; // ← 추가
+  disableFlip?: boolean;
+  flipOnHover?: boolean;
   width?: string;
   height?: string;
   imageWidth?: string;
@@ -15,6 +17,7 @@ interface MatchingCardProps {
 export default function MatchingCard({
   blurClass = "",
   disableFlip = false,
+  flipOnHover = false,
   width = "w-[600px]",
   height = "h-[800px]",
   imageWidth = "w-[500px]",
@@ -22,16 +25,40 @@ export default function MatchingCard({
   text = "text-[24px]",
   onClick,
 }: MatchingCardProps) {
-  const outerClasses = [width, height, "overflow-hidden", !disableFlip ? "group" : ""].join(" ");
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  const innerClasses = [
-    "w-full h-full",
-    "relative transform transition-transform duration-500",
-    !disableFlip ? "group-hover:rotate-y-180" : "",
+  //hover 트리거용인 경우에만 group
+  const outerClasses = [
+    width,
+    height,
+    "overflow-hidden",
+    flipOnHover && !disableFlip ? "group" : "",
   ].join(" ");
 
+  // 회전 클래스
+  const innerClasses = [
+    "w-full h-full relative transform transition-transform duration-500",
+    // hover flip
+    flipOnHover && !disableFlip ? "group-hover:rotate-y-180" : "",
+    // click flip
+    !flipOnHover && !disableFlip && isFlipped ? "rotate-y-180" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // 클릭 핸들러
+  const handleClick = () => {
+    if (disableFlip && onClick) {
+      onClick();
+    } else if (!disableFlip && !flipOnHover) {
+      setIsFlipped((f) => !f);
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <div style={{ perspective: "1000px" }} className={outerClasses} onClick={onClick}>
+    <div style={{ perspective: "1000px" }} className={outerClasses} onClick={handleClick}>
       <div className={innerClasses} style={{ transformStyle: "preserve-3d" }}>
         {/* 앞면 */}
         <div

@@ -1,19 +1,35 @@
 import { twMerge } from "tailwind-merge";
-
+import Icon from "../common/Icon";
 export default function ShowCalendar() {
   const days = Array.from({ length: 30 }, (_, index) => index + 1);
   const today = 4;
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[650px] flex justify-between items-center mt-[40px] mb-[40px]">
-        <div className="w-[33px] h-[33px] bg-[var(--primary-pink)]"></div>
+        <div className="pl-[10px]">
+          <Icon
+            width="22px"
+            height="29px"
+            left="-208px"
+            top="-394px"
+            className="hover:cursor-pointer"
+          />
+        </div>
         <div>
           <span className="text-lg mr-[14px] text-[var(--primary-pink-point)]">
             2025
           </span>
           <span className="text-[32px]">06</span>
         </div>
-        <div className="w-[33px] h-[33px] bg-[var(--primary-pink)]"></div>
+        <div className="pr-[10px]">
+          <Icon
+            width="22px"
+            height="29px"
+            left="-265px"
+            top="-395px"
+            className="hover:cursor-pointer"
+          />
+        </div>
       </div>
       <div className="w-full text-[20px]">
         <div className="w-full">
@@ -33,7 +49,7 @@ export default function ShowCalendar() {
               <div key={day} className="w-[14.28%] h-20 text-center">
                 <span
                   className={twMerge(
-                    "day-text relative py-1 px-[6px] pb-[8px] cursor-pointer leading-[1] inline-block gray-circle-bg",
+                    "day-text relative py-0.5 cursor-pointer leading-[1] inline-block gray-circle-bg",
                     today === day && "circle-bg"
                   )}
                 >

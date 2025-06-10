@@ -30,7 +30,7 @@ export default function MatchingPage() {
           </Button>
         </div>
         {/* 매칭 카드 리스트 */}
-        <div className="flex space-x-10 overflow-x-auto py-4">
+        <div className="flex space-x-8 overflow-x-auto py-4 justify-center items-center">
           {/* 왼쪽 흐린 카드 */}
           <MatchingCard
             blurClass="blur"
@@ -49,7 +49,9 @@ export default function MatchingPage() {
             </button>
 
             {/*  중앙 카드 */}
-            <MatchingCard />
+            <div className="cursor-pointer">
+              <MatchingCard />
+            </div>
 
             {/* 오른쪽 버튼 */}
             <button className="absolute top-1/2 right-0 translate-x-full -translate-y-1/2 z-10">
@@ -83,7 +85,7 @@ export default function MatchingPage() {
               height="h-[450px]"
               imageWidth="w-full"
               imageHeight="h-full"
-              text="text-[18px]"
+              text="text-[17px]"
               disableFlip={true}
               onClick={() => setIsModalOpen(true)}
             />
@@ -95,7 +97,7 @@ export default function MatchingPage() {
         <div
           className="
             fixed inset-0 flex items-center justify-center
-            z-50
+            z-50 top-[63px] right-[140px]
             backdrop-blur-sm
           "
         >
