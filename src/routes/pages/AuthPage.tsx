@@ -17,7 +17,7 @@ export default function AuthPage() {
             draggable="false"
           />
           <p
-            className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer"
+            className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer text-[var(--black)]"
             onClick={() => navigate("/")}
           >
             somepick
@@ -25,7 +25,7 @@ export default function AuthPage() {
           {/* <img src={logo} className="absolute top-5 left-5 h-14" /> */}
         </div>
 
-        <div className="bg-[var(--grey-100)] w-[62%]">
+        <div className="bg-[var(--white)] w-[62%]">
           <Outlet />
         </div>
       </div>
