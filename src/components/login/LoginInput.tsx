@@ -4,12 +4,16 @@ interface InputProps {
   type: string;
   placeholder: string;
   className?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function LoginInput({
   type,
   placeholder,
   className,
+  value,
+  onChange,
 }: InputProps) {
   return (
     <>
@@ -28,6 +32,8 @@ export default function LoginInput({
           type={type}
           placeholder={placeholder}
           className="w-full h-full bg-[var(--white)] border border-[var(--primary-pink)] rounded-full pl-16.5 focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)"
+          value={value}
+          onChange={onChange}
         />
       </div>
     </>
