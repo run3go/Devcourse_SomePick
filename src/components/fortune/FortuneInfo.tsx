@@ -3,15 +3,15 @@ export default function FortuneInfo() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="mt-[192px]">
+        <div>
           <img
             src={firstCouple}
             alt="타로 커플"
-            className="w-[380px] h-[253px]"
+            className="w-[300px] h-[200px]"
           />
         </div>
         <div className="text-center mt-4">
-          <p className="font-bold text-[32px]">
+          <p className="font-bold text-[28px]">
             <span className="text-[#FFC7ED]">지유</span>님, 오늘의 운세가
             준비되었어요!
           </p>

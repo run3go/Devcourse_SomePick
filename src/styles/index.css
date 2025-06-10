@@ -54,7 +54,7 @@ body {
 }
 
 .notification_item {
-  @apply py-[10px] border border-[var(--primary-pink)] rounded-[20px] bg-white hover:text-black cursor-pointer hover:border-[var(--primary-pink-point)];
+  @apply py-[6px] border border-[var(--primary-pink)] rounded-[20px] bg-white hover:text-black cursor-pointer hover:border-[var(--primary-pink-point)];
 }
 
 .notification_list::-webkit-scrollbar {
@@ -71,6 +71,22 @@ body {
 
 .gray-circle-bg:hover::before {
   @apply content-[""] absolute w-[55px] h-[55px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+}
+
+.header-menu::before {
+  @apply content-[""] absolute bottom-[-3px] block w-0 h-[2px] bg-black transition-all duration-200;
+}
+
+.header-menu:hover {
+  @apply text-black;
+}
+
+.header-menu:hover::before {
+  @apply w-full;
+}
+
+.header-menu__active::before {
+  @apply w-full;
 }
 
 .user-info {
