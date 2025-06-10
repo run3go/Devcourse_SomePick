@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">
+      <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
         <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
