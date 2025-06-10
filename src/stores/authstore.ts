@@ -4,9 +4,8 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type AuthStore = {
-  isLoggedIn: boolean;
+  isLogin: boolean;
   session: Session | null;
-
   setLogin: (userData: Session) => void;
   setLogout: () => void;
 };
@@ -14,16 +13,16 @@ type AuthStore = {
 export const useAuthStore = create<AuthStore>()(
   devtools(
     immer((set) => ({
-      isLoggedIn: false,
+      isLogin: false,
       session: null,
-      setLogin: (userData) =>
+      setLogin: (userData: Session) =>
         set((state) => {
-          state.isLoggedIn = true;
+          state.isLogin = true;
           state.session = userData;
         }),
       setLogout: () =>
         set((state) => {
-          state.isLoggedIn = false;
+          state.isLogin = false;
           state.session = null;
         }),
     }))

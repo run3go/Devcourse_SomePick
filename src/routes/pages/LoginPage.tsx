@@ -3,9 +3,40 @@ import { useNavigate } from "react-router";
 import google from "../../assets/images/google-login.png";
 import LoginInput from "../../components/login/LoginInput";
 import Button from "../../components/common/Button";
+import { useState } from "react";
+import supabase from "../../utils/supabase";
+import { toast } from "react-toastify";
+// import { showErrorToast } from "../../components/common/Toast";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const LoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      // showErrorToast("이메일과 비밀번호를 모두 입력해주세요.");
+      toast.warn("이메일과 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast.error("로그인 실패: " + error.message);
+      console.log("로그인 실패: " + error.message);
+    } else {
+      toast.success("로그인 성공!");
+      console.log(data);
+      navigate("/");
+    }
+  };
 
   return (
     <>
@@ -18,11 +49,24 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <LoginInput type="email" placeholder="Email" className="mb-3" />
+          <form onSubmit={LoginHandler} className="w-full">
+            <LoginInput
+              type="email"
+              placeholder="Email"
+              className="mb-3"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <LoginInput type="password" placeholder="Password" />
+            <LoginInput
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <Button className="w-full h-12.5 rounded-full mt-9">Login</Button>
+            <Button className="w-full h-12.5 rounded-full mt-9">Login</Button>
+          </form>
 
           <div className="flex items-center justify-between my-6 w-full">
             <hr className="w-[219px] border-[var(--gray-500)]" />
