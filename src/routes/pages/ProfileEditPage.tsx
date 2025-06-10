@@ -2,6 +2,7 @@ import profileImage from "../../assets/images/profile_image.png";
 import Button from "../../components/common/Button";
 import Icon from "../../components/common/Icon";
 import ProfileCard from "../../components/profile/ProfileCard";
+import ProfileSelectBox from "../../components/profile/ProfileSelectBox";
 
 export default function ProfileEditPage() {
   const keywords = [
@@ -94,70 +95,44 @@ export default function ProfileEditPage() {
               한줄 소개
             </span>
           </div>
-          <input className="box-border w-[730px] py-[23px] border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px]" />
+          <input className="box-border w-[730px] py-4 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]" />
         </div>
         <Button className="w-[264px] h-[38px]">커플로 전환하기</Button>
         <div className="flex flex-col w-full mb-[137px] mt-[132px]">
           <h3 className="mb-[55px] text-2xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
             내 정보
           </h3>
-          <div className="flex gap-[20px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
+          <div className="flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
             <ul className="flex flex-col gap-7">
-              <li className="flex items-center gap-8">
-                <span className=" w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  닉네임
-                </span>
-                <input
-                  type="text"
-                  className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"
-                />
+              <li className="flex items-center">
+                <span className="user-info">닉네임</span>
+                <input type="text" className="user-info-input" />
               </li>
-              <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  나이
-                </span>
-                <input
-                  type="text"
-                  className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"
-                />
+              <li className="flex items-center">
+                <span className="user-info">나이</span>
+                <input type="text" className="user-info-input" />
               </li>
-              <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  직업
-                </span>
-                <select className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"></select>
+              <li className="flex items-center">
+                <span className="user-info">직업</span>
+                <ProfileSelectBox type="job" />
               </li>
-              <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  지역
-                </span>
-                <select className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"></select>
+              <li className="flex items-center">
+                <span className="user-info">지역</span>
+                <ProfileSelectBox type="location" />
               </li>
-              <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  키
-                </span>
-                <input
-                  type="text"
-                  className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"
-                />
+              <li className="flex items-center">
+                <span className="user-info">키</span>
+                <input type="text" className="user-info-input" />
               </li>
-              <li className="flex items-center gap-8">
-                <span className="w-[131px] text-center py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  MBTI
-                </span>
-                <input
-                  type="text"
-                  className="px-[15px] w-[131px] py-[10px] border border-[#f1f1f1] rounded-[10px]"
-                />
+              <li className="flex items-center">
+                <span className="user-info">MBTI</span>
+                <ProfileSelectBox type="mbti" />
               </li>
             </ul>
             <ul className="flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
               <li className="flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  나를 표현하는 키워드
-                </span>
-                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
+                <span className="user-info w-50!">나를 표현하는 키워드</span>
+                <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px] pr-12">
                   {keywords.map((keyword) => (
                     <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
                       <span className="text-xs">{keyword}</span>
@@ -169,9 +144,7 @@ export default function ProfileEditPage() {
                 </ul>
               </li>
               <li className="relative flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  나의 관심사
-                </span>
+                <span className="user-info">나의 관심사</span>
                 <ul className="flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
                   {interests.map((interest) => (
                     <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
@@ -184,9 +157,7 @@ export default function ProfileEditPage() {
                 </ul>
               </li>
               <li className="flex flex-col items-start gap-5">
-                <span className="block px-[25px] py-[10px] bg-[var(--gray-200)] rounded-2xl">
-                  나의 이상형
-                </span>
+                <span className="user-info">나의 이상형</span>
                 <ul className="relative flex gap-[10px] items-center flex-wrap px-[26px] py-5 border border-[var(--primary-pink)] rounded-[30px]">
                   {keywords.map((keyword) => (
                     <li className="hover:bg-[var(--primary-pink)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]">
@@ -209,8 +180,7 @@ export default function ProfileEditPage() {
       {/* 컨펌창 */}
       {/* <div className="fixed inset-0 bg-black opacity-30 z-50" />
       <Confirm>
-        <span className="block mb-2">차은우님과 커플을 맺으시겠습니까?</span>
-        <span className="block">더 이상 소개팅 기능을 이용할 수 없습니다.</span>
+        <span className="block">더 이상 소개팅 기능을 이용하실 수 없습니다.</span>
       </Confirm> */}
 
       {/* 프롬프트 창 */}
