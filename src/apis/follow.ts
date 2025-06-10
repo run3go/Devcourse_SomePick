@@ -1,11 +1,7 @@
 import supabase from "../utils/supabase";
 // 팔로잉하는 유저 목록 가져오기 ()
-export const fetchFollowingList = async () => {
+export const fetchFollowingList = async (userId: string) => {
   try {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) return;
     const { data: followings, error: followingError } = await supabase
       .from("follows")
       .select(
@@ -17,7 +13,7 @@ export const fetchFollowingList = async () => {
         )
         `
       )
-      .eq("user_id", session.user.id);
+      .eq("user_id", userId);
     if (followingError) {
       console.log("팔로잉 가져오기 실패:", followingError.message);
       return;
@@ -28,12 +24,8 @@ export const fetchFollowingList = async () => {
   }
 };
 // 나를 팔로우하는 팔로워 유저 목록 가져오기 ()
-export const fetchFollowerList = async () => {
+export const fetchFollowerList = async (userId: string) => {
   try {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) return;
     const { data: followers, error: followerError } = await supabase
       .from("follows")
       .select(
@@ -45,7 +37,7 @@ export const fetchFollowerList = async () => {
         )
         `
       )
-      .eq("follow_id", session.user.id);
+      .eq("follow_id", userId);
     if (followerError) {
       console.log("팔로워 가져오기 실패:", followerError.message);
       return;
