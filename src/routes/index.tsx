@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
+import { fetchUserData } from "./loader/auth.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
 import CalendarPage from "./pages/CalendarPage";
@@ -20,15 +21,14 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
-import { fetchUserData } from "./loader/auth.loader";
 
 const router = createBrowserRouter([
   {
     Component: RootLayout,
+    loader: fetchUserData,
     children: [
       {
         path: "/",
-        loader: fetchUserData,
         Component: MainPage,
       },
       {

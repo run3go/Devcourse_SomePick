@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router";
 import {
   fetchFollowingList,
@@ -53,7 +54,14 @@ export default function FollowModal({
 
   const [isPending, startTransition] = useTransition();
   useEffect(() => {
-    startTransition(() => getMyFollowings());
+    startTransition(async () => {
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          resolve("");
+        }, 500)
+      );
+      getMyFollowings();
+    });
   }, [getMyFollowings]);
 
   return (
@@ -62,7 +70,22 @@ export default function FollowModal({
         {type}
       </span>
       {isPending ? (
-        "로딩중"
+        <ul className="flex flex-col">
+          {Array(users.length)
+            .fill(0)
+            .map((_, index) => (
+              <li
+                key={index}
+                className="group cursor-pointer flex justify-between mt-5 pb-[10px] items-center border-b border-[var(--primary-pink)]"
+              >
+                <div className="flex items-center gap-5">
+                  <div className="w-[45px] h-[45px] rounded-full bg-[var(--gray-300-50)] animate-pulse" />
+                  <span className="h-6 w-[100px] bg-[var(--gray-300-50)] animate-pulse"></span>
+                </div>
+                <div className="w-[94px] h-[33px] bg-[var(--gray-300-50)] rounded-2xl animate-pulse"></div>
+              </li>
+            ))}
+        </ul>
       ) : (
         <ul className="flex flex-col">
           {users.map((user) => (
