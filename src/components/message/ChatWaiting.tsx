@@ -5,9 +5,9 @@ import ChatCard from "./ChatCard";
 export default function ChatWaiting() {
   return (
     <>
-      <div className="w-full flex items-center justify-center">
-        <div className="w-[783px] h-[818px] box-shadow-custom rounded-2xl flex items-center justify-center bg-[#FFC7ED]/29">
-          <div className="w-[691px] h-[720px] border-[3px] rounded-2xl border-[#FFC7ED] bg-white px-[62px] py-9">
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full h-full mx-5 box-shadow-custom rounded-2xl flex items-center justify-center bg-[#FFC7ED]/29">
+          <div className="w-[661px] h-[700px] border-[3px] rounded-2xl border-[#FFC7ED] bg-white px-[62px] py-9">
             <div className="flex flex-col items-center gap-2.5">
               <Icon width="63px" height="55px" left="-51px" top="-1054px" />
               <div className="flex flex-col items-center font-semibold gap-3">
