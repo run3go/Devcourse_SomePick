@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
@@ -10,6 +10,21 @@ export default function Header() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const outsideRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (isNotificationOpen || (isModalOpen && outsideRef.current)) {
+        e.preventDefault();
+        setIsNotificationOpen(false);
+        setIsModalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isNotificationOpen, isModalOpen]);
   return (
     <>
       <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">
@@ -85,7 +100,11 @@ export default function Header() {
                 className="cursor-pointer"
                 onClick={() => setIsNotificationOpen((state) => !state)}
               />
-              {isNotificationOpen && <Notifications />}
+              {isNotificationOpen && (
+                <div ref={outsideRef}>
+                  <Notifications />
+                </div>
+              )}
             </div>
             <div>
               <Icon
@@ -96,7 +115,11 @@ export default function Header() {
                 className="cursor-pointer"
                 onClick={() => setIsModalOpen((state) => !state)}
               />
-              {isModalOpen && <HeaderModal />}
+              {isModalOpen && (
+                <div ref={outsideRef}>
+                  <HeaderModal />
+                </div>
+              )}
             </div>
             {/* <NavLink
               className={({ isActive }) =>
