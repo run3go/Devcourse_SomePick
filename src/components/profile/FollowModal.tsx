@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
-import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router";
 import {
   fetchFollowingList,
