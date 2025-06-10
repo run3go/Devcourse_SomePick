@@ -28,6 +28,7 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen, isModalOpen]);
+
   return (
     <>
       <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">
@@ -84,53 +85,55 @@ export default function Header() {
               오늘의 운세
             </NavLink>
           </div>
-          <div className="flex gap-[35px] text-[var(--gray-700)] w-[150px]">
-            <Link to={"/message"}>
-              <Icon
-                width="27px"
-                height="27px"
-                left="-361px"
-                top="-228px"
-                className="cursor-pointer"
-              />
-            </Link>
-            <div>
-              <Icon
-                width="28px"
-                height="27px"
-                left="-436px"
-                top="-228px"
-                className="cursor-pointer"
-                onClick={() => setIsNotificationOpen((state) => !state)}
-              />
-              {isNotificationOpen && (
-                <div ref={outsideRef}>
-                  <Notifications />
-                </div>
-              )}
-            </div>
+          <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
             {isLogin && (
-              <div>
-                <Icon
-                  width="23px"
-                  height="28px"
-                  left="-516px"
-                  top="-225px"
-                  className="cursor-pointer"
-                  onClick={() => setIsModalOpen((state) => !state)}
-                />
-                {isModalOpen && (
-                  <div ref={outsideRef}>
-                    <HeaderModal />
-                  </div>
-                )}
-              </div>
+              <>
+                <Link to={"/message"}>
+                  <Icon
+                    width="27px"
+                    height="27px"
+                    left="-361px"
+                    top="-228px"
+                    className="cursor-pointer"
+                  />
+                </Link>
+                <div className="relative">
+                  <Icon
+                    width="28px"
+                    height="27px"
+                    left="-436px"
+                    top="-228px"
+                    className="cursor-pointer"
+                    onClick={() => setIsNotificationOpen((state) => !state)}
+                  />
+                  {isNotificationOpen && (
+                    <div ref={outsideRef}>
+                      <Notifications />
+                    </div>
+                  )}
+                </div>
+                <div className="relative">
+                  <Icon
+                    width="23px"
+                    height="28px"
+                    left="-516px"
+                    top="-225px"
+                    className="cursor-pointer"
+                    onClick={() => setIsModalOpen((state) => !state)}
+                  />
+                  {isModalOpen && (
+                    <div ref={outsideRef}>
+                      <HeaderModal />
+                    </div>
+                  )}
+                </div>
+              </>
             )}
             {!isLogin && (
               <NavLink
                 className={({ isActive }) =>
                   twMerge(
-                    "relative header-menu",
+                    "relative header-menu inline-block whitespace-nowrap",
                     isActive && "header-menu__active text-black"
                   )
                 }

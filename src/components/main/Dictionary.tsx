@@ -2,7 +2,6 @@ import coupleImg from "../../assets/images/couplepro.png";
 import manImg from "../../assets/images/man.png";
 import womanImg from "../../assets/images/woman.png";
 import ballon from "../../assets/images/balloon.png";
-import "../../styles/icons.css";
 import useFadeIn from "../common/useFadeIn";
 import Icon from "../common/Icon";
 
