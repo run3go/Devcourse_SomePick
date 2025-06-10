@@ -5,12 +5,15 @@ import logoImage from "../../assets/images/headerlogo.png";
 import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function Header() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
+
+  const isLogin = useAuthStore((state) => state.isLogin);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -106,32 +109,36 @@ export default function Header() {
                 </div>
               )}
             </div>
-            <div>
-              <Icon
-                width="23px"
-                height="28px"
-                left="-516px"
-                top="-225px"
-                className="cursor-pointer"
-                onClick={() => setIsModalOpen((state) => !state)}
-              />
-              {isModalOpen && (
-                <div ref={outsideRef}>
-                  <HeaderModal />
-                </div>
-              )}
-            </div>
-            {/* <NavLink
-              className={({ isActive }) =>
-                twMerge(
-                  "relative header-menu",
-                  isActive && "header-menu__active text-black"
-                )
-              }
-              to={"/auth/login"}
-            >
-              로그인/회원가입
-            </NavLink> */}
+            {isLogin && (
+              <div>
+                <Icon
+                  width="23px"
+                  height="28px"
+                  left="-516px"
+                  top="-225px"
+                  className="cursor-pointer"
+                  onClick={() => setIsModalOpen((state) => !state)}
+                />
+                {isModalOpen && (
+                  <div ref={outsideRef}>
+                    <HeaderModal />
+                  </div>
+                )}
+              </div>
+            )}
+            {!isLogin && (
+              <NavLink
+                className={({ isActive }) =>
+                  twMerge(
+                    "relative header-menu",
+                    isActive && "header-menu__active text-black"
+                  )
+                }
+                to={"/auth/login"}
+              >
+                로그인/회원가입
+              </NavLink>
+            )}
           </div>
         </div>
       </div>
