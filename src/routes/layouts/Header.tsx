@@ -1,41 +1,118 @@
-import { NavLink, useNavigate } from "react-router";
-import logoImage from "../../assets/images/logoImage.png";
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
+import logoImage from "../../assets/images/headerlogo.png";
+import Icon from "../../components/common/Icon";
+import HeaderModal from "../../components/modals/HeaderModal";
+import Notifications from "../../components/modals/Notifications";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   return (
     <>
-      <div className="flex justify-center bg-white fixed w-full z-100">
-        <div className="w-[1350px] h-[157px] flex items-center justify-between">
+      <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-100 h-[66px]">
+        <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
             alt="로고 이미지"
             onClick={() => navigate("/")}
             className="cursor-pointer"
           />
-          <div className="relative flex gap-[65px] top-[-10px]">
-            <NavLink to={"/post/dating"}>연애백과</NavLink>
-            <NavLink to={"/post/free"}>자유 게시판</NavLink>
-            <NavLink to={"/matching"}>소개팅</NavLink>
-            <NavLink to={"/todayfortune"}>오늘의 운세</NavLink>
-            {/* 비로그인일 경우 */}
-            {/* <NavLink to={"/auth/login"}>로그인/회원가입</NavLink> */}
-            <div className="flex gap-[35px]">
-              {/* 솔로인 경우 */}
-              {/* <div className="w-[30px] h-[30px] border"></div> */}
-              <div className="relative w-[30px] h-[30px] border">
-                {/* 알림 모달 */}
-                {/* <Notifications /> */}
-              </div>
-              <div className="relative w-[30px] h-[30px] border">
-                {/* 모달 버튼 */}
-                {/* <HeaderModal /> */}
-              </div>
+          <div className="relative flex items-center gap-[65px] ">
+            <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/post/dating"}
+            >
+              연애백과
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/post/free"}
+            >
+              자유 게시판
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/matching"}
+            >
+              소개팅
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/todayfortune"}
+            >
+              오늘의 운세
+            </NavLink>
+          </div>
+          <div className="flex gap-[35px] text-[var(--gray-700)] w-[150px]">
+            <Link to={"/message"}>
+              <Icon
+                width="27px"
+                height="27px"
+                left="-361px"
+                top="-228px"
+                className="cursor-pointer"
+              />
+            </Link>
+            <div>
+              <Icon
+                width="28px"
+                height="27px"
+                left="-436px"
+                top="-228px"
+                className="cursor-pointer"
+                onClick={() => setIsNotificationOpen((state) => !state)}
+              />
+              {isNotificationOpen && <Notifications />}
             </div>
+            <div>
+              <Icon
+                width="23px"
+                height="28px"
+                left="-516px"
+                top="-225px"
+                className="cursor-pointer"
+                onClick={() => setIsModalOpen((state) => !state)}
+              />
+              {isModalOpen && <HeaderModal />}
+            </div>
+            {/* <NavLink
+              className={({ isActive }) =>
+                twMerge(
+                  "relative header-menu",
+                  isActive && "header-menu__active text-black"
+                )
+              }
+              to={"/auth/login"}
+            >
+              로그인/회원가입
+            </NavLink> */}
           </div>
         </div>
       </div>
-      <div className="w-full h-[157px]" />
+      <div className="w-full h-[66px]" />
     </>
   );
 }
