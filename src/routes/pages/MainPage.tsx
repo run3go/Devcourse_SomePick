@@ -8,13 +8,15 @@ import Footer from "../layouts/Footer";
 export default function MainPage() {
   return (
     <>
-      <Service />
-      <Dictionary />
-      <Meeting />
-      <MainCalendar />
-      <MainFortune />
-      <NearFooter />
-      <Footer />
+      <div className="select-none">
+        <Service />
+        <Dictionary />
+        <Meeting />
+        <MainCalendar />
+        <MainFortune />
+        <NearFooter />
+        <Footer />
+      </div>
     </>
   );
 }
