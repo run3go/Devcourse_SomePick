@@ -2,13 +2,13 @@ import Profile from "../../assets/images/profile_image.png";
 export default function ChatItem({ name }: { name: string }) {
   return (
     <>
-      <div className="flex gap-2.5 items-center p-1.5 m-2 cursor-pointer rounded-2xl hover:bg-[#FFEFFA]">
+      <div className="flex gap-2.5 items-center p-1 m-2 cursor-pointer rounded-[10px] hover:bg-[#FFEFFA]">
         <img
           src={Profile}
-          className="w-[46px] h-[46px] rounded-full"
+          className="w-[30px] h-[30px] rounded-full object-cover object-center"
           alt={`${name} 프로필`}
         />
-        <span>{name}</span>
+        <span className="text-[14px]">{name}</span>
       </div>
     </>
   );
