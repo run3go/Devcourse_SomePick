@@ -7,7 +7,7 @@ import WriteButton from "../../components/webboard/WriteButton";
 export default function PostsPage() {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex justify-between items-center w-full max-w-[1080px] px-4 py-6">
+      <div className="flex justify-between items-center w-full max-w-[1370px] px-4 py-6">
         <div className="flex items-center space-x-4">
           <SortDropdown />
           <SearchBar />

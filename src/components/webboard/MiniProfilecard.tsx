@@ -1,4 +1,4 @@
-import Button from "../common/Button1";
+import Button from "../common/Button";
 import image from "../../assets/images/KakaoTalk_20241210_084712919.jpg";
 
 export default function MiniProfilecard() {
@@ -15,11 +15,11 @@ export default function MiniProfilecard() {
 
       {/* 팔로우 버튼 */}
       <div className="flex gap-3">
-        <Button width="w-[70px]" height="h-[25px]" borderRadius="12px">
-          팔로우
+        <Button className="w-[70px] h-[25px] text-[20px] gap-2 text-black text-sm font-medium">
+          <span className="inline-block leading-[1]">팔로우</span>
         </Button>
-        <Button width="w-[70px]" height="h-[25px]" borderRadius="12px">
-          프로필
+        <Button className="w-[70px] h-[25px] text-[20px] gap-2 text-black text-sm font-medium">
+          <span className="inline-block leading-[1]">프로필</span>
         </Button>
       </div>
     </div>
