@@ -7,7 +7,7 @@ import RightBtn from "../../assets/images/right.png";
 import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
-import { motion, LayoutGroup } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -143,17 +143,30 @@ export default function MatchingPage() {
       </div>
 
       {/* 추천카드 모달 */}
-      {isModalOpen && selectedProfile && (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm"
-          style={{ top: "63px", right: "140px" }}
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div className="relative z-10 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <MatchingCardInfo profile={selectedProfile} />
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {isModalOpen && selectedProfile && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+            style={{ top: "63px", right: "140px" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              className="relative z-10 max-w-md w-full"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MatchingCardInfo profile={selectedProfile} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
