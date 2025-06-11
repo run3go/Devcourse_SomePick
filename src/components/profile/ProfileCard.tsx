@@ -31,7 +31,7 @@ export default function ProfileCard({
             height="78px"
             left="-164px"
             top="-449px"
-            className="absolute top-0 left-6 z-50"
+            className="absolute top-0 left-6 z-10"
           />
         )}
         <img
@@ -77,7 +77,12 @@ export default function ProfileCard({
             className="absolute top-0 left-6"
           />
         )}
-        <div className="flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover bg-[#EAEAEA] cursor-pointer hover:bg-[#cfcfcf]">
+        <div
+          className={twMerge(
+            "flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover bg-[#EAEAEA] cursor-pointer",
+            "hover:bg-[#cfcfcf]"
+          )}
+        >
           <Icon width="44px" height="44px" left="-136px" top="-387px" />
         </div>
       </div>

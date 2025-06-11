@@ -154,7 +154,7 @@ export default function SoloProfile({
                 </span>
               </div>
             </div>
-            {!isMyProfile && (
+            {!isMyProfile && session?.user.user_metadata.status === "solo" && (
               <div className="flex gap-7 mt-[22px]">
                 {isFollowing ? (
                   <Button
