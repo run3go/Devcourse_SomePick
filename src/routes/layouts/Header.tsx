@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
 import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useAuthStore } from "../../stores/authstore";
+import Alert from "../../components/common/Alert";
 
 export default function Header() {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -67,28 +68,53 @@ export default function Header() {
             >
               자유 게시판
             </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                twMerge(
-                  "relative header-menu",
-                  isActive && "header-menu__active text-black"
-                )
-              }
-              to={"/matching"}
-            >
-              소개팅
-            </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                twMerge(
-                  "relative header-menu",
-                  isActive && "header-menu__active text-black"
-                )
-              }
-              to={"/todayfortune"}
-            >
-              오늘의 운세
-            </NavLink>
+
+            <div>
+              <button
+                onClick={() => {
+                  if (!isLogin) {
+                    setIsAlertOpen(true);
+                    return;
+                  }
+                  navigate("/matching");
+                }}
+                className={twMerge(
+                  "relative header-menu cursor-pointer mr-[65px]",
+                  location.pathname === "/matching" &&
+                    "header-menu__active text-black"
+                )}
+              >
+                소개팅
+              </button>
+              {isAlertOpen && (
+                <Alert
+                  title="로그인이 필요해요!"
+                  isOk="로그인하러 가기"
+                  isNotOk="취소"
+                  onClick={() => {
+                    navigate("/auth/login");
+                    setIsAlertOpen(false);
+                  }}
+                  onCancel={() => setIsAlertOpen(false)}
+                ></Alert>
+              )}
+              <button
+                onClick={() => {
+                  if (!isLogin) {
+                    setIsAlertOpen(true);
+                    return;
+                  }
+                  navigate("/todayfortune");
+                }}
+                className={twMerge(
+                  "relative header-menu cursor-pointer",
+                  location.pathname === "/todayfortune" &&
+                    "header-menu__active text-black"
+                )}
+              >
+                오늘의 운세
+              </button>
+            </div>
           </div>
           <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
             {isLogin && (

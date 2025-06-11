@@ -54,7 +54,7 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
             "rounded-b-[20px] hover:text-black cursor-pointer hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
           )}
         >
-          다크모드
+          다크모드 켜기
         </li>
       </ul>
     </>
