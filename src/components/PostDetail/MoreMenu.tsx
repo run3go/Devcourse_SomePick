@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { deletePost } from "../../apis/posts/postCrud";
 import Icon from "../common/Icon";
+import { toast } from "react-toastify";
 
 type MoreMenuProps = {
   postId: number;
@@ -18,7 +19,7 @@ export default function MoreMenu({
   const handleDelte = async () => {
     await deletePost(postId);
     closeMenu();
-    alert("삭제 성공!");
+    toast.success("삭제 성공!");
     navigate("/post/free");
   };
   return (
