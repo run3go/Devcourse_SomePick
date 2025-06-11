@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import type { SingleValue } from "react-select";
 import { updateProfile } from "../../apis/user";
-import { storeImage } from "../../apis/util";
+import { deleteImage, storeImage } from "../../apis/util";
 import Button from "../../components/common/Button";
 import Icon from "../../components/common/Icon";
 import ProfileCard from "../../components/profile/ProfileCard";
@@ -16,6 +16,8 @@ export default function ProfileEditPage() {
 
   const [mainImageUrl, setMainImageUrl] = useState(profile.main_image);
   const [subImageUrl, setSubImageUrl] = useState(profile.sub_image);
+  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
+  const [subImageFile, setSubImageFile] = useState<File | null>(null);
   const [description, setDescription] = useState(profile.description || "");
   const [nickname, setNickname] = useState(profile.nickname);
   const [age, setAge] = useState(profile.age.toString() || "");
@@ -49,9 +51,13 @@ export default function ProfileEditPage() {
   };
 
   const handleSubmit = async () => {
+    const mainUrl =
+      mainImageFile && (await storeImage(mainImageFile, "main_image"));
+    const subUrl =
+      subImageFile && (await storeImage(subImageFile, "sub_image"));
     const payload: ProfileUpdatePayload = {
-      main_image: mainImageUrl,
-      sub_image: subImageUrl,
+      main_image: mainUrl || profile.main_image,
+      sub_image: subUrl || profile.sub_image,
       nickname,
       age: Number(age),
       job,
@@ -70,12 +76,19 @@ export default function ProfileEditPage() {
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => {
-    if (!e.target.files) return;
+    if (!e?.target.files) return;
     const url = await storeImage(e.target.files[0], "temp");
     if (type === "main" && url) {
       setMainImageUrl(url);
+      setMainImageFile(e.target.files[0]);
     } else if (type === "sub" && url) {
       setSubImageUrl(url);
+      setSubImageFile(e.target.files[0]);
+    }
+    if (url) {
+      setTimeout(() => {
+        deleteImage(url);
+      }, 2000);
     }
   };
 

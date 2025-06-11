@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
 import {
   fetchFollowingList,
@@ -18,18 +18,11 @@ export default function FollowModal({
   const navigate = useNavigate();
   const { session } = useAuthStore();
   const [myFollowings, setMyFollowings] = useState<string[]>([]);
-
+  console.log("hi");
   const isFollwingUser = (userId: string) => {
+    console.log("bye");
     return myFollowings.some((followingId) => followingId === userId);
   };
-
-  const getMyFollowings = useCallback(async () => {
-    if (!session) return;
-    const followings = await fetchFollowingList(session.user.id);
-    if (followings) {
-      setMyFollowings(followings.map((user) => user.following.id));
-    }
-  }, [session]);
 
   const handleFollowUser = async (userId: string) => {
     try {
@@ -59,9 +52,13 @@ export default function FollowModal({
           resolve("");
         }, 500)
       );
-      getMyFollowings();
+      if (!session) return;
+      const followings = await fetchFollowingList(session.user.id);
+      if (followings) {
+        setMyFollowings(followings.map((user) => user.following.id));
+      }
     });
-  }, [getMyFollowings]);
+  }, [session]);
 
   return (
     <div className="fixed left-1/2 -translate-x-1/2 z-100 bg-white p-6 flex flex-col w-[400px] h-[600px] shadow-[0_2px_8px_0_rgba(0,0,0,0.1)] rounded-[10px]">
@@ -108,13 +105,13 @@ export default function FollowModal({
                       e.stopPropagation();
                       handleUnfollowUser(user.id);
                     }}
-                    className="w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2]"
+                    className="w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2] text-sm"
                   >
                     팔로우 취소
                   </Button>
                 ) : (
                   <Button
-                    className="w-[94px] h-[33px]"
+                    className="w-[94px] h-[33px] text-sm"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleFollowUser(user.id);
