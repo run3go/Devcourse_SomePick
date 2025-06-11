@@ -20,7 +20,9 @@ export default function ProfileCard({
     return (
       <div
         className={twMerge(
-          "group relative p-[15px] flex flex-col justify-center items-center shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl"
+          "group relative p-[15px] flex flex-col justify-center items-center shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl",
+          isCouple &&
+            "hover:scale-102 transition-all duration-300 hover:shadow-[0_10px_10px_0_rgba(0,0,0,0.25)]"
         )}
       >
         {isMain && (
@@ -29,7 +31,7 @@ export default function ProfileCard({
             height="78px"
             left="-164px"
             top="-449px"
-            className="absolute top-0 left-6 z-50"
+            className="absolute top-0 left-6 z-10"
           />
         )}
         <img
@@ -40,7 +42,7 @@ export default function ProfileCard({
             (isCouple || isEdited) && "w-[300px] h-[373px]"
           )}
           src={image}
-          alt={isMain ? "메인 이미지" : "서브 이미지"}
+          alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
         />
         {isEdited && (
           <div className="group absolute flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer hover:bg-[rgba(0,0,0,0.5)]">
@@ -75,7 +77,12 @@ export default function ProfileCard({
             className="absolute top-0 left-6"
           />
         )}
-        <div className="flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover bg-[#EAEAEA] cursor-pointer hover:bg-[#cfcfcf]">
+        <div
+          className={twMerge(
+            "flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover bg-[#EAEAEA] cursor-pointer",
+            "hover:bg-[#cfcfcf]"
+          )}
+        >
           <Icon width="44px" height="44px" left="-136px" top="-387px" />
         </div>
       </div>

@@ -1,13 +1,21 @@
-import Select from "react-select";
+import Select, { type SingleValue } from "react-select";
 import { optionsGroup } from "../signup/data/optionsData";
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
+  value: { value: string; label: string };
+  onChange: (newValue: SingleValue<{ value: string; label: string }>) => void;
 }
-export default function ProfileSelectBox({ type }: SelectBoxProps) {
+export default function ProfileSelectBox({
+  type,
+  value,
+  onChange,
+}: SelectBoxProps) {
   const options = optionsGroup[type];
   return (
     <Select
-      placeholder=""
+      isSearchable={false}
+      onChange={onChange}
+      defaultValue={value}
       options={options}
       styles={{
         control: (baseStyles, state) => ({
@@ -52,6 +60,7 @@ export default function ProfileSelectBox({ type }: SelectBoxProps) {
         option: (base, state) => ({
           ...base,
           cursor: "pointer",
+          fontSize: "14px",
           backgroundColor: state.isSelected
             ? "var(--primary-pink)"
             : state.isFocused
@@ -62,6 +71,7 @@ export default function ProfileSelectBox({ type }: SelectBoxProps) {
         singleValue: (base) => ({
           ...base,
           color: "var(--gray-700)",
+          fontSize: "14px",
         }),
         indicatorSeparator: () => ({
           display: "none",

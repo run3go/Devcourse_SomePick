@@ -45,6 +45,7 @@ export const fetchPostByPostId = async (postId: number) => {
         contents,
         created_at,
         fortune_telling,
+        image,
         channel:channels!channel_name(
           name,
           description
@@ -57,6 +58,7 @@ export const fetchPostByPostId = async (postId: number) => {
         comments(
           id,
           comment,
+          created_at,
           author:profiles!author_id(
             id,
             main_image,
@@ -65,6 +67,7 @@ export const fetchPostByPostId = async (postId: number) => {
           comments(
             id,
             comment,
+            created_at,
             author:profiles!author_id(
               id,
               main_image,

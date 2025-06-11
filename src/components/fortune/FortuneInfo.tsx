@@ -12,11 +12,11 @@ export default function FortuneInfo() {
         </div>
         <div className="text-center mt-4">
           <p className="font-bold text-[28px]">
-            <span className="text-[#FFC7ED]">지유</span>님, 오늘의 운세가
-            준비되었어요!
+            <span className="text-[var(--primary-pink)]">지유</span>님, 오늘의
+            운세가 준비되었어요!
           </p>
           <br />
-          <p className="font-bold text-[20px] text-[#969696]">
+          <p className="font-bold text-[20px] text-[var(--gray-500)]">
             셋 중 하나의 카드를 클릭해보세요.
           </p>
         </div>
