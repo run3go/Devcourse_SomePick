@@ -31,7 +31,7 @@ export default function ProfileCard({
             height="78px"
             left="-164px"
             top="-449px"
-            className="absolute top-0 left-6 z-50"
+            className="absolute top-0 left-6 z-10"
           />
         )}
         <img
