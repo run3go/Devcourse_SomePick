@@ -70,7 +70,7 @@ export default function ProfilePage() {
                 {info.map((item, index) => (
                   <li key={index} className="flex items-center">
                     <span className="user-info">{item[0]}</span>
-                    <span>{item[1]}</span>
+                    <span className="w-[80px]">{item[1]}</span>
                   </li>
                 ))}
               </ul>
@@ -84,7 +84,7 @@ export default function ProfilePage() {
         )}
         {isMyProfile && (
           <Button
-            onClick={() => navigate("/profile/edit")}
+            onClick={() => navigate("/profile/edit", { state: userProfile })}
             className="w-[264px] h-[38px] self-end mt-8"
           >
             <span className="leading-[1]">프로필 정보 변경</span>
