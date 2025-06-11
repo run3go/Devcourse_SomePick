@@ -25,7 +25,8 @@ export default function ProfileCard({
         className={twMerge(
           "group relative p-[15px] flex flex-col justify-center items-center shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl",
           isCouple &&
-            "hover:scale-102 transition-all duration-300 hover:shadow-[0_10px_10px_0_rgba(0,0,0,0.25)]"
+            "hover:scale-102 transition-all duration-300 hover:shadow-[0_10px_10px_0_rgba(0,0,0,0.25)]",
+          isPartner && "cursor-pointer"
         )}
       >
         {isMain && (

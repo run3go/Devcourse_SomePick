@@ -128,7 +128,9 @@ export default function CoupleProfile({
             className="self-center"
           />
           <ProfileCard
-            onClick={() => partnerInfo && navigate(`profile/${partnerInfo.id}`)}
+            onClick={() =>
+              partnerInfo && navigate(`/profile/${partnerInfo.id}`)
+            }
             nickname={partner_nickname!}
             image={partnerInfo && partnerInfo.main_image}
             isPartner
