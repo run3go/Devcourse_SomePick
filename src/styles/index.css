@@ -48,29 +48,32 @@
   --main-font: "inter";
 }
 
-/* .dark {
-  --black: #ffffff;
-  --gray-700: #e5e5e5;
-  --gray-500: #b3b3b3;
-  --gray-300: #404040;
-  --gray-300-50: #40404080;
-  --gray-300-59: #40404095;
-  --gray-200: #2a2a2a;
-  --gray-100: #1a1a1a;
-  --white: #000000;
+.dark {
+  --dark-bg-primary: #333333;
+  --dark-bg-secondary: #4b4b4b;
+  --dark-bg-tertiary: #7b7b7b;
 
-  --primary-pink: #ffb3e6;
-  --primary-pink-tone: #ff80cc;
-  --primary-pink-point: #ff4da6;
-  --primary-pink-point-50: #ff4da680;
+  --dark-black: #000000;
 
-  --text-primary: #e5e5e5;
-  --text-secondary: #b3b3b3;
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2a2a2a;
-  --border-color: #404040;
-  --hover-bg: #333333;
-} */
+  /* 다크모드 기본 글자 색상 */
+  --dark-gray-700: #cacaca;
+
+  /* 다크모드 서브 글자 색상 (날짜 등..) */
+  --dark-gray-500: #969696;
+  --dark-gray-300: #d9d9d9;
+  --dark-gray-300-50: #d9d9d980;
+  --dark-gray-300-59: #d9d9d995;
+  --dark-gray-200: #f3f3f3;
+  --dark-gray-100: #f8f8f8;
+  --dark-white: #ffffff;
+
+  --dark-primary-pink: #ffc7ed;
+  --dark-primary-pink-tone: #ff9fd6;
+  --dark-primary-pink-point: #ff66b3;
+  --dark-primary-pink-point-50: #ff66b380;
+
+  --dark-red: #e94235;
+}
 
 body {
   @apply text-base font-(family-name:--main-font) text-[var(--gray-700)];
