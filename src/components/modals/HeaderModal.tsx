@@ -1,14 +1,12 @@
 import { twMerge } from "tailwind-merge";
-import supabase from "../../utils/supabase";
-import { useAuthStore } from "../../stores/authstore";
+import { logoutUser } from "../../apis/auth";
 
 export default function HeaderModal() {
-  const setLogout = useAuthStore((state) => state.setLogout);
-
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      setLogout();
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error(error);
     }
   };
 
