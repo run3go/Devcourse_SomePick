@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import image from "../../assets/images/image 8.png";
 import MatchingCardInfo from "./MatchingCardInfo";
+import type { Database } from "../../types/supabase";
+type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardProps {
+  profile: Profiles;
   blurClass?: string;
   disableFlip?: boolean;
   flipOnHover?: boolean;
@@ -15,6 +18,7 @@ interface MatchingCardProps {
 }
 
 export default function MatchingCard({
+  profile,
   blurClass = "",
   disableFlip = false,
   flipOnHover = false,
@@ -32,6 +36,7 @@ export default function MatchingCard({
     width,
     height,
     "overflow-hidden",
+    "cursor-pointer",
     flipOnHover && !disableFlip ? "group" : "",
   ].join(" ");
 
@@ -69,7 +74,7 @@ export default function MatchingCard({
           `}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <h2 className={`${text} text-center`}>현우님의 이상형과 100% 일치해요!</h2>
+          <h2 className={`${text} text-center`}>{profile.nickname}님의 이상형과 100% 일치해요!</h2>
           <div className="flex-grow flex items-center justify-center">
             <div className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}>
               <img src={image} alt="매칭 이미지" className="w-full h-full object-cover" />
@@ -85,7 +90,7 @@ export default function MatchingCard({
             backfaceVisibility: "hidden",
           }}
         >
-          <MatchingCardInfo />
+          <MatchingCardInfo profile={profile} />
         </div>
       </div>
     </div>
