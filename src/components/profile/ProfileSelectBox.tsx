@@ -1,21 +1,24 @@
-import Select, { type SingleValue } from "react-select";
+import { useController, useFormContext } from "react-hook-form";
+import Select from "react-select";
 import { optionsGroup } from "../signup/data/optionsData";
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
-  value: { value: string; label: string };
-  onChange: (newValue: SingleValue<{ value: string; label: string }>) => void;
 }
-export default function ProfileSelectBox({
-  type,
-  value,
-  onChange,
-}: SelectBoxProps) {
+export default function ProfileSelectBox({ type }: SelectBoxProps) {
+  const { control } = useFormContext();
+  const { field } = useController({ name: type, control });
   const options = optionsGroup[type];
   return (
     <Select
       isSearchable={false}
-      onChange={onChange}
-      defaultValue={value}
+      onChange={(newValue) => {
+        if (newValue) field.onChange(newValue);
+      }}
+      defaultValue={{
+        value: optionsGroup.mbti.find((item) => item.label === field.value)
+          ?.value as string,
+        label: field.value,
+      }}
       options={options}
       styles={{
         control: (baseStyles, state) => ({

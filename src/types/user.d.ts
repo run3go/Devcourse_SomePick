@@ -82,3 +82,22 @@ type UserData = {
   main_image: string | null;
   nickname: string | null;
 };
+
+type FormValue = {
+  mainImageUrl: string;
+  subImageUrl: string | null;
+  mainImageFile: File | null;
+  subImageFile: File | null;
+  nickname: string;
+  age: string;
+  status: "solo" | "couple";
+  description: string;
+  job: string;
+  location: string;
+  height: string;
+  mbti: string;
+  partnerNickname: string;
+  keywordList: string[];
+  interestList: string[];
+  idealTypeList: string[];
+};
