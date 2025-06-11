@@ -3,11 +3,14 @@ import supabase from "../../utils/supabase";
 import { useAuthStore } from "../../stores/authstore";
 import type { Session } from "@supabase/supabase-js";
 import { useNavigate } from "react-router";
-
+import { useDarkMode } from "../../hooks/useDarkMode";
 interface HeaderModalPropds {
   onClose: () => void;
 }
+
 export default function HeaderModal({ onClose }: HeaderModalPropds) {
+  const { isDark, toggleDarkMode } = useDarkMode();
+
   const setLogout = useAuthStore((state) => state.setLogout);
   const session = useAuthStore<Session | null>((state) => state.session);
   // console.log("안녕", session?.user.id);
@@ -29,7 +32,7 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
   };
   return (
     <>
-      <ul className="flex flex-col text-[var(--gray-50)] absolute top-[50px] w-[130px] h-[104px] border border-[var(--primary-pink)] rounded-[20px] bg-white">
+      <ul className="flex flex-col text-[var(--gray-50)] absolute top-[50px] w-[130px] h-[104px] border border-[var(--primary-pink)] rounded-[20px] bg-white dark:bg-black">
         <li
           onClick={handleMyProfile}
           className={twMerge(
@@ -54,7 +57,9 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
             "rounded-b-[20px] hover:text-black cursor-pointer hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
           )}
         >
-          다크모드 켜기
+          <button onClick={toggleDarkMode}>
+            {isDark ? "다크모드 끄기" : "다크모드 켜기"}
+          </button>
         </li>
       </ul>
     </>
