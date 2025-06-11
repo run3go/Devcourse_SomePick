@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.9",
     "@tailwindcss/vite": "^4.1.8",
+    "dayjs": "^1.11.13",
     "immer": "^10.1.1",
     "react": "^19.1.0",
     "react-day-picker": "^9.7.0",

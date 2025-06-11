@@ -1,9 +1,12 @@
 import Icon from "../common/Icon";
 
-export default function MoreMenu() {
+export default function MoreMenu({ onClick }: { onClick: () => void }) {
   return (
     <>
-      <div className="absolute right-0 mt-2 bg-white p-2.5 rounded-[10px] border border-[var(--gray-500)] flex flex-col w-[82px] z-50">
+      <div
+        className="absolute right-0 mt-2 bg-white p-2.5 rounded-[10px] border border-[var(--gray-500)] flex flex-col w-[82px] z-50"
+        onClick={onClick}
+      >
         <div className="flex items-center justify-center gap-[5px] pb-2.5">
           <button className="text-[10px] text-[var(--gray-700)] cursor-pointer">
             수정하기
