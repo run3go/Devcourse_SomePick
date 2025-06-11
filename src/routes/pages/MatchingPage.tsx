@@ -7,6 +7,7 @@ import RightBtn from "../../assets/images/right.png";
 import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
+import { motion, LayoutGroup } from "framer-motion";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -35,6 +36,12 @@ export default function MatchingPage() {
     if (len > 0) setCurrentIndex((prev) => (prev + 1) % len);
   };
 
+  const slots = [
+    { idx: prevIndex, position: "side" },
+    { idx: currentIndex, position: "center" },
+    { idx: nextIndex, position: "side" },
+  ] as const;
+
   return (
     <>
       <div className="flex flex-col items-center justify-center space-y-8 p-6">
@@ -60,57 +67,54 @@ export default function MatchingPage() {
         </div>
 
         {/* 캐러셀 카드 리스트 */}
-        <div className="flex items-center justify-center space-x-8">
-          {len > 0 && (
-            <>
-              {/* 좌측 흐린 카드 */}
-              <MatchingCard
-                profile={matchedProfiles[prevIndex]}
-                blurClass="blur"
-                width="w-[300px]"
-                height="h-[450px]"
-                imageWidth="w-full"
-                imageHeight="h-full"
-                text="text-[18px]"
-                disableFlip={true}
-              />
+        <LayoutGroup>
+          <div className="flex flex-col items-center justify-center space-y-8 p-6">
+            <div className="flex items-center justify-center space-x-8 relative">
+              <button onClick={handlePrev} className="absolute left-[-50px] z-10">
+                <img src={LeftBtn} alt="이전" className="cursor-pointer" />
+              </button>
 
-              {/* 중앙 카드 및 버튼 */}
-              <div className="relative flex items-center">
-                <button onClick={handlePrev} className="absolute left-[-50px] z-10">
-                  <img src={LeftBtn} alt="이전" className="cursor-pointer" />
-                </button>
+              {len > 0 &&
+                slots.map(({ idx, position }) => {
+                  const profile = matchedProfiles[idx];
+                  const isCenter = position === "center";
+                  return (
+                    // layoutId를 주면 언마운트/마운트 간 애니메이션도 자연스럽게 처리됩니다.
+                    <motion.div
+                      key={profile.id}
+                      layout // 레이아웃 변화에 애니메이션
+                      layoutId={profile.id.toString()}
+                      initial={false} // 첫 마운트 시 깜빡임 방지
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      className={`
+                    transform filter
+                    ${
+                      isCenter
+                        ? "scale-100 blur-0 w-[600px] h-[800px]"
+                        : "scale-100 blur-lg w-[300px] h-[450px]"
+                    }
+                  `}
+                    >
+                      <MatchingCard
+                        profile={profile}
+                        width="w-full"
+                        height="h-full"
+                        imageWidth="w-full"
+                        imageHeight="h-full"
+                        text="text-[18px]"
+                        disableFlip={!isCenter}
+                        onClick={isCenter ? () => setIsModalOpen(true) : undefined}
+                      />
+                    </motion.div>
+                  );
+                })}
 
-                <MatchingCard
-                  profile={matchedProfiles[currentIndex]}
-                  width="w-[600px]"
-                  height="h-[800px]"
-                  imageWidth="w-full"
-                  imageHeight="h-full"
-                  text="text-[18px]"
-                  disableFlip={false}
-                  onClick={() => setIsModalOpen(true)}
-                />
-
-                <button onClick={handleNext} className="absolute right-[-50px] z-10">
-                  <img src={RightBtn} alt="다음" className="cursor-pointer" />
-                </button>
-              </div>
-
-              {/* 우측 흐린 카드 */}
-              <MatchingCard
-                profile={matchedProfiles[nextIndex]}
-                blurClass="blur"
-                width="w-[300px]"
-                height="h-[450px]"
-                imageWidth="w-full"
-                imageHeight="h-full"
-                text="text-[18px]"
-                disableFlip={true}
-              />
-            </>
-          )}
-        </div>
+              <button onClick={handleNext} className="absolute right-[-50px] z-10">
+                <img src={RightBtn} alt="다음" className="cursor-pointer" />
+              </button>
+            </div>
+          </div>
+        </LayoutGroup>
 
         {/* 하단 안내 텍스트 */}
         <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px] text-black">
