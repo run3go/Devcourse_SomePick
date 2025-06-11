@@ -4,7 +4,13 @@ import MoreMenu from "./MoreMenu";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 
-export default function PostHeader({ post }: { post: Post }) {
+export default function PostHeader({
+  post,
+  postId,
+}: {
+  post: Post;
+  postId: number;
+}) {
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu((prev) => !prev);
   return (
@@ -20,7 +26,13 @@ export default function PostHeader({ post }: { post: Post }) {
               top="-768px"
               className="cursor-pointer"
             />
-            {showMenu && <MoreMenu onClick={toggleMenu} />}
+            {showMenu && (
+              <MoreMenu
+                onClick={toggleMenu}
+                postId={postId}
+                closeMenu={() => setShowMenu(false)}
+              />
+            )}
           </div>
         </div>
         <span className="text-[16px] text-[#969696]">

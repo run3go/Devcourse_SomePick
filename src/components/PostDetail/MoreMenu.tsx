@@ -1,6 +1,26 @@
+import { useNavigate } from "react-router";
+import { deletePost } from "../../apis/posts/postCrud";
 import Icon from "../common/Icon";
 
-export default function MoreMenu({ onClick }: { onClick: () => void }) {
+type MoreMenuProps = {
+  postId: number;
+  closeMenu: () => void;
+  onClick: () => void;
+};
+
+export default function MoreMenu({
+  postId,
+  onClick,
+  closeMenu,
+}: MoreMenuProps) {
+  const navigate = useNavigate();
+
+  const handleDelte = async () => {
+    await deletePost(postId);
+    closeMenu();
+    alert("삭제 성공!");
+    navigate("/post/free");
+  };
   return (
     <>
       <div
@@ -20,7 +40,10 @@ export default function MoreMenu({ onClick }: { onClick: () => void }) {
           />
         </div>
         <div className="flex items-center justify-center gap-[5px]">
-          <button className="text-[var(--red)]/60 text-[10px] cursor-pointer">
+          <button
+            className="text-[var(--red)]/60 text-[10px] cursor-pointer"
+            onClick={handleDelte}
+          >
             삭제하기
           </button>
           <Icon
