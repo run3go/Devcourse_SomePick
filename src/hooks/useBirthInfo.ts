@@ -6,7 +6,7 @@ export default function useBirthInfo() {
 
   const [birthDate, setBirthDate] = useState("");
   const [genderNum, setGenderNum] = useState("");
-  const [gender, setGender] = useState("");
+  // const [gender, setGender] = useState("");
 
   const [isValid, setIsValid] = useState(true);
 
@@ -19,14 +19,9 @@ export default function useBirthInfo() {
 
     setIsValid(true);
 
-    setGender(["2", "4"].includes(genderNum) ? "female" : "male");
-  }, [genderNum]);
-
-  useEffect(() => {
-    if (gender) {
-      updateData({ gender });
-    }
-  }, [gender, updateData]);
+    const gender = ["2", "4"].includes(genderNum) ? "female" : "male";
+    updateData({ gender });
+  }, [genderNum, updateData]);
 
   useEffect(() => {
     if (birthDate.length !== 6 || !/^\d{6}$/.test(birthDate)) {

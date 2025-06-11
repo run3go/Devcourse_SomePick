@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Icon from "../common/Icon";
-import { storeImage } from "../../apis/util";
+import { deleteImage, storeImage } from "../../apis/util";
 import { useSignUpStore } from "../../stores/signupStore";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function ProfileImgUpload() {
-  const { updateData } = useSignUpStore();
+  const { setImageFile } = useSignUpStore();
   const [imageUrl, setImageUrl] = useState("");
+  // const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,11 +16,13 @@ export default function ProfileImgUpload() {
       setIsLoading(true);
 
       try {
-        const url = await storeImage(file, "main_image");
+        const url = await storeImage(file, "temp");
 
         if (url) {
           setImageUrl(url);
-          updateData({ main_image: url });
+          setImageFile(file);
+
+          // updateData({ main_image: url });
           console.log("image upload success!", url);
         } else {
           console.error("image upload failed.");
@@ -28,6 +31,12 @@ export default function ProfileImgUpload() {
         console.error(e);
       } finally {
         setIsLoading(false);
+      }
+
+      if (imageUrl) {
+        setTimeout(() => {
+          deleteImage(imageUrl);
+        }, 2000);
       }
     }
   };

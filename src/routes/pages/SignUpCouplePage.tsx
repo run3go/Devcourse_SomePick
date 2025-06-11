@@ -3,7 +3,7 @@ import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
-import { useSignUpStore } from "../../stores/signupstore";
+import { useSignUpStore } from "../../stores/signupStore";
 import useCheckNickname from "../../hooks/useCheckNickname";
 // import LoadingSpinner from "../../components/signup/LoadingSpinner";
 import Icon from "../../components/common/Icon";
@@ -11,10 +11,11 @@ import InputBirthDate from "../../components/signup/InputBirthDate";
 import { signupUser } from "../../apis/auth";
 import { useNavigate } from "react-router";
 import useSignupValidation from "../../hooks/useSignupValidation";
+import { storeImage } from "../../apis/util";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();
-  const { data, updateData } = useSignUpStore();
+  const { data, updateData, imageFile } = useSignUpStore();
 
   const [nickname, setNickname] = useState("");
   const [partner, setPartner] = useState("");
@@ -41,7 +42,7 @@ export default function SignUpCouplePage() {
       return;
     }
 
-    if (data.age === 0 || data.gender === "") {
+    if (data.age === 0 || data.gender === undefined) {
       alert("주민등록번호를 입력해주세요.");
       return;
     }
@@ -52,7 +53,7 @@ export default function SignUpCouplePage() {
     }
 
     if (!isPwValid) {
-      alert("비밀번호는 6자 이상, 영문과 숫자를 포함해야 합니다.");
+      alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
       return;
     }
 
@@ -61,15 +62,24 @@ export default function SignUpCouplePage() {
       return;
     }
 
-    updateData({ nickname, partner_nickname: partner });
+    const imgUrl = imageFile && (await storeImage(imageFile, "main_image"));
+
+    const updated = {
+      nickname,
+      ...(imgUrl ? { main_image: imgUrl } : {}),
+      ...(partner ? { partner_nickname: partner } : {}),
+    };
+
+    updateData(updated);
 
     console.log(data);
-    // try {
-    //   await signupUser(email, pw, data);
-    //   navigate("/");
-    // } catch (e) {
-    //   console.error(e);
-    // }
+
+    try {
+      await signupUser(email, pw, data);
+      navigate("/");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
