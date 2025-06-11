@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { followUser, unfollowUser } from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
 import { useAuthStore } from "../../stores/authstore";
+import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import FollowModal from "./FollowModal";
@@ -18,6 +19,7 @@ export default function SoloProfile({
   isMyProfile: boolean;
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }) {
+  const navigate = useNavigate();
   const { description, main_image, sub_image, nickname, id } = soloProfile;
   const { session } = useAuthStore();
   const {
@@ -28,6 +30,7 @@ export default function SoloProfile({
     useLoaderData();
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
@@ -81,11 +84,21 @@ export default function SoloProfile({
   const handleSendHeart = async () => {
     const hasHeartAlready = await sendHeart(id);
     if (hasHeartAlready) {
-      console.log("이미 받은 하트가 있습니다");
+      setIsAlertOpen(true);
     }
   };
   return (
     <div className="w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px]">
+      {isAlertOpen && (
+        <Alert
+          title="이미 상대에게 전달받은 하트가 있습니다"
+          subtitle="매칭 페이지로 이동하시겠습니까?"
+          isOk="이동"
+          isNotOk="취소"
+          onClick={() => navigate("/message")}
+          onCancel={() => setIsAlertOpen(false)}
+        />
+      )}
       {isFollowerModalOpen && (
         <>
           <div
@@ -154,7 +167,7 @@ export default function SoloProfile({
                 </span>
               </div>
             </div>
-            {!isMyProfile && (
+            {!isMyProfile && session?.user.user_metadata.status === "solo" && (
               <div className="flex gap-7 mt-[22px]">
                 {isFollowing ? (
                   <Button
