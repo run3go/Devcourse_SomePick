@@ -2,23 +2,48 @@ import { Outlet, useNavigate } from "react-router";
 import ChatList from "../../components/message/ChatList";
 import Icon from "../../components/common/Icon";
 // import EmptyList from "../../components/message/EmptyList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptyList from "../../components/message/EmptyList";
+import { fetchMatchingUsers } from "../../apis/matching";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function MessagePage() {
   const navigate = useNavigate();
   const [isChatSelected, setIsChatSelected] = useState(false);
   const [selectedTab, setSelectedTab] = useState("받은 하트");
+  const { session } = useAuthStore();
+  const [matchingUsers, setMatchingUsers] = useState<Matching[]>([]);
 
-  function handleChatClick() {
+  useEffect(() => {
+    const getMatchingUsers = async () => {
+      const data = await fetchMatchingUsers();
+      if (data) {
+        setMatchingUsers(data);
+      }
+    };
+    getMatchingUsers();
+  }, []);
+
+  const handleChatClick = (userId: string) => {
     setIsChatSelected(true);
-    navigate("/message/:id");
-  }
+    if (selectedTab === "받은 하트") {
+      navigate(`/message/${userId}/request`);
+    }
+    if (selectedTab === "보낸 하트") {
+      navigate(`/message/${userId}/waiting`);
+    }
+  };
 
-  function handleTab(tabName: string) {
+  const handleTab = (tabName: string) => {
     setSelectedTab(tabName);
-  }
+  };
 
+  const filteredUsers = matchingUsers.filter((user) => {
+    const isSentByMe = user.sender.id === session?.user.id;
+    if (selectedTab === "받은 하트") return !isSentByMe;
+    if (selectedTab === "보낸 하트") return isSentByMe;
+    return true;
+  });
   return (
     <>
       <div className="w-[1150px] h-full mx-auto gap-10 flex my-[5vh]">
@@ -57,7 +82,10 @@ export default function MessagePage() {
                 <div>보낸 하트 목록</div>
               </div>
             </div>
-            <ChatList onChatClick={handleChatClick} selectedTab={selectedTab} />
+            <ChatList
+              onChatClick={handleChatClick}
+              matchingUsers={filteredUsers}
+            />
           </div>
           <div>
             <div>
@@ -66,7 +94,11 @@ export default function MessagePage() {
                 <span className="text-[14px]">연결 중</span>
               </div>
             </div>
-            {/* <ChatList onChatClick={handleChatClick} selectedTab={selectedTab} /> */}
+            {}
+            {/* <ChatList
+              onChatClick={handleChatClick}
+              matchingUsers={filteredUsers}
+            /> */}
             <EmptyList message="아직 연결중인 사람이 없어요!" />
           </div>
         </div>

@@ -1,33 +1,36 @@
 import ChatItem from "./ChatItem";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function ChatList({
   onChatClick,
-  selectedTab,
-}: {
-  onChatClick?: () => void;
-  selectedTab?: string;
+  matchingUsers,
+}: // selectedTab,
+{
+  onChatClick?: (userId: string) => void;
+  // selectedTab?: string;
+  matchingUsers: Matching[];
 }) {
-  function handleClick() {
-    onChatClick?.();
-  }
+  const { session } = useAuthStore();
 
   return (
-    <>
-      <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-auto">
-        {selectedTab === "보낸 하트" ? (
-          <>
-            <ChatItem name="차은우" onClick={handleClick} />
-            <hr className="border-[var(--primary-pink)] mx-2" />
-            <ChatItem name="변우석" onClick={handleClick} />
-          </>
-        ) : (
-          <>
-            <ChatItem name="정해인" onClick={handleClick} />
-            <hr className="border-[var(--primary-pink)] mx-2" />
-            <ChatItem name="강하늘" onClick={handleClick} />
-          </>
-        )}
-      </div>
-    </>
+    <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-auto">
+      {matchingUsers.map((user, idx) => {
+        const isSentByMe = user.sender.id === session?.user.id;
+        const targetUser = isSentByMe ? user.reciever : user.sender;
+
+        return (
+          <div key={idx}>
+            <ChatItem
+              name={targetUser.nickname}
+              profileImg={targetUser.main_image}
+              onClick={() => onChatClick?.(targetUser.id)}
+            />
+            {idx !== matchingUsers.length - 1 && (
+              <hr className="border-[var(--primary-pink)] mx-2" />
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }
