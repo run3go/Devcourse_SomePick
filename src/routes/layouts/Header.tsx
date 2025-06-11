@@ -12,13 +12,17 @@ export default function Header() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
   const isLogin = useAuthStore((state) => state.isLogin);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (isNotificationOpen || (isModalOpen && outsideRef.current)) {
+      if (
+        outsideRef.current &&
+        !outsideRef.current.contains(e.target as Node)
+      ) {
         e.preventDefault();
         setIsNotificationOpen(false);
         setIsModalOpen(false);
@@ -124,7 +128,7 @@ export default function Header() {
                   />
                   {isModalOpen && (
                     <div ref={outsideRef}>
-                      <HeaderModal />
+                      <HeaderModal onClose={() => setIsModalOpen(false)} />
                     </div>
                   )}
                 </div>
