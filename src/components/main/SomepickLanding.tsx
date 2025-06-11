@@ -1,3 +1,4 @@
+import { useAuthStore } from "../../stores/authstore";
 import "../../styles/SomepickLanding.css";
 const SomepickLanding = ({
   title,
@@ -12,6 +13,7 @@ const SomepickLanding = ({
   onClick: () => void;
   backGround: string;
 }) => {
+  const isLogin = useAuthStore((state) => state.isLogin);
   return (
     <div
       className="min-h-screen flex flex-col justify-center items-center overflow-hidden relative"
@@ -71,9 +73,11 @@ const SomepickLanding = ({
       <div className="relative z-10 text-center text-[var(--white)]">
         <p className="subtitle">{subtitle}</p>
         <h1 className="main-title">{title}</h1>
-        <button className="cta-button" onClick={onClick}>
-          {button}
-        </button>
+        {!isLogin && (
+          <button className="cta-button" onClick={onClick}>
+            {button}
+          </button>
+        )}
       </div>
     </div>
   );

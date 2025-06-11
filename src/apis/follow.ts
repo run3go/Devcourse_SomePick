@@ -6,7 +6,7 @@ export const fetchFollowingList = async (userId: string) => {
       .from("follows")
       .select(
         `
-        following:follow_id(
+        following:profiles!follow_id(
             id,
             nickname,
             main_image
@@ -30,7 +30,7 @@ export const fetchFollowerList = async (userId: string) => {
       .from("follows")
       .select(
         `
-      follower:follow_id(
+      follower:profiles!user_id(
         id,
         nickname,
         main_image
@@ -64,7 +64,6 @@ export const followUser = async (follow_id: string) => {
       console.log("팔로우 실패:", error.message);
       return;
     }
-    console.log("팔로우 성공");
   } catch (e) {
     console.error(e);
   }
