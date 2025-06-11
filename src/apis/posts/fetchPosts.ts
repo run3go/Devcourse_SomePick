@@ -85,7 +85,6 @@ export const fetchPostsByAuthorId = async (
       console.log("게시물 가져오기 실패:", error.message);
       return;
     }
-    console.log(posts);
     return posts;
   } catch (e) {
     console.error(e);

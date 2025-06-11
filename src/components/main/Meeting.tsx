@@ -13,9 +13,7 @@ export default function Meeting() {
         </div>
 
         <div className="flex justify-center items-start gap-[30px] mt-[40px]">
-          <div className="scale-[0.9] mt-[-38px]">
-            <MatchingCard flipOnHover={true} />
-          </div>
+          <div className="scale-[0.9] mt-[-38px]">{/* <MatchingCard flipOnHover={true} />*/}</div>
           <div className="flex flex-col items-center text-center">
             <Tags />
             <div className="flex items-center mb-[10px] mt-[40px]">
