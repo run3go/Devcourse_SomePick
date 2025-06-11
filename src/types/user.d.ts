@@ -35,7 +35,7 @@ type ProfileUpdatePayload = Partial<{
   keywords: string[];
   interests: string[];
   ideal_types: string[];
-  partner_nickname: string;
+  partner_nickname: string | null;
   status: "solo" | "couple";
 }>;
 

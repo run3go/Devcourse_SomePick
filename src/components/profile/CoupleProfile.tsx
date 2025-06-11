@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { followUser, unfollowUser } from "../../apis/follow";
 import { useAuthStore } from "../../stores/authstore";
 import Button from "../common/Button";
@@ -17,6 +17,7 @@ export default function CoupleProfile({
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const { session } = useAuthStore();
+  const navigate = useNavigate();
   const { main_image, nickname, partner_nickname, couple, id } = coupleProfile;
   const {
     posts,
@@ -31,8 +32,11 @@ export default function CoupleProfile({
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const partnerInfo =
-    couple.user1.nickname === partner_nickname ? couple.user1 : couple.user2;
+  const partnerInfo = couple
+    ? couple.user1.nickname === partner_nickname
+      ? couple.user1
+      : couple.user2
+    : "";
 
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
@@ -123,14 +127,13 @@ export default function CoupleProfile({
             top="-449px"
             className="self-center"
           />
-          <Link to={`/profile/${partnerInfo.id}`}>
-            <ProfileCard
-              nickname={partner_nickname!}
-              image={partnerInfo.main_image}
-              isPartner
-              isCouple
-            />
-          </Link>
+          <ProfileCard
+            onClick={() => partnerInfo && navigate(`profile/${partnerInfo.id}`)}
+            nickname={partner_nickname!}
+            image={partnerInfo && partnerInfo.main_image}
+            isPartner
+            isCouple
+          />
         </div>
         <div className="flex flex-col gap-[70px] justify-center">
           <div className="flex flex-col items-center w-75">

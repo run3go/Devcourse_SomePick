@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { updateProfile } from "../../apis/user";
+import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
 import Alert from "../../components/common/Alert";
 import Button from "../../components/common/Button";
@@ -41,8 +41,12 @@ export default function ProfileEditPage() {
       keywords: data.keywordList,
       interests: data.interestList,
       ideal_types: data.idealTypeList,
+      partner_nickname: status === "solo" ? null : data.partnerNickname,
     };
     await updateProfile(payload);
+    if (status === "couple") {
+      await checkCouple(data.partnerNickname, profile.gender);
+    }
     navigate(`/profile/${profile.id}`);
   };
 
@@ -50,7 +54,7 @@ export default function ProfileEditPage() {
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => {
-    if (!e?.target.files) return;
+    if (!e.target.files) return;
     const url = await storeImage(e.target.files[0], "temp");
     if (type === "main" && url) {
       setValue("mainImageUrl", url);
