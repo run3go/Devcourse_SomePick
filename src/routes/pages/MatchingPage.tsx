@@ -79,12 +79,11 @@ export default function MatchingPage() {
                   const profile = matchedProfiles[idx];
                   const isCenter = position === "center";
                   return (
-                    // layoutId를 주면 언마운트/마운트 간 애니메이션도 자연스럽게 처리됩니다.
                     <motion.div
                       key={profile.id}
-                      layout // 레이아웃 변화에 애니메이션
+                      layout
                       layoutId={profile.id.toString()}
-                      initial={false} // 첫 마운트 시 깜빡임 방지
+                      initial={false}
                       transition={{ duration: 0.5, ease: "easeInOut" }}
                       className={`
                     transform filter
