@@ -82,3 +82,13 @@ type UserData = {
   main_image: string | null;
   nickname: string | null;
 };
+
+type Matching = {
+  created_at: string;
+  id: number;
+  is_matched: boolean;
+  matching_user_id: string;
+  user_id: string;
+  sender: ProfileData;
+  reciever: ProfileData;
+};
