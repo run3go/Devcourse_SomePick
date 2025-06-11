@@ -16,3 +16,15 @@ export const storeImage = async (imageFile: File, type: string) => {
     console.error(e);
   }
 };
+
+export const deleteImage = async (imageUrl: string) => {
+  try {
+    const path = imageUrl.substring(imageUrl.indexOf("temp"));
+    const { error } = await supabase.storage.from("images").remove([path]);
+    if (error) {
+      console.log("이미지 삭제 실패");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
