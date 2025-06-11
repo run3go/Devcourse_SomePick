@@ -29,7 +29,8 @@ export default function PostHeader({
             {showMenu && (
               <MoreMenu
                 onClick={toggleMenu}
-                postId={postId}
+                id={postId}
+                type="post"
                 closeMenu={() => setShowMenu(false)}
               />
             )}
