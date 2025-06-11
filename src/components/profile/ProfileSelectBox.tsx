@@ -12,7 +12,7 @@ export default function ProfileSelectBox({ type }: SelectBoxProps) {
     <Select
       isSearchable={false}
       onChange={(newValue) => {
-        if (newValue) field.onChange(newValue);
+        if (newValue) field.onChange(newValue.label);
       }}
       defaultValue={{
         value: optionsGroup.mbti.find((item) => item.label === field.value)

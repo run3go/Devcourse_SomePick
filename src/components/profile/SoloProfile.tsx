@@ -29,10 +29,10 @@ export default function SoloProfile({
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
-
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
   );
+
   const scrollToPosts = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -79,9 +79,9 @@ export default function SoloProfile({
     }
   };
   const handleSendHeart = async () => {
-    const error = await sendHeart(id);
-    if (error && error.code === "23505") {
-      alert("이미 하트를 보낸 상대입니다.");
+    const hasHeartAlready = await sendHeart(id);
+    if (hasHeartAlready) {
+      console.log("이미 받은 하트가 있습니다");
     }
   };
   return (
@@ -154,7 +154,7 @@ export default function SoloProfile({
                 </span>
               </div>
             </div>
-            {!isMyProfile && session?.user.user_metadata.status === "solo" && (
+            {!isMyProfile && (
               <div className="flex gap-7 mt-[22px]">
                 {isFollowing ? (
                   <Button

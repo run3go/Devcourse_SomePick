@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormProvider, useWatch } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
@@ -20,7 +20,8 @@ export default function ProfileEditPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFormSubmit = async (data: FormValue) => {
-    const { status, nickname, age, job, location, height, mbti } = data;
+    const { status, nickname, age, job, location, height, mbti, description } =
+      data;
     const mainUrl =
       data.mainImageFile &&
       (await storeImage(data.mainImageFile, "main_image"));
@@ -33,6 +34,7 @@ export default function ProfileEditPage() {
       nickname,
       job,
       location,
+      description,
       mbti,
       age: Number(age),
       height: Number(height),
@@ -64,12 +66,10 @@ export default function ProfileEditPage() {
     }
   };
 
-  const { handleSubmit, register, setValue, control, getValues } = methods;
-  const watchedStatus = useWatch({
-    name: "status",
-    control,
-    defaultValue: profile.status,
-  });
+  const { handleSubmit, register, setValue, watch } = methods;
+  const watchedStatus = watch("status", profile.status);
+  const watchedMainImage = watch("mainImageUrl", profile.main_image);
+  const watchedSubImage = watch("subImageUrl", profile.sub_image);
   if (watchedStatus === "couple") {
     return (
       <main className="relative flex justify-center mb-[50px]">
@@ -80,7 +80,7 @@ export default function ProfileEditPage() {
           >
             <div className="mt-16 flex gap-[68px]">
               <label htmlFor="main_image">
-                <ProfileCard image={getValues().mainImageUrl} isMain isEdited />
+                <ProfileCard image={watchedMainImage} isMain isEdited />
                 <input
                   className="hidden"
                   type="file"
@@ -144,7 +144,7 @@ export default function ProfileEditPage() {
             {/* 프로필 사진 */}
             <div className="mt-16 flex gap-[68px]">
               <label htmlFor="main_image">
-                <ProfileCard image={getValues().mainImageUrl} isMain isEdited />
+                <ProfileCard image={watchedMainImage} isMain isEdited />
                 <input
                   className="hidden"
                   type="file"
@@ -153,7 +153,7 @@ export default function ProfileEditPage() {
                 />
               </label>
               <label htmlFor="sub_image">
-                <ProfileCard image={getValues().subImageUrl} isEdited />
+                <ProfileCard image={watchedSubImage} isEdited />
                 <input
                   className="hidden"
                   type="file"
