@@ -16,10 +16,6 @@ type Comments = {
 type Like = {
   user_id: string;
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> fc47a2cd0316cbdf7c6f0af958e8215ffab6eda2
 type PostData = {
   id: number;
   created_at: string;
