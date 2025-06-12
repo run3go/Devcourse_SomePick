@@ -160,7 +160,9 @@ export default function Header() {
                     left="-436px"
                     top="-228px"
                     className="cursor-pointer"
-                    onClick={() => setIsNotificationOpen((state) => !state)}
+                    onClick={() => {
+                      setIsNotificationOpen((state) => !state);
+                    }}
                   />
                   {isNotificationOpen && (
                     <div ref={outsideRef}>
