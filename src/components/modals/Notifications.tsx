@@ -103,21 +103,24 @@ export default function Notifications() {
   };
 
   // 실시간 알림
-  // useEffect(() => {
-  // const channel: RealtimeChannel | null;
+  useEffect(() => {
+    let channel: RealtimeChannel | null = null;
 
-  //   const subscribe = async () => {
-  //       channel = await subscribeNotification((notification: Notification) => {
-  //       setNotifications((prev) => [notification, ...prev]);
-  //     });
-  //   };
+    const subscribe = async () => {
+      const res = await subscribeNotification((notifications: Notification) => {
+        setNotifications((prev) => [notifications, ...prev]);
+      });
+      channel = res ?? null;
+    };
 
-  //   subscribe();
+    subscribe();
 
-  //   return () => {
-  //     channel?.unsubscribe();
-  //   };
-  // }, []);
+    return () => {
+      if (channel) {
+        channel.unsubscribe();
+      }
+    };
+  }, []);
 
   //  알림 형태
   const formatNotifications = (notification: Notification) => {
