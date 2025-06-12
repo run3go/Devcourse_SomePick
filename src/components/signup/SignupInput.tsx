@@ -8,6 +8,7 @@ interface InputProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isError?: boolean;
 }
 
 export default function SignupInput({
@@ -18,6 +19,7 @@ export default function SignupInput({
   placeholder,
   value,
   onChange,
+  isError = false,
 }: InputProps) {
   return (
     <>
@@ -33,11 +35,15 @@ export default function SignupInput({
           value={value}
           onChange={onChange}
           className={twMerge(
-            "pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border border-[var(--primary-pink)] rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)",
+            `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
+              isError ? "border-[var(--red)]" : "border-[var(--primary-pink)]"
+            }`,
             className
           )}
-          {...(name === "height" ? { min: 130, max: 299, step: 1 } : {})}
-          {...(name === "intro" ? { maxlength: 30 } : {})}
+          {...(name === "height"
+            ? { inputMode: "numeric", pattern: "[0-9]*" }
+            : {})}
+          {...(name === "intro" ? { maxLength: 30 } : {})}
           {...(name === "userName"
             ? { autoComplete: "off", minLength: 2, maxLength: 5 }
             : {})}

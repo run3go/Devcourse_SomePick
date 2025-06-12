@@ -68,13 +68,23 @@ export const createSchedule = async (
   couple_id: number,
   date: Date,
   title: string,
-  memo: string
+  memo: string,
+  id?: number
 ) => {
   try {
     const formattedDate = date.toISOString().split("T")[0];
+    const payload: SchedulePayload = {
+      couple_id,
+      date: formattedDate,
+      title,
+      memo,
+    };
+    if (id) {
+      payload.id = id;
+    }
     const { data, error } = await supabase
       .from("schedules")
-      .insert([{ couple_id, date: formattedDate, title, memo }])
+      .upsert([{ couple_id, date: formattedDate, title, memo }])
       .select("*")
       .single();
     if (error) {

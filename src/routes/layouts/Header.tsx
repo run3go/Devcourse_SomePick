@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
+import Alert from "../../components/common/Alert";
 import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useAuthStore } from "../../stores/authStore";
-import Alert from "../../components/common/Alert";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export default function Header() {
                         setIsAlertOpen(true);
                         return;
                       }
-                      navigate("/calendar");
+                      navigate("/couplecalendar");
                     }}
                     className={twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",

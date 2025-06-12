@@ -12,9 +12,9 @@ type SoloOptions = CommonOptions & {
   height: number;
   location: string;
   mbti: string;
-  keywords: string[];
-  interests: string[];
-  ideal_types: string[];
+  keywords: string;
+  interests: string;
+  ideal_types: string;
   description?: string;
 };
 
