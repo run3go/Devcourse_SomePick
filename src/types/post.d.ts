@@ -6,6 +6,7 @@ type Author = {
 
 type Comments = {
   id: number;
+  parent_id: number | null;
   comment: string;
   author: Author;
   created_at?: string;
@@ -14,7 +15,8 @@ type Comments = {
 
 type Like = {
   user_id: string;
-}
+};
+
 type PostData = {
   id: number;
   created_at: string;

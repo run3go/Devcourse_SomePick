@@ -33,7 +33,7 @@ export default function PostDetailPage() {
         <BackButton className="mb-[18px] text-[18px]" />
         <article className="border w-[1080px] h-full rounded-2xl border-[#FFC7ED] bg-[#FFC7ED]/24 px-[50px] py-[30px]">
           {post && <PostHeader post={post} postId={postId} />}
-          {post && <PostContent post={post} />}
+          {post && <PostContent post={post} postId={postId} />}
           <section className="mt-[12px]">
             <article>
               {post && (
