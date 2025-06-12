@@ -48,6 +48,33 @@
   --main-font: "inter";
 }
 
+.dark {
+  --dark-bg-primary: #333333;
+  --dark-bg-secondary: #4b4b4b;
+  --dark-bg-tertiary: #7b7b7b;
+
+  --dark-black: #000000;
+
+  /* 다크모드 기본 글자 색상 */
+  --dark-gray-700: #cacaca;
+
+  /* 다크모드 서브 글자 색상 (날짜 등..) */
+  --dark-gray-500: #969696;
+  --dark-gray-300: #d9d9d9;
+  --dark-gray-300-50: #d9d9d980;
+  --dark-gray-300-59: #d9d9d995;
+  --dark-gray-200: #f3f3f3;
+  --dark-gray-100: #f8f8f8;
+  --dark-white: #ffffff;
+
+  --dark-primary-pink: #ffc7ed;
+  --dark-primary-pink-tone: #ff9fd6;
+  --dark-primary-pink-point: #ff66b3;
+  --dark-primary-pink-point-50: #ff66b380;
+
+  --dark-red: #e94235;
+}
+
 body {
   @apply text-base font-(family-name:--main-font) text-[var(--gray-700)];
   font-family: "NPSfontBold";

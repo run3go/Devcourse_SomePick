@@ -35,7 +35,7 @@ type ProfileUpdatePayload = Partial<{
   keywords: string[];
   interests: string[];
   ideal_types: string[];
-  partner_nickname: string;
+  partner_nickname: string | null;
   status: "solo" | "couple";
 }>;
 
@@ -91,4 +91,23 @@ type Matching = {
   user_id: string;
   sender: ProfileData;
   reciever: ProfileData;
+}
+
+type FormValue = {
+  mainImageUrl: string;
+  subImageUrl: string | null;
+  mainImageFile: File | null;
+  subImageFile: File | null;
+  nickname: string;
+  age: string;
+  status: "solo" | "couple";
+  description: string;
+  job: string;
+  location: string;
+  height: string;
+  mbti: string;
+  partnerNickname: string;
+  keywordList: string[];
+  interestList: string[];
+  idealTypeList: string[];
 };

@@ -18,7 +18,7 @@ export default function MainPage() {
   };
   return (
     <>
-      <div className="select-none">
+      <div className="select-none dark:bg-[var(--dark-bg-primary)]">
         <Service
           onClickDictionary={() => scrollToSection(dictionaryRef)}
           onClickMeeting={() => scrollToSection(meetingRef)}
