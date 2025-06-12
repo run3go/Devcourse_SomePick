@@ -17,6 +17,8 @@ export default function Header() {
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
   const isLogin = useAuthStore((state) => state.isLogin);
+  const session = useAuthStore((state) => state.session);
+  const couple = session?.user.user_metadata.status;
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -68,24 +70,47 @@ export default function Header() {
             >
               자유 게시판
             </NavLink>
+            <div className="flex items-center">
+              {couple === "couple" ? (
+                <div>
+                  <button
+                    onClick={() => {
+                      if (!isLogin) {
+                        setIsAlertOpen(true);
+                        return;
+                      }
+                      navigate("/calendar");
+                    }}
+                    className={twMerge(
+                      "relative flex header-menu cursor-pointer mr-[65px]",
+                      location.pathname === "/calendar" &&
+                        "header-menu__active text-black"
+                    )}
+                  >
+                    커플 캘린더
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => {
+                      if (!isLogin) {
+                        setIsAlertOpen(true);
+                        return;
+                      }
+                      navigate("/matching");
+                    }}
+                    className={twMerge(
+                      "relative header-menu cursor-pointer mr-[65px]",
+                      location.pathname === "/couplecalendar" &&
+                        "header-menu__active text-black"
+                    )}
+                  >
+                    소개팅
+                  </button>
+                </div>
+              )}
 
-            <div>
-              <button
-                onClick={() => {
-                  if (!isLogin) {
-                    setIsAlertOpen(true);
-                    return;
-                  }
-                  navigate("/matching");
-                }}
-                className={twMerge(
-                  "relative header-menu cursor-pointer mr-[65px]",
-                  location.pathname === "/matching" &&
-                    "header-menu__active text-black"
-                )}
-              >
-                소개팅
-              </button>
               {isAlertOpen && (
                 <Alert
                   title="로그인이 필요해요!"
