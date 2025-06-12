@@ -16,10 +16,12 @@ export default function Calendar({
   schedules,
   targetDate,
   selectDate,
+  optimisticSchedlues,
 }: {
   schedules: Schedule[];
   targetDate: string;
   selectDate: (date: string) => void;
+  optimisticSchedlues: Schedule[];
 }) {
   const [date, setDate] = useState(new Date());
   const year = getYear(date);
@@ -61,7 +63,7 @@ export default function Calendar({
               {year}
             </span>
             <span className="text-[40px]">
-              {month.toString().length === 1 ? "0" + (month + 1) : month + 1}
+              {month + 1 < 10 ? "0" + (month + 1) : month + 1}
             </span>
           </div>
           <Icon

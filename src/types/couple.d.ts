@@ -7,8 +7,10 @@ type Couple = {
 };
 
 type Schedule = {
-  id: number;
+  couple_id: number;
+  created_at: string;
   date: string;
+  id: number;
+  memo: string | null;
   title: string;
-  memo: string;
 };
