@@ -3,9 +3,18 @@ import BackButton from "../../components/common/BackButton";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
 import Button from "../../components/common/Button";
+import { useState } from "react";
 
 export default function SignUpSoloStep1Page() {
   const navigate = useNavigate();
+
+  const [nickname, setNickname] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
+  const [pwConfirm, setPwConfirm] = useState("");
 
   return (
     <>
@@ -33,12 +42,16 @@ export default function SignUpSoloStep1Page() {
               type="text"
               name="userName"
               className="w-[223px]"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
             />
             <SignupInput
               label="생년월일"
               type="number"
               name="birthDate"
               className="w-[223px]"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
             />
           </div>
           <SignupInput
@@ -46,9 +59,23 @@ export default function SignUpSoloStep1Page() {
             type="email"
             name="email"
             placeholder="user@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <SignupInput label="비밀번호" type="password" name="password" />
-          <SignupInput label="비밀번호 확인" type="password" name="confirmPw" />
+          <SignupInput
+            label="비밀번호"
+            type="password"
+            name="password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+          <SignupInput
+            label="비밀번호 확인"
+            type="password"
+            name="confirmPw"
+            value={pwConfirm}
+            onChange={(e) => setPwConfirm(e.target.value)}
+          />
 
           <Button
             className="mt-9 w-full h-12.5 rounded-full"
