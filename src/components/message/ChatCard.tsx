@@ -2,11 +2,12 @@ import { useNavigate } from "react-router";
 import Button from "../common/Button";
 
 interface InfoProps {
-  profileImg: string;
-  name: string;
-  age: string;
-  message: string;
-  items: string[];
+  profileImg?: string;
+  name?: string;
+  age?: string;
+  message?: string | null;
+  items?: string[];
+  userId?: string;
 }
 
 export default function ChatCard({
@@ -15,6 +16,7 @@ export default function ChatCard({
   age,
   message,
   items,
+  userId,
 }: InfoProps) {
   const navigate = useNavigate();
   return (
@@ -27,7 +29,7 @@ export default function ChatCard({
           />
           <Button
             className="w-28 h-6 text-[10px]"
-            onClick={() => navigate("/profile/:id")}
+            onClick={() => navigate(`/profile/${userId}`)}
           >
             프로필 보기
           </Button>
