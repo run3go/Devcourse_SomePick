@@ -1,23 +1,23 @@
+import { useController, useFormContext } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
 export default function SelectTags({
   type,
   list,
-  values,
-  setValues,
+  name,
 }: {
   type: string;
   list: string[];
-  values: string[];
-  setValues: React.Dispatch<React.SetStateAction<string[]>>;
+  name: string;
 }) {
   const limit = 8;
+  const { control } = useFormContext();
+  const { field } = useController({ name, control });
   const selectTag = (tag: string) => {
-    setValues((values) => {
-      if (values.includes(tag)) return values.filter((value) => value !== tag);
-      else if (values.length >= 8) return values;
-      return [...values, tag];
-    });
+    const values = field.value as string[];
+    if (values.includes(tag))
+      field.onChange(values.filter((value) => value !== tag));
+    else if (values.length < limit) field.onChange([...values, tag]);
   };
   return (
     <li className="flex flex-col items-start gap-5">
@@ -29,7 +29,7 @@ export default function SelectTags({
             key={item}
             className={twMerge(
               "hover:border-[var(--primary-pink-point)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]",
-              values.some((value) => value === item) &&
+              field.value.some((value: string) => value === item) &&
                 "bg-[var(--primary-pink)]"
             )}
           >
@@ -37,7 +37,7 @@ export default function SelectTags({
           </li>
         ))}
         <span className="absolute right-[22px] bottom-[13px] text-sm">
-          {values.length} / {limit}
+          {field.value.length} / {limit}
         </span>
       </ul>
     </li>

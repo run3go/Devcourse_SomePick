@@ -19,7 +19,9 @@ export default function ShowCalendar() {
           <span className="text-lg mr-[14px] text-[var(--primary-pink-point)]">
             2025
           </span>
-          <span className="text-[32px]">06</span>
+          <span className="text-[32px] dark:text-[var(--dark-gray-700)]">
+            06
+          </span>
         </div>
         <div className="pr-[10px]">
           <Icon
@@ -37,16 +39,31 @@ export default function ShowCalendar() {
             <div className="w-[14.28%] text-[var(--primary-pink-point)] text-center">
               Sun
             </div>
-            <div className="w-[14.28%] text-center">Mon</div>
-            <div className="w-[14.28%] text-center">Tue</div>
-            <div className="w-[14.28%] text-center">Wed</div>
-            <div className="w-[14.28%] text-center">Thu</div>
-            <div className="w-[14.28%] text-center">Fri</div>
-            <div className="w-[14.28%] text-center">Sat</div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Mon
+            </div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Tue
+            </div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Wed
+            </div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Thu
+            </div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Fri
+            </div>
+            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+              Sat
+            </div>
           </div>
           <div className="days-wrap flex flex-wrap">
             {days.map((day) => (
-              <div key={day} className="w-[14.28%] h-20 text-center">
+              <div
+                key={day}
+                className="w-[14.28%] h-20 text-center dark:text-[var(--dark-gray-700)]"
+              >
                 <span
                   className={twMerge(
                     "day-text relative py-0.5 cursor-pointer leading-[1] inline-block gray-circle-bg",

@@ -32,13 +32,15 @@ export default function Service({
           <p className="mb-[10px] text-[24px] text-[var(--primary-pink)] font-bold">
             커플도, 솔로도 즐길 수 있는
           </p>
-          <h1 className="text-[40px] font-bold">다양한 서비스</h1>
+          <h1 className="text-[40px] font-bold dark:text-[var(--dark-gray-700)]">
+            다양한 서비스
+          </h1>
         </div>
         <div className="flex gap-[50px] justify-center mt-[60px]">
           <div
             onClick={onClickDictionary}
             className="flex flex-col items-center justify-center border rounded-[20px] bg-[#FFE6EB] border-[#FFE6EB]
-       w-[300px] h-[400px] shadow-lg shadow-black/25 cursor-pointer"
+       w-[300px] h-[400px] shadow-lg shadow-black/25 dark:hover:shadow-[#969696] cursor-pointer"
           >
             <p className="mb-[10px] text-[24px] text-[var(--gray-500)]">
               연애 고수가 알려주는
@@ -59,7 +61,7 @@ export default function Service({
           <div
             onClick={onClickMeeting}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[var(--primary-pink)] border-[var(--primary-pink)]
-       w-[300px] h-[400px] mt-[80px] shadow-lg shadow-black/25 cursor-pointer"
+       w-[300px] h-[400px] mt-[80px] shadow-lg dark:hover:shadow-[#969696] shadow-black/25 cursor-pointer"
           >
             <p className="mb-[10px] text-[24px] text-[var(--gray-500)]">
               솔로를 위한
@@ -80,7 +82,7 @@ export default function Service({
           <div
             onClick={onClickCalendar}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#FFF4FB] border-[#FFF4FB]
-       w-[300px] h-[400px] shadow-lg shadow-black/25 cursor-pointer"
+       w-[300px] h-[400px] shadow-lg shadow-black/25 dark:hover:shadow-[#969696] cursor-pointer"
           >
             <p className="mb-[10px] text-[24px] text-[var(--gray-500)]">
               둘이서 쓰는
@@ -101,7 +103,7 @@ export default function Service({
           <div
             onClick={onClickFortune}
             className="border rounded-[20px] flex flex-col items-center justify-center bg-[#E7E6F9] border-[#E7E6F9]
-       w-[300px] h-[400px] mt-[80px] shadow-lg shadow-black/25 cursor-pointer"
+       w-[300px] h-[400px] mt-[80px] shadow-lg dark:hover:shadow-[#969696] shadow-black/25 cursor-pointer"
           >
             <p className="mb-[10px] text-[24px] text-[var(--gray-500)]">
               연애 흐름을 알려주는
