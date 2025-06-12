@@ -1,4 +1,27 @@
 import supabase from "../utils/supabase";
+// 채팅 멤버 가져오기
+export const fetchChatMembers = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { data, error } = await supabase
+      .from("chat_rooms")
+      .select("*")
+      .or(`user1_id.eq.${session.user.id}, user2_id.eq.${session.user.id}`);
+    if (error) {
+      console.log("채팅방 멤버 조회 실패:", error.message);
+      return;
+    }
+    const chatMembers = data.map((room) =>
+      room.user1_id === session.user.id ? room.user2_id : room.user1_id
+    );
+    return chatMembers;
+  } catch (e) {
+    console.error(e);
+  }
+};
 // 채팅방 생성 (채팅 상대 id)
 export const createChatRoom = async (chatPartnerId: string) => {
   try {
