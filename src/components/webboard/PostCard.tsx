@@ -1,4 +1,3 @@
-// src/components/webboard/PostCard.tsx
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 

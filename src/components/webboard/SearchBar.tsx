@@ -1,4 +1,3 @@
-// components/webboard/SearchBar.tsx
 import { useState, useEffect } from "react";
 
 interface SearchBarProps {
@@ -9,7 +8,6 @@ interface SearchBarProps {
 export default function SearchBar({ value, onSearch }: SearchBarProps) {
   const [input, setInput] = useState(value);
 
-  // 상위 value가 바뀌면 로컬 state 동기화
   useEffect(() => {
     setInput(value);
   }, [value]);

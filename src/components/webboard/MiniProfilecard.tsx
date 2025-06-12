@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Button from "../common/Button";
 import { useNavigate } from "react-router";
 
