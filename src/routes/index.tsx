@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import { fetchUserData } from "./loader/auth.loader";
+import { getCoupleInfo } from "./loader/calendar.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
 import CalendarPage from "./pages/CalendarPage";
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/couplecalendar",
+        loader: getCoupleInfo,
         Component: CalendarPage,
       },
       {
