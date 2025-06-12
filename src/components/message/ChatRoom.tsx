@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router";
 import Profile from "../../assets/images/profile_image.png";
 import ChatInput from "./ChatInput";
 
 export default function ChatRoom() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full h-full py-0.5 flex flex-col">
@@ -11,7 +13,12 @@ export default function ChatRoom() {
             className="w-[45px] h-[45px] rounded-full object-cover object-center"
           />
           <div className="flex flex-col">
-            <span className="cursor-pointer text-[14px]">차은우</span>
+            <span
+              className="cursor-pointer text-[14px]"
+              onClick={() => navigate("/profile/:id")}
+            >
+              차은우
+            </span>
             <div className="flex gap-1 text-[var(--gray-00)] text-[11px]">
               <span>서울</span>
               <span>만 26세</span>

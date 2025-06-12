@@ -5,7 +5,7 @@ import logoImage from "../../assets/images/headerlogo.png";
 import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Alert from "../../components/common/Alert";
 
 export default function Header() {

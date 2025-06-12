@@ -1,8 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import supabase from "../../utils/supabase";
-import { useAuthStore } from "../../stores/authstore";
+
+import { useAuthStore } from "../../stores/authStore";
 import type { Session } from "@supabase/supabase-js";
 import { useNavigate } from "react-router";
+import { logoutUser } from "../../apis/auth";
 import { useDarkMode } from "../../hooks/useDarkMode";
 interface HeaderModalPropds {
   onClose: () => void;
@@ -10,16 +11,16 @@ interface HeaderModalPropds {
 
 export default function HeaderModal({ onClose }: HeaderModalPropds) {
   const { isDark, toggleDarkMode } = useDarkMode();
-
   const setLogout = useAuthStore((state) => state.setLogout);
   const session = useAuthStore<Session | null>((state) => state.session);
 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      setLogout();
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error(error);
     }
   };
 

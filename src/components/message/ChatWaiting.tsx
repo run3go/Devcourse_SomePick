@@ -1,8 +1,22 @@
-import Profile from "../../assets/images/profile_image2.png";
+import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import ChatCard from "./ChatCard";
-export default function ChatWaiting() {
+import { fetchProfile } from "../../apis/user";
+export default function ChatWaiting({ userId }: { userId?: string }) {
+  const [user, setUser] = useState<ProfileData | null>(null);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      if (!userId) return;
+      const data = await fetchProfile(userId);
+      if (data) {
+        setUser(data);
+        console.log("hello");
+      }
+    };
+    loadUser();
+  }, [userId]);
   return (
     <>
       <div className="w-full h-full flex items-center justify-center">
@@ -13,17 +27,23 @@ export default function ChatWaiting() {
               <div className="flex flex-col items-center font-semibold gap-3">
                 <span>설렘 전송중 ...</span>
                 <span>
-                  <span className="text-[#FF66B3]">고윤정</span>님께 하트를
-                  보냈어요!
+                  <span className="text-[#FF66B3]">{user?.nickname}</span>님께
+                  하트를 보냈어요!
                 </span>
               </div>
             </div>
             <ChatCard
-              profileImg={Profile}
-              name="고윤정"
-              age="만 28세"
-              message="안녕하세요 작부탁드립니다 반갑습니다"
-              items={["168cm", "서울", "모델", "ISTP"]}
+              profileImg={user?.main_image}
+              name={user?.nickname}
+              age={`만 ${user?.age}세`}
+              message={user?.description}
+              items={[
+                user?.job || "모델",
+                user?.height ? `${user.height}cm` : "180cm",
+                user?.location || "서울",
+                user?.mbti || "ENFP",
+              ]}
+              userId={userId}
             />
             <div className="flex flex-col items-center gap-6">
               <Button className="w-[359px] h-[51px] bg-[#d9d9d9] cursor-auto hover:bg-[#d9d9d9]">

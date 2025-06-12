@@ -6,6 +6,8 @@ interface InputProps {
   name: string;
   className?: string;
   placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function SignupInput({
@@ -14,6 +16,8 @@ export default function SignupInput({
   name,
   className,
   placeholder,
+  value,
+  onChange,
 }: InputProps) {
   return (
     <>
@@ -26,6 +30,8 @@ export default function SignupInput({
           type={type}
           name={name}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           className={twMerge(
             "pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border border-[var(--primary-pink)] rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)",
             className

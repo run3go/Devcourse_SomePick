@@ -25,14 +25,24 @@ export const sendHeart = async (receiverId: string) => {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
-    const { error } = await supabase
+    const { data } = await supabase
+      .from("matchings")
+      .select("*")
+      .eq("user_id", receiverId)
+      .eq("matching_user_id", session.user.id)
+      .single();
+    if (data) {
+      return true;
+    }
+
+    const { error: matchingError } = await supabase
       .from("matchings")
       .insert([{ user_id: session.user.id, matching_user_id: receiverId }])
       .select("*")
       .single();
-    if (error) {
-      console.log("하트 보내기 실패:", error.message);
-      return error;
+    if (matchingError && matchingError.code === "23505") {
+      alert("이미 하트를 보낸 상대입니다.");
+      return;
     }
   } catch (e) {
     console.error(e);
