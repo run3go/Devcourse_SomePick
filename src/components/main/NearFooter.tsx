@@ -10,7 +10,7 @@ export default function NearFooter() {
         {...fadeIn}
         className="flex flex-col text-center items-center mt-[300px] mb-[300px]"
       >
-        <p className="text-[28px] text-[var(--gray-500)]">
+        <p className="text-[28px] text-[var(--gray-500)] dark:text-[var(--dark-gray-500)]">
           설레는 시작을 기다리는
           <span className="text-[var(--primary-pink)] font-bold">솔로</span>부터
           <br />
@@ -19,7 +19,7 @@ export default function NearFooter() {
             커플
           </span>까지 <br />
         </p>
-        <p className="text-[40px]">
+        <p className="text-[40px] dark:text-[var(--dark-gray-700)]">
           사랑의 모든 순간,
           <span className="text-[var(--primary-pink-tone)] font-bold">
             썸픽

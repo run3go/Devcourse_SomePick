@@ -14,7 +14,9 @@ export default function Dictionary() {
           <p className="mb-[10px] text-[24px] text-[var(--gray-500)] font-bold">
             사랑이 어려울 땐,
           </p>
-          <p className="text-[40px] font-bold">연애 백과 펼치기</p>
+          <p className="text-[40px] font-bold dark:text-[var(--dark-gray-700)]">
+            연애 백과 펼치기
+          </p>
         </div>
 
         <div className="relative w-full flex flex-col items-center mt-[10px]">
@@ -97,7 +99,7 @@ export default function Dictionary() {
             편지도 꼭 쓰기!
           </div>
           <div className="absolute top-[115px] z-0 flex flex-col items-center gap-[40px]">
-            <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center shadow-md">
+            <div className="relative border rounded-[20px] border-[var(--primary-pink)] dark:bg-[var(--dark-bg-secondary)] dark:text-[var(--dark-gray-700)] w-[480px] h-[150px] flex items-center shadow-md">
               <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                 <img
                   src={coupleImg}
@@ -107,7 +109,9 @@ export default function Dictionary() {
               </div>
               <div className="flex flex-col ml-[20px]">
                 <div className="flex items-center gap-2 text-[var(--gray-500)] mb-[5px]">
-                  <p className="font-semibold text-[16px] text-black">주애정</p>
+                  <p className="font-semibold text-[16px] text-black dark:text-[var(--dark-white)]">
+                    주애정
+                  </p>
                   <p className="text-[12px]">25.06.05</p>
                 </div>
                 <p className="text-[14px] font-semibold mb-[5px]">
@@ -118,13 +122,13 @@ export default function Dictionary() {
                   행복해도 될까요?
                 </p>
               </div>
-              <button className="absolute bottom-[10px] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
+              <button className="absolute bottom-[10px] dark:text-[var(--dark-white)] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
                 더보기
               </button>
             </div>
 
             <div className="flex gap-[50px]">
-              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
+              <div className="relative dark:bg-[var(--dark-bg-secondary)] dark:text-[var(--dark-gray-700)] border rounded-[20px]  border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
                 <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                   <img
                     src={manImg}
@@ -133,8 +137,8 @@ export default function Dictionary() {
                   />
                 </div>
                 <div className="flex flex-col ml-[20px]">
-                  <div className="flex items-center gap-2 text-[var(--gray-500)] mb-[5px]">
-                    <p className="font-semibold text-[16px] text-black">
+                  <div className="flex items-center gap-2 text-[var(--gray-500)]  mb-[5px]">
+                    <p className="font-semibold text-[16px] text-black dark:text-[var(--dark-white)]">
                       박솔로
                     </p>
                     <p className="text-[12px]">25.06.10</p>
@@ -147,12 +151,12 @@ export default function Dictionary() {
                     이런 저 어떡하죠?
                   </p>
                 </div>
-                <button className="absolute bottom-[10px] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
+                <button className="absolute bottom-[10px] dark:text-[var(--dark-white)] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
                   더보기
                 </button>
               </div>
 
-              <div className="relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
+              <div className="dark:bg-[var(--dark-bg-secondary)] dark:text-[var(--dark-gray-700)] relative border rounded-[20px] border-[var(--primary-pink)] w-[480px] h-[150px] flex items-center  shadow-md">
                 <div className="w-[80px] h-[80px] border-[var(--primary-pink)] border shadow-lg overflow-hidden flex-shrink-0 rounded-full ml-[30px]">
                   <img
                     src={womanImg}
@@ -162,7 +166,7 @@ export default function Dictionary() {
                 </div>
                 <div className="flex flex-col ml-[20px]">
                   <div className="flex items-center gap-2 text-[var(--gray-500)] mb-[5px]">
-                    <p className="font-semibold text-[16px] text-black">
+                    <p className="font-semibold text-[16px] text-black dark:text-[var(--dark-white)]">
                       김사랑
                     </p>
                     <p className="text-[12px]">25.04.21</p>
@@ -175,7 +179,7 @@ export default function Dictionary() {
                     생일 선물 추천해주세요!
                   </p>
                 </div>
-                <button className="absolute bottom-[10px] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
+                <button className="absolute bottom-[10px] dark:text-[var(--dark-white)] right-[20px] border rounded-[20px] w-[70px] h-[25px] text-[12px] border-[var(--primary-pink)] bg-[var(--primary-pink)]">
                   더보기
                 </button>
               </div>
@@ -183,7 +187,7 @@ export default function Dictionary() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center text-center mt-[-20px]">
+        <div className="flex flex-col items-center text-center mt-[-20px] dark:text-[var(--dark-gray-700)]">
           <div className="flex items-center mb-[10px]">
             <div className="mr-[10px]">
               <Icon
@@ -198,7 +202,7 @@ export default function Dictionary() {
               사랑, 커플에게도 솔로에게도 어려워요.
             </p>
           </div>
-          <p className="text-[16px] text-[var(--gray-500)]">
+          <p className="text-[16px] text-[var(--gray-500)] dark:text-[var(--dark-gray-700)]">
             나와 같은 고민을 가진 사용자들과 고민 상담을 해요!<br></br> 연애
             고수들이 명쾌한 답을 알려줄 거예요.<br></br> 데이트 명소나 맛집
             정보도 알 수 있어요.
