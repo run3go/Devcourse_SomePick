@@ -1,5 +1,5 @@
 import Tags from "./Tags";
-import MatchingCard from "../MatchingPage/MatchingCard";
+// import MatchingCard from "../MatchingPage/MatchingCard";
 import useFadeIn from "../common/useFadeIn";
 import Icon from "../common/Icon";
 export default function Meeting() {
