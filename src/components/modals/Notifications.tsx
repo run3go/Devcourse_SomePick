@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Icon from "../common/Icon";
 import type { Notification } from "../../types/notification";
-// import type { RealtimeChannel } from "@supabase/supabase-js";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export default function Notifications() {
   const navigate = useNavigate();
