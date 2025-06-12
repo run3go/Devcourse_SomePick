@@ -14,7 +14,7 @@ type Comments = {
 
 type Like = {
   user_id: string;
-}
+};
 type PostData = {
   id: number;
   created_at: string;

@@ -1,6 +1,77 @@
 import { twMerge } from "tailwind-merge";
+import {
+  fetchNotifications,
+  readNotification,
+  readAllNotification,
+  subscribeNotification,
+} from "../../apis/notification";
+import { useState } from "react";
+
+interface Notifications {
+  id: number;
+  created_at: string;
+  sender: {
+    id: string;
+    nickname: string;
+  };
+  sender_id: string;
+  receiver_id: string;
+  post_id?: number;
+  comment_id?: number;
+  message_id?: number;
+  matching_id?: number;
+  like_id?: number;
+  chat_room_id?: number;
+  is_matched?: boolean;
+}
 
 export default function Notifications() {
+  const [notifications, setNotifications] = useState<Notifications[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [channel, setChannel] = useState(null);
+
+  // 전체 알림 목록 가져오기
+  const loadNotifications = async () => {
+    try {
+      setIsLoading(true);
+      const data = await fetchNotifications();
+      console.log(data);
+      // setNotifications(data)
+    } catch (e) {
+      console.log("에러", e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 알림 하나 하나 읽음 처리
+  const handleNotification = async () => {
+    try {
+      //읽지 않은 알림을 읽음 처리
+    } catch (e) {
+      console.log("알림읽기", e);
+    }
+  };
+
+  // 전체 읽음
+  const handleAllNotifications = async () => {
+    try {
+      const data = await readAllNotification();
+      console.log(data);
+      // setNotifications((prev) => prev.map(n => ({...n, })))
+    } catch (e) {
+      console.log("전체 알림", e);
+    }
+  };
+
+  //  알림 형태
+  const formatNotifications = (notification: Notifications) => {
+    const senderName = notification.sender.nickname || "누군가";
+  };
+
+  // 새로운 알림 실시간 반영
+  // const newNotifications = async () => {
+  // }
   return (
     <div
       className={twMerge(
@@ -14,6 +85,7 @@ export default function Notifications() {
       <div className="relative flex w-full justify-end">
         <span className="absolute left-[10px] top-[7px]">알림</span>
         <button
+          onClick={loadNotifications}
           className={twMerge("notification_item px-[18px] cursor-pointer")}
         >
           전체 읽음
