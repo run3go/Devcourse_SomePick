@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { followUser, unfollowUser } from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";

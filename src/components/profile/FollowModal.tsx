@@ -5,7 +5,7 @@ import {
   followUser,
   unfollowUser,
 } from "../../apis/follow";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 
 export default function FollowModal({
