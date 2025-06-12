@@ -10,13 +10,26 @@ export default function BackButton({
   type?: string;
 }) {
   const navigate = useNavigate();
-  const { resetData } = useSignUpStore();
+  const { resetData, updateData } = useSignUpStore();
 
   const handleButtonClick = () => {
-    switch (type) {
-      case "couple":
-        resetData();
+    if (type && type === "solo3") {
+      updateData({
+        keywords: "",
+        interests: "",
+        ideal_types: "",
+        job: "",
+        height: 0,
+        location: "",
+        mbti: "",
+        description: "",
+      });
     }
+
+    if (!type) {
+      resetData();
+    }
+
     navigate(-1);
   };
 
