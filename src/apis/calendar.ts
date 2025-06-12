@@ -61,8 +61,7 @@ export const updateMeetDate = async (couple_id: number, newMeetDate: Date) => {
     console.log("날짜 업데이트 실패:", error.message);
     return;
   }
-  console.log(data);
-  return data;
+  return data.meet_date;
 };
 //달력 일정 추가 (커플 아이디, 날짜, 제목, 내용)
 export const createSchedule = async (

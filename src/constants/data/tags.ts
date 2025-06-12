@@ -64,3 +64,12 @@ export const interests = [
   "산책",
   "갓생",
 ];
+
+export const profileInfo = {
+  nickname: "닉네임",
+  age: "나이",
+  height: "키",
+  job: "직업",
+  location: "지역",
+  mbti: "MBTI",
+};

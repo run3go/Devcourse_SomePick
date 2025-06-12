@@ -57,6 +57,7 @@ export const fetchPostByPostId = async (postId: number) => {
         ),
         comments(
           id,
+          parent_id,
           comment,
           created_at,
           author:profiles!author_id(
