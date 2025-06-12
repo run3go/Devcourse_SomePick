@@ -14,3 +14,11 @@ type Schedule = {
   memo: string | null;
   title: string;
 };
+
+type SchedulePayload = {
+  couple_id: number;
+  date: string;
+  title: string;
+  memo: string;
+  id?: number;
+};

@@ -74,6 +74,7 @@ export default function MeetDate({ couple }: { couple: Couple }) {
             onClick={() => setIsModalOpen(true)}
             className={twMerge(
               "cursor-pointer text-[40px] font-bold text-[var(--primary-pink-point)]",
+              "hover:animate-pulse",
               !calcPeriod() && "animate-pulse"
             )}
           >
