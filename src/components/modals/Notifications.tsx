@@ -110,7 +110,7 @@ export default function Notifications() {
       const res = await subscribeNotification((notifications: Notification) => {
         setNotifications((prev) => [notifications, ...prev]);
       });
-      channel = res;
+      channel = res ?? null;
     };
 
     subscribe();
