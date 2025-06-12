@@ -136,6 +136,31 @@ export const notifyMessage = async (
     console.error(e);
   }
 };
+
+// 스케줄 알림 보내기
+export const notifySchedule = async (receiver_id: string) => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase.from("notifications").insert([
+      {
+        sender_id: session.user.id,
+        receiver_id,
+        type: "schedule",
+      },
+    ]);
+    if (error) {
+      console.log("일정 알림 실패:", error.message);
+      return;
+    }
+    console.log("일정 알림 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 //알림 가져오기
 export const fetchNotifications = async () => {
   try {
