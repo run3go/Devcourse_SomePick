@@ -14,8 +14,10 @@ import DateItem from "./DateItem";
 
 export default function Calendar({
   optimisticSchedules,
+  showScrollBtn,
 }: {
   optimisticSchedules: Schedule[];
+  showScrollBtn: () => void;
 }) {
   const [date, setDate] = useState(new Date());
   const year = getYear(date);
@@ -83,6 +85,7 @@ export default function Calendar({
                   key={item}
                   item={item}
                   date={date}
+                  showScrollBtn={showScrollBtn}
                   schedules={optimisticSchedules.filter(
                     (schedule) =>
                       schedule.date ===

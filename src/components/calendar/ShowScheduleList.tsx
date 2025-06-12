@@ -7,9 +7,11 @@ import ScheduleItem from "./ScheduleItem";
 export default function ShowScheduleList({
   schedules,
   isPending,
+  scrollToInput,
 }: {
   schedules: Schedule[];
   isPending: boolean;
+  scrollToInput: () => void;
 }) {
   const targetDate = useCalendarStore((state) => state.targetDate);
   const upcomingSchedules = [...schedules]
@@ -47,10 +49,18 @@ export default function ShowScheduleList({
         <ul className="flex flex-col gap-4 mt-5">
           {targetDate
             ? targetDateSchedules.map((schedule) => (
-                <ScheduleItem key={schedule.id} schedule={schedule} />
+                <ScheduleItem
+                  key={schedule.id}
+                  schedule={schedule}
+                  scrollToInput={scrollToInput}
+                />
               ))
             : upcomingSchedules.map((schedule) => (
-                <ScheduleItem key={schedule.id} schedule={schedule} />
+                <ScheduleItem
+                  key={schedule.id}
+                  schedule={schedule}
+                  scrollToInput={scrollToInput}
+                />
               ))}
         </ul>
       )}

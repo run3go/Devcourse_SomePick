@@ -5,14 +5,17 @@ import { useCalendarStore } from "../../stores/calendarStore";
 export default function DateItem({
   item,
   date,
+  showScrollBtn,
   schedules,
 }: {
   item: number;
   date: Date;
+  showScrollBtn: () => void;
   schedules: Schedule[];
 }) {
   const targetDate = useCalendarStore((state) => state.targetDate);
   const setTargetDate = useCalendarStore((state) => state.setTargetDate);
+
   const [targetYear, targetMonth, targetDay] = targetDate
     .split("-")
     .map(Number);
@@ -21,15 +24,22 @@ export default function DateItem({
   const year = getYear(date);
   const month = getMonth(date);
   const day = getDate(date);
+
+  const selectDate = () => {
+    showScrollBtn();
+    setTargetDate([year, month + 1, item].join("-"));
+  };
   return (
     <div key={item} className="basis-1/7 h-25">
       <div className={twMerge("pb-[14px] leading-[1] inline-block")}>
         <div
-          className={twMerge("relative w-[55px] h-[22px] text-center text-2xl")}
+          className={twMerge(
+            "relative w-[55px] h-[24.5px] text-center text-2xl"
+          )}
         >
           {item < 1 ? null : (
             <span
-              onClick={() => setTargetDate([year, month + 1, item].join("-"))}
+              onClick={selectDate}
               className={twMerge(
                 day === item &&
                   thisMonth === month &&
@@ -53,7 +63,7 @@ export default function DateItem({
             .map((schedule) => (
               <li
                 key={schedule.id}
-                className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[13px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white"
+                className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[13px] pr-[3px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white"
               >
                 {schedule.title}
               </li>

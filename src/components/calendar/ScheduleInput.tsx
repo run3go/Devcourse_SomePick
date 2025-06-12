@@ -9,9 +9,11 @@ import Button from "../common/Button";
 export default function ScheduleInput({
   addOptimisticSchedule,
   startTransiton,
+  scrollRef,
 }: {
   addOptimisticSchedule: (action: Schedule) => void;
   startTransiton: React.TransitionStartFunction;
+  scrollRef: React.RefObject<HTMLInputElement | null>;
 }) {
   const targetDate = useCalendarStore((state) => state.targetDate);
   const { couple }: { couple: Couple } = useLoaderData();
@@ -20,9 +22,13 @@ export default function ScheduleInput({
 
   const title = useCalendarStore((state) => state.title);
   const memo = useCalendarStore((state) => state.memo);
-  const { setTitle, setMemo, addSchedule } = useCalendarStore();
+  const { setTitle, setMemo, addSchedule, setTargetDate } = useCalendarStore();
 
   const handleSubmit = () => {
+    if (!title.trim().length) {
+      toast.warn("제목을 입력해주세요");
+      return;
+    }
     startTransiton(async () => {
       const opti: Schedule = {
         created_at: new Date().toString(),
@@ -39,6 +45,10 @@ export default function ScheduleInput({
         addSchedule(schedule);
         setTitle("");
         setMemo("");
+        scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => {
+          setTargetDate("");
+        }, 500);
       } else {
         toast.error("일정 등록에 실패했습니다");
       }
@@ -47,6 +57,7 @@ export default function ScheduleInput({
   if (targetDate)
     return (
       <div
+        ref={scrollRef}
         className={twMerge(
           "flex flex-col gap-[27px] h-[453px] mt-[80px] px-[77px] py-[35px] ",
           "border border-[var(--primary-pink)] mb-[150px]"
