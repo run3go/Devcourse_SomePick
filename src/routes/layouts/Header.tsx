@@ -7,6 +7,12 @@ import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useAuthStore } from "../../stores/authStore";
 import Alert from "../../components/common/Alert";
+import {
+  fetchNotifications,
+  subscribeNotification,
+} from "../../apis/notification";
+import type { Notification } from "../../types/notification";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -16,9 +22,62 @@ export default function Header() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
   const couple = session?.user.user_metadata.status;
+
+  // 초기 알림 데이터 로드
+  useEffect(() => {
+    const loadNotifications = async () => {
+      if (!isLogin) return;
+
+      try {
+        const data = await fetchNotifications();
+        if (data) {
+          setNotifications(data);
+          setHasUnreadNotifications(data.length > 0);
+        }
+      } catch (error) {
+        console.error("알림 로드 에러:", error);
+      }
+    };
+
+    loadNotifications();
+  }, [isLogin]);
+
+  // 실시간 알림 구독 (헤더에서 항상 실행)
+  useEffect(() => {
+    if (!isLogin) return;
+
+    let channel: RealtimeChannel | null = null;
+
+    const subscribe = async () => {
+      const res = await subscribeNotification(addNotification);
+      channel = res ?? null;
+    };
+
+    subscribe();
+
+    return () => {
+      if (channel) {
+        channel.unsubscribe();
+      }
+    };
+  }, [isLogin]);
+
+  // 헤더에서는 상태 업데이트
+  const addNotification = (newNotification: Notification) => {
+    setNotifications((prev) => [newNotification, ...prev]);
+    setHasUnreadNotifications(true);
+  };
+
+  const updateNotifications = (updatedNotifications: Notification[]) => {
+    setNotifications(updatedNotifications);
+    setHasUnreadNotifications(updatedNotifications.length > 0);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -26,7 +85,6 @@ export default function Header() {
         outsideRef.current &&
         !outsideRef.current.contains(e.target as Node)
       ) {
-        e.preventDefault();
         setIsNotificationOpen(false);
         setIsModalOpen(false);
       }
@@ -164,9 +222,18 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   />
+                  {/* 알림 뱃지 표시 */}
+                  {hasUnreadNotifications && (
+                    <span className="absolute top-[-7px] right-[-2px] text-[var(--primary-pink)] text-[18px]">
+                      ●
+                    </span>
+                  )}
                   {isNotificationOpen && (
                     <div ref={outsideRef}>
-                      <Notifications />
+                      <Notifications
+                        notifications={notifications}
+                        onNotificationsChange={updateNotifications}
+                      />
                     </div>
                   )}
                 </div>
