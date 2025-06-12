@@ -52,8 +52,10 @@ type MiniProfilecardProps = {
     id: string;
     main_image: string | null;
     nickname: string | null;
+    is_followed?: boolean;
   };
   onClose: () => void;
+  onFollowToggle?: (userId: string, isNowFollowing: boolean) => void;
 };
 
 type Anchor = { x: number; y: number };

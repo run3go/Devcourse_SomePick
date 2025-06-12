@@ -6,9 +6,13 @@ import SearchBar from "../../components/webboard/SearchBar";
 import SortDropdown from "../../components/webboard/SortDropdown";
 import WriteButton from "../../components/webboard/WriteButton";
 import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
+import { useAuthStore } from "../../stores/authStore";
+import { fetchFollowingList } from "../../apis/follow";
 
 export default function PostsPage() {
+  const { session } = useAuthStore();
   const [posts, setPosts] = useState<PostData[]>([]);
+  const [followings, setFollowings] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
   const [sortRule, setSortRule] = useState<"created_at" | "likes">("created_at");
   const [keyword, setKeyword] = useState("");
@@ -20,6 +24,34 @@ export default function PostsPage() {
 
   // 무한 스크롤 관찰용 레퍼런스
   const loaderRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!session) return;
+    (async () => {
+      const data = await fetchFollowingList(session.user.id);
+      if (data) {
+        setFollowings(data.map((item) => item.following.id));
+      }
+    })();
+  }, [session]);
+
+  const handleFollowToggle = (userId: string, isNowFollowing: boolean) => {
+    // posts 의 author.is_followed 업데이트
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.author.id === userId
+          ? {
+              ...post,
+              author: { ...post.author, is_followed: isNowFollowing },
+            }
+          : post
+      )
+    );
+    // followings 리스트도 동기화
+    setFollowings((prev) =>
+      isNowFollowing ? [...prev, userId] : prev.filter((id) => id !== userId)
+    );
+  };
 
   // 채널/정렬/검색어 변경 시 초기화
   useEffect(() => {
@@ -77,7 +109,14 @@ export default function PostsPage() {
           className="fixed z-50"
           style={{ top: selected.anchor.y - 50, left: selected.anchor.x - 250 }}
         >
-          <MiniProfilecard user={selected.user} onClose={() => setSelected(null)} />
+          <MiniProfilecard
+            user={{
+              ...selected.user,
+              is_followed: followings.includes(selected.user.id),
+            }}
+            onClose={() => setSelected(null)}
+            onFollowToggle={handleFollowToggle}
+          />
         </div>
       )}
 
