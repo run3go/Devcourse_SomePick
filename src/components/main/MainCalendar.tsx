@@ -10,7 +10,9 @@ export default function MainCalender() {
           <p className="mb-[10px] text-[24px] text-[var(--gray-500)] font-bold">
             연인과 함께 쓰는
           </p>
-          <p className="text-[40px] font-bold">데이트 캘린더</p>
+          <p className="text-[40px] font-bold dark:text-[var(--dark-gray-700)]">
+            데이트 캘린더
+          </p>
         </div>
 
         <div className="flex gap-[40px] items-center justify-center mt-[50px]">
@@ -18,7 +20,7 @@ export default function MainCalender() {
             <div className="w-[650px] h-[500px] border-[var(--primary-pink)] border flex justify-center items-center shadow-lg rounded-[20px]">
               <ShowCalendar />
             </div>
-            <div className="flex flex-col text-left mt-[30px]">
+            <div className="flex flex-col text-left mt-[30px] dark:text-[var(--dark-gray-700)]">
               <div className="flex items-center mb-[10px]">
                 <div className="mr-[10px]">
                   <Icon
@@ -58,7 +60,7 @@ export default function MainCalender() {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col text-left mt-[40px]">
+            <div className="flex flex-col text-left mt-[40px] dark:text-[var(--dark-gray-700)]">
               <div className="flex items-center mb-[10px]">
                 <div className="mr-[10px]">
                   <Icon
@@ -70,7 +72,7 @@ export default function MainCalender() {
                 </div>
                 <p className="text-[24px] font-bold">일정 작성</p>
               </div>
-              <p className="text-[16px] text-[var(--gray-500)]">
+              <p className="text-[16px] text-[var(--gray-500)] dark:text-[var(--dark-gray-700)]">
                 데이트, 기념일, 이벤트 등을 입력해 기록하고 관리할 수 있어요.
               </p>
             </div>

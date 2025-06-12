@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import { fetchUserData } from "./loader/auth.loader";
+import { getCoupleInfo } from "./loader/calendar.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
 import CalendarPage from "./pages/CalendarPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
-import MessageDetailPage from "./pages/MessageDetailPage";
+// import MessageDetailPage from "./pages/MessageDetailPage";
 import MessagePage from "./pages/MessagePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
@@ -21,6 +22,9 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/couplecalendar",
+        loader: getCoupleInfo,
         Component: CalendarPage,
       },
       {
@@ -69,8 +74,16 @@ const router = createBrowserRouter([
         Component: MessagePage,
         children: [
           {
-            path: ":id",
-            Component: MessageDetailPage,
+            path: ":id/request",
+            Component: ChatRequestPage,
+          },
+          {
+            path: ":id/room",
+            Component: ChatRoomPage,
+          },
+          {
+            path: ":id/waiting",
+            Component: ChatWaitingPage,
           },
         ],
       },

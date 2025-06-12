@@ -1,7 +1,10 @@
+import { getYear } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import Button from "../common/Button";
 
-export default function ScheduleInput() {
+export default function ScheduleInput({ targetDate }: { targetDate: string }) {
+  const [targetYear, targetMonth, targetDay] = targetDate.split("-");
+  const thisYear = getYear(new Date()).toString();
   return (
     <div
       className={twMerge(
@@ -10,7 +13,8 @@ export default function ScheduleInput() {
       )}
     >
       <h2 className="text-[26px] text-[var(--primary-pink-point)]">
-        선택된 날짜 - 6월 19일
+        선택된 날짜 - {thisYear !== targetYear && `${targetYear}년`}{" "}
+        {targetMonth}월 {targetDay}일
       </h2>
       <input
         type="text"

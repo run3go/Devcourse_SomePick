@@ -5,7 +5,7 @@ import logoImage from "../../assets/images/headerlogo.png";
 import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Alert from "../../components/common/Alert";
 
 export default function Header() {
@@ -37,7 +37,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex justify-center items-center bg-white border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
+      <div className="flex justify-center items-center bg-white dark:bg-[var(--dark-bg-primary)] border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
         <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
@@ -45,7 +45,7 @@ export default function Header() {
             onClick={() => navigate("/")}
             className="cursor-pointer"
           />
-          <div className="relative flex items-center gap-[65px] ">
+          <div className="relative flex items-center gap-[65px] dark:text-[var(--dark-gray-700)]">
             <NavLink
               className={({ isActive }) =>
                 twMerge(

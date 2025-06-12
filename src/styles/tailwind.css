@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 .btn-search-icon {
   @apply ml-2 w-[20px] h-[20px] bg-no-repeat cursor-pointer;
