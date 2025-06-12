@@ -10,7 +10,8 @@ export default function BackButton({
   type?: string;
 }) {
   const navigate = useNavigate();
-  const { resetData, updateData } = useSignUpStore();
+  const { data, resetData, updateData } = useSignUpStore();
+  const soloData = data as SoloOptions;
 
   const handleButtonClick = () => {
     if (type && type === "solo3") {
@@ -22,7 +23,7 @@ export default function BackButton({
         height: 0,
         location: "",
         mbti: "",
-        description: "",
+        ...(soloData.description ? { description: "" } : {}),
       });
     }
 

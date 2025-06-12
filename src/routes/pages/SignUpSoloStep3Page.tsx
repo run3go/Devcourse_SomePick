@@ -9,28 +9,30 @@ export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
   const { data, email, pw } = useSignUpStore();
 
-  function isSoloOptions(
-    data: SoloOptions | CoupleOptions
-  ): data is SoloOptions {
-    return data.status === "solo";
-  }
+  const soloData = data as SoloOptions;
+
+  // function isSoloOptions(
+  //   data: SoloOptions | CoupleOptions
+  // ): data is SoloOptions {
+  //   return data.status === "solo";
+  // }
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isSoloOptions(data)) {
-      if (
-        !data.keywords ||
-        data.keywords.length < 4 ||
-        !data.interests ||
-        data.interests.length < 4 ||
-        !data.ideal_types ||
-        data.ideal_types.length < 4
-      ) {
-        alert("각 항목에서 최소 4개 이상 선택해주세요.");
-        return;
-      }
+    // if (isSoloOptions(data)) {
+    if (
+      !soloData.keywords ||
+      soloData.keywords.length < 4 ||
+      !soloData.interests ||
+      soloData.interests.length < 4 ||
+      !soloData.ideal_types ||
+      soloData.ideal_types.length < 4
+    ) {
+      alert("각 항목에서 최소 4개 이상 선택해주세요.");
+      return;
     }
+    // }
 
     console.log(data, email, pw);
 
