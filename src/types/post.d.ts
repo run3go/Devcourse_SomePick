@@ -59,3 +59,5 @@ type MiniProfilecardProps = {
 type Anchor = { x: number; y: number };
 
 type Selected = { user: Author; anchor: Anchor };
+
+type ChannelName = "free" | "dating";

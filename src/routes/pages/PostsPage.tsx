@@ -7,8 +7,6 @@ import SortDropdown from "../../components/webboard/SortDropdown";
 import WriteButton from "../../components/webboard/WriteButton";
 import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
 
-type ChannelName = "free" | "dating";
-
 export default function PostsPage() {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [offset, setOffset] = useState(0);
@@ -34,7 +32,21 @@ export default function PostsPage() {
     (async () => {
       const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
       if (!result) return;
-      setPosts((prev) => (offset === 0 ? result : [...prev, ...result]));
+
+      setPosts((prev) => {
+        // 1) offset 0 → 완전 교체, else → 기존 뒤에 추가
+        const merged = offset === 0 ? result : [...prev, ...result];
+
+        // 2) 인기순 정렬이라면, 좋아요 개수 내림차순으로 정렬
+        if (sortRule === "likes") {
+          return merged
+            .slice() // 원본 보호
+            .sort((a, b) => b.likes.length - a.likes.length);
+        }
+
+        // 3) 최신순 등 나머지일 땐 그대로
+        return merged;
+      });
     })();
   }, [safeChannel, offset, sortRule, keyword]);
 
