@@ -144,15 +144,17 @@ export default function Header() {
           <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
             {isLogin && (
               <>
-                <Link to={"/message"}>
-                  <Icon
-                    width="27px"
-                    height="27px"
-                    left="-361px"
-                    top="-228px"
-                    className="cursor-pointer"
-                  />
-                </Link>
+                {couple !== "couple" && (
+                  <Link to={"/message"}>
+                    <Icon
+                      width="27px"
+                      height="27px"
+                      left="-361px"
+                      top="-228px"
+                      className="cursor-pointer"
+                    />
+                  </Link>
+                )}
                 <div className="relative">
                   <Icon
                     width="28px"
