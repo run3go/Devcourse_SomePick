@@ -1,5 +1,5 @@
+import { useAuthStore } from "../../stores/authStore";
 import ChatItem from "./ChatItem";
-import { useAuthStore } from "../../stores/authstore";
 
 export default function ChatList({
   onChatClick,

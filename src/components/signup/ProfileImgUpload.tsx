@@ -4,10 +4,10 @@ import { deleteImage, storeImage } from "../../apis/util";
 import { useSignUpStore } from "../../stores/signupStore";
 import LoadingSpinner from "../common/LoadingSpinner";
 
-export default function ProfileImgUpload() {
-  const { setImageFile } = useSignUpStore();
-  const [imageUrl, setImageUrl] = useState("");
-  // const [imageFile, setImageFile] = useState<File | null>(null);
+export default function ProfileImgUpload({ type }: { type: string }) {
+  const { setMainImgFile, setSubImgFile } = useSignUpStore();
+  const [mainImageUrl, setMainImageUrl] = useState("");
+  const [subImageUrl, setSubImageUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,11 +19,20 @@ export default function ProfileImgUpload() {
         const url = await storeImage(file, "temp");
 
         if (url) {
-          setImageUrl(url);
-          setImageFile(file);
+          if (type === "main") {
+            setMainImageUrl(url);
+            setMainImgFile(file);
+          } else {
+            setSubImageUrl(url);
+            setSubImgFile(file);
+          }
 
           // updateData({ main_image: url });
           console.log("image upload success!", url);
+
+          setTimeout(() => {
+            deleteImage(url);
+          }, 2000);
         } else {
           console.error("image upload failed.");
         }
@@ -32,28 +41,22 @@ export default function ProfileImgUpload() {
       } finally {
         setIsLoading(false);
       }
-
-      if (imageUrl) {
-        setTimeout(() => {
-          deleteImage(imageUrl);
-        }, 2000);
-      }
     }
   };
 
   return (
     <>
       <label
-        htmlFor="profileImg"
+        htmlFor={`profileImg-${type}`}
         className="relative flex justify-center items-center w-40 h-48 bg-[var(--gray-300-59)] rounded-[18px] shadow-[0_2.21px_8.85px_rgba(0,0,0,0.25)] cursor-pointer hover:bg-[var(--gray-300)]"
       >
         {isLoading && <LoadingSpinner />}
 
         {!isLoading &&
-          (imageUrl ? (
+          (mainImageUrl || subImageUrl ? (
             <>
               <img
-                src={imageUrl}
+                src={type === "main" ? mainImageUrl : subImageUrl}
                 alt="프로필 이미지"
                 draggable="false"
                 className="w-full h-full object-cover rounded-[18px]"
@@ -68,7 +71,7 @@ export default function ProfileImgUpload() {
             <Icon width="30px" height="30px" left="-647px" top="-755px" />
           ))}
         <input
-          id="profileImg"
+          id={`profileImg-${type}`}
           type="file"
           accept="image/*"
           className="hidden"

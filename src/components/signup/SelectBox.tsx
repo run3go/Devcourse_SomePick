@@ -3,15 +3,17 @@ import { optionsGroup } from "./data/optionsData";
 
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export default function SelectBox({ type }: SelectBoxProps) {
+export default function SelectBox({ type, value, onChange }: SelectBoxProps) {
   const options = optionsGroup[type];
+  const selectedOption = options.find((option) => option.value === value);
 
   const titleGroup = {
     job: "직업",
     location: "사는 지역",
-    height: "키",
     mbti: "MBTI",
   };
 
@@ -24,6 +26,8 @@ export default function SelectBox({ type }: SelectBoxProps) {
           options={options}
           isSearchable={false}
           placeholder="선택"
+          value={selectedOption}
+          onChange={(option) => option && onChange(option.value)}
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
