@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import Button from "../common/Button";
 
-interface InfoProps {
+type InfoProps = {
   profileImg?: string;
   name?: string;
   age?: string;
@@ -10,7 +10,7 @@ interface InfoProps {
   keyword?: string[] | null;
   interest?: string[] | null;
   userId?: string;
-}
+};
 
 export default function ChatCard({
   profileImg,
@@ -23,11 +23,15 @@ export default function ChatCard({
   userId,
 }: InfoProps) {
   const navigate = useNavigate();
+
+  // 태그에서 키워드 출력
   const keywords: string[] =
     keyword && keyword.length > 0
       ? keyword.slice(0, 4)
       : ["키워드 정보가 없습니다."];
   console.log(keywords);
+
+  // 태그에서 관심사 출력
   const interests: string[] =
     interest && interest.length > 0
       ? interest.slice(0, 3)

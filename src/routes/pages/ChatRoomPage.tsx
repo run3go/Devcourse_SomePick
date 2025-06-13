@@ -11,6 +11,7 @@ export default function ChatRoomPage() {
 
   const [chatRoomId, setChatRoomId] = useState<string | null>(null);
 
+  // 주소값으로 채팅상대 찾고, 찾은 채팅상대 아이디로 채팅방 아이디 찾아서 출력
   useEffect(() => {
     const prepareChatRoom = async () => {
       if (!chatPartnerId || !authId) return;
@@ -31,7 +32,7 @@ export default function ChatRoomPage() {
 
   return (
     <>
-      <ChatRoom userId={chatPartnerId} />
+      <ChatRoom userId={chatPartnerId} chatRoomId={chatRoomId} />
     </>
   );
 }

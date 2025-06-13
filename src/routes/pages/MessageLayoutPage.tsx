@@ -2,7 +2,7 @@ import { Outlet, useLoaderData } from "react-router";
 import MessagePage from "./MessagePage";
 
 export default function MessageLayoutPage() {
-  const { matchingUserProfile, matchedUserProfile } = useLoaderData();
+  const { matchingUserProfile, matchedUserProfile } = useLoaderData() ?? {};
   return (
     <>
       <div className="w-[1150px] h-full mx-auto gap-10 flex my-[5vh]">

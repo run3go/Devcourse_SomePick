@@ -5,10 +5,10 @@ import EmptyList from "../../components/message/EmptyList";
 import { useAuthStore } from "../../stores/authStore";
 import Icon from "../../components/common/Icon";
 
-interface MessagePageProps {
+type MessagePageProps = {
   matchingUserProfile: Matching[];
   matchedUserProfile: Matching[];
-}
+};
 
 export default function MessagePage({
   matchingUserProfile,
@@ -19,6 +19,7 @@ export default function MessagePage({
   const [selectedTab, setSelectedTab] = useState("받은 하트");
   const session = useAuthStore((state) => state.session);
 
+  // 클릭된 목록 구분
   const handleChatClick = (
     userId: string,
     type?: "received" | "sent" | "matched"
@@ -37,7 +38,8 @@ export default function MessagePage({
     setSelectedTab(tabName);
   };
 
-  const filteredUsers = matchingUserProfile.filter((user) => {
+  // 클릭된 목록으로 구분해서 사용자 목록 출력
+  const filteredUsers = (matchingUserProfile ?? []).filter((user) => {
     if (user.is_matched === true) return false;
 
     const isSentByMe = user.sender.id === session?.user.id;

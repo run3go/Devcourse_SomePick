@@ -14,6 +14,8 @@ export default function ChatRequestPage() {
     await createChatRoom(id);
     const chatRoom = await fetchChatRoom(id);
     console.log(chatRoom?.id);
+
+    // 수락하면 바로 채팅방으로 이동 -> 연결중 목록으로 사용자이름도 이동
     if (chatRoom?.id) {
       navigate(`/message/${id}`);
       setTimeout(() => {
