@@ -1,27 +1,49 @@
-import { useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Profile from "../../assets/images/profile_image.png";
 import ChatInput from "./ChatInput";
+// import { useEffect, useState } from "react";
+// import { fetchProfile } from "../../apis/user";
 
-export default function ChatRoom() {
+export default function ChatRoom({ userId }: { userId?: string }) {
+  const {
+    chatUserProfile,
+  }: {
+    chatUserProfile: ProfileData;
+  } = useLoaderData();
   const navigate = useNavigate();
+
+  // const [user, setUser] = useState<ProfileData | null>(null);
+
+  // useEffect(() => {
+  //   const loadUser = async () => {
+  //     if (!userId) return;
+  //     const data = await fetchProfile(userId);
+  //     if (data) {
+  //       setUser(data);
+  //       console.log("hello");
+  //     }
+  //   };
+  //   loadUser();
+  // }, [userId]);
+
   return (
     <>
       <div className="w-full h-full py-0.5 flex flex-col">
         <div className="flex gap-3.5 px-6 items-center">
           <img
-            src={Profile}
+            src={chatUserProfile.main_image}
             className="w-[45px] h-[45px] rounded-full object-cover object-center"
           />
           <div className="flex flex-col">
             <span
               className="cursor-pointer text-[14px]"
-              onClick={() => navigate("/profile/:id")}
+              onClick={() => navigate(`/profile/${userId}`)}
             >
-              차은우
+              {chatUserProfile.nickname}
             </span>
             <div className="flex gap-1 text-[var(--gray-00)] text-[11px]">
-              <span>서울</span>
-              <span>만 26세</span>
+              <span>{chatUserProfile.location}</span>
+              <span>{`만 ${chatUserProfile.age}세`}</span>
             </div>
           </div>
         </div>
@@ -35,7 +57,7 @@ export default function ChatRoom() {
           <div className="h-full w-full px-8 py-6">
             <div className="flex gap-3.5 items-end">
               <img
-                src={Profile}
+                src={chatUserProfile.main_image}
                 className="w-[35px] h-[35px] rounded-full object-cover object-center"
               />
               <div className="flex items-end gap-3.5 mb-4">
