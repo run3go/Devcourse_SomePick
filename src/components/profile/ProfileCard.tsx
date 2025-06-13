@@ -23,10 +23,11 @@ export default function ProfileCard({
       <div
         onClick={onClick}
         className={twMerge(
-          "group relative p-[15px] flex flex-col justify-center items-center shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl",
+          "group relative p-[15px] flex flex-col justify-center items-center shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] bg-white rounded-2xl",
           isCouple &&
-            "hover:scale-102 transition-all duration-300 hover:shadow-[0_10px_10px_0_rgba(0,0,0,0.25)]",
-          isPartner && "cursor-pointer"
+            "hover:scale-102 transition-all duration-300 hover:shadow-[0_10px_10px_0_rgba(0,0,0,0.25)] ",
+          isPartner && "cursor-pointer",
+          "dark:bg-[var(--dark-gray-300)]"
         )}
       >
         {isMain && (
@@ -69,9 +70,9 @@ export default function ProfileCard({
         )}
       </div>
     );
-  } else {
+  } else if (isEdited) {
     return (
-      <div className="relative p-[18px] flex flex-col justify-center items-center w-[330px] shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl">
+      <div className="bg-white relative p-[18px] flex flex-col justify-center items-center w-[330px] shadow-[0_2px_7px_0_rgba(0,0,0,0.25)] rounded-2xl">
         {isMain && (
           <Icon
             width="37px"

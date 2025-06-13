@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
 import Alert from "../../components/common/Alert";
@@ -20,8 +21,17 @@ export default function ProfileEditPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFormSubmit = async (data: FormValue) => {
-    const { status, nickname, age, job, location, height, mbti, description } =
-      data;
+    const {
+      status,
+      nickname,
+      age,
+      job,
+      location,
+      height,
+      mbti,
+      description,
+      partnerNickname,
+    } = data;
     const mainUrl =
       data.mainImageFile &&
       (await storeImage(data.mainImageFile, "main_image"));
@@ -41,7 +51,7 @@ export default function ProfileEditPage() {
       keywords: data.keywordList,
       interests: data.interestList,
       ideal_types: data.idealTypeList,
-      partner_nickname: status === "solo" ? null : data.partnerNickname,
+      partner_nickname: status === "solo" ? null : partnerNickname,
     };
     await updateProfile(payload);
     if (status === "couple") {
@@ -69,14 +79,13 @@ export default function ProfileEditPage() {
       }, 2000);
     }
   };
-
   const { handleSubmit, register, setValue, watch } = methods;
   const watchedStatus = watch("status", profile.status);
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
   const watchedSubImage = watch("subImageUrl", profile.sub_image);
   if (watchedStatus === "couple") {
     return (
-      <main className="relative flex justify-center mb-[50px]">
+      <main className="relative flex justify-center pb-[50px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(handleFormSubmit)}
@@ -101,7 +110,11 @@ export default function ProfileEditPage() {
                 </span>
               </div>
               <input
-                className="w-[150px] box-border py-2 border-3 border-[var(--gray-200)] rounded-[20px] pl-[20px] focus:outline-[var(--primary-pink)]"
+                className={twMerge(
+                  "w-[150px] box-border py-2 border-3 border-[var(--gray-200)] rounded-[20px] pl-[20px] focus:outline-[var(--primary-pink)]",
+                  "dark:border-[var(--primary-pink-tone)] dark:focus:outline-0 dark:focus:border-[var(--primary-pink-point)]",
+                  "dark:text-[var(--dark-white)]"
+                )}
                 {...register("partnerNickname")}
               />
             </div>
@@ -125,7 +138,7 @@ export default function ProfileEditPage() {
                 onCancel={() => setIsModalOpen(false)}
               />
             )}
-            <div className="flex flex-col w-full mt-[50px]">
+            <div className="flex flex-col w-full  mt-[50px]">
               <Button
                 type="submit"
                 className="w-[264px] h-[38px] self-end mt-8"
@@ -139,7 +152,7 @@ export default function ProfileEditPage() {
     );
   } else
     return (
-      <main className="relative flex justify-center mb-[150px]">
+      <main className="relative flex justify-center pb-[150px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(handleFormSubmit)}
@@ -175,7 +188,11 @@ export default function ProfileEditPage() {
                 </span>
               </div>
               <input
-                className="box-border w-[730px] py-4 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]"
+                className={twMerge(
+                  "box-border w-[730px] py-4 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]",
+                  "dark:text-[var(--dark-white)] dark:border-[var(--primary-pink)]",
+                  "dark:outline-0 dark:focus:border-[var(--primary-pink-point)]"
+                )}
                 {...register("description")}
               />
             </div>
@@ -200,10 +217,20 @@ export default function ProfileEditPage() {
               />
             )}
             <div className="flex flex-col w-full mb-[137px] mt-[132px]">
-              <h3 className="mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
+              <h3
+                className={twMerge(
+                  "mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]",
+                  "dark:text-[var(--dark-white)]"
+                )}
+              >
                 내 정보
               </h3>
-              <div className="flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
+              <div
+                className={twMerge(
+                  "flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]",
+                  "dark:border-[var(--primary-pink)] dark:bg-[var(--dark-bg-secondary)]"
+                )}
+              >
                 <ul className="flex flex-col gap-7">
                   {/* 닉네임, 나이, 키 */}
                   {["nickname", "age", "height"].map((item) => (
@@ -231,7 +258,7 @@ export default function ProfileEditPage() {
                   ))}
                 </ul>
                 {/* 태그 */}
-                <ul className="flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
+                <ul className="dark:text-[var(--dark-white)] flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
                   <SelectTags
                     type="나를 표현하는 키워드"
                     list={keywords}
