@@ -69,7 +69,7 @@ export default function ChatRoom({
   // 메세지 오면 채팅창 맨아래로 이동
   useEffect(() => {
     if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messageEndRef.current.scrollIntoView({ behavior: "auto" });
     }
   }, [messages]);
 
