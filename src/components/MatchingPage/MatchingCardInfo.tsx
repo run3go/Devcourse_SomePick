@@ -2,6 +2,7 @@ import Icon from "../common/Icon";
 import Button from "../common/Button";
 import type { Database } from "../../types/supabase";
 import { useNavigate } from "react-router";
+import { sendHeart } from "../../apis/matching";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -23,10 +24,21 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
   const keywordsToShow = keywords.slice(0, 5);
   const interestsToShow = interests.slice(0, 5);
 
-  const handleSendHeart = (e: React.MouseEvent) => {
+  const handleSendHeart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    // TODO: 하트 보내기 로직
-    console.log(profile.id);
+
+    try {
+      const alreadySent = await sendHeart(profile.id);
+
+      if (alreadySent) {
+        alert("이미 하트를 보낸 상대입니다.");
+      } else {
+        alert("하트를 성공적으로 보냈습니다!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("하트를 보내는 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   const handleViewProfile = (e: React.MouseEvent) => {
