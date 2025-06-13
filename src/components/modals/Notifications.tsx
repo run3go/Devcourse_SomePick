@@ -1,46 +1,27 @@
 import { twMerge } from "tailwind-merge";
-import {
-  fetchNotifications,
-  readNotification,
-  readAllNotification,
-  subscribeNotification,
-} from "../../apis/notification";
+import { readNotification, readAllNotification } from "../../apis/notification";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Icon from "../common/Icon";
 import type { Notification } from "../../types/notification";
-import type { RealtimeChannel } from "@supabase/supabase-js";
 
-export default function Notifications() {
+interface Props {
+  notifications: Notification[];
+  onNotificationsChange: (notifications: Notification[]) => void;
+}
+
+export default function Notifications({
+  notifications,
+  onNotificationsChange,
+}: Props) {
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 알림이 있으면 동그라미 띄우고 없으면 안띄움
-  const [isSeen, setIsSeen] = useState(false);
-
-  // 전체 알림 목록 가져오기
-  const loadNotifications = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetchNotifications();
-      console.log("안녕", data);
-      if (data) {
-        setNotifications(data);
-      }
-    } catch (e) {
-      console.log("에러", e);
-    } finally {
+  useEffect(() => {
+    if (notifications) {
       setIsLoading(false);
     }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await loadNotifications();
-    };
-    fetchData();
-  }, []);
+  }, [notifications]);
 
   // 알림 하나 하나 읽음 처리
   const handleNotification = async (notification: Notification) => {
@@ -48,7 +29,10 @@ export default function Notifications() {
       if (notification.id) {
         await readNotification(notification.id);
       }
-      setNotifications((prev) => prev.filter((n) => n.id !== notification.id));
+      const updatedNotifications = notifications.filter(
+        (n) => n.id !== notification.id
+      );
+      onNotificationsChange(updatedNotifications);
 
       switch (notification.type) {
         case "like":
@@ -89,6 +73,8 @@ export default function Notifications() {
       }
     } catch (e) {
       console.log("알림읽기", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,31 +82,11 @@ export default function Notifications() {
   const handleAllNotifications = async () => {
     try {
       await readAllNotification();
-      setNotifications([]);
+      onNotificationsChange([]);
     } catch (e) {
       console.log("전체 알림", e);
     }
   };
-
-  // 실시간 알림
-  useEffect(() => {
-    let channel: RealtimeChannel | null = null;
-
-    const subscribe = async () => {
-      const res = await subscribeNotification((notifications: Notification) => {
-        setNotifications((prev) => [notifications, ...prev]);
-      });
-      channel = res ?? null;
-    };
-
-    subscribe();
-
-    return () => {
-      if (channel) {
-        channel.unsubscribe();
-      }
-    };
-  }, []);
 
   //  알림 형태
   const formatNotifications = (notification: Notification) => {
@@ -161,6 +127,7 @@ export default function Notifications() {
           <>
             <button
               onClick={handleAllNotifications}
+              disabled={isLoading}
               className={twMerge("notification_item px-[18px] cursor-pointer")}
             >
               전체 읽음
@@ -200,11 +167,6 @@ export default function Notifications() {
           </>
         )}
       </ul>
-      {notifications.length > 0 && !isSeen && (
-        <span className="absolute top-[-58px] right-[-12px] text-[var(--primary-pink)] text-[18px]">
-          ●
-        </span>
-      )}
     </div>
   );
 }
