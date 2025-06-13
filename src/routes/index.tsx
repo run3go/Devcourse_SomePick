@@ -12,12 +12,7 @@ import CalendarPage from "./pages/CalendarPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
-// import MessageDetailPage from "./pages/MessageDetailPage";
 import Back from "./pages/Back";
-import ChatRequestPage from "./pages/ChatRequestPage";
-import ChatRoomPage from "./pages/ChatRoomPage";
-import ChatWaitingPage from "./pages/ChatWaitingPage";
-import MessagePage from "./pages/MessagePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
 import PostDetailPage from "./pages/PostDetailPage";
@@ -30,6 +25,12 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import MessageLayoutPage from "./pages/MessageLayoutPage";
+import ChatEmptyPage from "./pages/ChatEmptyPage";
+import { getUserMessage } from "./loader/message.loader";
 
 const router = createBrowserRouter([
   {
@@ -80,19 +81,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/message",
-        loader: requireAuth,
-        Component: MessagePage,
+        loader: getUserMessage,
+        Component: MessageLayoutPage,
         children: [
           {
+            index: true,
+            Component: ChatEmptyPage,
+          },
+          {
             path: ":id/request",
+            loader: getUserMessage,
             Component: ChatRequestPage,
           },
           {
-            path: ":id/room",
+            path: ":id",
+            loader: getUserMessage,
             Component: ChatRoomPage,
           },
           {
             path: ":id/waiting",
+            loader: getUserMessage,
             Component: ChatWaitingPage,
           },
         ],
