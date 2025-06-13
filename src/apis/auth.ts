@@ -51,7 +51,7 @@ export const checkEmail = async (email: string) => {
       console.log("이메일 중복 확인 실패:", error.message);
       return;
     }
-    return data ? true : false;
+    return data;
   } catch (e) {
     console.error(e);
   }
@@ -65,6 +65,43 @@ export const loginUser = async (email: string, password: string) => {
     });
     if (error) {
       console.log("로그인 실패:", error.message);
+      return;
+    }
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+// 구글 로그인
+export const loginUserByGoogle = async () => {
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+// profile에 정보가 있는지 확인
+export const checkHasProfile = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+    if (error) {
+      console.log(error);
       return;
     }
     return data;

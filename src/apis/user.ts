@@ -39,6 +39,7 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
+    console.log(session);
     const { data: profile, error } = await supabase
       .from("profiles")
       .update(payload)
@@ -49,7 +50,6 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
       console.log("프로필 수정 실패:", error.message);
       return;
     }
-    console.log(profile);
     return profile;
   } catch (e) {
     console.error(e);

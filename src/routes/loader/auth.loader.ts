@@ -1,4 +1,5 @@
 import { redirect } from "react-router";
+import { checkHasProfile } from "../../apis/auth";
 import { useAuthStore } from "../../stores/authstore";
 import supabase from "../../utils/supabase";
 
@@ -10,6 +11,10 @@ export const fetchUserData = async () => {
   if (session) {
     const setLogin = useAuthStore.getState().setLogin;
     setLogin(session);
+    const data = await checkHasProfile(session.user.id);
+    if (!data?.nickname) {
+      return redirect("/auth/signup");
+    }
   }
 };
 

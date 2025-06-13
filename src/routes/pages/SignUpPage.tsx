@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
 import { useSignUpStore } from "../../stores/signupStore";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { email, id } = location.state;
   const { resetData } = useSignUpStore();
 
   return (
@@ -29,7 +30,7 @@ export default function SignUpPage() {
               onClick={() => {
                 // updateData({ status: "couple" });
                 resetData("couple");
-                navigate("couple");
+                navigate("couple", { state: { email, id } });
               }}
             >
               커플
@@ -40,7 +41,7 @@ export default function SignUpPage() {
               onClick={() => {
                 // updateData({ status: "solo" });
                 resetData("solo");
-                navigate("solo/1");
+                navigate("solo/1", { state: { email, id } });
               }}
             >
               솔로

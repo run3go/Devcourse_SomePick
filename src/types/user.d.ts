@@ -23,7 +23,9 @@ type CoupleOptions = CommonOptions & {
 };
 
 type ProfileUpdatePayload = Partial<{
+  id: string;
   age: number;
+  gender: string;
   nickname: string;
   main_image: string;
   sub_image: string;
@@ -91,7 +93,7 @@ type Matching = {
   user_id: string;
   sender: ProfileData;
   reciever: ProfileData;
-}
+};
 
 type FormValue = {
   mainImageUrl: string;
