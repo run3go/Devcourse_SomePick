@@ -20,19 +20,48 @@ export default function MatchingPage() {
   const session = useAuthStore((state) => state.session);
   const name = session!.user.user_metadata?.nickname;
   const gender = session!.user.user_metadata?.gender;
-  const location = session!.user.user_metadata?.location;
-  console.log(location);
+  const mylocation = session!.user.user_metadata?.location;
+  const interests: string[] = session!.user.user_metadata?.interests || [];
+  const [filterByLocation, setFilterByLocation] = useState(false);
+  const [filterByInterest, setFilterByInterest] = useState(false);
+  console.log(interests);
 
   useEffect(() => {
     (async () => {
       const list = await fetchMatchedUsers(gender);
-      if (list) setMatchedProfiles(list);
+      if (list) {
+        setMatchedProfiles(list);
+        // location만 따로 뽑아서 로그
+        const locations = list.map((profile) => profile.location);
+        console.log("Locations:", locations);
+      }
     })();
   }, [gender]);
 
-  const len = matchedProfiles.length;
+  // 변경: 필터링된 프로필 배열 계산 (지역 & 관심사)
+  let displayedProfiles = matchedProfiles;
+  if (filterByLocation) {
+    displayedProfiles = displayedProfiles.filter((profile) => profile.location === mylocation);
+  }
+  if (filterByInterest) {
+    displayedProfiles = displayedProfiles.filter((profile) =>
+      profile.interests?.some((i) => interests.includes(i))
+    );
+  }
+
+  const len = displayedProfiles.length;
   const prevIndex = (currentIndex - 1 + len) % len;
   const nextIndex = (currentIndex + 1) % len;
+
+  // 변경: 필터 토글 시 인덱스 초기화
+  const toggleLocationFilter = () => {
+    setFilterByLocation((prev) => !prev);
+    setCurrentIndex(0);
+  };
+  const toggleInterestFilter = () => {
+    setFilterByInterest((prev) => !prev);
+    setCurrentIndex(0);
+  };
 
   const handlePrev = () => {
     if (len > 0) setCurrentIndex((prev) => (prev - 1 + len) % len);
@@ -41,11 +70,23 @@ export default function MatchingPage() {
     if (len > 0) setCurrentIndex((prev) => (prev + 1) % len);
   };
 
-  const slots = [
-    { idx: prevIndex, position: "side" },
-    { idx: currentIndex, position: "center" },
-    { idx: nextIndex, position: "side" },
-  ] as const;
+  let slots: readonly { idx: number; position: "side" | "center" }[];
+  if (len >= 3) {
+    slots = [
+      { idx: prevIndex, position: "side" },
+      { idx: currentIndex, position: "center" },
+      { idx: nextIndex, position: "side" },
+    ] as const;
+  } else if (len === 2) {
+    // 프로필 2개면 center + side 1개만
+    slots = [
+      { idx: currentIndex, position: "center" },
+      { idx: nextIndex, position: "side" },
+    ] as const;
+  } else {
+    // 프로필 1개면 center 1개만
+    slots = [{ idx: currentIndex, position: "center" }] as const;
+  }
 
   return (
     <>
@@ -60,10 +101,16 @@ export default function MatchingPage() {
 
         {/* 필터 버튼 그룹 */}
         <div className="flex space-x-8">
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleInterestFilter}
+          >
             <span className="inline-block leading-[1]">관심사</span>
           </Button>
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleLocationFilter}
+          >
             <span className="inline-block leading-[1]">지역</span>
           </Button>
           <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
@@ -81,7 +128,7 @@ export default function MatchingPage() {
 
               {len > 0 &&
                 slots.map(({ idx, position }) => {
-                  const profile = matchedProfiles[idx];
+                  const profile = displayedProfiles[idx];
                   const isCenter = position === "center";
                   return (
                     <motion.div
