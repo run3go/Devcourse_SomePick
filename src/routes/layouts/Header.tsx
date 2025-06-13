@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
-import Icon from "../../components/common/Icon";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 import Alert from "../../components/common/Alert";
 import {
   fetchNotifications,
@@ -13,8 +12,15 @@ import {
 } from "../../apis/notification";
 import type { Notification } from "../../types/notification";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useDarkMode } from "../../hooks/useDarkMode";
+import { MdOutlineLightMode } from "react-icons/md";
+import { MdOutlineNightlight } from "react-icons/md";
+import { TbMessageHeart } from "react-icons/tb";
+import { IoNotifications } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
 
 export default function Header() {
+  const { isDark, toggleDarkMode } = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +35,7 @@ export default function Header() {
   const session = useAuthStore((state) => state.session);
   const couple = session?.user.user_metadata.status;
 
-  // 초기 알림 데이터 로드
+  // 초기 알림 데이터
   useEffect(() => {
     const loadNotifications = async () => {
       if (!isLogin) return;
@@ -48,7 +54,7 @@ export default function Header() {
     loadNotifications();
   }, [isLogin]);
 
-  // 실시간 알림 구독 (헤더에서 항상 실행)
+  // 실시간 알림 구독
   useEffect(() => {
     if (!isLogin) return;
 
@@ -203,28 +209,18 @@ export default function Header() {
             {isLogin && (
               <>
                 <Link to={"/message"}>
-                  <Icon
-                    width="27px"
-                    height="27px"
-                    left="-361px"
-                    top="-228px"
-                    className="cursor-pointer"
-                  />
+                  <TbMessageHeart size={25} />
                 </Link>
-                <div className="relative">
-                  <Icon
-                    width="28px"
-                    height="27px"
-                    left="-436px"
-                    top="-228px"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setIsNotificationOpen((state) => !state);
-                    }}
-                  />
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => {
+                    setIsNotificationOpen((state) => !state);
+                  }}
+                >
+                  <IoNotifications size={25} />
                   {/* 알림 뱃지 표시 */}
                   {hasUnreadNotifications && (
-                    <span className="absolute top-[-7px] right-[-2px] text-[var(--primary-pink)] text-[18px]">
+                    <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
                       ●
                     </span>
                   )}
@@ -237,15 +233,11 @@ export default function Header() {
                     </div>
                   )}
                 </div>
-                <div className="relative">
-                  <Icon
-                    width="23px"
-                    height="28px"
-                    left="-516px"
-                    top="-225px"
-                    className="cursor-pointer"
-                    onClick={() => setIsModalOpen((state) => !state)}
-                  />
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => setIsModalOpen((state) => !state)}
+                >
+                  <FaUser size={23} />
                   {isModalOpen && (
                     <div ref={outsideRef}>
                       <HeaderModal onClose={() => setIsModalOpen(false)} />
@@ -267,6 +259,19 @@ export default function Header() {
                 로그인/회원가입
               </NavLink>
             )}
+            <>
+              <button onClick={toggleDarkMode}>
+                {isDark ? (
+                  <div className="cursor-pointer">
+                    <MdOutlineLightMode size={28} />
+                  </div>
+                ) : (
+                  <div className="cursor-pointer">
+                    <MdOutlineNightlight size={28} />
+                  </div>
+                )}
+              </button>
+            </>
           </div>
         </div>
       </div>
