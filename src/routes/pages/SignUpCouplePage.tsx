@@ -15,12 +15,13 @@ import { storeImage } from "../../apis/util";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();
-  const { data, mainImgFile, resetData } = useSignUpStore();
-
-  const [nickname, setNickname] = useState("");
-  const [partner, setPartner] = useState("");
+  const { data, mainImgFile, resetData, updateData } = useSignUpStore();
+  const coupleData = data as CoupleOptions;
+  const { nickname, partner_nickname: partner } = coupleData;
 
   const [isTouched, setIsTouched] = useState(false);
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
+  const [isPwTouched, setIsPwTouched] = useState(false);
 
   const { isDuplicate } = useCheckNickname(nickname);
 
@@ -41,6 +42,11 @@ export default function SignUpCouplePage() {
 
     if (!mainImgFile) {
       alert("이미지를 추가해주세요.");
+      return;
+    }
+
+    if (!nickname) {
+      alert("닉네임을 입력해주세요.");
       return;
     }
 
@@ -73,20 +79,14 @@ export default function SignUpCouplePage() {
 
     const fullPayload = {
       ...data,
-      nickname,
       ...(imgUrl ? { main_image: imgUrl } : {}),
-      ...(partner ? { partner_nickname: partner } : {}),
     };
 
     console.log(fullPayload);
 
-    try {
-      await signupUser(email, pw, fullPayload);
-      navigate("/");
-      resetData();
-    } catch (e) {
-      console.error(e);
-    }
+    await signupUser(email, pw, fullPayload);
+    navigate("/");
+    resetData();
   };
 
   return (
@@ -111,14 +111,14 @@ export default function SignUpCouplePage() {
                     name="userName"
                     value={nickname}
                     onChange={(e) => {
-                      setNickname(e.target.value);
+                      updateData({ nickname: e.target.value });
                       setIsTouched(true);
                     }}
                     className="mb-5"
                     isError={isDuplicate}
                   />
                   {isTouched && (
-                    <div className="absolute right-5 top-1.5">
+                    <div className="absolute right-54 top-1">
                       {isDuplicate === true && (
                         <Icon
                           width="20px"
@@ -149,8 +149,11 @@ export default function SignUpCouplePage() {
               name="email"
               placeholder="user@email.com"
               value={email}
-              onChange={handleEmailChange}
-              isError={!isEmailValid}
+              onChange={(e) => {
+                handleEmailChange(e);
+                setIsEmailTouched(true);
+              }}
+              isError={isEmailTouched && !isEmailValid}
               // className={`${isEmailValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
@@ -158,8 +161,11 @@ export default function SignUpCouplePage() {
               type="password"
               name="password"
               value={pw}
-              onChange={handlePwChange}
-              isError={!isPwValid}
+              onChange={(e) => {
+                handlePwChange(e);
+                setIsPwTouched(true);
+              }}
+              isError={isPwTouched && !isPwValid}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
@@ -175,8 +181,8 @@ export default function SignUpCouplePage() {
               label="내 연인의 닉네임 (선택)"
               type="text"
               name="loverNickname"
-              value={partner}
-              onChange={(e) => setPartner(e.target.value)}
+              value={partner || ""}
+              onChange={(e) => updateData({ partner_nickname: e.target.value })}
             />
 
             <Button type="submit" className="mt-9 w-full h-12.5 rounded-full">

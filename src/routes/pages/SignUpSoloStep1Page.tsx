@@ -9,16 +9,17 @@ import useCheckNickname from "../../hooks/useCheckNickname";
 import Icon from "../../components/common/Icon";
 import InputBirthDate from "../../components/signup/InputBirthDate";
 import useSignupValidation from "../../hooks/useSignupValidation";
-import { storeImage } from "../../apis/util";
+// import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep1Page() {
   const navigate = useNavigate();
 
-  const [nickname, setNickname] = useState("");
   const [isTouched, setIsTouched] = useState(false);
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
+  const [isPwTouched, setIsPwTouched] = useState(false);
 
-  const { mainImgFile, subImgFile, data, updateData, setEmail, setPw } =
-    useSignUpStore();
+  const { mainImgFile, subImgFile, data, updateData } = useSignUpStore();
+  const nickname = data.nickname;
 
   const { isDuplicate } = useCheckNickname(nickname);
 
@@ -72,23 +73,6 @@ export default function SignUpSoloStep1Page() {
       return;
     }
 
-    const mainImgUrl =
-      mainImgFile && (await storeImage(mainImgFile, "main_image"));
-
-    const subImgUrl =
-      subImgFile && (await storeImage(subImgFile, "main_image"));
-
-    const fullPayload = {
-      ...data,
-      nickname,
-      ...(mainImgUrl ? { main_image: mainImgUrl } : {}),
-      ...(subImgUrl ? { sub_image: subImgUrl } : {}),
-    };
-
-    setEmail(email);
-    setPw(pw);
-    updateData(fullPayload);
-
     navigate("/auth/signup/solo/2");
   };
 
@@ -123,14 +107,14 @@ export default function SignUpSoloStep1Page() {
                   name="userName"
                   value={nickname}
                   onChange={(e) => {
-                    setNickname(e.target.value);
+                    updateData({ nickname: e.target.value });
                     setIsTouched(true);
                   }}
                   className="w-[223px]"
                   isError={isDuplicate}
                 />
                 {isTouched && (
-                  <div className="absolute right-5 top-1.5">
+                  <div className="absolute right-34.5 top-1">
                     {isDuplicate === true && (
                       <Icon
                         width="18px"
@@ -167,17 +151,22 @@ export default function SignUpSoloStep1Page() {
               name="email"
               placeholder="user@email.com"
               value={email}
-              onChange={handleEmailChange}
-              isError={!isEmailValid}
-              // className={`${isEmailValid ? "" : "border-[var(--red)]"}`}
+              onChange={(e) => {
+                handleEmailChange(e);
+                setIsEmailTouched(true);
+              }}
+              isError={isEmailTouched && !isEmailValid}
             />
             <SignupInput
               label="비밀번호"
               type="password"
               name="password"
               value={pw}
-              onChange={handlePwChange}
-              isError={!isPwValid}
+              onChange={(e) => {
+                handlePwChange(e);
+                setIsPwTouched(true);
+              }}
+              isError={isPwTouched && !isPwValid}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput

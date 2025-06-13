@@ -8,15 +8,26 @@ type SignUpStore = {
   data: SignUpData;
   updateData: (newData: Partial<SignUpData>) => void;
   resetData: (status?: "solo" | "couple") => void;
+
   mainImgFile: File | null;
-  setMainImgFile: (file: File | null) => void;
+  mainImgUrl: string;
+  setMainImgFile: (file: File | null, url?: string) => void;
+
   subImgFile: File | null;
-  setSubImgFile: (file: File | null) => void;
+  subImgUrl: string;
+  setSubImgFile: (file: File | null, url?: string) => void;
+
   email: string;
   setEmail: (email: string) => void;
+
   pw: string;
   setPw: (pw: string) => void;
-  // resetPartialData: (keys: (keyof SignUpData)[]) => void;
+
+  birthDate: string;
+  setBirthDate: (birthDate: string) => void;
+
+  genderNum: string;
+  setGenderNum: (genderNum: string) => void;
 };
 
 export const useSignUpStore = create<SignUpStore>()(
@@ -46,7 +57,7 @@ export const useSignUpStore = create<SignUpStore>()(
                   gender: "",
                 }
               : {
-                  status: "",
+                  status: "solo",
                   main_image: "",
                   nickname: "",
                   age: 0,
@@ -54,7 +65,7 @@ export const useSignUpStore = create<SignUpStore>()(
 
                   sub_image: "",
                   job: "",
-                  height: 0,
+                  // height: 0,
                   location: "",
                   mbti: "",
                   keywords: "",
@@ -62,19 +73,30 @@ export const useSignUpStore = create<SignUpStore>()(
                   ideal_types: "",
                 },
           mainImgFile: null,
+          mainImgUrl: "",
           subImgFile: null,
+          subImgUrl: "",
           email: "",
           pw: "",
+          birthDate: "",
+          genderNum: "",
         })),
       mainImgFile: null,
-      setMainImgFile: (file) => set({ mainImgFile: file }),
+      mainImgUrl: "",
+      setMainImgFile: (file, url = "") =>
+        set({ mainImgFile: file, mainImgUrl: url }),
       subImgFile: null,
-      setSubImgFile: (file) => set({ subImgFile: file }),
+      subImgUrl: "",
+      setSubImgFile: (file, url = "") =>
+        set({ subImgFile: file, subImgUrl: url }),
       email: "",
       setEmail: (string) => set({ email: string }),
       pw: "",
       setPw: (string) => set({ pw: string }),
-
+      birthDate: "",
+      setBirthDate: (string) => set({ birthDate: string }),
+      genderNum: "",
+      setGenderNum: (string) => set({ genderNum: string }),
       // resetPartialData: (keys) => set((state) => {
       //   keys.forEach((key) => {
       //     const value = state.data[key];

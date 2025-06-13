@@ -4,10 +4,12 @@ import Button from "../../components/common/Button";
 import TagGroup from "../../components/signup/TagGroup";
 import { useSignUpStore } from "../../stores/signupStore";
 import { signupUser } from "../../apis/auth";
+import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
-  const { data, email, pw } = useSignUpStore();
+  const { data, email, pw, mainImgFile, subImgFile, resetData } =
+    useSignUpStore();
 
   const soloData = data as SoloOptions;
 
@@ -36,8 +38,21 @@ export default function SignUpSoloStep3Page() {
 
     console.log(data, email, pw);
 
-    await signupUser(email, pw, data);
+    const mainImgUrl =
+      mainImgFile && (await storeImage(mainImgFile, "main_image"));
+
+    const subImgUrl =
+      subImgFile && (await storeImage(subImgFile, "main_image"));
+
+    const fullPayload = {
+      ...data,
+      ...(mainImgUrl ? { main_image: mainImgUrl } : {}),
+      ...(subImgUrl ? { sub_image: subImgUrl } : {}),
+    };
+
+    await signupUser(email, pw, fullPayload);
     navigate("/");
+    resetData();
   };
 
   return (
