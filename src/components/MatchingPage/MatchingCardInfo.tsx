@@ -26,7 +26,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
   const handleSendHeart = (e: React.MouseEvent) => {
     e.stopPropagation();
     // TODO: 하트 보내기 로직
-    console.log("하트 보냈습니다!");
+    console.log(profile.id);
   };
 
   const handleViewProfile = (e: React.MouseEvent) => {

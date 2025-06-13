@@ -12,6 +12,23 @@ import { useAuthStore } from "../../stores/authstore";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
+const mbtiPairs: Record<string, string[]> = {
+  ENFJ: ["INFP", "ISTP"],
+  INFP: ["ENFJ", "ENTJ"],
+  ISTJ: ["ESFP", "ENFP"],
+  ESFP: ["ISTJ", "INTJ"],
+  INTJ: ["ENFP", "ESFP"],
+  ENFP: ["INTJ", "ISTJ"],
+  ISFJ: ["ESTP", "ENTP"],
+  ESTP: ["ISFJ", "INFJ"],
+  INFJ: ["ESTP", "ENTP"],
+  ENTP: ["ISFJ", "INFJ"],
+  ENTJ: ["INFP", "ISFP"],
+  ISFP: ["ENTJ", "ESFJ"],
+  ESFJ: ["ISFP", "ISTP"],
+  ISTP: ["ESFJ", "ENFJ"],
+};
+
 export default function MatchingPage() {
   const [selectedProfile, setSelectedProfile] = useState<Profiles | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +39,11 @@ export default function MatchingPage() {
   const gender = session!.user.user_metadata?.gender;
   const mylocation = session!.user.user_metadata?.location;
   const interests: string[] = session!.user.user_metadata?.interests || [];
+  const myMbti: string = session!.user.user_metadata?.mbti || "";
   const [filterByLocation, setFilterByLocation] = useState(false);
   const [filterByInterest, setFilterByInterest] = useState(false);
-  console.log(interests);
+  const [filterByMbti, setFilterByMbti] = useState(false);
+  console.log(myMbti);
 
   useEffect(() => {
     (async () => {
@@ -40,13 +59,13 @@ export default function MatchingPage() {
 
   // 변경: 필터링된 프로필 배열 계산 (지역 & 관심사)
   let displayedProfiles = matchedProfiles;
-  if (filterByLocation) {
-    displayedProfiles = displayedProfiles.filter((profile) => profile.location === mylocation);
-  }
-  if (filterByInterest) {
-    displayedProfiles = displayedProfiles.filter((profile) =>
-      profile.interests?.some((i) => interests.includes(i))
-    );
+  if (filterByLocation || filterByInterest || filterByMbti) {
+    displayedProfiles = matchedProfiles.filter((profile) => {
+      if (filterByLocation && profile.location !== mylocation) return false;
+      if (filterByInterest && !profile.interests?.some((i) => interests.includes(i))) return false;
+      if (filterByMbti && !mbtiPairs[myMbti]?.includes(profile.mbti || "")) return false;
+      return true;
+    });
   }
 
   const len = displayedProfiles.length;
@@ -60,6 +79,10 @@ export default function MatchingPage() {
   };
   const toggleInterestFilter = () => {
     setFilterByInterest((prev) => !prev);
+    setCurrentIndex(0);
+  };
+  const toggleMbtiFilter = () => {
+    setFilterByMbti((prev) => !prev);
     setCurrentIndex(0);
   };
 
@@ -113,7 +136,10 @@ export default function MatchingPage() {
           >
             <span className="inline-block leading-[1]">지역</span>
           </Button>
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleMbtiFilter}
+          >
             <span className="inline-block leading-[1]">MBTI</span>
           </Button>
         </div>
