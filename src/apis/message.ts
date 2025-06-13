@@ -81,7 +81,8 @@ export const fetchMessages = async (chatRoomId: string) => {
         )
         `
       )
-      .eq("chat_room_id", chatRoomId);
+      .eq("chat_room_id", chatRoomId)
+      .order("created_at", { ascending: true });
     if (error) {
       console.log("메시지 조회 실패:", error.message);
       return;
