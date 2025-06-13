@@ -1,9 +1,10 @@
 import { useLoaderData, useNavigate } from "react-router";
 import ChatInput from "./ChatInput";
 import { useEffect, useState } from "react";
-import { fetchMessages } from "../../apis/message";
+import { fetchMessages, subscribeToMessages } from "../../apis/message";
 import { useAuthStore } from "../../stores/authStore";
 import dayjs from "dayjs";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export default function ChatRoom({
   userId,
@@ -21,6 +22,12 @@ export default function ChatRoom({
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const authId = session?.user.id;
+
+  const handleNewMessage = (msg: Message) => {
+    setMessages((prev) => [...prev, msg]);
+  };
+
+  // 메세지 불러오기
   useEffect(() => {
     const loadMessages = async () => {
       if (!chatRoomId) return;
@@ -29,8 +36,31 @@ export default function ChatRoom({
         setMessages(data);
       }
     };
-
     loadMessages();
+  }, [chatRoomId]);
+
+  useEffect(() => {
+    if (!chatRoomId) return;
+    let channel: RealtimeChannel | null = null;
+
+    const subscribe = async () => {
+      const res = await subscribeToMessages(chatRoomId, (msg: Message) => {
+        if (msg.sender_id === authId) return;
+        setMessages((prev) => [...prev, msg]);
+        console.log("authId", authId);
+        console.log("msg.sender_id", msg.sender_id);
+        console.log("equals?", String(msg.sender_id) === String(authId));
+      });
+      channel = res ?? null;
+    };
+
+    subscribe();
+
+    return () => {
+      if (channel) {
+        channel.unsubscribe();
+      }
+    };
   }, [chatRoomId]);
 
   return (
@@ -74,7 +104,7 @@ export default function ChatRoom({
                     <span className="text-[10px] text-[#969696] self-end mb-1">
                       {dayjs(message.created_at).format("HH:mm")}
                     </span>
-                    <div className="max-w-96 px-4 py-3 bg-[#FFC7ED] text-black text-right rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl rounded-br-none text-[11px] whitespace-pre-line">
+                    <div className="max-w-96 px-4 py-3 bg-[#FFC7ED] text-black rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl rounded-br-none text-[11px] whitespace-pre-line">
                       <p>{message.message}</p>
                     </div>
                   </div>
@@ -100,7 +130,11 @@ export default function ChatRoom({
             })}
           </div>
         </div>
-        <ChatInput chatRoomId={chatRoomId} receiverId={userId} />
+        <ChatInput
+          chatRoomId={chatRoomId}
+          receiverId={userId}
+          onSend={handleNewMessage}
+        />
       </div>
     </>
   );
