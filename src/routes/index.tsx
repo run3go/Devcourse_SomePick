@@ -9,6 +9,9 @@ import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
 // import MessageDetailPage from "./pages/MessageDetailPage";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
 import MessagePage from "./pages/MessagePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
@@ -22,9 +25,6 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
-import ChatRequestPage from "./pages/ChatRequestPage";
-import ChatWaitingPage from "./pages/ChatWaitingPage";
-import ChatRoomPage from "./pages/ChatRoomPage";
 
 const router = createBrowserRouter([
   {

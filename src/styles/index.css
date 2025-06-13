@@ -76,7 +76,7 @@
 }
 
 body {
-  @apply text-base font-(family-name:--main-font) text-[var(--gray-700)];
+  @apply text-base font-(family-name:--main-font) text-[var(--gray-700)] overflow-y-scroll dark:bg-[var(--dark-bg-primary)];
   font-family: "NPSfontBold";
 }
 
