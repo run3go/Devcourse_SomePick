@@ -28,6 +28,7 @@ export default function SignUpSoloStep1Page() {
     pw,
     pwConfirm,
     isEmailValid,
+    isEmailDuplicate,
     isPwValid,
     isPwConfirmValid,
     handleEmailChange,
@@ -60,6 +61,11 @@ export default function SignUpSoloStep1Page() {
 
     if (!isEmailValid) {
       alert("올바른 이메일 형식이 아닙니다.");
+      return;
+    }
+
+    if (isEmailDuplicate) {
+      alert("중복된 이메일입니다.");
       return;
     }
 
@@ -145,18 +151,43 @@ export default function SignUpSoloStep1Page() {
                 onChange={(e) => setBirthDate(e.target.value)}
               /> */}
             </div>
-            <SignupInput
-              label="이메일"
-              type="email"
-              name="email"
-              placeholder="user@email.com"
-              value={email}
-              onChange={(e) => {
-                handleEmailChange(e);
-                setIsEmailTouched(true);
-              }}
-              isError={isEmailTouched && !isEmailValid}
-            />
+            <div className="relative">
+              <SignupInput
+                label="이메일"
+                type="email"
+                name="email"
+                placeholder="user@email.com"
+                value={email}
+                onChange={(e) => {
+                  handleEmailChange(e);
+                  setIsEmailTouched(true);
+                }}
+                isError={
+                  (isEmailTouched && !isEmailValid) ||
+                  (isEmailTouched && isEmailDuplicate)
+                }
+              />
+              {isEmailTouched && (
+                <div className="absolute left-17.5 top-1">
+                  {isEmailDuplicate === true && (
+                    <Icon
+                      width="20px"
+                      height="20px"
+                      left="-889px"
+                      top="-760px"
+                    />
+                  )}
+                  {isEmailDuplicate === false && (
+                    <Icon
+                      width="16px"
+                      height="12px"
+                      left="-929px"
+                      top="-762px"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
             <SignupInput
               label="비밀번호"
               type="password"
