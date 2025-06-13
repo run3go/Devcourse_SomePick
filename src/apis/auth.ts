@@ -39,6 +39,23 @@ export const checkNickname = async (nickname: string) => {
     console.error(e);
   }
 };
+// 이메일 중복 확인 (이메일)
+export const checkEmail = async (email: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("email", email)
+      .maybeSingle();
+    if (error) {
+      console.log("이메일 중복 확인 실패:", error.message);
+      return;
+    }
+    return data ? true : false;
+  } catch (e) {
+    console.error(e);
+  }
+};
 // 로그인 (이메일, 비밀번호)
 export const loginUser = async (email: string, password: string) => {
   try {

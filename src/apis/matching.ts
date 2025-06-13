@@ -18,6 +18,7 @@ export const fetchMatchedUsers = async (gender: "male" | "female") => {
     console.error(e);
   }
 };
+
 // 관심 있는 상대에게 하트 보내기 (하트를 받을 상대)
 export const sendHeart = async (receiverId: string) => {
   try {
@@ -48,6 +49,7 @@ export const sendHeart = async (receiverId: string) => {
     console.error(e);
   }
 };
+
 // 내게 하트를 준 유저와 내가 하트를 보낸 유저 목록 조회
 export const fetchMatchingUsers = async () => {
   try {
@@ -65,6 +67,37 @@ export const fetchMatchingUsers = async () => {
         `
       )
       .eq("is_matched", false)
+      .or(
+        `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
+      );
+    if (error) {
+      console.log("유저 목록 조회 실패:", error.message);
+      return;
+    }
+    console.log(profiles);
+    return profiles;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// 매칭된 유저 목록 조회 (연결중)
+export const fetchChatUsers = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { data: profiles, error } = await supabase
+      .from("matchings")
+      .select(
+        `
+        *,
+        sender:profiles!user_id(*),
+        reciever:profiles!matching_user_id(*)
+        `
+      )
+      .eq("is_matched", true)
       .or(
         `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
       );

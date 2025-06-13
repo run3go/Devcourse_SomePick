@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router";
 import Button from "../common/Button";
 
-interface InfoProps {
+type InfoProps = {
   profileImg?: string;
   name?: string;
   age?: string;
   message?: string | null;
   items?: string[];
+  keyword?: string[] | null;
+  interest?: string[] | null;
   userId?: string;
-}
+};
 
 export default function ChatCard({
   profileImg,
@@ -16,9 +18,25 @@ export default function ChatCard({
   age,
   message,
   items,
+  keyword,
+  interest,
   userId,
 }: InfoProps) {
   const navigate = useNavigate();
+
+  // 태그에서 키워드 출력
+  const keywords: string[] =
+    keyword && keyword.length > 0
+      ? keyword.slice(0, 4)
+      : ["키워드 정보가 없습니다."];
+  console.log(keywords);
+
+  // 태그에서 관심사 출력
+  const interests: string[] =
+    interest && interest.length > 0
+      ? interest.slice(0, 3)
+      : ["키워드 정보가 없습니다."];
+
   return (
     <>
       <div className="flex gap-10 my-15 items-center justify-center">
@@ -46,56 +64,34 @@ export default function ChatCard({
           </div>
           <hr className="border-[var(--primary-pink)] w-[248px] my-4" />
           <div className="px-5 justify-between flex text-[14px] text-[var(--gray-500)] font-bold">
-            {items.map((item, idx) => (
+            {items?.map((item, idx) => (
               <span key={idx}>{item}</span>
             ))}
           </div>
           <div className="my-5 flex flex-col gap-3.5">
-            <ul className="flex gap-4 w-full justify-center">
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  잘생김
-                </span>
-              </li>
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  듬직한
-                </span>
-              </li>
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  감성적인
-                </span>
-              </li>
+            <ul className="flex flex-wrap justify-center gap-3">
+              {keywords.map((keyword, idx) => (
+                <li
+                  key={`${keyword}-${idx}`}
+                  className="px-3.5 py-1 border border-[var(--primary-pink)] rounded-[50px] flex items-center"
+                >
+                  <span className="text-[12px] text-[var(--gray-50)]">
+                    {keyword}
+                  </span>
+                </li>
+              ))}
             </ul>
-            <ul className="flex gap-4 w-full justify-center">
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  잘생김
-                </span>
-              </li>
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  듬직한
-                </span>
-              </li>
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  감성적인
-                </span>
-              </li>
-            </ul>
-            <ul className="flex gap-4 w-full justify-center">
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  잘생김
-                </span>
-              </li>
-              <li className="px-3.5 py-1 flex items-center border border-[var(--primary-pink)] rounded-[50px]">
-                <span className="inline-block text-[var(--gray-50)] leading-[1] text-[12px]">
-                  듬직한
-                </span>
-              </li>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {interests.map((interest, idx) => (
+                <li
+                  key={`${interest}-${idx}`}
+                  className="px-3.5 py-1 border border-[var(--primary-pink)] rounded-[50px] flex items-center"
+                >
+                  <span className="text-[12px] text-[var(--gray-50)]">
+                    {interest}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
