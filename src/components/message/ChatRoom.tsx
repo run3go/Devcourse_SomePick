@@ -57,9 +57,11 @@ export default function ChatRoom({
         <hr className="mx-5 my-3 border-[var(--gray-300)]" />
         <div className="h-full overflow-y-scroll flex flex-col my-4">
           <div className="flex items-center justify-center">
-            <span className="text-[var(--gray-500)] text-[10px]">
-              2025년 6월 4일
-            </span>
+            {messages.length > 0 && (
+              <span className="text-[var(--gray-500)] text-[10px]">
+                {dayjs(messages[0].created_at).format("YYYY년 MM월 DD일")}
+              </span>
+            )}
           </div>
           <div className="h-full w-full px-8 py-6">
             {messages.map((message, index) => {
@@ -79,7 +81,7 @@ export default function ChatRoom({
                 );
               } else {
                 return (
-                  <div className="flex gap-3.5 items-end">
+                  <div className="flex gap-3.5 items-end" key={index}>
                     <img
                       src={chatUserProfile.main_image}
                       className="w-[35px] h-[35px] rounded-full object-cover object-center"

@@ -9,6 +9,8 @@ export default function ChatInput({
   receiverId?: string | null;
 }) {
   const [message, setMessage] = useState("");
+
+  // 메세지 보내기
   const handleSend = async () => {
     if (!message.trim() || !chatRoomId || !receiverId) return;
     await sendMessage(chatRoomId, message, receiverId);
