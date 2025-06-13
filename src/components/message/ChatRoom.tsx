@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router";
 import ChatInput from "./ChatInput";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchMessages, subscribeToMessages } from "../../apis/message";
 import { useAuthStore } from "../../stores/authStore";
 import dayjs from "dayjs";
@@ -22,6 +22,7 @@ export default function ChatRoom({
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const authId = session?.user.id;
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   const handleNewMessage = (msg: Message) => {
     setMessages((prev) => [...prev, msg]);
@@ -62,6 +63,12 @@ export default function ChatRoom({
       }
     };
   }, [chatRoomId]);
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <>
@@ -128,6 +135,7 @@ export default function ChatRoom({
                 );
               }
             })}
+            <div ref={messageEndRef}></div>
           </div>
         </div>
         <ChatInput
