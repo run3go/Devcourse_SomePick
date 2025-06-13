@@ -30,7 +30,7 @@ export default function SelectTags({
             className={twMerge(
               "hover:border-[var(--primary-pink-point)] cursor-pointer flex px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]",
               field.value.some((value: string) => value === item) &&
-                "bg-[var(--primary-pink)]"
+                "bg-[var(--primary-pink)] dark:text-[var(--dark-bg-primary)]"
             )}
           >
             <span className="text-xs">{item}</span>
