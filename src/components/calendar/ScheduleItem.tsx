@@ -16,7 +16,6 @@ export default function ScheduleItem({
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleUpdateschedule = async () => {
-    console.log("scroll");
     setTargetDate(schedule.date);
     setTitle(schedule.title);
     setMemo(schedule.memo || "");
