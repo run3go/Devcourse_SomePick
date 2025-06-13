@@ -24,6 +24,7 @@ export default function ChatRoom({
   const authId = session?.user.id;
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
+  // 내가 보낸 메세지 바로 보이게
   const handleNewMessage = (msg: Message) => {
     setMessages((prev) => [...prev, msg]);
   };
@@ -40,6 +41,7 @@ export default function ChatRoom({
     loadMessages();
   }, [chatRoomId]);
 
+  // 메세지 실시간 연동
   useEffect(() => {
     if (!chatRoomId) return;
     let channel: RealtimeChannel | null = null;
@@ -64,6 +66,7 @@ export default function ChatRoom({
     };
   }, [chatRoomId]);
 
+  // 메세지 오면 채팅창 맨아래로 이동
   useEffect(() => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
