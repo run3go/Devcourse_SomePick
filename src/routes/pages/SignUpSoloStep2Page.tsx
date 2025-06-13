@@ -10,19 +10,15 @@ import { useSignUpStore } from "../../stores/signupStore";
 export default function SignUpSoloStep2Page() {
   const navigate = useNavigate();
 
-  const [job, setJob] = useState("");
-  const [location, setLocation] = useState("");
-  const [height, setHeight] = useState("");
-  const [mbti, setMbti] = useState("");
-  const [intro, setIntro] = useState("");
+  const { data, updateData } = useSignUpStore();
+  const soloData = data as SoloOptions;
+  const { job, location, height, mbti, description: intro } = soloData;
 
   const [isTouched, setIsTouched] = useState(false);
 
-  const heightNum = parseInt(height);
+  const heightNum = parseInt(height?.toString());
   const isValidHeight =
     !isNaN(heightNum) && heightNum >= 130 && heightNum <= 299;
-
-  const { updateData } = useSignUpStore();
 
   const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +35,9 @@ export default function SignUpSoloStep2Page() {
 
     if (!height) {
       alert("키를 입력해주세요");
-    } else if (height && !isValidHeight) {
+    }
+
+    if (!isValidHeight) {
       alert("정확한 키를 입력해주세요.");
     }
 
@@ -48,15 +46,15 @@ export default function SignUpSoloStep2Page() {
       return;
     }
 
-    const fullPayload = {
-      job,
-      height: heightNum,
-      location,
-      mbti,
-      ...(intro ? { description: intro } : {}),
-    };
+    // const fullPayload = {
+    //   job,
+    //   height: heightNum,
+    //   location,
+    //   mbti,
+    //   ...(intro ? { description: intro } : {}),
+    // };
 
-    updateData(fullPayload);
+    // updateData(fullPayload);
 
     navigate("/auth/signup/solo/3");
   };
@@ -75,11 +73,15 @@ export default function SignUpSoloStep2Page() {
             className="w-[490px] h-[770px] flex flex-col justify-center"
           >
             <div className="flex justify-between mb-10">
-              <SelectBox type="job" value={job} onChange={setJob} />
+              <SelectBox
+                type="job"
+                value={job || ""}
+                onChange={(value) => updateData({ job: value })}
+              />
               <SelectBox
                 type="location"
-                value={location}
-                onChange={setLocation}
+                value={location || ""}
+                onChange={(value) => updateData({ location: value })}
               />
             </div>
 
@@ -89,15 +91,20 @@ export default function SignUpSoloStep2Page() {
                 type="text"
                 name="height"
                 className="w-[220px] mb-0"
-                value={height}
+                value={height?.toString() || ""}
                 onChange={(e) => {
                   const value = e.target.value;
-                  if (/^\d*$/.test(value)) setHeight(value);
+                  if (/^\d*$/.test(value))
+                    updateData({ height: parseInt(value) || 0 });
                   setIsTouched(true);
                 }}
                 isError={isTouched && !isValidHeight}
               />
-              <SelectBox type="mbti" value={mbti} onChange={setMbti} />
+              <SelectBox
+                type="mbti"
+                value={mbti || ""}
+                onChange={(value) => updateData({ mbti: value })}
+              />
             </div>
 
             <SignupInput
@@ -105,8 +112,8 @@ export default function SignUpSoloStep2Page() {
               type="text"
               name="intro"
               placeholder="첫인상을 결정짓는 한 문장!"
-              value={intro}
-              onChange={(e) => setIntro(e.target.value)}
+              value={intro || ""}
+              onChange={(e) => updateData({ description: e.target.value })}
             />
 
             <Button

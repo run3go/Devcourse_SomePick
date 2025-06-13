@@ -9,16 +9,17 @@ import useCheckNickname from "../../hooks/useCheckNickname";
 import Icon from "../../components/common/Icon";
 import InputBirthDate from "../../components/signup/InputBirthDate";
 import useSignupValidation from "../../hooks/useSignupValidation";
-import { storeImage } from "../../apis/util";
+// import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep1Page() {
   const navigate = useNavigate();
 
-  const [nickname, setNickname] = useState("");
   const [isTouched, setIsTouched] = useState(false);
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
+  const [isPwTouched, setIsPwTouched] = useState(false);
 
-  const { mainImgFile, subImgFile, data, updateData, setEmail, setPw } =
-    useSignUpStore();
+  const { mainImgFile, subImgFile, data, updateData } = useSignUpStore();
+  const nickname = data.nickname;
 
   const { isDuplicate } = useCheckNickname(nickname);
 
@@ -27,6 +28,7 @@ export default function SignUpSoloStep1Page() {
     pw,
     pwConfirm,
     isEmailValid,
+    isEmailDuplicate,
     isPwValid,
     isPwConfirmValid,
     handleEmailChange,
@@ -62,6 +64,11 @@ export default function SignUpSoloStep1Page() {
       return;
     }
 
+    if (isEmailDuplicate) {
+      alert("중복된 이메일입니다.");
+      return;
+    }
+
     if (!isPwValid) {
       alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
       return;
@@ -71,23 +78,6 @@ export default function SignUpSoloStep1Page() {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-
-    const mainImgUrl =
-      mainImgFile && (await storeImage(mainImgFile, "main_image"));
-
-    const subImgUrl =
-      subImgFile && (await storeImage(subImgFile, "main_image"));
-
-    const fullPayload = {
-      ...data,
-      nickname,
-      ...(mainImgUrl ? { main_image: mainImgUrl } : {}),
-      ...(subImgUrl ? { sub_image: subImgUrl } : {}),
-    };
-
-    setEmail(email);
-    setPw(pw);
-    updateData(fullPayload);
 
     navigate("/auth/signup/solo/2");
   };
@@ -123,14 +113,14 @@ export default function SignUpSoloStep1Page() {
                   name="userName"
                   value={nickname}
                   onChange={(e) => {
-                    setNickname(e.target.value);
+                    updateData({ nickname: e.target.value });
                     setIsTouched(true);
                   }}
                   className="w-[223px]"
                   isError={isDuplicate}
                 />
                 {isTouched && (
-                  <div className="absolute right-5 top-1.5">
+                  <div className="absolute right-34.5 top-1">
                     {isDuplicate === true && (
                       <Icon
                         width="18px"
@@ -161,23 +151,53 @@ export default function SignUpSoloStep1Page() {
                 onChange={(e) => setBirthDate(e.target.value)}
               /> */}
             </div>
-            <SignupInput
-              label="이메일"
-              type="email"
-              name="email"
-              placeholder="user@email.com"
-              value={email}
-              onChange={handleEmailChange}
-              isError={!isEmailValid}
-              // className={`${isEmailValid ? "" : "border-[var(--red)]"}`}
-            />
+            <div className="relative">
+              <SignupInput
+                label="이메일"
+                type="email"
+                name="email"
+                placeholder="user@email.com"
+                value={email}
+                onChange={(e) => {
+                  handleEmailChange(e);
+                  setIsEmailTouched(true);
+                }}
+                isError={
+                  (isEmailTouched && !isEmailValid) ||
+                  (isEmailTouched && isEmailDuplicate)
+                }
+              />
+              {isEmailTouched && (
+                <div className="absolute left-17.5 top-1">
+                  {isEmailDuplicate === true && (
+                    <Icon
+                      width="20px"
+                      height="20px"
+                      left="-889px"
+                      top="-760px"
+                    />
+                  )}
+                  {isEmailDuplicate === false && (
+                    <Icon
+                      width="16px"
+                      height="12px"
+                      left="-929px"
+                      top="-762px"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
             <SignupInput
               label="비밀번호"
               type="password"
               name="password"
               value={pw}
-              onChange={handlePwChange}
-              isError={!isPwValid}
+              onChange={(e) => {
+                handlePwChange(e);
+                setIsPwTouched(true);
+              }}
+              isError={isPwTouched && !isPwValid}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput

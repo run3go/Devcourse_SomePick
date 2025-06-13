@@ -2,23 +2,86 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
-import Alert from "../../components/common/Alert";
-import Icon from "../../components/common/Icon";
+
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { FaUser } from "react-icons/fa";
+import { IoNotifications } from "react-icons/io5";
+import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
+import { TbMessageHeart } from "react-icons/tb";
+import {
+  fetchNotifications,
+  subscribeNotification,
+} from "../../apis/notification";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
-import { useAuthStore } from "../../stores/authStore";
+import { useDarkMode } from "../../hooks/useDarkMode";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function Header() {
+  const { isDark, toggleDarkMode } = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
+
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
   const couple = session?.user.user_metadata.status;
+
+  // 초기 알림 데이터
+  useEffect(() => {
+    const loadNotifications = async () => {
+      if (!isLogin) return;
+
+      try {
+        const data = await fetchNotifications();
+        if (data) {
+          setNotifications(data);
+          setHasUnreadNotifications(data.length > 0);
+        }
+      } catch (error) {
+        console.error("알림 로드 에러:", error);
+      }
+    };
+
+    loadNotifications();
+  }, [isLogin]);
+
+  // 실시간 알림 구독
+  useEffect(() => {
+    if (!isLogin) return;
+
+    let channel: RealtimeChannel | null = null;
+
+    const subscribe = async () => {
+      const res = await subscribeNotification(addNotification);
+      channel = res ?? null;
+    };
+
+    subscribe();
+
+    return () => {
+      if (channel) {
+        channel.unsubscribe();
+      }
+    };
+  }, [isLogin]);
+
+  // 헤더에서는 상태 업데이트
+  const addNotification = (newNotification: NotificationData) => {
+    setNotifications((prev) => [newNotification, ...prev]);
+    setHasUnreadNotifications(true);
+  };
+
+  const updateNotifications = (updatedNotifications: NotificationData[]) => {
+    setNotifications(updatedNotifications);
+    setHasUnreadNotifications(updatedNotifications.length > 0);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -26,7 +89,6 @@ export default function Header() {
         outsideRef.current &&
         !outsideRef.current.contains(e.target as Node)
       ) {
-        e.preventDefault();
         setIsNotificationOpen(false);
         setIsModalOpen(false);
       }
@@ -75,10 +137,6 @@ export default function Header() {
                 <div>
                   <button
                     onClick={() => {
-                      if (!isLogin) {
-                        setIsAlertOpen(true);
-                        return;
-                      }
                       navigate("/couplecalendar");
                     }}
                     className={twMerge(
@@ -94,10 +152,6 @@ export default function Header() {
                 <div>
                   <button
                     onClick={() => {
-                      if (!isLogin) {
-                        setIsAlertOpen(true);
-                        return;
-                      }
                       navigate("/matching");
                     }}
                     className={twMerge(
@@ -111,7 +165,7 @@ export default function Header() {
                 </div>
               )}
 
-              {isAlertOpen && (
+              {/* {isAlertOpen && (
                 <Alert
                   title="로그인이 필요해요!"
                   isOk="로그인하러 가기"
@@ -122,13 +176,9 @@ export default function Header() {
                   }}
                   onCancel={() => setIsAlertOpen(false)}
                 ></Alert>
-              )}
+              )} */}
               <button
                 onClick={() => {
-                  if (!isLogin) {
-                    setIsAlertOpen(true);
-                    return;
-                  }
                   navigate("/todayfortune");
                 }}
                 className={twMerge(
@@ -145,40 +195,35 @@ export default function Header() {
             {isLogin && (
               <>
                 <Link to={"/message"}>
-                  <Icon
-                    width="27px"
-                    height="27px"
-                    left="-361px"
-                    top="-228px"
-                    className="cursor-pointer"
-                  />
+                  <TbMessageHeart size={25} />
                 </Link>
-                <div className="relative">
-                  <Icon
-                    width="28px"
-                    height="27px"
-                    left="-436px"
-                    top="-228px"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setIsNotificationOpen((state) => !state);
-                    }}
-                  />
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => {
+                    setIsNotificationOpen((state) => !state);
+                  }}
+                >
+                  <IoNotifications size={25} />
+                  {/* 알림 뱃지 표시 */}
+                  {hasUnreadNotifications && (
+                    <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                      ●
+                    </span>
+                  )}
                   {isNotificationOpen && (
                     <div ref={outsideRef}>
-                      <Notifications />
+                      <Notifications
+                        notifications={notifications}
+                        onNotificationsChange={updateNotifications}
+                      />
                     </div>
                   )}
                 </div>
-                <div className="relative">
-                  <Icon
-                    width="23px"
-                    height="28px"
-                    left="-516px"
-                    top="-225px"
-                    className="cursor-pointer"
-                    onClick={() => setIsModalOpen((state) => !state)}
-                  />
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => setIsModalOpen((state) => !state)}
+                >
+                  <FaUser size={23} />
                   {isModalOpen && (
                     <div ref={outsideRef}>
                       <HeaderModal onClose={() => setIsModalOpen(false)} />
@@ -200,6 +245,19 @@ export default function Header() {
                 로그인/회원가입
               </NavLink>
             )}
+            <>
+              <button onClick={toggleDarkMode}>
+                {isDark ? (
+                  <div className="cursor-pointer">
+                    <MdOutlineLightMode size={28} />
+                  </div>
+                ) : (
+                  <div className="cursor-pointer">
+                    <MdOutlineNightlight size={28} />
+                  </div>
+                )}
+              </button>
+            </>
           </div>
         </div>
       </div>

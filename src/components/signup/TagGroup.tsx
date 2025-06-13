@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { personalityTags, interestTags } from "./data/tagData";
 import Icon from "../common/Icon";
 import { useSignUpStore } from "../../stores/signupStore";
@@ -8,10 +8,11 @@ export default function TagGroup({
   tagName,
 }: {
   title: string;
-  tagName: string;
+  tagName: "keywords" | "interests" | "ideal_types";
 }) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const { updateData } = useSignUpStore();
+  // const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const { data, updateData } = useSignUpStore();
+  const soloData = data as SoloOptions;
 
   const tagGroup: { [key: string]: string[] } = {
     keywords: personalityTags,
@@ -20,6 +21,8 @@ export default function TagGroup({
   };
 
   const tags = tagGroup[tagName] || [];
+  // const selectedTags = soloData[tagName];
+  const selectedTags = soloData[tagName] ? soloData[tagName].split(",") : [];
 
   const toggleTag = (tag: string) => {
     const isSelected = selectedTags.includes(tag);
@@ -29,16 +32,16 @@ export default function TagGroup({
       return;
     }
 
-    if (isSelected) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
+    const newTags = isSelected
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+
+    updateData({ [tagName]: newTags.join(",") });
   };
 
-  useEffect(() => {
-    updateData({ [tagName]: selectedTags.join(",") });
-  }, [selectedTags, tagName, updateData]);
+  // useEffect(() => {
+  //   updateData({ [tagName]: selectedTags.join(",") });
+  // }, [selectedTags, tagName, updateData]);
 
   return (
     <>

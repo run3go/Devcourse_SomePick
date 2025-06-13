@@ -1,35 +1,37 @@
-// import { useNavigate } from "react-router";
-// import Profile from "../../assets/images/profile_image.png";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import ChatCard from "./ChatCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Alert from "../common/Alert";
-import { fetchProfile } from "../../apis/user";
+import { useLoaderData } from "react-router";
 export default function ChatRequest({
   onAccept,
+  onReject,
   userId,
 }: {
-  onAccept: () => void;
+  onAccept: (id: string) => void;
+  onReject: (id: string) => void;
   userId?: string;
 }) {
+  const {
+    chatUserProfile,
+  }: {
+    chatUserProfile: ProfileData;
+  } = useLoaderData();
   // const navigate = useNavigate();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [user, setUser] = useState<ProfileData | null>(null);
+  const [alertType, setAlertType] = useState<"reject" | "accept" | null>(null);
 
-  useEffect(() => {
-    const loadUser = async () => {
-      if (!userId) return;
-      const data = await fetchProfile(userId);
-      if (data) {
-        setUser(data);
-        console.log("hello");
-      }
-    };
-    loadUser();
-  }, [userId]);
+  // 거절 확인 알림창 열기
+  const openRejectAlert = () => {
+    setAlertType("reject");
+    setIsAlertOpen(true);
+  };
 
-  const handleClick = () => {
+  // 수락 확인 알림창 열기
+  const openAcceptAlert = async () => {
+    if (!userId) return;
+    setAlertType("accept");
     setIsAlertOpen(true);
   };
 
@@ -44,37 +46,39 @@ export default function ChatRequest({
                 <span>설렘도착</span>
                 <span>
                   <span className="text-[var(--primary-pink-point)]">
-                    {user?.nickname}
+                    {chatUserProfile.nickname}
                   </span>
                   님이 하트를 보냈어요!
                 </span>
               </div>
             </div>
             <ChatCard
-              profileImg={user?.main_image}
-              name={user?.nickname}
-              age={`만 ${user?.age}세`}
-              message={user?.description}
+              profileImg={chatUserProfile.main_image}
+              name={chatUserProfile.nickname}
+              age={`만 ${chatUserProfile.age}세`}
+              message={chatUserProfile.description}
               items={[
-                user?.job || "모델",
-                user?.height ? `${user.height}cm` : "180cm",
-                user?.location || "서울",
-                user?.mbti || "ENFP",
+                chatUserProfile.job || "직업",
+                chatUserProfile.height ? `${chatUserProfile.height}cm` : "키",
+                chatUserProfile.location || "지역",
+                chatUserProfile.mbti || "MBTI",
               ]}
+              keyword={chatUserProfile.keywords}
+              interest={chatUserProfile.interests}
               userId={userId}
             />
             <div className="flex flex-col items-center gap-6">
-              <span>{user?.nickname}님과 연결하시겠습니까?</span>
+              <span>{chatUserProfile.nickname}님과 연결하시겠습니까?</span>
               <div className="flex gap-14">
                 <Button
                   className="w-[157px] h-[47px] text-[14px]"
-                  onClick={onAccept}
+                  onClick={openAcceptAlert}
                 >
                   연결할래요
                 </Button>
                 <Button
                   className="w-[157px] h-[47px] text-[14px] bg-[var(--gray-300)] hover:bg-[var(--gray-500)]/70"
-                  onClick={handleClick}
+                  onClick={openRejectAlert}
                 >
                   다음에요
                 </Button>
@@ -83,14 +87,29 @@ export default function ChatRequest({
           </div>
         </div>
       </div>
-      {isAlertOpen && (
+      {isAlertOpen && alertType === "reject" && (
         <Alert
           title="정말 거절하시겠습니까?"
           subtitle="채팅방에서 목록이 지워집니다."
           isOk="네"
           isNotOk="아니요"
-          onClick={() => setIsAlertOpen(false)}
+          onClick={() => {
+            setIsAlertOpen(false);
+            if (userId) onReject(userId);
+          }}
           onCancel={() => setIsAlertOpen(false)}
+        />
+      )}
+
+      {isAlertOpen && alertType === "accept" && (
+        <Alert
+          title="채팅방이 생성되었어요!"
+          subtitle="이제 대화를 시작해보세요 💬"
+          isOk="확인"
+          onClick={() => {
+            setIsAlertOpen(false);
+            if (userId) onAccept(userId);
+          }}
         />
       )}
     </>
