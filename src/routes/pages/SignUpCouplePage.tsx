@@ -15,7 +15,7 @@ import { storeImage } from "../../apis/util";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();
-  const { data, updateData, imageFile, resetData } = useSignUpStore();
+  const { data, imageFile, resetData } = useSignUpStore();
 
   const [nickname, setNickname] = useState("");
   const [partner, setPartner] = useState("");
@@ -63,8 +63,6 @@ export default function SignUpCouplePage() {
     }
 
     const imgUrl = imageFile && (await storeImage(imageFile, "main_image"));
-
-    // updateData(updated);
 
     const fullPayload = {
       ...data,
