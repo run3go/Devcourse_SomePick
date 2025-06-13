@@ -3,23 +3,20 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
 
-import HeaderModal from "../../components/modals/HeaderModal";
-import Notifications from "../../components/modals/Notifications";
-import { useAuthStore } from "../../stores/authstore";
-import Alert from "../../components/common/Alert";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { FaUser } from "react-icons/fa";
+import { IoNotifications } from "react-icons/io5";
+import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
+import { TbMessageHeart } from "react-icons/tb";
 import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
-import type { Notification } from "../../types/notification";
-import type { RealtimeChannel } from "@supabase/supabase-js";
+import Alert from "../../components/common/Alert";
+import HeaderModal from "../../components/modals/HeaderModal";
+import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { MdOutlineLightMode } from "react-icons/md";
-import { MdOutlineNightlight } from "react-icons/md";
-import { TbMessageHeart } from "react-icons/tb";
-import { IoNotifications } from "react-icons/io5";
-import { FaUser } from "react-icons/fa";
-
+import { useAuthStore } from "../../stores/authstore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -30,7 +27,7 @@ export default function Header() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -77,12 +74,12 @@ export default function Header() {
   }, [isLogin]);
 
   // 헤더에서는 상태 업데이트
-  const addNotification = (newNotification: Notification) => {
+  const addNotification = (newNotification: NotificationData) => {
     setNotifications((prev) => [newNotification, ...prev]);
     setHasUnreadNotifications(true);
   };
 
-  const updateNotifications = (updatedNotifications: Notification[]) => {
+  const updateNotifications = (updatedNotifications: NotificationData[]) => {
     setNotifications(updatedNotifications);
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };
