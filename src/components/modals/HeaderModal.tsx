@@ -17,6 +17,7 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
   const handleLogout = async () => {
     try {
       await logoutUser();
+      setLogout();
     } catch (error) {
       console.error(error);
     }
