@@ -143,7 +143,7 @@ export default function Header() {
                         setIsAlertOpen(true);
                         return;
                       }
-                      navigate("/calendar");
+                      navigate("/couplecalendar");
                     }}
                     className={twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",
