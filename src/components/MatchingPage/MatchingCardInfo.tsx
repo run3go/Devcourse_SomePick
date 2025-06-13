@@ -1,7 +1,7 @@
-import image from "../../assets/images/image 8.png";
 import Icon from "../common/Icon";
 import Button from "../common/Button";
 import type { Database } from "../../types/supabase";
+import { useNavigate } from "react-router";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -9,6 +9,7 @@ interface MatchingCardInfoProps {
 }
 
 export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
+  const navigate = useNavigate();
   const keywords =
     profile.keywords && profile.keywords.length > 0
       ? profile.keywords
@@ -19,6 +20,9 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
       ? profile.interests
       : ["관심사 정보가 없습니다."];
 
+  const keywordsToShow = keywords.slice(0, 5);
+  const interestsToShow = interests.slice(0, 5);
+
   const handleSendHeart = (e: React.MouseEvent) => {
     e.stopPropagation();
     // TODO: 하트 보내기 로직
@@ -28,7 +32,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
   const handleViewProfile = (e: React.MouseEvent) => {
     e.stopPropagation();
     // TODO: 프로필 보기 로직
-    console.log("프로필 보기!");
+    navigate(`/profile/${profile.id}`);
   };
 
   return (
@@ -37,7 +41,11 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
       <div className="w-full h-[400px] bg-[#F6F6F6] flex flex-col items-center justify-center space-y-4">
         {/* 프로필이미지 */}
         <div className="w-[300px] h-[300px] rounded-full overflow-hidden">
-          <img src={image} alt="프로필 이미지" className="w-full h-full object-cover" />
+          <img
+            src={profile.sub_image!}
+            alt="프로필 이미지"
+            className="w-full h-full object-cover"
+          />
           {/* 한줄소개 */}
         </div>
         <p className="text-[24px] text-center">{profile.description}</p>
@@ -73,9 +81,9 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
           <span>{profile.job}</span>
         </div>
         {/* 키워드 */}
-        <div className="w-[450px] flex flex-col items-center space-y-3">
+        <div className="w-[600px] flex flex-col items-center space-y-3">
           <ul className="flex flex-wrap justify-center gap-[10px]">
-            {keywords.map((keyword, idx) => (
+            {keywordsToShow.map((keyword, idx) => (
               <li
                 key={`${keyword}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
@@ -85,7 +93,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
             ))}
           </ul>
           <ul className="flex flex-wrap justify-center gap-[10px]">
-            {interests.map((interest, idx) => (
+            {interestsToShow.map((interest, idx) => (
               <li
                 key={`${interest}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"

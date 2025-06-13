@@ -8,6 +8,7 @@ import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { useAuthStore } from "../../stores/authstore";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -16,14 +17,18 @@ export default function MatchingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [matchedProfiles, setMatchedProfiles] = useState<Profiles[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const myGender: "male" | "female" = "male";
+  const session = useAuthStore((state) => state.session);
+  const name = session!.user.user_metadata?.nickname;
+  const gender = session!.user.user_metadata?.gender;
+  const location = session!.user.user_metadata?.location;
+  console.log(location);
 
   useEffect(() => {
     (async () => {
-      const list = await fetchMatchedUsers(myGender);
+      const list = await fetchMatchedUsers(gender);
       if (list) setMatchedProfiles(list);
     })();
-  }, [myGender]);
+  }, [gender]);
 
   const len = matchedProfiles.length;
   const prevIndex = (currentIndex - 1 + len) % len;
@@ -50,7 +55,7 @@ export default function MatchingPage() {
 
         {/* 제목 */}
         <div className="text-[32px] font-bold">
-          <span className="text-[#FFC7ED]">지유</span>님이 원하시는 소개팅 상대를 찾았어요!
+          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅 상대를 찾았어요!
         </div>
 
         {/* 필터 버튼 그룹 */}
@@ -100,7 +105,6 @@ export default function MatchingPage() {
                         height="h-full"
                         imageWidth="w-full"
                         imageHeight="h-full"
-                        text="text-[18px]"
                         disableFlip={!isCenter}
                         onClick={isCenter ? () => setIsModalOpen(true) : undefined}
                       />
@@ -131,7 +135,7 @@ export default function MatchingPage() {
               height="h-[450px]"
               imageWidth="w-full"
               imageHeight="h-full"
-              text="text-[17px]"
+              text="text-[16px]"
               disableFlip={true}
               onClick={() => {
                 setSelectedProfile(profile);
