@@ -1,6 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
-import { fetchUserData } from "./loader/auth.loader";
+import {
+  fetchUserData,
+  requireAuth,
+  requireNoAuth,
+} from "./loader/auth.loader";
 import { getCoupleInfo } from "./loader/calendar.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
@@ -9,6 +13,10 @@ import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
 // import MessageDetailPage from "./pages/MessageDetailPage";
+import Back from "./pages/Back";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
 import MessagePage from "./pages/MessagePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
@@ -22,9 +30,6 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
-import ChatRequestPage from "./pages/ChatRequestPage";
-import ChatWaitingPage from "./pages/ChatWaitingPage";
-import ChatRoomPage from "./pages/ChatRoomPage";
 
 const router = createBrowserRouter([
   {
@@ -45,10 +50,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/post/create/:id?",
+        loader: requireAuth,
         Component: PostCreatePage,
       },
       {
         path: "/profile/edit",
+        loader: requireAuth,
         Component: ProfileEditPage,
       },
       {
@@ -63,14 +70,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/matching",
+        loader: requireAuth,
         Component: MatchingPage,
       },
       {
         path: "/todayfortune",
+        loader: requireAuth,
         Component: TodayFortunePage,
       },
       {
         path: "/message",
+        loader: requireAuth,
         Component: MessagePage,
         children: [
           {
@@ -95,6 +105,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "login",
+        loader: requireNoAuth,
         Component: LoginPage,
       },
       {
@@ -118,6 +129,10 @@ const router = createBrowserRouter([
         Component: SignUpCouplePage,
       },
     ],
+  },
+  {
+    path: "/back",
+    Component: Back,
   },
   {
     path: "*",
