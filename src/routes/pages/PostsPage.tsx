@@ -14,10 +14,13 @@ export default function PostsPage() {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [followings, setFollowings] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
-  const [sortRule, setSortRule] = useState<"created_at" | "likes">("created_at");
+  const [sortRule, setSortRule] = useState<"created_at" | "likes">(
+    "created_at"
+  );
   const [keyword, setKeyword] = useState("");
   const [selected, setSelected] = useState<Selected | null>(null);
   const navigate = useNavigate();
+  const params = useParams();
 
   const { channelName } = useParams<{ channelName: string }>();
   const safeChannel = channelName! as ChannelName;
@@ -62,7 +65,12 @@ export default function PostsPage() {
   // 게시물 페치 및 append 로직
   useEffect(() => {
     (async () => {
-      const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
+      const result = await fetchPostsByChannelName(
+        safeChannel,
+        offset,
+        sortRule,
+        keyword
+      );
       if (!result) return;
 
       setPosts((prev) => {
@@ -136,7 +144,11 @@ export default function PostsPage() {
             }}
           />
         </div>
-        <WriteButton onClick={() => navigate(`/post/create`)} />
+        <WriteButton
+          onClick={() =>
+            navigate(`/post/create`, { state: params.channelName })
+          }
+        />
       </div>
 
       {/* 게시물 리스트 */}
@@ -147,7 +159,10 @@ export default function PostsPage() {
             post={post}
             onProfileClick={(author, e) => {
               e.stopPropagation();
-              setSelected({ user: author, anchor: { x: e.clientX, y: e.clientY } });
+              setSelected({
+                user: author,
+                anchor: { x: e.clientX, y: e.clientY },
+              });
             }}
           />
         ))}

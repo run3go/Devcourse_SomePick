@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
+import Icon from "../common/Icon";
 
 interface PostcardProps {
   className?: string;
@@ -61,12 +62,12 @@ export default function Postcard({
 
         {/* 좋아요 · 댓글 */}
         <div className="flex items-center space-x-6 mt-auto">
-          <div className="flex items-center">
-            <span className="heart mr-1" />
+          <div className="flex items-center gap-[5px]">
+            <Icon width="18px" height="16px" left="-415px" top="-762px" />
             <span>{post.likes.length}</span>
           </div>
-          <div className="flex items-center">
-            <span className="comment mr-1" />
+          <div className="flex items-center gap-[6px]">
+            <Icon width="16px" height="16px" left="-463px" top="-762px" />
             <span>{post.comments.length}</span>
           </div>
         </div>

@@ -31,6 +31,9 @@ export default function ChatRequestPage() {
     if (!id) return;
     await disconnectMatching(id);
     navigate(`/message`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
   };
 
   return (
