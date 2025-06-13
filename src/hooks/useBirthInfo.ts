@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { useSignUpStore } from "../stores/signupStore";
 
 export default function useBirthInfo() {
-  const { updateData } = useSignUpStore();
-
-  const [birthDate, setBirthDate] = useState("");
-  const [genderNum, setGenderNum] = useState("");
-  // const [gender, setGender] = useState("");
+  const { updateData, birthDate, setBirthDate, genderNum, setGenderNum } =
+    useSignUpStore();
 
   const [isValid, setIsValid] = useState(true);
 
