@@ -1,17 +1,35 @@
-import { useLocation, useNavigate } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
 import { useSignUpStore } from "../../stores/signupStore";
+import supabase from "../../utils/supabase";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { email, id } = location.state;
   const { resetData } = useSignUpStore();
 
+  const [hasProfile, setHasProfile] = useState(false);
+
+  const getUserData = useCallback(async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      setHasProfile(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
   return (
     <>
       <div className="flex h-full flex-col justify-center">
-        <BackButton className="ml-20" />
+        {hasProfile ? (
+          <BackButton className="ml-20" type="google" />
+        ) : (
+          <BackButton className="ml-20" />
+        )}
 
         <div className="flex flex-col items-center justify-center h-[861px]">
           <p className="text-[36px] cursor-default mb-9">
@@ -30,7 +48,7 @@ export default function SignUpPage() {
               onClick={() => {
                 // updateData({ status: "couple" });
                 resetData("couple");
-                navigate("couple", { state: { email, id } });
+                navigate("couple");
               }}
             >
               커플
@@ -41,7 +59,7 @@ export default function SignUpPage() {
               onClick={() => {
                 // updateData({ status: "solo" });
                 resetData("solo");
-                navigate("solo/1", { state: { email, id } });
+                navigate("solo/1");
               }}
             >
               솔로

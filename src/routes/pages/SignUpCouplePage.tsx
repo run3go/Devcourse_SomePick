@@ -22,7 +22,7 @@ export default function SignUpCouplePage() {
     id: "",
     email: "",
   });
-  const { data, mainImgFile, resetData, updateData, setId } = useSignUpStore();
+  const { data, mainImgFile, resetData, updateData } = useSignUpStore();
   const coupleData = data as CoupleOptions;
   const { nickname, partner_nickname: partner } = coupleData;
 
@@ -143,9 +143,8 @@ export default function SignUpCouplePage() {
     if (session) {
       const { user } = session;
       setProfile({ id: user.id, email: user.user_metadata.email });
-      setId(user.id);
     }
-  }, [setId]);
+  }, []);
 
   useEffect(() => {
     getUserData();
@@ -212,7 +211,7 @@ export default function SignUpCouplePage() {
               </div>
             </div>
 
-            <div className={twMerge("relative", profile && "hidden")}>
+            <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
                 label="이메일"
                 type="email"
@@ -260,7 +259,7 @@ export default function SignUpCouplePage() {
                 setIsPwTouched(true);
               }}
               isError={isPwTouched && !isPwValid}
-              className={twMerge(profile && "hidden")}
+              className={twMerge(profile.id && "hidden")}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
@@ -270,7 +269,7 @@ export default function SignUpCouplePage() {
               value={pwConfirm}
               onChange={handlePwConfirmChange}
               isError={!isPwConfirmValid}
-              className={twMerge(profile && "hidden")}
+              className={twMerge(profile.id && "hidden")}
               // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput

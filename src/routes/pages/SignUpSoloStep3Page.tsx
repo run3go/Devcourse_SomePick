@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router";
+import { signupUser } from "../../apis/auth";
+import { updateProfile } from "../../apis/user";
+import { storeImage } from "../../apis/util";
 import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import TagGroup from "../../components/signup/TagGroup";
 import { useSignUpStore } from "../../stores/signupStore";
-import { signupUser } from "../../apis/auth";
-import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
-  const { data, email, pw, mainImgFile, subImgFile, resetData } =
+  const { data, email, pw, mainImgFile, subImgFile, resetData, id } =
     useSignUpStore();
 
   const soloData = data as SoloOptions;
@@ -49,8 +50,16 @@ export default function SignUpSoloStep3Page() {
       ...(mainImgUrl ? { main_image: mainImgUrl } : {}),
       ...(subImgUrl ? { sub_image: subImgUrl } : {}),
     };
-
-    await signupUser(email, pw, fullPayload);
+    if (id) {
+      await updateProfile({
+        ...fullPayload,
+        ideal_types: soloData.ideal_types.split(","),
+        keywords: soloData.keywords.split(","),
+        interests: soloData.interests.split(","),
+      });
+    } else {
+      await signupUser(email, pw, fullPayload);
+    }
     navigate("/");
     resetData();
   };
