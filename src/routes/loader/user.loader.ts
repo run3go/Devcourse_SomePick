@@ -13,7 +13,7 @@ export const getUserProfile = async ({ params }: LoaderFunctionArgs) => {
     new Promise((resolve) =>
       setTimeout(() => {
         resolve("");
-      }, 1800)
+      }, 500)
     ),
   ]);
 

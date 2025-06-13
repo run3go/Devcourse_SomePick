@@ -1,13 +1,18 @@
-import Service from "../../components/main/Service";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
+import { checkHasProfile } from "../../apis/auth";
 import Dictionary from "../../components/main/Dictionary";
+import MainCalendar from "../../components/main/MainCalendar";
 import MainFortune from "../../components/main/MainFortune";
 import Meeting from "../../components/main/Meeting";
 import NearFooter from "../../components/main/NearFooter";
-import MainCalendar from "../../components/main/MainCalendar";
+import Service from "../../components/main/Service";
+import supabase from "../../utils/supabase";
 import Footer from "../layouts/Footer";
-import { useRef } from "react";
 
 export default function MainPage() {
+  const navigate = useNavigate();
+
   const dictionaryRef = useRef<HTMLDivElement | null>(null);
   const meetingRef = useRef<HTMLDivElement | null>(null);
   const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -16,6 +21,20 @@ export default function MainPage() {
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "INITIAL_SESSION") {
+        const userId = session?.user.id;
+        if (userId) {
+          const data = await checkHasProfile(userId);
+          if (!data?.nickname) {
+            navigate("/auth/signup", { state: data });
+          }
+        }
+      }
+    });
+  }, [navigate]);
   return (
     <>
       <div className="select-none dark:bg-[var(--dark-bg-primary)]">

@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
-import { useSignUpStore } from "../../stores/signupStore";
 import useCheckNickname from "../../hooks/useCheckNickname";
+import { useSignUpStore } from "../../stores/signupStore";
 // import LoadingSpinner from "../../components/signup/LoadingSpinner";
+import { useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
+import { signupUser } from "../../apis/auth";
+import { updateProfile } from "../../apis/user";
+import { storeImage } from "../../apis/util";
 import Icon from "../../components/common/Icon";
 import InputBirthDate from "../../components/signup/InputBirthDate";
-import { signupUser } from "../../apis/auth";
-import { useNavigate } from "react-router";
 import useSignupValidation from "../../hooks/useSignupValidation";
-import { storeImage } from "../../apis/util";
+import supabase from "../../utils/supabase";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();
+  const [profile, setProfile] = useState<{ id: string; email: string }>({
+    id: "",
+    email: "",
+  });
   const { data, mainImgFile, resetData, updateData } = useSignUpStore();
   const coupleData = data as CoupleOptions;
   const { nickname, partner_nickname: partner } = coupleData;
@@ -37,6 +44,40 @@ export default function SignUpCouplePage() {
     handlePwChange,
     handlePwConfirmChange,
   } = useSignupValidation();
+
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!mainImgFile) {
+      alert("이미지를 추가해주세요.");
+      return;
+    }
+    if (!nickname) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
+    if (isDuplicate) {
+      alert("중복된 닉네임입니다.");
+      return;
+    }
+
+    if (data.age === 0 || data.gender === undefined) {
+      alert("주민등록번호를 입력해주세요.");
+      return;
+    }
+    const imgUrl = mainImgFile && (await storeImage(mainImgFile, "main_image"));
+    const fullPayload: ProfileUpdatePayload = {
+      main_image: imgUrl || "",
+      nickname: data.nickname,
+      age: data.age,
+      gender: data.gender,
+      status: data.status,
+      partner_nickname: partner,
+    };
+    await updateProfile(fullPayload);
+    navigate("/");
+    resetData();
+  };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,6 +136,19 @@ export default function SignUpCouplePage() {
     resetData();
   };
 
+  const getUserData = useCallback(async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      const { user } = session;
+      setProfile({ id: user.id, email: user.user_metadata.email });
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
   return (
     <>
       <div className="flex h-full flex-col justify-center ">
@@ -105,8 +159,16 @@ export default function SignUpCouplePage() {
             Welcome to SomePick!
           </p>
 
-          <form onSubmit={handleSignUp} className="w-[490px] h-[727px]">
-            <div className="flex gap-6 items-center mb-6">
+          <form
+            onSubmit={profile.id ? handleUpdateProfile : handleSignUp}
+            className="w-[490px] h-[727px]"
+          >
+            <div
+              className={twMerge(
+                "flex gap-6 items-center mb-6",
+                profile && "mb-12"
+              )}
+            >
               <ProfileImgUpload type="main" />
 
               <div className="w-76">
@@ -149,7 +211,7 @@ export default function SignUpCouplePage() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
                 label="이메일"
                 type="email"
@@ -197,6 +259,7 @@ export default function SignUpCouplePage() {
                 setIsPwTouched(true);
               }}
               isError={isPwTouched && !isPwValid}
+              className={twMerge(profile.id && "hidden")}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
@@ -206,6 +269,7 @@ export default function SignUpCouplePage() {
               value={pwConfirm}
               onChange={handlePwConfirmChange}
               isError={!isPwConfirmValid}
+              className={twMerge(profile.id && "hidden")}
               // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
