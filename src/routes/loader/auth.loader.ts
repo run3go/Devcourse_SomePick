@@ -13,24 +13,32 @@ export const fetchUserData = async () => {
   }
 };
 
-// 로그인한 사용자만 접근 가능한 페이지
 export const requireAuth = async () => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
   if (!session) {
-    return redirect("/login");
+    return redirect("/auth/login");
   }
 };
 
-// 비로그인만 접근 가능한 페이지
 export const requireNoAuth = async () => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
   if (session) {
+    return redirect("/");
+  }
+};
+
+export const requireNoInfo = async () => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session?.user.user_metadata.nickname) {
     return redirect("/");
   }
 };

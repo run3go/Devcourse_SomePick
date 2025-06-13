@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { followUser, unfollowUser } from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
@@ -88,7 +88,12 @@ export default function SoloProfile({
     }
   };
   return (
-    <div className="w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px]">
+    <div
+      className={twMerge(
+        "w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px] dark:bg-[var(--dark-bg-secondary)]",
+        "dark:text-[var(--dark-white)]"
+      )}
+    >
       {isAlertOpen && (
         <Alert
           title="이미 상대에게 전달받은 하트가 있습니다"
@@ -143,7 +148,9 @@ export default function SoloProfile({
                 onClick={() => setIsFollowerModalOpen(true)}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로워</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로워
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followerList.length}
                 </span>
@@ -152,7 +159,9 @@ export default function SoloProfile({
                 onClick={() => setIsFollowingModalOpen(true)}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로잉</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로잉
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followings.length}
                 </span>
@@ -161,7 +170,9 @@ export default function SoloProfile({
                 onClick={scrollToPosts}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">게시글</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  게시글
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {posts.length}
                 </span>
@@ -224,7 +235,7 @@ export default function SoloProfile({
                 한줄 소개
               </span>
             </div>
-            <div className="py-3 pl-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
+            <div className="dark:text-[var(--dark-bg-primary)] py-3 pl-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
               {description}
             </div>
           </div>

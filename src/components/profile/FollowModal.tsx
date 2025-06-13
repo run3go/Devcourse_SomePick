@@ -1,11 +1,12 @@
 import { useEffect, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 import {
   fetchFollowingList,
   followUser,
   unfollowUser,
 } from "../../apis/follow";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 
 export default function FollowModal({
@@ -18,9 +19,7 @@ export default function FollowModal({
   const navigate = useNavigate();
   const { session } = useAuthStore();
   const [myFollowings, setMyFollowings] = useState<string[]>([]);
-  console.log("hi");
   const isFollwingUser = (userId: string) => {
-    console.log("bye");
     return myFollowings.some((followingId) => followingId === userId);
   };
 
@@ -61,7 +60,12 @@ export default function FollowModal({
   }, [session]);
 
   return (
-    <div className="fixed left-1/2 -translate-x-1/2 z-100 bg-white p-6 flex flex-col w-[400px] h-[600px] shadow-[0_2px_8px_0_rgba(0,0,0,0.1)] rounded-[10px]">
+    <div
+      className={twMerge(
+        "fixed left-1/2 -translate-x-1/2 z-100 bg-white p-6 flex flex-col w-[400px] h-[600px] shadow-[0_2px_8px_0_rgba(0,0,0,0.1)] rounded-[10px]",
+        "dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-white)]"
+      )}
+    >
       <span className="text-center text-lg pb-[10px] w-full border-b border-[var(--primary-pink)]">
         {type}
       </span>
@@ -96,7 +100,9 @@ export default function FollowModal({
                   alt="프로필 이미지"
                   className="w-[45px] h-[45px] rounded-full object-cover"
                 />
-                <span className="group-hover:text-black">{user.nickname}</span>
+                <span className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
+                  {user.nickname}
+                </span>
               </div>
               {session?.user.id !== user.id &&
                 (isFollwingUser(user.id) ? (

@@ -42,6 +42,7 @@
   --primary-pink-tone: #ff9fd6;
   --primary-pink-point: #ff66b3;
   --primary-pink-point-50: #ff66b380;
+  --primary-pink-50: #ffeffa;
 
   --red: #e94235;
 
@@ -93,15 +94,15 @@ body {
 }
 
 .circle-bg::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[60%] left-1/2 -translate-x-1/2  bg-[var(--primary-pink)] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2  bg-[var(--primary-pink)] rounded-full z-[-1];
 }
 
 .gray-circle-bg:hover::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[60%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 }
 
 .gray-circle__active::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[60%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 }
 
 .header-menu::before {
@@ -125,7 +126,7 @@ body {
 }
 
 .user-info-input {
-  @apply text-sm px-[15px] w-[131px] h-[38px] border border-[var(--gray-300)] rounded-[10px] focus:border-0 focus:outline-[var(--primary-pink)] focus:outline-1;
+  @apply bg-white text-sm px-[15px] w-[131px] h-[38px] border border-[var(--gray-300)] rounded-[10px] focus:border-0 focus:outline-[var(--primary-pink)] focus:outline-1;
 }
 
 .scrollbar-hide {

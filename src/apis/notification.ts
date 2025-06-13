@@ -1,6 +1,5 @@
 import supabase from "../utils/supabase";
 import { fetchProfile } from "./user";
-import type { Notification } from "../types/notification";
 //좋아요 알림 보내기 ( 게시글 작성자 아이디, 게시글 아이디)
 export const notifyLike = async (receiver_id: string, post_id: number) => {
   try {
@@ -139,7 +138,6 @@ export const notifyMessage = async (
   }
 };
 
-// 스케줄 알림 보내기
 export const notifySchedule = async (receiver_id: string) => {
   try {
     const {
@@ -229,7 +227,7 @@ export const readAllNotification = async () => {
 
 //실시간 알림 받기 (알림 업데이트 함수)
 export const subscribeNotification = async (
-  updateNotification: (payload: Notification) => void
+  updateNotification: (payload: NotificationData) => void
 ) => {
   const {
     data: { session },

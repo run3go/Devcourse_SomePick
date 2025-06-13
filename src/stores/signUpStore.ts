@@ -2,21 +2,32 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-type SignUpData = {
-  status: "solo" | "couple";
-  main_image: string;
-  nickname: string;
-  age: number;
-  gender: "male" | "female";
-  partner_nickname?: string;
-};
+type SignUpData = SoloOptions | CoupleOptions;
 
 type SignUpStore = {
   data: SignUpData;
   updateData: (newData: Partial<SignUpData>) => void;
-  resetData: () => void;
-  imageFile: File | null;
-  setImageFile: (file: File | null) => void;
+  resetData: (status?: "solo" | "couple") => void;
+
+  mainImgFile: File | null;
+  mainImgUrl: string;
+  setMainImgFile: (file: File | null, url?: string) => void;
+
+  subImgFile: File | null;
+  subImgUrl: string;
+  setSubImgFile: (file: File | null, url?: string) => void;
+
+  email: string;
+  setEmail: (email: string) => void;
+
+  pw: string;
+  setPw: (pw: string) => void;
+
+  birthDate: string;
+  setBirthDate: (birthDate: string) => void;
+
+  genderNum: string;
+  setGenderNum: (genderNum: string) => void;
 };
 
 export const useSignUpStore = create<SignUpStore>()(
@@ -28,21 +39,72 @@ export const useSignUpStore = create<SignUpStore>()(
         nickname: "",
         age: 0,
         gender: "male",
+        keywords: "",
+        interests: "",
+        ideal_types: "",
       },
       updateData: (newData) =>
         set((state) => ({ data: { ...state.data, ...newData } })),
-      resetData: () =>
-        set({
-          data: {
-            status: "solo",
-            main_image: "",
-            nickname: "",
-            age: 0,
-            gender: "male",
-          },
-        }),
-      imageFile: null,
-      setImageFile: (file) => set({ imageFile: file }),
+      resetData: (status) =>
+        set(() => ({
+          data:
+            status === "couple"
+              ? {
+                  status: "couple",
+                  main_image: "",
+                  nickname: "",
+                  age: 0,
+                  gender: "",
+                }
+              : {
+                  status: "solo",
+                  main_image: "",
+                  nickname: "",
+                  age: 0,
+                  gender: "",
+
+                  sub_image: "",
+                  job: "",
+                  // height: 0,
+                  location: "",
+                  mbti: "",
+                  keywords: "",
+                  interests: "",
+                  ideal_types: "",
+                },
+          mainImgFile: null,
+          mainImgUrl: "",
+          subImgFile: null,
+          subImgUrl: "",
+          email: "",
+          pw: "",
+          birthDate: "",
+          genderNum: "",
+        })),
+      mainImgFile: null,
+      mainImgUrl: "",
+      setMainImgFile: (file, url = "") =>
+        set({ mainImgFile: file, mainImgUrl: url }),
+      subImgFile: null,
+      subImgUrl: "",
+      setSubImgFile: (file, url = "") =>
+        set({ subImgFile: file, subImgUrl: url }),
+      email: "",
+      setEmail: (string) => set({ email: string }),
+      pw: "",
+      setPw: (string) => set({ pw: string }),
+      birthDate: "",
+      setBirthDate: (string) => set({ birthDate: string }),
+      genderNum: "",
+      setGenderNum: (string) => set({ genderNum: string }),
+      // resetPartialData: (keys) => set((state) => {
+      //   keys.forEach((key) => {
+      //     const value = state.data[key];
+      //     if(typeof value === 'string') {
+      //       state.data[key] = "";
+      //     }
+      //   })
+      // })
     })),
     { name: "signupStore" }
   )
