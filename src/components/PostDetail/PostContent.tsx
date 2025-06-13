@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { createLike, deleteLike } from "../../apis/like";
+import { useAuthStore } from "../../stores/authStore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
-import { createLike, deleteLike } from "../../apis/like";
-import { useAuthStore } from "../../stores/authstore";
 // import PostImg from "../../assets/images/post_image.png";
 
 export default function PostContent({

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { followUser, unfollowUser } from "../../apis/follow";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import FollowModal from "./FollowModal";

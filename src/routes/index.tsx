@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         Component: MainPage,
       },
       {
-        path: "/post/:id",
+        path: "/post/:channelName",
         Component: PostsPage,
       },
       {

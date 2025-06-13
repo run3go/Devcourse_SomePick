@@ -1,11 +1,11 @@
 import { Outlet, useNavigate } from "react-router";
-import ChatList from "../../components/message/ChatList";
 import Icon from "../../components/common/Icon";
+import ChatList from "../../components/message/ChatList";
 // import EmptyList from "../../components/message/EmptyList";
 import { useEffect, useState } from "react";
-import EmptyList from "../../components/message/EmptyList";
 import { fetchMatchingUsers } from "../../apis/matching";
-import { useAuthStore } from "../../stores/authstore";
+import EmptyList from "../../components/message/EmptyList";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function MessagePage() {
   const navigate = useNavigate();

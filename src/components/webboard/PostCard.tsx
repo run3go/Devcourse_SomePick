@@ -1,15 +1,20 @@
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
+interface PostcardProps {
+  className?: string;
+  post: PostData;
+  isProfile?: boolean;
+  // 클릭 이벤트를 받아서 author와 event를 부모로 전달
+  onProfileClick?: (author: Author, e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
 export default function Postcard({
   className,
   post,
   isProfile = false,
-}: {
-  className?: string;
-  post: PostData;
-  isProfile?: boolean;
-}) {
+  onProfileClick,
+}: PostcardProps) {
   const navigate = useNavigate();
   return (
     <div
@@ -21,17 +26,23 @@ export default function Postcard({
         className
       )}
     >
-      <div className="flex-1  flex flex-col">
-        {isProfile && (
+      <div className="flex-1 flex flex-col">
+        {isProfile && post.channel && (
           <span className="text-sm text-[var(--primary-pink)] font-bold mb-4">
             {post.channel.description}
           </span>
         )}
         <div className="space-y-2">
-          {/* 프로필 */}
-          <div className="flex items-center">
+          {/* 프로필 (클릭 영역) */}
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              onProfileClick?.(post.author, e);
+            }}
+          >
             <img
-              src={post.author.main_image}
+              src={post.author.main_image ?? undefined}
               alt="사진"
               className="w-[44px] h-[40px] rounded-full object-cover mr-2"
             />
@@ -48,7 +59,7 @@ export default function Postcard({
           <p className="leading-relaxed line-clamp-2">{post.contents}</p>
         </div>
 
-        {/* 좋아요 댓글 */}
+        {/* 좋아요 · 댓글 */}
         <div className="flex items-center space-x-6 mt-auto">
           <div className="flex items-center">
             <span className="heart mr-1" />

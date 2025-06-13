@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import logoImage from "../../assets/images/headerlogo.png";
+
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useAuthStore } from "../../stores/authstore";
@@ -18,6 +19,7 @@ import { MdOutlineNightlight } from "react-icons/md";
 import { TbMessageHeart } from "react-icons/tb";
 import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
+
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -143,7 +145,7 @@ export default function Header() {
                         setIsAlertOpen(true);
                         return;
                       }
-                      navigate("/calendar");
+                      navigate("/couplecalendar");
                     }}
                     className={twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",

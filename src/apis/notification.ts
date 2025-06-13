@@ -139,7 +139,6 @@ export const notifyMessage = async (
   }
 };
 
-// 스케줄 알림 보내기
 export const notifySchedule = async (receiver_id: string) => {
   try {
     const {
