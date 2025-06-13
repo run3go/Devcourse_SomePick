@@ -7,7 +7,7 @@ import secondDarkCard from "../../assets/images/darkcard2.png";
 import lastDarkCard from "../../assets/images/darkcard3.png";
 import styles from "../../styles/FortuneCards.module.css";
 import { motion, AnimatePresence } from "framer-motion";
-import ShareButton from "./ShareButton";
+// import ShareButton from "./ShareButton";
 
 interface FortuneData {
   date: string | null;
@@ -164,9 +164,7 @@ export default function FortuneCards({ fortuneData }: Props) {
                 )}
               </div>
             </motion.div>
-            <div>
-              <ShareButton fortuneData={fortuneData} />
-            </div>
+            <div>{/* <ShareButton /> */}</div>
           </motion.div>
         )}
       </AnimatePresence>
