@@ -149,8 +149,8 @@ export const readMessage = async (
 // 메시지 실시간 확인
 export const subscribeToMessages = async (
   chat_room_id: string,
-  updateMessage: (msg: unknown) => void,
-  updateSeen: () => void
+  updateMessage: (msg: Message) => void
+  // updateSeen: () => void
 ) => {
   try {
     const {

@@ -4,17 +4,22 @@ import Icon from "../common/Icon";
 export default function ChatInput({
   chatRoomId,
   receiverId,
+  onSend,
 }: {
   chatRoomId?: string | null;
   receiverId?: string | null;
+  onSend: (msg: Message) => void;
 }) {
   const [message, setMessage] = useState("");
 
   // 메세지 보내기
   const handleSend = async () => {
     if (!message.trim() || !chatRoomId || !receiverId) return;
-    await sendMessage(chatRoomId, message, receiverId);
+    const newMessage = await sendMessage(chatRoomId, message, receiverId);
     setMessage("");
+    if (newMessage && onSend) {
+      onSend(newMessage);
+    }
     console.log("전송완료");
   };
 
@@ -27,7 +32,9 @@ export default function ChatInput({
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") handleSend();
+            if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+              handleSend();
+            }
           }}
         />
         <button
