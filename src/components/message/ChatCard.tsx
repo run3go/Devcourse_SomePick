@@ -39,7 +39,7 @@ export default function ChatCard({
 
   return (
     <>
-      <div className="flex gap-10 my-15 items-center justify-center">
+      <div className="flex gap-6 my-10 items-center justify-center">
         <div className="flex flex-col items-center gap-5">
           <img
             src={profileImg}
@@ -52,7 +52,7 @@ export default function ChatCard({
             프로필 보기
           </Button>
         </div>
-        <div className="w-[284px] h-full rounded-2xl py-3.5 px-[18px]">
+        <div className="w-[310px] h-full rounded-2xl py-3.5 px-[18px]">
           <div className="flex flex-col gap-4 px-3 justify-center items-start">
             <div className="flex gap-1.5 items-end">
               <span className="text-[18px] font-bold">{name}</span>
@@ -68,8 +68,8 @@ export default function ChatCard({
               <span key={idx}>{item}</span>
             ))}
           </div>
-          <div className="my-5 flex flex-col gap-3.5">
-            <ul className="flex flex-wrap justify-center gap-3">
+          <div className="my-5 flex flex-col gap-2.5 w-full">
+            <ul className="flex flex-wrap justify-center gap-y-2.5 gap-x-1">
               {keywords.map((keyword, idx) => (
                 <li
                   key={`${keyword}-${idx}`}
@@ -81,7 +81,7 @@ export default function ChatCard({
                 </li>
               ))}
             </ul>
-            <ul className="flex flex-wrap justify-center gap-4">
+            <ul className="flex flex-wrap justify-center gap-2">
               {interests.map((interest, idx) => (
                 <li
                   key={`${interest}-${idx}`}
