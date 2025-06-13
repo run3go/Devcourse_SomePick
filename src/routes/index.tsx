@@ -6,13 +6,19 @@ import {
   requireNoAuth,
 } from "./loader/auth.loader";
 import { getCoupleInfo } from "./loader/calendar.loader";
+import { getUserMessage } from "./loader/message.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
+import Back from "./pages/Back";
 import CalendarPage from "./pages/CalendarPage";
+import ChatEmptyPage from "./pages/ChatEmptyPage";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
-import Back from "./pages/Back";
+import MessageLayoutPage from "./pages/MessageLayoutPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
 import PostDetailPage from "./pages/PostDetailPage";
@@ -25,12 +31,6 @@ import SignUpSoloStep1Page from "./pages/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
-import ChatRequestPage from "./pages/ChatRequestPage";
-import ChatWaitingPage from "./pages/ChatWaitingPage";
-import ChatRoomPage from "./pages/ChatRoomPage";
-import MessageLayoutPage from "./pages/MessageLayoutPage";
-import ChatEmptyPage from "./pages/ChatEmptyPage";
-import { getUserMessage } from "./loader/message.loader";
 
 const router = createBrowserRouter([
   {
