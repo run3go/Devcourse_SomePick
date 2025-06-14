@@ -16,7 +16,7 @@ import Alert from "../../components/common/Alert";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();

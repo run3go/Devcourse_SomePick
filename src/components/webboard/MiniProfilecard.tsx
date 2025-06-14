@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "../common/Button";
 import { useNavigate } from "react-router";
-import { useAuthStore } from "../../stores/authstore";
 import { followUser, unfollowUser } from "../../apis/follow"; // 경로를 실제 API 파일 위치로 조정하세요
+import { useAuthStore } from "../../stores/authStore";
+import Button from "../common/Button";
 
-export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniProfilecardProps) {
+export default function MiniProfilecard({
+  user,
+  onClose,
+  onFollowToggle,
+}: MiniProfilecardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { session } = useAuthStore();
@@ -21,7 +25,10 @@ export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniP
   // 외부 클릭 감지
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     }
