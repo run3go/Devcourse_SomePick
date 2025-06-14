@@ -52,6 +52,9 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
     const { error: sessionError } = await supabase.auth.updateUser({
       data: {
         ...payload,
+        keywords: payload.keywords?.join(","),
+        ideal_types: payload.ideal_types?.join(","),
+        interests: payload.interests?.join(","),
       },
     });
     if (sessionError) {
