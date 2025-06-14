@@ -47,13 +47,16 @@ export default function CommentForm({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="댓글을 작성해주세요."
-            className={`bg-white rounded-2xl ${
+            className={`bg-white rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border dark:text-[var(--dark-gray-100)] ${
               isReply ? "w-[918px]" : "w-[980px]"
             } resize-none px-[18px] py-[12px] text-[14px] mb-[10px] focus:outline-none focus:ring-2 focus:ring-[#FFC7ED]`}
           ></textarea>
         </div>
         <div className="flex w-full">
-          <Button type="submit" className="ml-auto w-[98px] h-[38px]">
+          <Button
+            type="submit"
+            className="ml-auto w-[98px] h-[38px] dark:text-[var(--dark-black)]"
+          >
             등록
           </Button>
         </div>

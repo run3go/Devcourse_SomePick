@@ -30,8 +30,8 @@ export default function PostDetailPage() {
   return (
     <>
       <div className="mx-auto w-[1080px] pt-[2vh] pb-[5vh]">
-        <BackButton className="mb-[18px] text-[18px]" />
-        <article className="border w-[1080px] h-full rounded-2xl border-[#FFC7ED] bg-[#FFC7ED]/24 px-[50px] py-[30px]">
+        <BackButton className="mb-[18px] text-[18px] dark:text-[var(--dark-gray-100)]" />
+        <article className="border w-[1080px] h-full rounded-2xl border-[var(--primary-pink)] bg-[var(--primary-pink)]/24 px-[50px] py-[30px] dark:bg-[var(--dark-bg-secondary)]">
           {post && <PostHeader post={post} postId={postId} />}
           {post && <PostContent post={post} postId={postId} />}
           <section className="mt-[12px]">

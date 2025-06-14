@@ -16,7 +16,7 @@ export default function PostHeader({
   return (
     <>
       <header>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center dark:text-[var(--dark-gray-100)]">
           <h1 className="text-[20px]">{post.title}</h1>
           <div className="relative inline-block" onClick={toggleMenu}>
             <Icon
@@ -40,13 +40,15 @@ export default function PostHeader({
           {dayjs(post.created_at).format("YYYY년 MM월 DD일 HH:mm")}
         </span>
       </header>
-      <hr className="my-[15px] border-white border-1" />
+      <hr className="my-[15px] border-white border dark:border-[var(--dark-gray-500)]" />
       <div className="flex gap-2.5 mb-5 items-center">
         <img
           className="w-[30px] h-[30px] rounded-full object-center object-cover"
           src={post.author.main_image ?? ""}
         />
-        <span className="cursor-pointer">{post.author.nickname}</span>
+        <span className="cursor-pointer dark:text-[var(--dark-gray-100)]">
+          {post.author.nickname}
+        </span>
       </div>
     </>
   );

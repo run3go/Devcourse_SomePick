@@ -41,7 +41,7 @@ export default function CommentList({
                 />
               )}
               <div className="flex flex-col w-full">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center dark:text-[var(--dark-gray-100)]">
                   <span className="cursor-pointer">
                     {comment.author.nickname}
                   </span>
@@ -67,13 +67,15 @@ export default function CommentList({
                     )}
                   </div>
                 </div>
-                <span className="text-[12px] text-[#969696]">
+                <span className="text-[12px] text-[#969696] ">
                   {dayjs(comment.created_at).format("YYYY년 MM월 DD일 HH:mm")}
                 </span>
               </div>
             </div>
             <div>
-              <p className="my-[12px]">{comment.comment}</p>
+              <p className="my-[12px] dark:text-[var(--dark-gray-100)]">
+                {comment.comment}
+              </p>
               {!isReply && (
                 <a className="text-[14px] text-[#969696] cursor-pointer">
                   답글 달기
