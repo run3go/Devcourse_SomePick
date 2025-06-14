@@ -6,6 +6,7 @@ import {
   followUser,
   unfollowUser,
 } from "../../apis/follow";
+import { notifyFollow } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
@@ -63,6 +64,7 @@ export default function CoupleProfile({
         },
       ]);
       await followUser(id);
+      await notifyFollow(id);
     } catch (e) {
       console.error(e);
       setIsFollwing(false);

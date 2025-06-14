@@ -16,7 +16,6 @@ import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import { useAuthStore } from "../../stores/authStore";
-import supabase from "../../utils/supabase";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -29,10 +28,11 @@ export default function Header() {
 
   const [notifications, setNotifications] = useState<NotificationData[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
-  const [couple, setcouple] = useState();
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
+
+  const couple = session?.user.user_metadata.status;
 
   // 초기 알림 데이터
   useEffect(() => {
@@ -99,20 +99,6 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen, isModalOpen]);
-
-  useEffect(() => {
-    if (session) {
-      setcouple(session.user.user_metadata.status);
-    }
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "USER_UPDATED") {
-        if (session) {
-          setcouple(session.user.user_metadata.status);
-        }
-      }
-    });
-    return () => data.subscription.unsubscribe();
-  }, []);
 
   return (
     <>

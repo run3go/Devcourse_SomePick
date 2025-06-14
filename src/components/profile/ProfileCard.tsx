@@ -56,7 +56,9 @@ export default function ProfileCard({
             <div
               className={twMerge(
                 "flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer",
-                !isMain && !isCouple && "w-[190px] h-[239px]"
+                !isEdited &&
+                  !isCouple &&
+                  (isMain ? "w-[236px] h-[294px]" : "w-[190px] h-[239px]")
               )}
             >
               <LoadingSpinner className="w-15 h-15" />

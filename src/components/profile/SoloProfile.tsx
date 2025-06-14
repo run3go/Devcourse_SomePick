@@ -7,6 +7,7 @@ import {
   unfollowUser,
 } from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
+import { notifyFollow, notifyHeart } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
@@ -30,17 +31,22 @@ export default function SoloProfile({
     posts,
     followers,
     followings,
-  }: { posts: PostData[]; followers: UserData[]; followings: UserData[] } =
-    useLoaderData();
+    matching: matchingData,
+  }: {
+    posts: PostData[];
+    followers: UserData[];
+    followings: UserData[];
+    matching: Matching;
+  } = useLoaderData();
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
   const [myFollowings, setMyFollowings] = useState<string[]>([]);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [matching, setMatching] = useState(matchingData);
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
   );
-
   const scrollToPosts = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -58,6 +64,7 @@ export default function SoloProfile({
         },
       ]);
       await followUser(id);
+      await notifyFollow(id);
     } catch (e) {
       console.error(e);
       setIsFollwing(false);
@@ -93,7 +100,21 @@ export default function SoloProfile({
     const hasHeartAlready = await sendHeart(id);
     if (hasHeartAlready) {
       setIsAlertOpen(true);
+    } else {
+      setMatching({
+        id: 1,
+        created_at: "",
+        is_matched: false,
+        is_rejected: false,
+        matching_user_id: id,
+        user_id: "",
+      });
+      await notifyHeart(id);
     }
+  };
+
+  const navigateMessage = () => {
+    navigate(`/message/${id}`);
   };
 
   return (
@@ -105,11 +126,11 @@ export default function SoloProfile({
     >
       {isAlertOpen && (
         <Alert
-          title="이미 상대에게 전달받은 하트가 있습니다"
+          title="상대에게 전달 받은 하트가 있습니다"
           subtitle="매칭 페이지로 이동하시겠습니까?"
           isOk="이동"
           isNotOk="취소"
-          onClick={() => navigate("/message")}
+          onClick={() => navigate(`/message/${id}/request`)}
           onCancel={() => setIsAlertOpen(false)}
         />
       )}
@@ -221,7 +242,7 @@ export default function SoloProfile({
                 </span>
               </div>
             </div>
-            {!isMyProfile && session?.user.user_metadata.status === "solo" && (
+            {!isMyProfile && session && (
               <div className="flex gap-7 mt-[22px]">
                 {isFollowing ? (
                   <Button
@@ -252,10 +273,24 @@ export default function SoloProfile({
                     <span className="inline-block leading-[1]">팔로우</span>
                   </Button>
                 )}
-                {
+
+                {session?.user.user_metadata.status === "solo" && (
                   <Button
-                    onClick={handleSendHeart}
+                    onClick={
+                      matching && matching.is_matched
+                        ? navigateMessage
+                        : handleSendHeart
+                    }
                     className="w-[177px] h-[38px] gap-2"
+                    disabled={
+                      matching
+                        ? matching.is_matched
+                          ? false
+                          : matching.user_id === id
+                          ? false
+                          : true
+                        : false
+                    }
                   >
                     <Icon
                       width="23px"
@@ -264,10 +299,16 @@ export default function SoloProfile({
                       top="-399px"
                     />
                     <span className="inline-block leading-[1]">
-                      하트 보내기
+                      {matching
+                        ? matching.is_matched
+                          ? "DM 보내기"
+                          : matching.user_id === id
+                          ? "받은 하트 보기"
+                          : "연결 대기중..."
+                        : "하트 보내기"}
                     </span>
                   </Button>
-                }
+                )}
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { followUser, unfollowUser } from "../../apis/follow";
+import { notifyFollow } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 
@@ -25,6 +26,7 @@ export default function FollowModal({
     try {
       setMyFollowings((state) => [...state, userId]);
       await followUser(userId);
+      await notifyFollow(userId);
     } catch (e) {
       console.error(e);
       setMyFollowings((state) => state.filter((id) => id !== userId));
