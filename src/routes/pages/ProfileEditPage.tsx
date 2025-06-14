@@ -76,8 +76,8 @@ export default function ProfileEditPage() {
       setValue("subImageFile", e.target.files[0]);
     }
     if (url) {
-      setTimeout(() => {
-        deleteImage(url);
+      setTimeout(async () => {
+        await deleteImage(url);
       }, 2000);
     }
   };

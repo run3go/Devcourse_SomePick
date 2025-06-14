@@ -26,8 +26,10 @@ export default function ProfileCard({
 }) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   useEffect(() => {
-    setIsImageLoaded(false);
-  }, [image]);
+    if (isEdited) {
+      setIsImageLoaded(false);
+    }
+  }, [image, isEdited]);
   return (
     <div
       onClick={onClick}
