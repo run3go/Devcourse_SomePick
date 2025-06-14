@@ -181,7 +181,7 @@ export default function CoupleProfile({
                   <Button
                     className={twMerge(
                       "w-[300px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]",
-                      "dark:bg-[var(--dark-bg-tertiary)] hover:bg-[var(--dark-gray-300-50)]"
+                      "dark:bg-[var(--dark-bg-tertiary)] hover:dark:bg-[var(--dark-gray-300-50)]"
                     )}
                     onClick={handleUnfollowUser}
                   >
