@@ -76,7 +76,7 @@ export default function ChatRoom({
   return (
     <>
       <div className="w-full h-full py-0.5 flex flex-col">
-        <div className="flex gap-3.5 px-6 items-center">
+        <div className="flex gap-3.5 px-6 items-center dark:text-[var(--dark-gray-100)]">
           <img
             src={chatUserProfile.main_image}
             className="w-[45px] h-[45px] rounded-full object-cover object-center"
@@ -94,7 +94,7 @@ export default function ChatRoom({
             </div>
           </div>
         </div>
-        <hr className="mx-5 my-3 border-[var(--gray-300)]" />
+        <hr className="mx-5 my-3 border-[var(--gray-500)] dark:bg-[var(--dark-bg-primary)]" />
         <div className="h-full overflow-y-scroll flex flex-col my-4">
           <div className="flex items-center justify-center">
             {messages.length > 0 && (
@@ -127,7 +127,7 @@ export default function ChatRoom({
                       className="w-[35px] h-[35px] rounded-full object-cover object-center"
                     />
                     <div className="flex items-end gap-2.5 mb-4" key={index}>
-                      <div className="max-w-96 px-4 py-3 bg-gray-200 text-black mr-auto text-left rounded-tl-2xl rounded-tr-2xl rounded-bl-none rounded-br-2xl text-[11px] whitespace-pre-line">
+                      <div className="max-w-96 px-4 py-3 bg-gray-200 text-black mr-auto text-left rounded-tl-2xl rounded-tr-2xl rounded-bl-none rounded-br-2xl text-[11px] whitespace-pre-line dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-gray-100)]">
                         <p>{message.message}</p>
                       </div>
                       <span className="text-[10px] text-[#969696]">

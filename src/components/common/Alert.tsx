@@ -33,7 +33,7 @@ export default function Alert({
         rounded-[20px] flex flex-col justify-between px-4 py-4 shadow-md"
       >
         {/* 텍스트 */}
-        <div className="flex flex-col justify-center items-center flex-1 text-center">
+        <div className="flex flex-col justify-center items-center flex-1 text-center dark:text-[var(--gray-300)]">
           <p className="text-[var(--gray-700)] text-[16px]">{title}</p>
           {subtitle && (
             <p className="text-[var(--gray-700)] text-[14px] mt-1">

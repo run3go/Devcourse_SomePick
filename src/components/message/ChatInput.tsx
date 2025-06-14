@@ -27,7 +27,7 @@ export default function ChatInput({
     <>
       <div className="flex justify-between gap-2.5 px-7 items-end">
         <input
-          className="border border-[var(--gray-300)] rounded-full w-full py-2 px-4 h-full focus:outline-none text-[11px]"
+          className="border border-[var(--gray-300)] rounded-full w-full py-2 px-4 h-full focus:outline-none text-[11px] dark:bg-[var(--dark-white)]"
           placeholder="메세지를 입력해주세요."
           value={message}
           onChange={(e) => setMessage(e.target.value)}

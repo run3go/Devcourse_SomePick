@@ -18,7 +18,7 @@ export default function ChatList({
   const { session } = useAuthStore();
 
   return (
-    <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-y-auto">
+    <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-y-auto dark:bg-[var(--dark-white)]/27">
       {users?.map((user, idx) => {
         const isSentByMe = user.sender.id === session?.user.id;
         const targetUser = isSentByMe ? user.reciever : user.sender;
