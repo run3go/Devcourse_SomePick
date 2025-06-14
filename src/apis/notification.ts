@@ -43,7 +43,7 @@ export const notifyComment = async (receiver_id: string, post_id: number) => {
   }
 };
 //소개팅 하트 알림 보내기 ( 상대방 아이디, 매칭 아이디 )
-export const notifyHeart = async (receiver_id: string, matching_id: number) => {
+export const notifyHeart = async (receiver_id: string) => {
   try {
     const {
       data: { session },
@@ -51,9 +51,7 @@ export const notifyHeart = async (receiver_id: string, matching_id: number) => {
     if (!session) return;
     const { error } = await supabase
       .from("notifications")
-      .insert([
-        { sender_id: session.user.id, receiver_id, matching_id, type: "heart" },
-      ]);
+      .insert([{ sender_id: session.user.id, receiver_id, type: "heart" }]);
     if (error) {
       console.log("하트 알림 실패:", error.message);
       return;

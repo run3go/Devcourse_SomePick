@@ -66,6 +66,27 @@ export const fetchChatRoom = async (chatPartnerId: string) => {
     console.error(e);
   }
 };
+// 내가 속한 채팅방 삭제하기
+export const deleteChatRoom = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase
+      .from("chat_rooms")
+      .delete()
+      .or(`user1_id.eq.${session.user.id},user2_id.eq.${session.user.id}`);
+    if (error) {
+      console.log("채팅방 삭제 실패:", error.message);
+      return;
+    }
+    console.log("채팅방 삭제 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // 메시지 가져오기 (채팅방id)
 export const fetchMessages = async (chatRoomId: string) => {
   try {

@@ -21,11 +21,13 @@ export default function CoupleEdit({
 
   const { watch, register, setValue } = useFormContext();
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
+
   return (
     <>
       <div className="mt-16 flex gap-[68px]">
         <label htmlFor="main_image">
           <ProfileCard image={watchedMainImage} isMain isEdited />
+
           <input
             className="hidden"
             type="file"

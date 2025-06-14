@@ -31,6 +31,7 @@ export default function Header() {
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
+
   const couple = session?.user.user_metadata.status;
 
   // 초기 알림 데이터
