@@ -1,10 +1,12 @@
 import { twMerge } from "tailwind-merge";
-import waiting from "../../assets/images/waiting.png";
+import man from "../../assets/images/man.png";
+import woman from "../../assets/images/woman.png";
 import Icon from "../common/Icon";
 
 export default function ProfileCard({
   nickname,
   image,
+  gender,
   isPartner = false,
   isCouple = false,
   isMain = false,
@@ -13,6 +15,7 @@ export default function ProfileCard({
 }: {
   nickname?: string;
   image: string | null;
+  gender?: "male" | "female";
   isPartner?: boolean;
   isCouple?: boolean;
   isMain?: boolean;
@@ -89,7 +92,7 @@ export default function ProfileCard({
               !isMain && "w-[190px] h-[239px]",
               (isCouple || isEdited) && "w-[300px] h-[373px]"
             )}
-            src={waiting}
+            src={gender === "male" ? woman : man}
             alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
           />
           {isCouple && (

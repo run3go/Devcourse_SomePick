@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
-import { followUser, unfollowUser } from "../../apis/follow";
+import {
+  fetchFollowingList,
+  followUser,
+  unfollowUser,
+} from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
 import { useAuthStore } from "../../stores/authStore";
 import Alert from "../common/Alert";
@@ -30,8 +34,9 @@ export default function SoloProfile({
     useLoaderData();
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
+  const [myFollowings, setMyFollowings] = useState<string[]>([]);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
   );
@@ -39,6 +44,7 @@ export default function SoloProfile({
   const scrollToPosts = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   const handleFollowUser = async () => {
     try {
       if (!session) return;
@@ -60,6 +66,7 @@ export default function SoloProfile({
       );
     }
   };
+
   const handleUnfollowUser = async () => {
     try {
       setIsFollwing(false);
@@ -81,12 +88,14 @@ export default function SoloProfile({
       ]);
     }
   };
+
   const handleSendHeart = async () => {
     const hasHeartAlready = await sendHeart(id);
     if (hasHeartAlready) {
       setIsAlertOpen(true);
     }
   };
+
   return (
     <div
       className={twMerge(
@@ -110,7 +119,12 @@ export default function SoloProfile({
             onClick={() => setIsFollowerModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followerList} type="팔로워" />
+          <FollowModal
+            users={followerList}
+            type="팔로워"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       {isFollowingModalOpen && (
@@ -119,7 +133,12 @@ export default function SoloProfile({
             onClick={() => setIsFollowingModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followings} type="팔로잉" />
+          <FollowModal
+            users={followings}
+            type="팔로잉"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       <div className="w-full text-center">
@@ -145,7 +164,19 @@ export default function SoloProfile({
           <div className="flex flex-col items-center">
             <div className="w-full flex justify-evenly gap-[29px] mt-[38px] font-semibold text-xl">
               <div
-                onClick={() => setIsFollowerModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowerModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
                 <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
@@ -156,7 +187,19 @@ export default function SoloProfile({
                 </span>
               </div>
               <div
-                onClick={() => setIsFollowingModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowingModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
                 <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
