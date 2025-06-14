@@ -262,6 +262,7 @@ export type Database = {
           created_at: string;
           id: number;
           is_matched: boolean;
+          is_rejected: boolean;
           matching_user_id: string;
           user_id: string;
         };
@@ -269,6 +270,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           is_matched?: boolean;
+          is_rejected?: boolean;
           matching_user_id: string;
           user_id: string;
         };
@@ -276,6 +278,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           is_matched?: boolean;
+          is_rejected?: boolean;
           matching_user_id?: string;
           user_id?: string;
         };
