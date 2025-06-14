@@ -177,3 +177,25 @@ export const disconnectMatching = async (senderId: string) => {
     console.error(e);
   }
 };
+
+export const deleteMatching = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase
+      .from("matchings")
+      .delete()
+      .or(
+        `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
+      );
+    if (error) {
+      console.log("매칭 전부 삭제 실패:", error.message);
+      return;
+    }
+    console.log("매칭 전부 삭제 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};

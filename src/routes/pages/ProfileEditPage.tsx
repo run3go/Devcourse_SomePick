@@ -1,6 +1,8 @@
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { deleteMatching } from "../../apis/matching";
+import { deleteChatRoom } from "../../apis/message";
 import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
 import CoupleEdit from "../../components/profile/CoupleEdit";
@@ -57,7 +59,11 @@ export default function ProfileEditPage() {
       return;
     }
     if (status === "couple") {
-      await checkCouple(data.partnerNickname, profile.gender);
+      Promise.all([
+        await checkCouple(data.partnerNickname, profile.gender),
+        await deleteChatRoom(),
+        await deleteMatching(),
+      ]);
     }
     navigate(`/profile/${profile.id}`);
   };
