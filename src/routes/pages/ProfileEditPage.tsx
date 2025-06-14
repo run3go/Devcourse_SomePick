@@ -1,16 +1,18 @@
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
 import CoupleEdit from "../../components/profile/CoupleEdit";
 import SoloEdit from "../../components/profile/SoloEdit";
 import { useProfileForm } from "../../hooks/useProfileForm";
+import { handleError } from "../../utils/handleError";
 
 export default function ProfileEditPage() {
   const { state: profile }: { state: ProfileData } = useLocation();
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (data: FormValue) => {
+  const handleFormSubmit = async (data: FormValues) => {
     const {
       status,
       age,
@@ -19,6 +21,7 @@ export default function ProfileEditPage() {
       location,
       mbti,
       height,
+      description,
       partnerNickname,
     } = data;
 
@@ -33,6 +36,8 @@ export default function ProfileEditPage() {
       job,
       location,
       mbti,
+      status,
+      description,
       main_image: mainUrl || profile.main_image,
       sub_image: subUrl || profile.sub_image,
       age: Number(age),
@@ -42,7 +47,15 @@ export default function ProfileEditPage() {
       ideal_types: data.idealTypeList,
       partner_nickname: status === "solo" ? null : partnerNickname,
     };
-    await updateProfile(payload);
+    const error = await updateProfile(payload);
+    if (
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "23505"
+    ) {
+      toast.warn("중복된 닉네임입니다");
+      return;
+    }
     if (status === "couple") {
       await checkCouple(data.partnerNickname, profile.gender);
     }
@@ -78,7 +91,7 @@ export default function ProfileEditPage() {
       <main className="relative flex justify-center pb-[50px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
             <CoupleEdit handleFileChange={handleFileChange} />
@@ -91,7 +104,7 @@ export default function ProfileEditPage() {
       <main className="relative flex justify-center pb-[150px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
             <SoloEdit handleFileChange={handleFileChange} />

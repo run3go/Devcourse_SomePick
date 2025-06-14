@@ -34,7 +34,7 @@ export default function CoupleEdit({
           />
         </label>
       </div>
-      <div className="flex items-center gap-[18px] mt-[42px]">
+      <div className="flex items-center gap-[20px] mt-[42px]">
         <div className="flex items-center gap-2">
           <Icon width="10px" height="9px" left="-49px" top="-405px" />
           <span className="font-semibold text-[var(--primary-pink-point)] leading-[1]">
@@ -47,6 +47,9 @@ export default function CoupleEdit({
             "dark:border-[var(--primary-pink-tone)] dark:focus:outline-0 dark:focus:border-[var(--primary-pink-point)]",
             "dark:text-[var(--dark-white)]"
           )}
+          minLength={2}
+          maxLength={5}
+          autoComplete={"off"}
           {...register("partnerNickname")}
         />
       </div>

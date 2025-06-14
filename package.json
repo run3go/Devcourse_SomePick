@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "@supabase/supabase-js": "^2.49.9",
     "@tailwindcss/vite": "^4.1.8",
     "date-fns": "^4.1.0",
@@ -27,6 +28,7 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.8",
     "uuid": "^11.1.0",
+    "zod": "^3.25.64",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

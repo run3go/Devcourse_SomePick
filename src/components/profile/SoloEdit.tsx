@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { interests, keywords, profileInfo } from "../../constants/data/tags";
+import useCheckNickname from "../../hooks/useCheckNickname";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
@@ -21,10 +22,14 @@ export default function SoloEdit({
   const { state: profile }: { state: ProfileData } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
 
   const { watch, register, setValue } = useFormContext();
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
   const watchedSubImage = watch("subImageUrl", profile.sub_image);
+  const watchedNickname = watch("nickname", profile.nickname);
+
+  const { isDuplicate } = useCheckNickname(watchedNickname);
   return (
     <>
       <div className="mt-16 flex gap-[68px]">
@@ -57,10 +62,11 @@ export default function SoloEdit({
         </div>
         <input
           className={twMerge(
-            "box-border w-[730px] py-4 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]",
+            "box-border w-[730px] h-14 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]",
             "dark:text-[var(--dark-white)] dark:border-[var(--primary-pink)]",
             "dark:outline-0 dark:focus:border-[var(--primary-pink-point)]"
           )}
+          maxLength={30}
           {...register("description")}
         />
       </div>
@@ -102,15 +108,42 @@ export default function SoloEdit({
           <ul className="flex flex-col gap-7">
             {/* 닉네임, 나이, 키 */}
             {["nickname", "age", "height"].map((item) => (
-              <li key={item} className="flex items-center">
+              <li key={item} className="relative flex items-center">
                 <span className="user-info">
                   {profileInfo[item as "nickname" | "age" | "height"]}
                 </span>
                 <input
                   type="text"
                   className="user-info-input"
-                  {...register(item as "nickname" | "age" | "height")}
+                  autoComplete="off"
+                  {...register(item as "nickname" | "age" | "height", {
+                    onChange: () => {
+                      if (item === "nickname") {
+                        setIsTouched(true);
+                      }
+                    },
+                  })}
                 />
+                {isTouched && item === "nickname" && (
+                  <div className="absolute left-1/4 top-1/2 -translate-y-1/2">
+                    {isDuplicate === true && (
+                      <Icon
+                        width="18px"
+                        height="18px"
+                        left="-888px"
+                        top="-759px"
+                      />
+                    )}
+                    {isDuplicate === false && (
+                      <Icon
+                        width="16px"
+                        height="12px"
+                        left="-929px"
+                        top="-762px"
+                      />
+                    )}
+                  </div>
+                )}
               </li>
             ))}
             {/* 직업, 지역, mbti */}

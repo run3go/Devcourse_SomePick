@@ -1,7 +1,12 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { profileSchema } from "../utils/profile.schema";
 
 export const useProfileForm = (profile: ProfileData) => {
-  return useForm<FormValue>({
+  return useForm<FormValues>({
+    mode: "onSubmit",
+    shouldFocusError: false,
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       mainImageUrl: profile.main_image || "",
       subImageUrl: profile.sub_image || "",
