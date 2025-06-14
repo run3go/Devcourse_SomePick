@@ -1,16 +1,35 @@
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
 import { useSignUpStore } from "../../stores/signupStore";
+import supabase from "../../utils/supabase";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
-
   const { resetData } = useSignUpStore();
 
+  const [hasProfile, setHasProfile] = useState(false);
+
+  const getUserData = useCallback(async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      setHasProfile(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
   return (
     <>
       <div className="flex h-full flex-col justify-center">
-        <BackButton className="ml-20" />
+        {hasProfile ? (
+          <BackButton className="ml-20" type="google" />
+        ) : (
+          <BackButton className="ml-20" />
+        )}
 
         <div className="flex flex-col items-center justify-center h-[861px]">
           <p className="text-[36px] cursor-default mb-9">

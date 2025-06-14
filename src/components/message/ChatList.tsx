@@ -3,29 +3,39 @@ import ChatItem from "./ChatItem";
 
 export default function ChatList({
   onChatClick,
-  matchingUsers,
-}: // selectedTab,
-{
-  onChatClick?: (userId: string) => void;
-  // selectedTab?: string;
-  matchingUsers: Matching[];
+  users,
+  selectedUserId,
+  type,
+}: {
+  onChatClick?: (
+    userId: string,
+    type?: "received" | "sent" | "matched"
+  ) => void;
+  users?: Matching[];
+  selectedUserId?: string | null;
+  type: "received" | "sent" | "matched";
 }) {
   const { session } = useAuthStore();
 
   return (
-    <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-auto">
-      {matchingUsers.map((user, idx) => {
+    <div className="border rounded-2xl p-1.5 my-3 border-[var(--primary-pink)] h-[300px] overflow-y-auto">
+      {users?.map((user, idx) => {
         const isSentByMe = user.sender.id === session?.user.id;
         const targetUser = isSentByMe ? user.reciever : user.sender;
+
+        const handleClick = () => {
+          onChatClick?.(targetUser.id, type);
+        };
 
         return (
           <div key={idx}>
             <ChatItem
               name={targetUser.nickname}
               profileImg={targetUser.main_image}
-              onClick={() => onChatClick?.(targetUser.id)}
+              onClick={handleClick}
+              isSelected={selectedUserId === targetUser.id}
             />
-            {idx !== matchingUsers.length - 1 && (
+            {idx !== users.length - 1 && (
               <hr className="border-[var(--primary-pink)] mx-2" />
             )}
           </div>

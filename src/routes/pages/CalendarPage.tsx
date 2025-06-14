@@ -18,7 +18,7 @@ export default function CalendarPage() {
     useLoaderData();
 
   const schedules = useCalendarStore((state) => state.schedules);
-  const { setSchedules, setTargetDate } = useCalendarStore();
+  const { setSchedules } = useCalendarStore();
   const scrollRef = useRef<HTMLInputElement | null>(null);
   const [isScrollBtnShow, setIsScrollBtnShow] = useState(false);
 
@@ -55,7 +55,7 @@ export default function CalendarPage() {
     return () => {
       window.removeEventListener("scroll", scrollEvent);
     };
-  }, [setTargetDate, setSchedules, data]);
+  }, [setSchedules, data]);
   return (
     <main className="flex justify-center mt-[30px]">
       <div className="w-[1366px] relative">

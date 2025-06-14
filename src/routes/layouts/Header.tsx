@@ -12,7 +12,6 @@ import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
-import Alert from "../../components/common/Alert";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
@@ -24,7 +23,7 @@ export default function Header() {
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
   const [notifications, setNotifications] = useState<NotificationData[]>([]);
@@ -138,10 +137,6 @@ export default function Header() {
                 <div>
                   <button
                     onClick={() => {
-                      if (!isLogin) {
-                        setIsAlertOpen(true);
-                        return;
-                      }
                       navigate("/couplecalendar");
                     }}
                     className={twMerge(
@@ -157,10 +152,6 @@ export default function Header() {
                 <div>
                   <button
                     onClick={() => {
-                      if (!isLogin) {
-                        setIsAlertOpen(true);
-                        return;
-                      }
                       navigate("/matching");
                     }}
                     className={twMerge(
@@ -174,7 +165,7 @@ export default function Header() {
                 </div>
               )}
 
-              {isAlertOpen && (
+              {/* {isAlertOpen && (
                 <Alert
                   title="로그인이 필요해요!"
                   isOk="로그인하러 가기"
@@ -185,13 +176,9 @@ export default function Header() {
                   }}
                   onCancel={() => setIsAlertOpen(false)}
                 ></Alert>
-              )}
+              )} */}
               <button
                 onClick={() => {
-                  if (!isLogin) {
-                    setIsAlertOpen(true);
-                    return;
-                  }
                   navigate("/todayfortune");
                 }}
                 className={twMerge(

@@ -5,9 +5,8 @@ import { useSignUpStore } from "../../stores/signupStore";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function ProfileImgUpload({ type }: { type: string }) {
-  const { setMainImgFile, setSubImgFile } = useSignUpStore();
-  const [mainImageUrl, setMainImageUrl] = useState("");
-  const [subImageUrl, setSubImageUrl] = useState("");
+  const { setMainImgFile, mainImgUrl, setSubImgFile, subImgUrl } =
+    useSignUpStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,11 +19,9 @@ export default function ProfileImgUpload({ type }: { type: string }) {
 
         if (url) {
           if (type === "main") {
-            setMainImageUrl(url);
-            setMainImgFile(file);
+            setMainImgFile(file, url);
           } else {
-            setSubImageUrl(url);
-            setSubImgFile(file);
+            setSubImgFile(file, url);
           }
 
           // updateData({ main_image: url });
@@ -32,7 +29,7 @@ export default function ProfileImgUpload({ type }: { type: string }) {
 
           setTimeout(() => {
             deleteImage(url);
-          }, 2000);
+          }, 600000);
         } else {
           console.error("image upload failed.");
         }
@@ -44,6 +41,8 @@ export default function ProfileImgUpload({ type }: { type: string }) {
     }
   };
 
+  const imageUrl = type === "main" ? mainImgUrl : subImgUrl;
+
   return (
     <>
       <label
@@ -53,10 +52,10 @@ export default function ProfileImgUpload({ type }: { type: string }) {
         {isLoading && <LoadingSpinner />}
 
         {!isLoading &&
-          (mainImageUrl || subImageUrl ? (
+          (imageUrl ? (
             <>
               <img
-                src={type === "main" ? mainImageUrl : subImageUrl}
+                src={imageUrl}
                 alt="프로필 이미지"
                 draggable="false"
                 className="w-full h-full object-cover rounded-[18px]"

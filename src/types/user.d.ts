@@ -23,7 +23,9 @@ type CoupleOptions = CommonOptions & {
 };
 
 type ProfileUpdatePayload = Partial<{
+  id: string;
   age: number;
+  gender: string;
   nickname: string;
   main_image: string;
   sub_image: string;

@@ -23,7 +23,7 @@ export default function SignupInput({
 }: InputProps) {
   return (
     <>
-      <div className="flex flex-col">
+      <div className={twMerge("flex flex-col", className)}>
         <label htmlFor={name} className="ml-5 mb-1">
           {label}
         </label>
@@ -37,8 +37,7 @@ export default function SignupInput({
           className={twMerge(
             `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
               isError ? "border-[var(--red)]" : "border-[var(--primary-pink)]"
-            }`,
-            className
+            }`
           )}
           {...(name === "height"
             ? { inputMode: "numeric", pattern: "[0-9]*" }

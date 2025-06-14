@@ -22,7 +22,7 @@ export default function ScheduleInput({
 
   const title = useCalendarStore((state) => state.title);
   const memo = useCalendarStore((state) => state.memo);
-  const { setTitle, setMemo, addSchedule, setTargetDate } = useCalendarStore();
+  const { setTitle, setMemo, addSchedule } = useCalendarStore();
 
   const handleSubmit = () => {
     if (!title.trim().length) {
@@ -46,9 +46,6 @@ export default function ScheduleInput({
         setTitle("");
         setMemo("");
         scrollTo({ top: 0, behavior: "smooth" });
-        setTimeout(() => {
-          setTargetDate("");
-        }, 500);
       } else {
         toast.error("일정 등록에 실패했습니다");
       }
