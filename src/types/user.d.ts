@@ -95,7 +95,7 @@ type Matching = {
   reciever: ProfileData;
 };
 
-type FormValue = {
+type FormValues = {
   mainImageUrl: string;
   subImageUrl: string | null;
   mainImageFile: File | null;
@@ -103,7 +103,7 @@ type FormValue = {
   nickname: string;
   age: string;
   status: "solo" | "couple";
-  description: string;
+  description?: string;
   job: string;
   location: string;
   height: string;

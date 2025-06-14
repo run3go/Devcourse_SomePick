@@ -1,51 +1,45 @@
-import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { twMerge } from "tailwind-merge";
+import { toast } from "react-toastify";
 import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
-import Alert from "../../components/common/Alert";
-import Button from "../../components/common/Button";
-import Icon from "../../components/common/Icon";
-import ProfileCard from "../../components/profile/ProfileCard";
-import ProfileSelectBox from "../../components/profile/ProfileSelectBox";
-import SelectTags from "../../components/profile/SelectTags";
-import { interests, keywords, profileInfo } from "../../constants/data/tags";
+import CoupleEdit from "../../components/profile/CoupleEdit";
+import SoloEdit from "../../components/profile/SoloEdit";
 import { useProfileForm } from "../../hooks/useProfileForm";
+import { handleError } from "../../utils/handleError";
 
 export default function ProfileEditPage() {
   const { state: profile }: { state: ProfileData } = useLocation();
   const navigate = useNavigate();
 
-  const methods = useProfileForm(profile);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleFormSubmit = async (data: FormValue) => {
+  const handleFormSubmit = async (data: FormValues) => {
     const {
       status,
-      nickname,
       age,
+      nickname,
       job,
       location,
-      height,
       mbti,
+      height,
       description,
       partnerNickname,
     } = data;
+
     const mainUrl =
       data.mainImageFile &&
       (await storeImage(data.mainImageFile, "main_image"));
     const subUrl =
       data.subImageFile && (await storeImage(data.subImageFile, "sub_image"));
+
     const payload: ProfileUpdatePayload = {
-      main_image: mainUrl || profile.main_image,
-      sub_image: subUrl || profile.sub_image,
-      status,
       nickname,
       job,
       location,
-      description,
       mbti,
+      status,
+      description,
+      main_image: mainUrl || profile.main_image,
+      sub_image: subUrl || profile.sub_image,
       age: Number(age),
       height: Number(height),
       keywords: data.keywordList,
@@ -53,7 +47,15 @@ export default function ProfileEditPage() {
       ideal_types: data.idealTypeList,
       partner_nickname: status === "solo" ? null : partnerNickname,
     };
-    await updateProfile(payload);
+    const error = await updateProfile(payload);
+    if (
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "23505"
+    ) {
+      toast.warn("중복된 닉네임입니다");
+      return;
+    }
     if (status === "couple") {
       await checkCouple(data.partnerNickname, profile.gender);
     }
@@ -79,73 +81,20 @@ export default function ProfileEditPage() {
       }, 2000);
     }
   };
-  const { handleSubmit, register, setValue, watch } = methods;
+
+  const methods = useProfileForm(profile);
+  const { handleSubmit, setValue, watch } = methods;
   const watchedStatus = watch("status", profile.status);
-  const watchedMainImage = watch("mainImageUrl", profile.main_image);
-  const watchedSubImage = watch("subImageUrl", profile.sub_image);
+
   if (watchedStatus === "couple") {
     return (
       <main className="relative flex justify-center pb-[50px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
-            <div className="mt-16 flex gap-[68px]">
-              <label htmlFor="main_image">
-                <ProfileCard image={watchedMainImage} isMain isEdited />
-                <input
-                  className="hidden"
-                  type="file"
-                  id="main_image"
-                  onChange={(e) => handleFileChange(e, "main")}
-                />
-              </label>
-            </div>
-            <div className="flex items-center gap-[18px] mt-[42px]">
-              <div className="flex items-center gap-2">
-                <Icon width="10px" height="9px" left="-49px" top="-405px" />
-                <span className="font-semibold text-[var(--primary-pink-point)] leading-[1]">
-                  상대 닉네임
-                </span>
-              </div>
-              <input
-                className={twMerge(
-                  "w-[150px] box-border py-2 border-3 border-[var(--gray-200)] rounded-[20px] pl-[20px] focus:outline-[var(--primary-pink)]",
-                  "dark:border-[var(--primary-pink-tone)] dark:focus:outline-0 dark:focus:border-[var(--primary-pink-point)]",
-                  "dark:text-[var(--dark-white)]"
-                )}
-                {...register("partnerNickname")}
-              />
-            </div>
-            <Button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="w-[264px] h-[38px] mt-[37px]"
-            >
-              솔로로 전환하기
-            </Button>
-            {isModalOpen && (
-              <Alert
-                title="정말로 솔로로 전환하시겠습니까?"
-                subtitle="기존 커플 기록이 전부 삭제됩니다"
-                isOk="네"
-                isNotOk="아니요"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setValue("status", "solo");
-                }}
-                onCancel={() => setIsModalOpen(false)}
-              />
-            )}
-            <div className="flex flex-col w-full  mt-[50px]">
-              <Button
-                type="submit"
-                className="w-[264px] h-[38px] self-end mt-8"
-              >
-                <span className="leading-[1]">프로필 정보 저장</span>
-              </Button>
-            </div>
+            <CoupleEdit handleFileChange={handleFileChange} />
           </form>
         </FormProvider>
       </main>
@@ -155,134 +104,10 @@ export default function ProfileEditPage() {
       <main className="relative flex justify-center pb-[150px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
-            {/* 프로필 사진 */}
-            <div className="mt-16 flex gap-[68px]">
-              <label htmlFor="main_image">
-                <ProfileCard image={watchedMainImage} isMain isEdited />
-                <input
-                  className="hidden"
-                  type="file"
-                  id="main_image"
-                  onChange={(e) => handleFileChange(e, "main")}
-                />
-              </label>
-              <label htmlFor="sub_image">
-                <ProfileCard image={watchedSubImage} isEdited />
-                <input
-                  className="hidden"
-                  type="file"
-                  id="sub_image"
-                  onChange={(e) => handleFileChange(e, "sub")}
-                />
-              </label>
-            </div>
-            {/* 한줄 소개 */}
-            <div className="flex items-center gap-[18px] mt-[42px] mb-[37px]">
-              <div className="flex items-center gap-2">
-                <Icon width="10px" height="9px" left="-49px" top="-405px" />
-                <span className="font-semibold text-[var(--primary-pink-point)] leading-[1]">
-                  한줄 소개
-                </span>
-              </div>
-              <input
-                className={twMerge(
-                  "box-border w-[730px] py-4 border-3 border-[var(--gray-200)] rounded-[20px] pl-[30px] focus:outline-[var(--primary-pink)]",
-                  "dark:text-[var(--dark-white)] dark:border-[var(--primary-pink)]",
-                  "dark:outline-0 dark:focus:border-[var(--primary-pink-point)]"
-                )}
-                {...register("description")}
-              />
-            </div>
-            <Button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="w-[264px] h-[38px]"
-            >
-              커플로 전환하기
-            </Button>
-            {isModalOpen && (
-              <Alert
-                title="정말로 커플로 전환하시겠습니까?"
-                subtitle="매칭과 채팅 기록이 모두 삭제됩니다."
-                isOk="네"
-                isNotOk="아니요"
-                onClick={() => {
-                  setValue("status", "couple");
-                  setIsModalOpen(false);
-                }}
-                onCancel={() => setIsModalOpen(false)}
-              />
-            )}
-            <div className="flex flex-col w-full mb-[137px] mt-[132px]">
-              <h3
-                className={twMerge(
-                  "mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]",
-                  "dark:text-[var(--dark-white)]"
-                )}
-              >
-                내 정보
-              </h3>
-              <div
-                className={twMerge(
-                  "flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]",
-                  "dark:border-[var(--primary-pink)] dark:bg-[var(--dark-bg-secondary)]"
-                )}
-              >
-                <ul className="flex flex-col gap-7">
-                  {/* 닉네임, 나이, 키 */}
-                  {["nickname", "age", "height"].map((item) => (
-                    <li key={item} className="flex items-center">
-                      <span className="user-info">
-                        {profileInfo[item as "nickname" | "age" | "height"]}
-                      </span>
-                      <input
-                        type="text"
-                        className="user-info-input"
-                        {...register(item as "nickname" | "age" | "height")}
-                      />
-                    </li>
-                  ))}
-                  {/* 직업, 지역, mbti */}
-                  {["job", "location", "mbti"].map((item) => (
-                    <li key={item} className="flex items-center">
-                      <span className="user-info">
-                        {profileInfo[item as "job" | "location" | "mbti"]}
-                      </span>
-                      <ProfileSelectBox
-                        type={item as "job" | "location" | "mbti"}
-                      />
-                    </li>
-                  ))}
-                </ul>
-                {/* 태그 */}
-                <ul className="dark:text-[var(--dark-white)] flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
-                  <SelectTags
-                    type="나를 표현하는 키워드"
-                    list={keywords}
-                    name="keywordList"
-                  />
-                  <SelectTags
-                    type="나의 관심사"
-                    list={interests}
-                    name="interestList"
-                  />
-                  <SelectTags
-                    type="나의 이상형"
-                    list={keywords}
-                    name="idealTypeList"
-                  />
-                </ul>
-              </div>
-              <Button
-                type="submit"
-                className="w-[264px] h-[38px] self-end mt-8"
-              >
-                <span className="leading-[1]">프로필 정보 저장</span>
-              </Button>
-            </div>
+            <SoloEdit handleFileChange={handleFileChange} />
           </form>
         </FormProvider>
       </main>

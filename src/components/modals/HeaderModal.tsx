@@ -3,7 +3,8 @@ import { twMerge } from "tailwind-merge";
 import type { Session } from "@supabase/supabase-js";
 import { useNavigate } from "react-router";
 import { logoutUser } from "../../apis/auth";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
+
 interface HeaderModalPropds {
   onClose: () => void;
 }

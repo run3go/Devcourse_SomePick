@@ -48,7 +48,7 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
       .single();
     if (error) {
       console.log("프로필 수정 실패:", error.message);
-      return;
+      return error;
     }
     return profile;
   } catch (e) {
