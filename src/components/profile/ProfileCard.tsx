@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import man from "../../assets/images/man.png";
 import woman from "../../assets/images/woman.png";
 import Icon from "../common/Icon";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function ProfileCard({
   nickname,
@@ -22,6 +24,10 @@ export default function ProfileCard({
   isEdited?: boolean;
   onClick?: () => void;
 }) {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  useEffect(() => {
+    setIsImageLoaded(false);
+  }, [image]);
   return (
     <div
       onClick={onClick}
@@ -44,15 +50,26 @@ export default function ProfileCard({
       )}
       {image ? (
         <>
+          {!isImageLoaded && (
+            <div
+              className={twMerge(
+                "flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer"
+              )}
+            >
+              <LoadingSpinner className="w-15 h-15" />
+            </div>
+          )}
           <img
             draggable="false"
             className={twMerge(
               "w-[236px] h-[294px] rounded-2xl object-cover",
               !isMain && "w-[190px] h-[239px]",
-              (isCouple || isEdited) && "w-[300px] h-[373px]"
+              (isCouple || isEdited) && "w-[300px] h-[373px]",
+              !isImageLoaded && "hidden"
             )}
             src={image}
             alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
+            onLoad={() => setIsImageLoaded(true)}
           />
           {isEdited && (
             <div className="group absolute flex justify-center items-center w-[300px] h-[373px] rounded-2xl object-cover cursor-pointer hover:bg-[rgba(0,0,0,0.5)]">
@@ -93,6 +110,7 @@ export default function ProfileCard({
               (isCouple || isEdited) && "w-[300px] h-[373px]"
             )}
             src={gender === "male" ? woman : man}
+            onLoad={() => setIsImageLoaded(true)}
             alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
           />
           {isCouple && (
