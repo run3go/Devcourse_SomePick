@@ -145,8 +145,6 @@ export default function SignUpCouplePage() {
       ...(imgUrl ? { main_image: imgUrl } : {}),
     };
 
-    console.log(fullPayload);
-
     await signupUser(email, pw, fullPayload);
     navigate("/");
     resetData();

@@ -6,6 +6,7 @@ import {
   getYear,
   subMonths,
 } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { weeks } from "../../constants/data/calendar";
@@ -35,8 +36,9 @@ export default function Calendar({
   const nextMonth = () => {
     setDate((date) => addMonths(date, 1));
   };
+
   return (
-    <div className="flex justify-center pl-[62px] py-[20px] flex-grow shadow-[0_2px_8px_0_rgba(0,0,0,0.4)] rounded-[30px]">
+    <div className="overflow-x-hidden flex justify-center pl-[62px] py-[20px] flex-grow shadow-[0_2px_8px_0_rgba(0,0,0,0.4)] rounded-[30px]">
       <div className="w-[820px]">
         <div className="flex justify-between items-center mb-[30px] w-[735px] ml-[10px]">
           <Icon
@@ -64,40 +66,44 @@ export default function Calendar({
             onClick={nextMonth}
           />
         </div>
-        <div className="w-full text-[30px]">
-          <div className="w-full">
-            <div className="flex h-[50px] text-xl">
-              {weeks.map((week, index) => (
-                <div
-                  key={week}
-                  className={twMerge(
-                    "basis-1/7",
-                    !index && "text-[var(--primary-pink-point)]"
-                  )}
-                >
-                  <div className="w-[55px] text-center">{week}</div>
+        <AnimatePresence mode="wait">
+          <motion.div>
+            <div className="w-full text-[30px]">
+              <div className="w-full">
+                <div className="flex h-[50px] text-xl">
+                  {weeks.map((week, index) => (
+                    <div
+                      key={week}
+                      className={twMerge(
+                        "basis-1/7",
+                        !index && "text-[var(--primary-pink-point)]"
+                      )}
+                    >
+                      <div className="w-[55px] text-center">{week}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="days-wrap flex flex-wrap">
+                  {dayArray.map((item) => (
+                    <DateItem
+                      key={item}
+                      item={item}
+                      date={date}
+                      showScrollBtn={showScrollBtn}
+                      schedules={optimisticSchedules.filter(
+                        (schedule) =>
+                          schedule.date ===
+                          `${year}-${
+                            month + 1 < 10 ? "0" + (month + 1) : month + 1
+                          }-${item}`
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="days-wrap flex flex-wrap">
-              {dayArray.map((item) => (
-                <DateItem
-                  key={item}
-                  item={item}
-                  date={date}
-                  showScrollBtn={showScrollBtn}
-                  schedules={optimisticSchedules.filter(
-                    (schedule) =>
-                      schedule.date ===
-                      `${year}-${
-                        month + 1 < 10 ? "0" + (month + 1) : month + 1
-                      }-${item}`
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
