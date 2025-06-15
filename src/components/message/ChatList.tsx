@@ -11,7 +11,7 @@ export default function ChatList({
     userId: string,
     type?: "received" | "sent" | "matched"
   ) => void;
-  users?: Matching[];
+  users?: MatchingUser[];
   selectedUserId?: string | null;
   type: "received" | "sent" | "matched";
 }) {

@@ -6,8 +6,8 @@ import { useAuthStore } from "../../stores/authStore";
 import Icon from "../../components/common/Icon";
 
 type MessagePageProps = {
-  matchingUserProfile: Matching[];
-  matchedUserProfile: Matching[];
+  matchingUserProfile: MatchingUser[];
+  matchedUserProfile: MatchingUser[];
 };
 
 export default function MessagePage({
