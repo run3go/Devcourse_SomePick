@@ -33,7 +33,7 @@ export default function BackButton({
     if (type == "google") {
       await logoutUser();
       setLogout();
-      navigate("/auth/signup");
+      navigate("/auth/login");
       return;
     }
 
