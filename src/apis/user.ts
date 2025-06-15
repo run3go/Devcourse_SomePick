@@ -18,7 +18,9 @@ export const fetchProfile = async (userId: string) => {
                 nickname,
                 main_image
             )
-        )
+        ),
+        fortuneData:fortune_telling_id (
+        *)
         `
       )
       .eq("id", userId)
