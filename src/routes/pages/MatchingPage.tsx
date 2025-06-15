@@ -57,6 +57,19 @@ export default function MatchingPage() {
     })();
   }, [gender]);
 
+  //추천카드모달 나올시 스크롤 안되게
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
+
   // 변경: 필터링된 프로필 배열 계산 (지역 & 관심사)
   let displayedProfiles = matchedProfiles;
   if (filterByLocation || filterByInterest || filterByMbti) {
@@ -125,35 +138,40 @@ export default function MatchingPage() {
         {/* 필터 버튼 그룹 */}
         <div className="flex space-x-8">
           <Button
-            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
+              filterByInterest ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
+            }`}
             onClick={toggleInterestFilter}
           >
             <span className="inline-block leading-[1]">관심사</span>
           </Button>
           <Button
-            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
+              filterByLocation ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
+            }`}
             onClick={toggleLocationFilter}
           >
             <span className="inline-block leading-[1]">지역</span>
           </Button>
           <Button
-            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
+              filterByMbti ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
+            }`}
             onClick={toggleMbtiFilter}
           >
             <span className="inline-block leading-[1]">MBTI</span>
           </Button>
         </div>
 
-        {/* 캐러셀 카드 리스트 */}
-        <LayoutGroup>
-          <div className="flex flex-col items-center justify-center space-y-8 p-6">
-            <div className="flex items-center justify-center space-x-8 relative">
-              <button onClick={handlePrev} className="absolute left-[-50px] z-10">
-                <img src={LeftBtn} alt="이전" className="cursor-pointer" />
-              </button>
+        {displayedProfiles.length > 0 && (
+          <LayoutGroup>
+            <div className="flex flex-col items-center justify-center space-y-8 p-6">
+              <div className="flex items-center justify-center space-x-8 relative">
+                <button onClick={handlePrev} className="absolute left-[-50px] z-10">
+                  <img src={LeftBtn} alt="이전" className="cursor-pointer" />
+                </button>
 
-              {len > 0 &&
-                slots.map(({ idx, position }) => {
+                {slots.map(({ idx, position }) => {
                   const profile = displayedProfiles[idx];
                   const isCenter = position === "center";
                   return (
@@ -163,14 +181,11 @@ export default function MatchingPage() {
                       layoutId={profile.id.toString()}
                       initial={false}
                       transition={{ duration: 0.5, ease: "easeInOut" }}
-                      className={`
-                    transform filter
-                    ${
-                      isCenter
-                        ? "scale-100 blur-0 w-[600px] h-[800px]"
-                        : "scale-100 blur-lg w-[300px] h-[450px]"
-                    }
-                  `}
+                      className={`transform filter ${
+                        isCenter
+                          ? "scale-100 blur-0 w-[600px] h-[800px]"
+                          : "scale-100 blur-lg w-[300px] h-[450px]"
+                      }`}
                     >
                       <MatchingCard
                         profile={profile}
@@ -185,12 +200,20 @@ export default function MatchingPage() {
                   );
                 })}
 
-              <button onClick={handleNext} className="absolute right-[-50px] z-10">
-                <img src={RightBtn} alt="다음" className="cursor-pointer" />
-              </button>
+                <button onClick={handleNext} className="absolute right-[-50px] z-10">
+                  <img src={RightBtn} alt="다음" className="cursor-pointer" />
+                </button>
+              </div>
             </div>
+          </LayoutGroup>
+        )}
+
+        {/* 필터 결과 없을 때 메시지 */}
+        {displayedProfiles.length === 0 && (
+          <div className="text-center text-[20px] text-[#999] mt-12">
+            😥 조건에 맞는 상대가 없어요. <br /> 아래에서 더 찾아볼까요?
           </div>
-        </LayoutGroup>
+        )}
 
         {/* 하단 안내 텍스트 */}
         <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px] text-black">
