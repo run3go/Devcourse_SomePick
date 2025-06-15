@@ -20,9 +20,11 @@ export default function ScheduleInput({
   const [targetYear, targetMonth, targetDay] = targetDate.split("-");
   const thisYear = getYear(new Date()).toString();
 
+  const id = useCalendarStore((state) => state.id);
   const title = useCalendarStore((state) => state.title);
   const memo = useCalendarStore((state) => state.memo);
-  const { setTitle, setMemo, addSchedule } = useCalendarStore();
+  const { setTitle, setMemo, setId, addSchedule, updateSchedule } =
+    useCalendarStore();
 
   const handleSubmit = () => {
     if (!title.trim().length) {
@@ -40,11 +42,16 @@ export default function ScheduleInput({
       };
       addOptimisticSchedule(opti);
       const date = new Date(addDays(targetDate, 1));
-      const schedule = await createSchedule(couple.id, date, title, memo);
+      const schedule = await createSchedule(couple.id, date, title, memo, id);
       if (schedule) {
-        addSchedule(schedule);
+        if (id) {
+          updateSchedule(schedule);
+        } else {
+          addSchedule(schedule);
+        }
         setTitle("");
         setMemo("");
+        setId(0);
         scrollTo({ top: 0, behavior: "smooth" });
       } else {
         toast.error("일정 등록에 실패했습니다");
@@ -90,7 +97,7 @@ export default function ScheduleInput({
           onClick={handleSubmit}
           className="self-end mt-[15px] px-12 py-4 rounded-[50px]"
         >
-          일정 추가하기
+          {id ? "일정 수정하기 " : "일정 추가하기"}
         </Button>
       </div>
     );

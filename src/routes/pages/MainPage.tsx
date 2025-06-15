@@ -9,6 +9,7 @@ import NearFooter from "../../components/main/NearFooter";
 import Service from "../../components/main/Service";
 import supabase from "../../utils/supabase";
 import Footer from "../layouts/Footer";
+import TopButton from "../../components/common/TopButton";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function MainPage() {
   return (
     <>
       <div className="select-none dark:bg-[var(--dark-bg-primary)]">
+        <TopButton />
         <Service
           onClickDictionary={() => scrollToSection(dictionaryRef)}
           onClickMeeting={() => scrollToSection(meetingRef)}

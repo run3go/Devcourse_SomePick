@@ -15,6 +15,7 @@ import Icon from "../../components/common/Icon";
 import InputBirthDate from "../../components/signup/InputBirthDate";
 import useSignupValidation from "../../hooks/useSignupValidation";
 import supabase from "../../utils/supabase";
+import { toast } from "react-toastify";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();
@@ -83,42 +84,57 @@ export default function SignUpCouplePage() {
     e.preventDefault();
 
     if (!mainImgFile) {
-      alert("이미지를 추가해주세요.");
+      // alert("이미지를 추가해주세요.");
+      toast.warn("이미지를 추가해주세요.");
       return;
     }
 
     if (!nickname) {
-      alert("닉네임을 입력해주세요.");
+      // alert("닉네임을 입력해주세요.");
+      toast.warn("닉네임을 입력해주세요.");
       return;
     }
 
     if (isDuplicate) {
-      alert("중복된 닉네임입니다.");
+      // alert("중복된 닉네임입니다.");
+      toast.warn("중복된 닉네임입니다.");
       return;
     }
 
     if (data.age === 0 || data.gender === undefined) {
-      alert("주민등록번호를 입력해주세요.");
+      // alert("주민등록번호를 입력해주세요.");
+      toast.warn("올바른 주민등록번호를 입력해주세요.");
+      return;
+    }
+
+    if (!email) {
+      toast.warn("이메일을 입력해주세요.");
       return;
     }
 
     if (!isEmailValid) {
-      alert("올바른 이메일 형식이 아닙니다.");
+      // alert("올바른 이메일 형식이 아닙니다.");
+      toast.warn("올바른 이메일 형식이 아닙니다.");
       return;
     }
 
     if (isEmailDuplicate) {
-      alert("중복된 이메일입니다.");
+      // alert("중복된 이메일입니다.");
+      toast.warn("중복된 이메일입니다.");
       return;
     }
 
     if (!isPwValid) {
-      alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
+      // alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
+      toast.warn(
+        "비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다."
+      );
       return;
     }
 
     if (pw !== pwConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      // alert("비밀번호가 일치하지 않습니다.");
+      toast.warn("비밀번호가 일치하지 않습니다.");
       return;
     }
 
@@ -128,8 +144,6 @@ export default function SignUpCouplePage() {
       ...data,
       ...(imgUrl ? { main_image: imgUrl } : {}),
     };
-
-    console.log(fullPayload);
 
     await signupUser(email, pw, fullPayload);
     navigate("/");
@@ -184,26 +198,34 @@ export default function SignUpCouplePage() {
                     }}
                     className="mb-5"
                     isError={isDuplicate}
+                    errorMessage={isDuplicate ? "(중복된 닉네임입니다.)" : ""}
                   />
                   {isTouched && (
-                    <div className="absolute right-54 top-1">
-                      {isDuplicate === true && (
-                        <Icon
-                          width="20px"
-                          height="20px"
-                          left="-889px"
-                          top="-760px"
-                        />
-                      )}
+                    // <div className="absolute right-18 top-[0.2px]">
+                    <>
+                      {/* {isDuplicate === true && (
+                        <div className="flex items-center absolute top-[0.2px] left-18">
+                          <Icon
+                            width="20px"
+                            height="20px"
+                            left="-889px"
+                            top="-760px"
+                          />
+                        </div>
+                      )} */}
                       {isDuplicate === false && (
-                        <Icon
-                          width="16px"
-                          height="12px"
-                          left="-929px"
-                          top="-762px"
-                        />
+                        <div className="flex items-center absolute top-[5px] right-54">
+                          <Icon
+                            width="16px"
+                            height="12px"
+                            left="-929px"
+                            top="-762px"
+                          />
+                        </div>
                       )}
-                    </div>
+                    </>
+
+                    // </div>
                   )}
                 </div>
 
@@ -214,7 +236,7 @@ export default function SignUpCouplePage() {
             <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
                 label="이메일"
-                type="email"
+                type="text"
                 name="email"
                 placeholder="user@email.com"
                 value={email}
@@ -226,19 +248,26 @@ export default function SignUpCouplePage() {
                   (isEmailTouched && !isEmailValid) ||
                   (isEmailTouched && isEmailDuplicate)
                 }
+                errorMessage={
+                  isEmailTouched && !isEmailValid
+                    ? "(올바른 이메일 형식이 아닙니다.)"
+                    : isEmailTouched && isEmailDuplicate
+                    ? "(중복된 이메일입니다.)"
+                    : ""
+                }
                 // className={`${isEmailValid ? "" : "border-[var(--red)]"}`}
               />
               {isEmailTouched && (
                 <div className="absolute left-17.5 top-1">
-                  {isEmailDuplicate === true && (
+                  {/* {(!isEmailValid || isEmailDuplicate) && (
                     <Icon
                       width="20px"
                       height="20px"
                       left="-889px"
                       top="-760px"
                     />
-                  )}
-                  {isEmailDuplicate === false && (
+                  )} */}
+                  {isEmailValid && !isEmailDuplicate && (
                     <Icon
                       width="16px"
                       height="12px"
@@ -259,6 +288,11 @@ export default function SignUpCouplePage() {
                 setIsPwTouched(true);
               }}
               isError={isPwTouched && !isPwValid}
+              errorMessage={
+                isPwTouched && !isPwValid
+                  ? "(6자 이상, 영문·숫자·특수문자를 포함해야 합니다.)"
+                  : ""
+              }
               className={twMerge(profile.id && "hidden")}
               // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
@@ -269,6 +303,9 @@ export default function SignUpCouplePage() {
               value={pwConfirm}
               onChange={handlePwConfirmChange}
               isError={!isPwConfirmValid}
+              errorMessage={
+                !isPwConfirmValid ? "(비밀번호가 일치하지 않습니다.)" : ""
+              }
               className={twMerge(profile.id && "hidden")}
               // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
@@ -280,7 +317,10 @@ export default function SignUpCouplePage() {
               onChange={(e) => updateData({ partner_nickname: e.target.value })}
             />
 
-            <Button type="submit" className="mt-9 w-full h-12.5 rounded-full">
+            <Button
+              type="submit"
+              className="mt-9 w-full h-12.5 rounded-full dark:text-[var(--dark-black)]"
+            >
               가입 완료
             </Button>
           </form>

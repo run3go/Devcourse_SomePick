@@ -10,6 +10,7 @@ import {
   updatePost,
 } from "../../apis/posts/postCrud";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 export default function PostCreatePage() {
   const navigate = useNavigate();
@@ -97,7 +98,8 @@ export default function PostCreatePage() {
         // fortune ? fortune : ""
       );
 
-      alert("게시물이 수정 되었습니다!");
+      // alert("게시물이 수정 되었습니다!");
+      toast.success("게시물이 수정 되었습니다!");
       navigate(`/post/${backTo}`);
     } else {
       await createPost(
@@ -107,7 +109,8 @@ export default function PostCreatePage() {
         imageFile ? imageFile : null
         // fortune ? fortune : ""
       );
-      alert("게시물이 업로드 되었습니다!");
+      // alert("게시물이 업로드 되었습니다!");
+      toast.success("게시물이 업로드 되었습니다!");
       navigate(`/post/${channel}`);
     }
   };
@@ -118,7 +121,7 @@ export default function PostCreatePage() {
         <div className="flex flex-col gap-5">
           <BackButton className="mt-10" />
 
-          <div className="text-center">
+          <div className="text-center dark:text-[var(--dark-gray-700)]">
             {channel === "dating" || backTo === "dating" ? (
               <>
                 <p className="text-[30px] font-bold">연애백과</p>
@@ -138,7 +141,7 @@ export default function PostCreatePage() {
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col w-[1080px] [height:calc(100vh-340px)] border-t-2 border-[var(--gray-500)] pl-2 py-7.5"
+            className="flex flex-col w-[1080px] [height:calc(100vh-340px)] border-t-2 border-[var(--gray-500)] pl-2 py-7.5 dark:text-[var(--dark-gray-700)]"
           >
             <label className="w-full mb-5">
               제목
@@ -147,7 +150,7 @@ export default function PostCreatePage() {
                 placeholder="제목을 작성해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="ml-5 placeholder:text-[var(--gray-500)] focus:outline-none bg-[var(--gray-100)] p-2 w-[94%] rounded-lg"
+                className="ml-5 placeholder:text-[var(--gray-500)] focus:outline-none bg-[var(--gray-100)] p-2 w-[94%] rounded-lg text-[var(--dark-black)]"
               />
             </label>
 
@@ -158,7 +161,7 @@ export default function PostCreatePage() {
                 placeholder="당신의 이야기를 자유롭게 들려주세요"
                 value={contents}
                 onChange={(e) => setContents(e.target.value)}
-                className="placeholder:text-[var(--gray-500)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] rounded-lg p-2"
+                className="placeholder:text-[var(--gray-500)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] rounded-lg p-2 text-[var(--dark-black)]"
               />
             </div>
 
@@ -219,7 +222,7 @@ export default function PostCreatePage() {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                className="w-[252px] mt-5 h-12.5 rounded-full"
+                className="w-[252px] mt-5 h-12.5 rounded-full dark:text-[var(--dark-black)]"
               >
                 저장
               </Button>
