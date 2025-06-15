@@ -48,7 +48,7 @@ export default function BackButton({
     <>
       <div className={`${className}`}>
         <button
-          className="flex justify-center items-center gap-1.5 cursor-pointer"
+          className="flex justify-center items-center gap-1.5 cursor-pointer dark:text-[var(--dark-gray-700)]"
           onClick={handleButtonClick}
         >
           <Icon
