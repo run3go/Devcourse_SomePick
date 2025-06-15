@@ -9,6 +9,9 @@ type SignUpStore = {
   updateData: (newData: Partial<SignUpData>) => void;
   resetData: (status?: "solo" | "couple") => void;
 
+  id: string;
+  setId: (id: string) => void;
+
   mainImgFile: File | null;
   mainImgUrl: string;
   setMainImgFile: (file: File | null, url?: string) => void;
@@ -81,6 +84,9 @@ export const useSignUpStore = create<SignUpStore>()(
           birthDate: "",
           genderNum: "",
         })),
+      id: "",
+      setId: (id) => set({ id }),
+
       mainImgFile: null,
       mainImgUrl: "",
       setMainImgFile: (file, url = "") =>

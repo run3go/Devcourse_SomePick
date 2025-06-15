@@ -15,7 +15,7 @@ import {
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -31,6 +31,7 @@ export default function Header() {
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
+
   const couple = session?.user.user_metadata.status;
 
   // 초기 알림 데이터

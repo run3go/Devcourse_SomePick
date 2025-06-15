@@ -1,42 +1,39 @@
 import { formatDate } from "date-fns";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { Korean } from "flatpickr/dist/l10n/ko";
+import "flatpickr/dist/themes/confetti.css";
+import { useEffect, useState } from "react";
+import { default as Flatpickr } from "react-flatpickr";
 import { twMerge } from "tailwind-merge";
 import { updateMeetDate } from "../../apis/calendar";
 import { useAuthStore } from "../../stores/authStore";
-import { compareDate } from "../../utils/date";
 import Button from "../common/Button";
 
 export default function MeetDate({ couple }: { couple: Couple }) {
   const { session } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [meetDate, setMeetDate] = useState(couple.meet_date);
-  const [value, setValue] = useState<string>(couple.meet_date || "");
+  const [meetDate, setMeetDate] = useState(new Date());
+
   const updateDate = async () => {
-    if (value === "") {
-      setIsModalOpen(false);
-      return;
-    }
-    const meetDate = new Date(value);
-    const today = new Date();
-    if (compareDate(meetDate, today) < 0) {
-      toast.error("오늘 이전의 날짜만 입력 가능합니다");
-      return;
-    }
-    setMeetDate(value);
-    await updateMeetDate(couple.id, new Date(value));
+    await updateMeetDate(couple.id, meetDate);
     setIsModalOpen(false);
   };
 
   const calcPeriod = () => {
     if (!meetDate) return 0;
-    const start = new Date(meetDate).getTime();
+    const start = meetDate.getTime();
     const end = new Date().getTime();
     return Math.floor((end - start) / (1000 * 60 * 60 * 24));
   };
+
   const partnerInfo =
     session?.user.id === couple.user1.id ? couple.user2 : couple.user1;
   const today = formatDate(new Date(), "yyyy-MM-dd");
+
+  useEffect(() => {
+    if (couple.meet_date) {
+      setMeetDate(new Date(couple.meet_date));
+    }
+  }, [setMeetDate, couple]);
   return (
     <div className="flex flex-col h-[203px] items-center border-y-5 border-[var(--primary-pink)] py-9">
       {isModalOpen ? (
@@ -47,17 +44,17 @@ export default function MeetDate({ couple }: { couple: Couple }) {
             </strong>
             님과 첫 만남, 언제였나요?
           </span>
-          <input
-            type="text"
-            className={twMerge(
-              "px-3 py-1 border border-[var(--primary-pink)] mb-4 rounded-full text-sm",
-              "focus:outline-[var(--primary-pink-tone)]"
-            )}
+          <Flatpickr
             placeholder={today}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            className={twMerge(
+              "py-1 border border-[var(--primary-pink-point)] mb-4 rounded-full text-sm",
+              "focus:outline-[var(--primary-pink-tone)] text-center"
+            )}
+            options={{ maxDate: "today", locale: Korean }}
+            onChange={([selected]) => setMeetDate(selected)}
+            value={meetDate}
           />
-          <Button className="px-6 py-[2px] rounded-[5px] " onClick={updateDate}>
+          <Button onClick={updateDate} className="px-6 py-[2px] rounded-[5px] ">
             저장
           </Button>
         </>

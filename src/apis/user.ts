@@ -47,9 +47,20 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
       .single();
     if (error) {
       console.log("프로필 수정 실패:", error.message);
+      return error;
+    }
+    const { error: sessionError } = await supabase.auth.updateUser({
+      data: {
+        ...payload,
+        keywords: payload.keywords?.join(","),
+        ideal_types: payload.ideal_types?.join(","),
+        interests: payload.interests?.join(","),
+      },
+    });
+    if (sessionError) {
+      console.log("세션 업데이트 실패:", sessionError);
       return;
     }
-    console.log(profile);
     return profile;
   } catch (e) {
     console.error(e);

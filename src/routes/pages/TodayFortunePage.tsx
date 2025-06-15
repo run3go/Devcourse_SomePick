@@ -55,6 +55,11 @@ export default function TodayFortunePage() {
         }
 
         console.log("AI 응답:", responseText);
+        console.log(
+          `${new Date().getFullYear()}년 ${
+            new Date().getMonth() + 1
+          }월 ${new Date().getDate()}일`
+        );
         const jsonResponseText = responseText
           .replace("```json", "")
           .replace("```", "")
