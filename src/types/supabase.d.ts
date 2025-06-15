@@ -7,31 +7,6 @@ export type Json =
   | Json[];
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never;
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string;
-          query?: string;
-          variables?: Json;
-          extensions?: Json;
-        };
-        Returns: Json;
-      };
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
   public: {
     Tables: {
       channels: {
@@ -220,6 +195,33 @@ export type Database = {
             referencedColumns: ["id"];
           }
         ];
+      };
+      fortune_tellings: {
+        Row: {
+          created_at: string;
+          id: string;
+          love_advice: string;
+          love_description: string;
+          love_title: string;
+          used_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          love_advice: string;
+          love_description: string;
+          love_title: string;
+          used_at: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          love_advice?: string;
+          love_description?: string;
+          love_title?: string;
+          used_at?: string;
+        };
+        Relationships: [];
       };
       likes: {
         Row: {
@@ -469,6 +471,7 @@ export type Database = {
           created_at: string;
           description: string | null;
           email: string | null;
+          fortune_telling_id: string | null;
           gender: string | null;
           height: number | null;
           id: string;
@@ -490,6 +493,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           email?: string | null;
+          fortune_telling_id?: string | null;
           gender?: string | null;
           height?: number | null;
           id?: string;
@@ -511,6 +515,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           email?: string | null;
+          fortune_telling_id?: string | null;
           gender?: string | null;
           height?: number | null;
           id?: string;
@@ -532,6 +537,13 @@ export type Database = {
             columns: ["couple_id"];
             isOneToOne: false;
             referencedRelation: "couples";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "profiles_fortune_telling_id_fkey";
+            columns: ["fortune_telling_id"];
+            isOneToOne: false;
+            referencedRelation: "fortune_tellings";
             referencedColumns: ["id"];
           }
         ];
@@ -693,9 +705,6 @@ export type CompositeTypes<
   : never;
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },
