@@ -3,17 +3,24 @@ import Button from "../common/Button";
 import Icon from "../common/Icon";
 import { createComment } from "../../apis/comment";
 import Alert from "../common/Alert";
+import { notifyComment } from "../../apis/notification";
 
 interface CommentProps {
   className?: string;
+  parentId?: number;
   isReply?: boolean;
-  postId: number;
+  postId: number | null;
+  post: Post;
+  onCommentAdd: () => void;
 }
 
 export default function CommentForm({
   className = "",
-  isReply = false,
+  parentId,
+  isReply = true,
   postId,
+  post,
+  onCommentAdd,
 }: CommentProps) {
   const [input, setInput] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -24,9 +31,13 @@ export default function CommentForm({
       setIsAlertOpen(true);
       return;
     }
-    const newComment = await createComment(input, postId);
+    const newComment = await createComment(input, postId, parentId);
+    if (postId !== null) {
+      await notifyComment(post.author.id, postId);
+    }
     if (newComment) {
       setInput("");
+      onCommentAdd?.();
     }
   };
 
