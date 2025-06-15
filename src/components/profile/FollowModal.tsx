@@ -85,8 +85,8 @@ export default function FollowModal({
                 {user.nickname}
               </span>
             </div>
-            {session &&
-              session?.user.id !== user.id &&
+            {session?.user.id !== user.id ? (
+              session &&
               (isFollwingUser(user.id) ? (
                 <Button
                   onClick={(e) => {
@@ -107,7 +107,10 @@ export default function FollowModal({
                 >
                   팔로우
                 </Button>
-              ))}
+              ))
+            ) : (
+              <span className="pr-9 group-hover:text-black text-sm">본인</span>
+            )}
           </li>
         ))}
       </ul>

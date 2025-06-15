@@ -124,26 +124,28 @@ export default function SoloEdit({
                     },
                   })}
                 />
-                {isTouched && item === "nickname" && (
-                  <div className="absolute left-1/4 top-1/2 -translate-y-1/2">
-                    {isDuplicate === true && (
-                      <Icon
-                        width="18px"
-                        height="18px"
-                        left="-888px"
-                        top="-759px"
-                      />
-                    )}
-                    {isDuplicate === false && (
-                      <Icon
-                        width="16px"
-                        height="12px"
-                        left="-929px"
-                        top="-762px"
-                      />
-                    )}
-                  </div>
-                )}
+                {isTouched &&
+                  item === "nickname" &&
+                  watchedNickname !== profile.nickname && (
+                    <div className="absolute left-1/4 top-1/2 -translate-y-1/2">
+                      {isDuplicate === true && (
+                        <Icon
+                          width="18px"
+                          height="18px"
+                          left="-888px"
+                          top="-759px"
+                        />
+                      )}
+                      {isDuplicate === false && (
+                        <Icon
+                          width="16px"
+                          height="12px"
+                          left="-929px"
+                          top="-762px"
+                        />
+                      )}
+                    </div>
+                  )}
               </li>
             ))}
             {/* 직업, 지역, mbti */}

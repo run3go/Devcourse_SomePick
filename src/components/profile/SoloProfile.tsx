@@ -333,7 +333,7 @@ export default function SoloProfile({
               </span>
             </div>
             <div className="dark:text-[var(--dark-bg-primary)] py-3 px-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
-              {description}
+              {description ? description : "..."}
             </div>
           </div>
         </div>
