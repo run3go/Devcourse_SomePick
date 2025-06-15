@@ -10,8 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // import ShareButton from "./ShareButton";
 
 interface FortuneData {
-  date: string | null;
-  userName: string | null;
+  userName?: string | null;
   status: string | null;
   loveTitle: string | null;
   loveDescription: string | null;
@@ -83,7 +82,10 @@ export default function FortuneCards({ fortuneData }: Props) {
               >
                 {fortuneData ? (
                   <div className="text-center px-4 py-4">
-                    <p>{fortuneData.date}</p>
+                    <p>
+                      {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
+                      {new Date().getDate()}일
+                    </p>
                     <p className="text-[16px] mt-[10px]">
                       {fortuneData.loveTitle}
                     </p>
@@ -146,7 +148,11 @@ export default function FortuneCards({ fortuneData }: Props) {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.1, duration: 1 }}
                   >
-                    <p className="text-[18px]">{fortuneData.date}</p>
+                    <p className="text-[18px]">
+                      {" "}
+                      {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
+                      {new Date().getDate()}일
+                    </p>
                     <p className="text-[20px] font-bold mt-[10px] mb-6">
                       {fortuneData.loveTitle}
                     </p>

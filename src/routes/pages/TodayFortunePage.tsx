@@ -5,8 +5,7 @@ import { useAuthStore } from "../../stores/authstore";
 import { GoogleGenAI } from "@google/genai";
 
 interface FortuneData {
-  date: string | null;
-  userName: string | null;
+  userName?: string | null;
   status: string | null;
   loveTitle: string | null;
   loveDescription: string | null;
@@ -33,10 +32,6 @@ export default function TodayFortunePage() {
   
         다음 JSON 형식으로 반환해주세요:
         {
-          "date": "${new Date().getFullYear()}년 ${
-          new Date().getMonth() + 1
-        }월 ${new Date().getDate()}일",
-          "userName": "${userName}",
           "status": "${isCouple ? "couple" : "solo"}",
           "loveTitle": "운세 제목",
           "loveDescription": "오늘의 연애운 상세 설명",
@@ -55,11 +50,6 @@ export default function TodayFortunePage() {
         }
 
         console.log("AI 응답:", responseText);
-        console.log(
-          `${new Date().getFullYear()}년 ${
-            new Date().getMonth() + 1
-          }월 ${new Date().getDate()}일`
-        );
         const jsonResponseText = responseText
           .replace("```json", "")
           .replace("```", "")
