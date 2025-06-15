@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { logoutUser } from "../../apis/auth";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Icon from "./Icon";
 // import { useSignUpStore } from "../../stores/signupStore";
 
@@ -30,10 +30,10 @@ export default function BackButton({
       // });
     }
 
-    if (type) {
+    if (type == "google") {
       await logoutUser();
       setLogout();
-      navigate("/");
+      navigate("/auth/login");
       return;
     }
 

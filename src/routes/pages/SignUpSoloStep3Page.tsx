@@ -6,6 +6,7 @@ import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import TagGroup from "../../components/signup/TagGroup";
 import { useSignUpStore } from "../../stores/signupStore";
+import { toast } from "react-toastify";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
@@ -26,13 +27,14 @@ export default function SignUpSoloStep3Page() {
     // if (isSoloOptions(data)) {
     if (
       !soloData.keywords ||
-      soloData.keywords.length < 4 ||
+      soloData.keywords.split(",").length < 4 ||
       !soloData.interests ||
-      soloData.interests.length < 4 ||
+      soloData.interests.split(",").length < 4 ||
       !soloData.ideal_types ||
-      soloData.ideal_types.length < 4
+      soloData.ideal_types.split(",").length < 4
     ) {
-      alert("각 항목에서 최소 4개 이상 선택해주세요.");
+      // alert("각 항목에서 최소 4개 이상 선택해주세요.");
+      toast.warn("각 항목에서 최소 4개 이상 선택해주세요.");
       return;
     }
     // }

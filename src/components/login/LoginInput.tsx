@@ -31,7 +31,7 @@ export default function LoginInput({
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full h-full bg-[var(--white)] border border-[var(--primary-pink)] rounded-full pl-16.5 focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)"
+          className="w-full h-full bg-[var(--white)] dark:bg-[var(--dark-bg-secondary)] border border-[var(--primary-pink)] rounded-full pl-16.5 focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)"
           value={value}
           onChange={onChange}
         />
