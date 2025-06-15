@@ -221,6 +221,33 @@ export type Database = {
           }
         ];
       };
+      fortune_tellings: {
+        Row: {
+          created_at: string;
+          id: string;
+          love_advice: string;
+          love_dscription: string;
+          love_title: string;
+          used_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          love_advice: string;
+          love_dscription: string;
+          love_title: string;
+          used_at: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          love_advice?: string;
+          love_dscription?: string;
+          love_title?: string;
+          used_at?: string;
+        };
+        Relationships: [];
+      };
       likes: {
         Row: {
           created_at: string;
@@ -469,6 +496,7 @@ export type Database = {
           created_at: string;
           description: string | null;
           email: string | null;
+          fortune_telling_id: string | null;
           gender: string | null;
           height: number | null;
           id: string;
@@ -490,6 +518,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           email?: string | null;
+          fortune_telling_id?: string | null;
           gender?: string | null;
           height?: number | null;
           id?: string;
@@ -511,6 +540,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           email?: string | null;
+          fortune_telling_id?: string | null;
           gender?: string | null;
           height?: number | null;
           id?: string;
@@ -532,6 +562,13 @@ export type Database = {
             columns: ["couple_id"];
             isOneToOne: false;
             referencedRelation: "couples";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "profiles_fortune_telling_id_fkey";
+            columns: ["fortune_telling_id"];
+            isOneToOne: false;
+            referencedRelation: "fortune_tellings";
             referencedColumns: ["id"];
           }
         ];
