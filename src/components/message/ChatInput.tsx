@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendMessage } from "../../apis/message";
 import Icon from "../common/Icon";
+import { notifyMessage } from "../../apis/notification";
 export default function ChatInput({
   chatRoomId,
   receiverId,
@@ -16,6 +17,7 @@ export default function ChatInput({
   const handleSend = async () => {
     if (!message.trim() || !chatRoomId || !receiverId) return;
     const newMessage = await sendMessage(chatRoomId, message, receiverId);
+    await notifyMessage(receiverId, chatRoomId);
     setMessage("");
     if (newMessage && onSend) {
       onSend(newMessage);
