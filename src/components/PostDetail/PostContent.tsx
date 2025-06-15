@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { createLike, deleteLike } from "../../apis/like";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
-// import PostImg from "../../assets/images/post_image.png";
+import { notifyLike } from "../../apis/notification";
 
 export default function PostContent({
   post,
   postId,
+  onCommentAdd,
 }: {
   post: Post;
   postId: number;
+  onCommentAdd: () => void;
 }) {
   const { session } = useAuthStore();
   const [heart, setHeart] = useState(false);
@@ -30,6 +32,7 @@ export default function PostContent({
   const handleHeart = async () => {
     if (!heart) {
       await createLike(postId);
+      await notifyLike(post.author.id, postId);
       setHeart(true);
       setLikesCount((prev) => prev + 1);
     } else {
@@ -72,7 +75,12 @@ export default function PostContent({
             </span>
           </div>
         </div>
-        <CommentForm isReply={false} postId={postId} />
+        <CommentForm
+          post={post}
+          isReply={false}
+          postId={postId}
+          onCommentAdd={onCommentAdd}
+        />
       </section>
     </>
   );

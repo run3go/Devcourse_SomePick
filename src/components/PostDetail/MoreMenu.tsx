@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { deletePost } from "../../apis/posts/postCrud";
 import Icon from "../common/Icon";
 import { toast } from "react-toastify";
@@ -6,10 +6,11 @@ import { deleteComment } from "../../apis/comment";
 
 type MoreMenuProps = {
   id: number;
-  isParent?: boolean | undefined;
+  isParent: boolean;
   type: "post" | "comment";
   closeMenu: () => void;
   onClick: () => void;
+  onCommentAdd: () => void;
 };
 
 export default function MoreMenu({
@@ -18,17 +19,19 @@ export default function MoreMenu({
   type,
   onClick,
   closeMenu,
+  onCommentAdd,
 }: MoreMenuProps) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleDelte = async () => {
     if (type === "post") {
-      // await deletePost(id);
+      await deletePost(id);
       toast.success("게시글이 삭제되었습니다.");
-      // navigate("/post/free");
+      navigate(-1);
     } else if (type === "comment") {
-      await deleteComment(id, isParent ?? false);
+      await deleteComment(id, isParent);
       toast.success("댓글이 삭제되었습니다.");
+      onCommentAdd?.();
     }
     closeMenu();
   };

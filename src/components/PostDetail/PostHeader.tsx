@@ -7,9 +7,11 @@ import "dayjs/locale/ko";
 export default function PostHeader({
   post,
   postId,
+  authId,
 }: {
   post: Post;
   postId: number;
+  authId?: string;
 }) {
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu((prev) => !prev);
@@ -18,23 +20,25 @@ export default function PostHeader({
       <header>
         <div className="flex justify-between items-center dark:text-[var(--dark-gray-100)]">
           <h1 className="text-[20px]">{post.title}</h1>
-          <div className="relative inline-block" onClick={toggleMenu}>
-            <Icon
-              width="14px"
-              height="4px"
-              left="-511px"
-              top="-768px"
-              className="cursor-pointer"
-            />
-            {showMenu && (
-              <MoreMenu
-                onClick={toggleMenu}
-                id={postId}
-                type="post"
-                closeMenu={() => setShowMenu(false)}
+          {post.author.id === authId && (
+            <div className="relative inline-block" onClick={toggleMenu}>
+              <Icon
+                width="14px"
+                height="4px"
+                left="-511px"
+                top="-768px"
+                className="cursor-pointer"
               />
-            )}
-          </div>
+              {showMenu && (
+                <MoreMenu
+                  onClick={toggleMenu}
+                  id={postId}
+                  type="post"
+                  closeMenu={() => setShowMenu(false)}
+                />
+              )}
+            </div>
+          )}
         </div>
         <span className="text-[16px] text-[#969696]">
           {dayjs(post.created_at).format("YYYY년 MM월 DD일 HH:mm")}
