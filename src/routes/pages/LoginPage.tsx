@@ -27,6 +27,8 @@ export default function LoginPage() {
 
       if (login) {
         navigate("/");
+      } else {
+        toast.error("이메일/비밀번호가 일치하지 않습니다.");
       }
     } catch (error) {
       console.error(error);
@@ -64,7 +66,9 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button className="w-full h-12.5 rounded-full mt-9">Login</Button>
+            <Button className="w-full h-12.5 rounded-full mt-9 dark:text-[var(--dark-black)]">
+              Login
+            </Button>
           </form>
 
           <div className="flex items-center justify-between my-6 w-full">
@@ -83,13 +87,13 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="flex gap-2.5 mt-10 cursor-default text-[var(--gray-500)]">
-            Dont't have an account?
+          <div className="flex gap-2.5 mt-10 cursor-default text-[var(--gray-500)] dark:text-[var(--dark-gray-100)]">
+            계정이 없으신가요?
             <div
               className="text-[var(--primary-pink-point)] font-bold cursor-pointer"
               onClick={() => navigate("/auth/signup")}
             >
-              Sign Up now
+              회원가입 하러가기
             </div>
           </div>
         </div>
