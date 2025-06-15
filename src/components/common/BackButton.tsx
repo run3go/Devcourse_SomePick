@@ -30,10 +30,10 @@ export default function BackButton({
       // });
     }
 
-    if (type) {
+    if (type == "google") {
       await logoutUser();
       setLogout();
-      navigate("/");
+      navigate("/auth/login");
       return;
     }
 

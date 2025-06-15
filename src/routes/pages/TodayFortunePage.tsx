@@ -1,9 +1,9 @@
+import { GoogleGenAI } from "@google/genai";
 import { useEffect } from "react";
 import FortuneCards from "../../components/fortune/FortuneCards";
 import FortuneInfo from "../../components/fortune/FortuneInfo";
 import ShareButton from "../../components/fortune/ShareButton";
-import { useAuthStore } from "../../stores/authstore";
-import { GoogleGenAI } from "@google/genai";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function TodayFortunePage() {
   const user = useAuthStore((state) => state.session?.user.user_metadata);

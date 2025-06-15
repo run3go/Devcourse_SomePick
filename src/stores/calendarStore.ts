@@ -8,21 +8,25 @@ type CalendarStore = {
   schedules: Schedule[];
   title: string;
   memo: string;
+  id: number;
   setTargetDate: (date: string) => void;
   setSchedules: (schedules: Schedule[]) => void;
   addSchedule: (newSchedule: Schedule) => void;
+  updateSchedule: (modifiedSchedule: Schedule) => void;
   removeSchedule: (id: number) => void;
   setTitle: (value: string) => void;
   setMemo: (value: string) => void;
+  setId: (value: number) => void;
 };
 
 export const useCalendarStore = create<CalendarStore>()(
   devtools(
     immer((set) => ({
-      targetDate: formatDate(new Date(), "yyyy-MM-dd"),
+      targetDate: formatDate(new Date(), "yyyy-M-dd"),
       schedules: [],
       title: "",
       memo: "",
+      id: 0,
       setTargetDate: (date) =>
         set((state) => {
           state.targetDate = date;
@@ -37,6 +41,12 @@ export const useCalendarStore = create<CalendarStore>()(
         set((state) => {
           state.schedules.push(newSchedule);
         }),
+      updateSchedule: (modifiedSchedule) =>
+        set((state) => {
+          state.schedules = state.schedules.map((schedule) =>
+            schedule.id === modifiedSchedule.id ? modifiedSchedule : schedule
+          );
+        }),
       removeSchedule: (id) =>
         set((state) => {
           state.schedules = state.schedules.filter(
@@ -50,6 +60,10 @@ export const useCalendarStore = create<CalendarStore>()(
       setMemo: (value) =>
         set((state) => {
           state.memo = value;
+        }),
+      setId: (value) =>
+        set((state) => {
+          state.id = value;
         }),
     }))
   )

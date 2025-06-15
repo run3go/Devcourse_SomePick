@@ -69,7 +69,7 @@ export const createSchedule = async (
   date: Date,
   title: string,
   memo: string,
-  id?: number
+  id: number
 ) => {
   try {
     const formattedDate = date.toISOString().split("T")[0];
@@ -82,31 +82,10 @@ export const createSchedule = async (
     if (id) {
       payload.id = id;
     }
+    console.log(payload);
     const { data, error } = await supabase
       .from("schedules")
-      .upsert([{ couple_id, date: formattedDate, title, memo }])
-      .select("*")
-      .single();
-    if (error) {
-      console.log("날짜 업데이트 실패:", error.message);
-      return;
-    }
-    return data;
-  } catch (e) {
-    console.error(e);
-  }
-};
-//달력 일정 업데이트 (커플 아이디, 날짜, 제목, 내용)
-export const updateSchedule = async (
-  schedule_id: number,
-  title: string,
-  memo: string
-) => {
-  try {
-    const { data, error } = await supabase
-      .from("schedules")
-      .update({ title, memo })
-      .eq("id", schedule_id)
+      .upsert([payload])
       .select("*")
       .single();
     if (error) {

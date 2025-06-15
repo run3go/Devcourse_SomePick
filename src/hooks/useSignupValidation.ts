@@ -22,13 +22,14 @@ export default function useSignupValidation() {
     if (valid) {
       const check = async () => {
         const res = await checkEmail(email);
+        console.log(res);
         if (res?.email && !res.nickname) {
           setIsEmailDuplicate(false);
           return;
         }
         if (res) {
-          setIsEmailDuplicate(false);
-        } else setIsEmailDuplicate(true);
+          setIsEmailDuplicate(true);
+        } else setIsEmailDuplicate(false);
       };
       check();
     } else {
