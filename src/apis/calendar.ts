@@ -61,21 +61,30 @@ export const updateMeetDate = async (couple_id: number, newMeetDate: Date) => {
     console.log("날짜 업데이트 실패:", error.message);
     return;
   }
-  console.log(data);
-  return data;
+  return data.meet_date;
 };
 //달력 일정 추가 (커플 아이디, 날짜, 제목, 내용)
 export const createSchedule = async (
   couple_id: number,
   date: Date,
   title: string,
-  memo: string
+  memo: string,
+  id?: number
 ) => {
   try {
     const formattedDate = date.toISOString().split("T")[0];
+    const payload: SchedulePayload = {
+      couple_id,
+      date: formattedDate,
+      title,
+      memo,
+    };
+    if (id) {
+      payload.id = id;
+    }
     const { data, error } = await supabase
       .from("schedules")
-      .insert([{ couple_id, date: formattedDate, title, memo }])
+      .upsert([{ couple_id, date: formattedDate, title, memo }])
       .select("*")
       .single();
     if (error) {

@@ -12,9 +12,9 @@ type SoloOptions = CommonOptions & {
   height: number;
   location: string;
   mbti: string;
-  keywords: string[];
-  interests: string[];
-  ideal_types: string[];
+  keywords: string;
+  interests: string;
+  ideal_types: string;
   description?: string;
 };
 
@@ -23,6 +23,9 @@ type CoupleOptions = CommonOptions & {
 };
 
 type ProfileUpdatePayload = Partial<{
+  id: string;
+  age: number;
+  gender: string;
   nickname: string;
   main_image: string;
   sub_image: string;
@@ -34,7 +37,7 @@ type ProfileUpdatePayload = Partial<{
   keywords: string[];
   interests: string[];
   ideal_types: string[];
-  partner_nickname: string;
+  partner_nickname: string | null;
   status: "solo" | "couple";
 }>;
 
@@ -80,4 +83,33 @@ type UserData = {
   id: string;
   main_image: string | null;
   nickname: string | null;
+};
+
+type Matching = {
+  created_at: string;
+  id: number;
+  is_matched: boolean;
+  matching_user_id: string;
+  user_id: string;
+  sender: ProfileData;
+  reciever: ProfileData;
+};
+
+type FormValues = {
+  mainImageUrl: string;
+  subImageUrl: string | null;
+  mainImageFile: File | null;
+  subImageFile: File | null;
+  nickname: string;
+  age: string;
+  status: "solo" | "couple";
+  description?: string;
+  job: string;
+  location: string;
+  height: string;
+  mbti: string;
+  partnerNickname: string;
+  keywordList: string[];
+  interestList: string[];
+  idealTypeList: string[];
 };

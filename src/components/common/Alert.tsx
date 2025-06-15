@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export default function Alert({
   //예시
   //   <Alert
@@ -44,14 +46,17 @@ export default function Alert({
         <div className="flex justify-center gap-[20px] mt-2 text-[14px]">
           <button
             className="text-white bg-[var(--primary-pink)] px-3 py-1 rounded
-              hover:bg-[var(--primary-pink-tone)]"
+              hover:bg-[var(--primary-pink-tone)] cursor-pointer"
             onClick={onClick}
           >
             {isOk}
           </button>
           {isNotOk && (
             <button
-              className="bg-[var(--gray-300-50)] text-[var(--gray-500)] px-3 py-1 rounded hover:bg-[var(--gray-300)]"
+              className={twMerge(
+                "bg-[var(--gray-300-50)] text-[var(--gray-500)] px-3 py-1 rounded hover:bg-[var(--gray-300)]",
+                "cursor-pointer"
+              )}
               onClick={onCancel}
             >
               {isNotOk}

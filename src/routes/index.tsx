@@ -1,14 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layouts/RootLayout";
-import { fetchUserData } from "./loader/auth.loader";
+import {
+  fetchUserData,
+  requireAuth,
+  requireNoAuth,
+} from "./loader/auth.loader";
+import { getCoupleInfo } from "./loader/calendar.loader";
+import { getUserMessage } from "./loader/message.loader";
 import { getUserProfile } from "./loader/user.loader";
 import AuthPage from "./pages/AuthPage";
+import Back from "./pages/Back";
 import CalendarPage from "./pages/CalendarPage";
+import ChatEmptyPage from "./pages/ChatEmptyPage";
+import ChatRequestPage from "./pages/ChatRequestPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatWaitingPage from "./pages/ChatWaitingPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import MatchingPage from "./pages/MatchingPage";
-import MessageDetailPage from "./pages/MessageDetailPage";
-import MessagePage from "./pages/MessagePage";
+import MessageLayoutPage from "./pages/MessageLayoutPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostCreatePage from "./pages/PostCreatePage";
 import PostDetailPage from "./pages/PostDetailPage";
@@ -32,7 +42,7 @@ const router = createBrowserRouter([
         Component: MainPage,
       },
       {
-        path: "/post/:id",
+        path: "/post/:channelName",
         Component: PostsPage,
       },
       {
@@ -41,10 +51,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/post/create/:id?",
+        loader: requireAuth,
         Component: PostCreatePage,
       },
       {
         path: "/profile/edit",
+        loader: requireAuth,
         Component: ProfileEditPage,
       },
       {
@@ -54,23 +66,42 @@ const router = createBrowserRouter([
       },
       {
         path: "/couplecalendar",
+        loader: getCoupleInfo,
         Component: CalendarPage,
       },
       {
         path: "/matching",
+        loader: requireAuth,
         Component: MatchingPage,
       },
       {
         path: "/todayfortune",
+        loader: requireAuth,
         Component: TodayFortunePage,
       },
       {
         path: "/message",
-        Component: MessagePage,
+        loader: getUserMessage,
+        Component: MessageLayoutPage,
         children: [
           {
+            index: true,
+            Component: ChatEmptyPage,
+          },
+          {
+            path: ":id/request",
+            loader: getUserMessage,
+            Component: ChatRequestPage,
+          },
+          {
             path: ":id",
-            Component: MessageDetailPage,
+            loader: getUserMessage,
+            Component: ChatRoomPage,
+          },
+          {
+            path: ":id/waiting",
+            loader: getUserMessage,
+            Component: ChatWaitingPage,
           },
         ],
       },
@@ -82,6 +113,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "login",
+        loader: requireNoAuth,
         Component: LoginPage,
       },
       {
@@ -105,6 +137,10 @@ const router = createBrowserRouter([
         Component: SignUpCouplePage,
       },
     ],
+  },
+  {
+    path: "/back",
+    Component: Back,
   },
   {
     path: "*",

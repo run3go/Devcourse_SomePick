@@ -1,11 +1,11 @@
 // import email from "../../assets/icons/email.png";
-import { useNavigate } from "react-router";
-import google from "../../assets/images/google-login.png";
-import LoginInput from "../../components/login/LoginInput";
-import Button from "../../components/common/Button";
 import { useState } from "react";
-import supabase from "../../utils/supabase";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { loginUser, loginUserByGoogle } from "../../apis/auth";
+import google from "../../assets/images/google-login.png";
+import Button from "../../components/common/Button";
+import LoginInput from "../../components/login/LoginInput";
 // import { showErrorToast } from "../../components/common/Toast";
 
 export default function LoginPage() {
@@ -18,24 +18,23 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email || !password) {
-      // showErrorToast("이메일과 비밀번호를 모두 입력해주세요.");
       toast.warn("이메일과 비밀번호를 모두 입력해주세요.");
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const login = await loginUser(email, password);
 
-    if (error) {
-      toast.error("로그인 실패: " + error.message);
-      console.log("로그인 실패: " + error.message);
-    } else {
-      toast.success("로그인 성공!");
-      console.log(data);
-      navigate("/");
+      if (login) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    await loginUserByGoogle();
   };
 
   return (
@@ -76,7 +75,7 @@ export default function LoginPage() {
             <hr className="w-[219px] border-[var(--gray-500)]" />
           </div>
 
-          <div className="cursor-pointer">
+          <div onClick={handleGoogleLogin} className="cursor-pointer">
             <img
               src={google}
               alt="구글 로그인"

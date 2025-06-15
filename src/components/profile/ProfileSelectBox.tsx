@@ -1,13 +1,24 @@
+import { useController, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import { optionsGroup } from "../signup/data/optionsData";
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
 }
 export default function ProfileSelectBox({ type }: SelectBoxProps) {
+  const { control } = useFormContext();
+  const { field } = useController({ name: type, control });
   const options = optionsGroup[type];
   return (
     <Select
-      placeholder=""
+      isSearchable={false}
+      onChange={(newValue) => {
+        if (newValue) field.onChange(newValue.label);
+      }}
+      defaultValue={{
+        value: optionsGroup.mbti.find((item) => item.label === field.value)
+          ?.value as string,
+        label: field.value,
+      }}
       options={options}
       styles={{
         control: (baseStyles, state) => ({
@@ -52,6 +63,7 @@ export default function ProfileSelectBox({ type }: SelectBoxProps) {
         option: (base, state) => ({
           ...base,
           cursor: "pointer",
+          fontSize: "14px",
           backgroundColor: state.isSelected
             ? "var(--primary-pink)"
             : state.isFocused
@@ -62,6 +74,7 @@ export default function ProfileSelectBox({ type }: SelectBoxProps) {
         singleValue: (base) => ({
           ...base,
           color: "var(--gray-700)",
+          fontSize: "14px",
         }),
         indicatorSeparator: () => ({
           display: "none",

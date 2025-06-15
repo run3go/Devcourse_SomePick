@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
-import { followUser, unfollowUser } from "../../apis/follow";
+import {
+  fetchFollowingList,
+  followUser,
+  unfollowUser,
+} from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
-import { useAuthStore } from "../../stores/authstore";
+import { notifyFollow, notifyHeart } from "../../apis/notification";
+import { useAuthStore } from "../../stores/authStore";
+import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import FollowModal from "./FollowModal";
@@ -18,24 +24,33 @@ export default function SoloProfile({
   isMyProfile: boolean;
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }) {
+  const navigate = useNavigate();
   const { description, main_image, sub_image, nickname, id } = soloProfile;
   const { session } = useAuthStore();
   const {
     posts,
     followers,
     followings,
-  }: { posts: PostData[]; followers: UserData[]; followings: UserData[] } =
-    useLoaderData();
+    matching: matchingData,
+  }: {
+    posts: PostData[];
+    followers: UserData[];
+    followings: UserData[];
+    matching: Matching;
+  } = useLoaderData();
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
-
+  const [myFollowings, setMyFollowings] = useState<string[]>([]);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [matching, setMatching] = useState(matchingData);
   const [isFollowing, setIsFollwing] = useState(
     followerList.some((user) => user.id === session?.user.id)
   );
   const scrollToPosts = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   const handleFollowUser = async () => {
     try {
       if (!session) return;
@@ -49,6 +64,7 @@ export default function SoloProfile({
         },
       ]);
       await followUser(id);
+      await notifyFollow(id);
     } catch (e) {
       console.error(e);
       setIsFollwing(false);
@@ -57,6 +73,7 @@ export default function SoloProfile({
       );
     }
   };
+
   const handleUnfollowUser = async () => {
     try {
       setIsFollwing(false);
@@ -78,21 +95,57 @@ export default function SoloProfile({
       ]);
     }
   };
+
   const handleSendHeart = async () => {
-    const error = await sendHeart(id);
-    if (error && error.code === "23505") {
-      alert("이미 하트를 보낸 상대입니다.");
+    const hasHeartAlready = await sendHeart(id);
+    if (hasHeartAlready) {
+      setIsAlertOpen(true);
+    } else {
+      setMatching({
+        id: 1,
+        created_at: "",
+        is_matched: false,
+        is_rejected: false,
+        matching_user_id: id,
+        user_id: "",
+      });
+      await notifyHeart(id);
     }
   };
+
+  const navigateMessage = () => {
+    navigate(`/message/${id}`);
+  };
+
   return (
-    <div className="w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px]">
+    <div
+      className={twMerge(
+        "w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px] dark:bg-[var(--dark-bg-secondary)]",
+        "dark:text-[var(--dark-white)]"
+      )}
+    >
+      {isAlertOpen && (
+        <Alert
+          title="상대에게 전달 받은 하트가 있습니다"
+          subtitle="매칭 페이지로 이동하시겠습니까?"
+          isOk="이동"
+          isNotOk="취소"
+          onClick={() => navigate(`/message/${id}/request`)}
+          onCancel={() => setIsAlertOpen(false)}
+        />
+      )}
       {isFollowerModalOpen && (
         <>
           <div
             onClick={() => setIsFollowerModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followerList} type="팔로워" />
+          <FollowModal
+            users={followerList}
+            type="팔로워"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       {isFollowingModalOpen && (
@@ -101,7 +154,12 @@ export default function SoloProfile({
             onClick={() => setIsFollowingModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followings} type="팔로잉" />
+          <FollowModal
+            users={followings}
+            type="팔로잉"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       <div className="w-full text-center">
@@ -127,19 +185,47 @@ export default function SoloProfile({
           <div className="flex flex-col items-center">
             <div className="w-full flex justify-evenly gap-[29px] mt-[38px] font-semibold text-xl">
               <div
-                onClick={() => setIsFollowerModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowerModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로워</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로워
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followerList.length}
                 </span>
               </div>
               <div
-                onClick={() => setIsFollowingModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowingModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로잉</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로잉
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followings.length}
                 </span>
@@ -148,13 +234,15 @@ export default function SoloProfile({
                 onClick={scrollToPosts}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">게시글</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  게시글
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {posts.length}
                 </span>
               </div>
             </div>
-            {!isMyProfile && (
+            {!isMyProfile && session && (
               <div className="flex gap-7 mt-[22px]">
                 {isFollowing ? (
                   <Button
@@ -185,10 +273,24 @@ export default function SoloProfile({
                     <span className="inline-block leading-[1]">팔로우</span>
                   </Button>
                 )}
-                {
+
+                {session?.user.user_metadata.status === "solo" && (
                   <Button
-                    onClick={handleSendHeart}
+                    onClick={
+                      matching && matching.is_matched
+                        ? navigateMessage
+                        : handleSendHeart
+                    }
                     className="w-[177px] h-[38px] gap-2"
+                    disabled={
+                      matching
+                        ? matching.is_matched
+                          ? false
+                          : matching.user_id === id
+                          ? false
+                          : true
+                        : false
+                    }
                   >
                     <Icon
                       width="23px"
@@ -197,10 +299,16 @@ export default function SoloProfile({
                       top="-399px"
                     />
                     <span className="inline-block leading-[1]">
-                      하트 보내기
+                      {matching
+                        ? matching.is_matched
+                          ? "DM 보내기"
+                          : matching.user_id === id
+                          ? "받은 하트 보기"
+                          : "연결 대기중..."
+                        : "하트 보내기"}
                     </span>
                   </Button>
-                }
+                )}
               </div>
             )}
           </div>
@@ -211,7 +319,7 @@ export default function SoloProfile({
                 한줄 소개
               </span>
             </div>
-            <div className="py-3 pl-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
+            <div className="dark:text-[var(--dark-bg-primary)] py-3 px-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
               {description}
             </div>
           </div>

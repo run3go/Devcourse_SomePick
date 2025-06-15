@@ -5,7 +5,7 @@ import CoupleProfile from "../../components/profile/CoupleProfile";
 import ProfileTags from "../../components/profile/ProfileTags";
 import SoloProfile from "../../components/profile/SoloProfile";
 import { default as PostCard } from "../../components/webboard/PostCard";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function ProfilePage() {
   const {
@@ -42,8 +42,8 @@ export default function ProfilePage() {
   ];
 
   return (
-    <main className="relative flex justify-center mb-[150px] mt-[50px]">
-      <div className="flex items-center flex-col w-270">
+    <main className="relative flex justify-center pb-[150px] pt-[50px] dark:bg-[var(--dark-bg-primary)]">
+      <div className="flex items-center flex-col w-270 ">
         {status === "couple" ? (
           <CoupleProfile
             coupleProfile={userProfile}
@@ -59,22 +59,22 @@ export default function ProfilePage() {
         )}
         {status === "solo" && (
           <div className="flex flex-col w-full">
-            <h3 className="mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
+            <h3 className="dark:text-[var(--dark-white)] mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
               <span className="text-[var(--primary-pink-tone)]">
                 {nickname}
               </span>
               님의 정보
             </h3>
-            <div className="flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
+            <div className="dark:text-[var(--dark-white)] flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
               <ul className="flex flex-col justify-around">
                 {info.map((item, index) => (
                   <li key={index} className="flex items-center">
                     <span className="user-info">{item[0]}</span>
-                    <span>{item[1]}</span>
+                    <span className="w-[80px]">{item[1]}</span>
                   </li>
                 ))}
               </ul>
-              <ul className="flex flex-col gap-[38px] border-l border-[var(--gray-50)] px-8 text-[var(--gray-500)]">
+              <ul className="dark:text-[var(--dark-white)] flex flex-col gap-[38px] border-l border-[var(--gray-50)] px-8 text-[var(--gray-500)]">
                 <ProfileTags title="나를 표현하는 키워드" list={keywords!} />
                 <ProfileTags title="나의 관심사" list={interests!} />
                 <ProfileTags title="나의 이상형" list={ideal_types!} />
@@ -84,7 +84,7 @@ export default function ProfilePage() {
         )}
         {isMyProfile && (
           <Button
-            onClick={() => navigate("/profile/edit")}
+            onClick={() => navigate("/profile/edit", { state: userProfile })}
             className="w-[264px] h-[38px] self-end mt-8"
           >
             <span className="leading-[1]">프로필 정보 변경</span>
@@ -94,7 +94,7 @@ export default function ProfilePage() {
           ref={scrollRef}
           className="w-full flex flex-col gap-[40px] mt-[127px]"
         >
-          <h3 className="text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
+          <h3 className="dark:text-[var(--dark-white)]  text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
             <span className="text-[var(--primary-pink-tone)]">{nickname}</span>
             님이 쓴 게시물
           </h3>

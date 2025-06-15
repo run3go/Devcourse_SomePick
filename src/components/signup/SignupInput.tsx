@@ -6,6 +6,9 @@ interface InputProps {
   name: string;
   className?: string;
   placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isError?: boolean;
 }
 
 export default function SignupInput({
@@ -14,10 +17,13 @@ export default function SignupInput({
   name,
   className,
   placeholder,
+  value,
+  onChange,
+  isError = false,
 }: InputProps) {
   return (
     <>
-      <div className="flex flex-col">
+      <div className={twMerge("flex flex-col", className)}>
         <label htmlFor={name} className="ml-5 mb-1">
           {label}
         </label>
@@ -26,12 +32,17 @@ export default function SignupInput({
           type={type}
           name={name}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           className={twMerge(
-            "pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border border-[var(--primary-pink)] rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone)",
-            className
+            `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
+              isError ? "border-[var(--red)]" : "border-[var(--primary-pink)]"
+            }`
           )}
-          {...(name === "height" ? { min: 130, max: 299, step: 1 } : {})}
-          {...(name === "intro" ? { maxlength: 30 } : {})}
+          {...(name === "height"
+            ? { inputMode: "numeric", pattern: "[0-9]*" }
+            : {})}
+          {...(name === "intro" ? { maxLength: 30 } : {})}
           {...(name === "userName"
             ? { autoComplete: "off", minLength: 2, maxLength: 5 }
             : {})}

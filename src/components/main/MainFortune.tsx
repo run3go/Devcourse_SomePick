@@ -10,7 +10,9 @@ export default function MainFortune() {
           <p className="mb-[10px] text-[24px] text-[var(--gray-500)] font-bold">
             지금 내 연애, 어디쯤일까?
           </p>
-          <p className="text-[40px] font-bold">운세로 체크!</p>
+          <p className="text-[40px] font-bold dark:text-[var(--dark-gray-700)]">
+            운세로 체크!
+          </p>
         </div>
 
         <div className=" mb-[60px]">
@@ -26,9 +28,11 @@ export default function MainFortune() {
                 top="-330.09px"
               ></Icon>
             </div>
-            <p className="text-[24px] font-bold">내 연애운을 확인해요.</p>
+            <p className="text-[24px] font-bold dark:text-[var(--dark-gray-700)]">
+              내 연애운을 확인해요.
+            </p>
           </div>
-          <p className="text-[16px] text-[var(--gray-500)]">
+          <p className="text-[16px] text-[var(--gray-500)] dark:text-[var(--dark-gray-700)]">
             오늘의 연애운을 확인하세요!<br></br>
             결과를 게시판에 공유할 수도 있어요.
           </p>

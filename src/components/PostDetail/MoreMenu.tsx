@@ -1,9 +1,43 @@
+// import { useNavigate } from "react-router";
+import { deletePost } from "../../apis/posts/postCrud";
 import Icon from "../common/Icon";
+import { toast } from "react-toastify";
+import { deleteComment } from "../../apis/comment";
 
-export default function MoreMenu() {
+type MoreMenuProps = {
+  id: number;
+  isParent?: boolean | undefined;
+  type: "post" | "comment";
+  closeMenu: () => void;
+  onClick: () => void;
+};
+
+export default function MoreMenu({
+  id,
+  isParent,
+  type,
+  onClick,
+  closeMenu,
+}: MoreMenuProps) {
+  // const navigate = useNavigate();
+
+  const handleDelte = async () => {
+    if (type === "post") {
+      // await deletePost(id);
+      toast.success("게시글이 삭제되었습니다.");
+      // navigate("/post/free");
+    } else if (type === "comment") {
+      await deleteComment(id, isParent ?? false);
+      toast.success("댓글이 삭제되었습니다.");
+    }
+    closeMenu();
+  };
   return (
     <>
-      <div className="absolute right-0 mt-2 bg-white p-2.5 rounded-[10px] border border-[var(--gray-500)] flex flex-col w-[82px] z-50">
+      <div
+        className="absolute right-0 mt-2 bg-white p-2.5 rounded-[10px] border border-[var(--gray-500)] flex flex-col w-[82px] z-50"
+        onClick={onClick}
+      >
         <div className="flex items-center justify-center gap-[5px] pb-2.5">
           <button className="text-[10px] text-[var(--gray-700)] cursor-pointer">
             수정하기
@@ -17,7 +51,10 @@ export default function MoreMenu() {
           />
         </div>
         <div className="flex items-center justify-center gap-[5px]">
-          <button className="text-[var(--red)]/60 text-[10px] cursor-pointer">
+          <button
+            className="text-[var(--red)]/60 text-[10px] cursor-pointer"
+            onClick={handleDelte}
+          >
             삭제하기
           </button>
           <Icon

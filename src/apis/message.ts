@@ -1,4 +1,27 @@
 import supabase from "../utils/supabase";
+// 채팅 멤버 가져오기
+export const fetchChatMembers = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { data, error } = await supabase
+      .from("chat_rooms")
+      .select("*")
+      .or(`user1_id.eq.${session.user.id}, user2_id.eq.${session.user.id}`);
+    if (error) {
+      console.log("채팅방 멤버 조회 실패:", error.message);
+      return;
+    }
+    const chatMembers = data.map((room) =>
+      room.user1_id === session.user.id ? room.user2_id : room.user1_id
+    );
+    return chatMembers;
+  } catch (e) {
+    console.error(e);
+  }
+};
 // 채팅방 생성 (채팅 상대 id)
 export const createChatRoom = async (chatPartnerId: string) => {
   try {
@@ -43,6 +66,27 @@ export const fetchChatRoom = async (chatPartnerId: string) => {
     console.error(e);
   }
 };
+// 내가 속한 채팅방 삭제하기
+export const deleteChatRoom = async () => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase
+      .from("chat_rooms")
+      .delete()
+      .or(`user1_id.eq.${session.user.id},user2_id.eq.${session.user.id}`);
+    if (error) {
+      console.log("채팅방 삭제 실패:", error.message);
+      return;
+    }
+    console.log("채팅방 삭제 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // 메시지 가져오기 (채팅방id)
 export const fetchMessages = async (chatRoomId: string) => {
   try {
@@ -58,7 +102,8 @@ export const fetchMessages = async (chatRoomId: string) => {
         )
         `
       )
-      .eq("chat_room_id", chatRoomId);
+      .eq("chat_room_id", chatRoomId)
+      .order("created_at", { ascending: true });
     if (error) {
       console.log("메시지 조회 실패:", error.message);
       return;
@@ -125,8 +170,8 @@ export const readMessage = async (
 // 메시지 실시간 확인
 export const subscribeToMessages = async (
   chat_room_id: string,
-  updateMessage: (msg: unknown) => void,
-  updateSeen: () => void
+  updateMessage: (msg: Message) => void
+  // updateSeen: () => void
 ) => {
   try {
     const {
