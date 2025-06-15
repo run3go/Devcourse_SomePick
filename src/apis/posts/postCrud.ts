@@ -16,12 +16,20 @@ export const createPost = async (
     } = await supabase.auth.getSession();
     if (!session) return;
     const imageUrls: string[] = [];
-    imageFiles?.forEach(async (file) => {
-      const image = await storeImage(file, "post");
-      if (image) {
-        imageUrls.push(image);
+    // imageFiles?.forEach(async (file) => {
+    //   const image = await storeImage(file, "post");
+    //   if (image) {
+    //     imageUrls.push(image);
+    //   }
+    // });
+    if (imageFiles) {
+      for (let i = 0; i < imageFiles.length; i++) {
+        const image = await storeImage(imageFiles[i], "post");
+        if (image) {
+          imageUrls.push(image);
+        }
       }
-    });
+    }
     const { error } = await supabase.from("posts").insert([
       {
         channel_name,
@@ -109,12 +117,14 @@ export const updatePost = async (
 ) => {
   try {
     const imageUrls: string[] = [];
-    imageFiles?.forEach(async (file) => {
-      const image = await storeImage(file, "post");
-      if (image) {
-        imageUrls.push(image);
+    if (imageFiles) {
+      for (let i = 0; i < imageFiles.length; i++) {
+        const image = await storeImage(imageFiles[i], "post");
+        if (image) {
+          imageUrls.push(image);
+        }
       }
-    });
+    }
     const { error } = await supabase
       .from("posts")
       .update({
