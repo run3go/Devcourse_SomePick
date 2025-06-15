@@ -118,7 +118,7 @@ export default function MatchingPage() {
     // 프로필 2개면 center + side 1개만
     slots = [
       { idx: currentIndex, position: "center" },
-      { idx: nextIndex, position: "side" },
+      { idx: nextIndex, position: "center" },
     ] as const;
   } else {
     // 프로필 1개면 center 1개만
@@ -163,14 +163,16 @@ export default function MatchingPage() {
             <span className="inline-block leading-[1]">MBTI</span>
           </Button>
         </div>
-
+        {/* 추천카드 */}
         {displayedProfiles.length > 0 && (
           <LayoutGroup>
             <div className="flex flex-col items-center justify-center space-y-8 p-6">
               <div className="flex items-center justify-center space-x-8 relative">
-                <button onClick={handlePrev} className="absolute left-[-50px] z-10">
-                  <img src={LeftBtn} alt="이전" className="cursor-pointer" />
-                </button>
+                {len >= 3 && (
+                  <button onClick={handlePrev} className="absolute left-[-50px] z-10">
+                    <img src={LeftBtn} alt="이전" className="cursor-pointer" />
+                  </button>
+                )}
 
                 {slots.map(({ idx, position }) => {
                   const profile = displayedProfiles[idx];
@@ -201,9 +203,11 @@ export default function MatchingPage() {
                   );
                 })}
 
-                <button onClick={handleNext} className="absolute right-[-50px] z-10">
-                  <img src={RightBtn} alt="다음" className="cursor-pointer" />
-                </button>
+                {len >= 3 && (
+                  <button onClick={handleNext} className="absolute right-[-50px] z-10">
+                    <img src={RightBtn} alt="다음" className="cursor-pointer" />
+                  </button>
+                )}
               </div>
             </div>
           </LayoutGroup>
@@ -222,7 +226,7 @@ export default function MatchingPage() {
           다른 소개팅 상대들도 만나보세요!
         </h2>
 
-        {/* 추천 카드 */}
+        {/* 추천 카드 전체*/}
         <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 w-[1500px]">
           {matchedProfiles.map((profile) => (
             <MatchingCard
