@@ -39,6 +39,7 @@ type ProfileUpdatePayload = Partial<{
   ideal_types: string[];
   partner_nickname: string | null;
   status: "solo" | "couple";
+  fortune_telling_id: string;
 }>;
 
 type ProfileData = {

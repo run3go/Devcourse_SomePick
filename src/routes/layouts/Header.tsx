@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { twMerge } from "tailwind-merge";
-import logoImage from "../../assets/images/headerlogo.png";
-
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
 import { TbMessageHeart } from "react-icons/tb";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
+import logoImage from "../../assets/images/headerlogo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
