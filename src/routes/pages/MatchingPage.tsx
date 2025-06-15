@@ -9,6 +9,7 @@ import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useAuthStore } from "../../stores/authstore";
+import Icon from "../../components/common/Icon";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -262,6 +263,13 @@ export default function MatchingPage() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* 닫기 버튼 */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 left-140 cursor-pointer"
+              >
+                <Icon width="17px" height="17px" left="-463px" top="-729px" />
+              </button>
               <MatchingCardInfo profile={selectedProfile} />
             </motion.div>
           </motion.div>
