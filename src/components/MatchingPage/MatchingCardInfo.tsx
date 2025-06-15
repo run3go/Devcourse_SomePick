@@ -3,6 +3,7 @@ import Button from "../common/Button";
 import type { Database } from "../../types/supabase";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
+import { notifyHeart } from "../../apis/notification";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -34,6 +35,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
         alert("이미 하트를 보낸 상대입니다.");
       } else {
         alert("하트를 성공적으로 보냈습니다!");
+        await notifyHeart(profile.id); // 하트 보낸 후 알림 전송
       }
     } catch (error) {
       console.error(error);

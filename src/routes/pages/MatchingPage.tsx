@@ -51,7 +51,7 @@ export default function MatchingPage() {
       const list = await fetchMatchedUsers(gender);
       if (list) {
         setMatchedProfiles(list);
-        // location만 따로 뽑아서 로그
+
         const locations = list.map((profile) => profile.location);
         console.log("Locations:", locations);
       }
@@ -71,7 +71,7 @@ export default function MatchingPage() {
     };
   }, [isModalOpen]);
 
-  // 변경: 필터링된 프로필 배열 계산 (지역 & 관심사)
+  //  필터링된 프로필 배열 계산
   let displayedProfiles = matchedProfiles;
   if (filterByLocation || filterByInterest || filterByMbti) {
     displayedProfiles = matchedProfiles.filter((profile) => {
@@ -115,13 +115,11 @@ export default function MatchingPage() {
       { idx: nextIndex, position: "side" },
     ] as const;
   } else if (len === 2) {
-    // 프로필 2개면 center + side 1개만
     slots = [
       { idx: currentIndex, position: "center" },
       { idx: nextIndex, position: "center" },
     ] as const;
   } else {
-    // 프로필 1개면 center 1개만
     slots = [{ idx: currentIndex, position: "center" }] as const;
   }
 
