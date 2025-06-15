@@ -10,6 +10,7 @@ import {
   updatePost,
 } from "../../apis/posts/postCrud";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 export default function PostCreatePage() {
   const navigate = useNavigate();
@@ -97,7 +98,8 @@ export default function PostCreatePage() {
         // fortune ? fortune : ""
       );
 
-      alert("게시물이 수정 되었습니다!");
+      // alert("게시물이 수정 되었습니다!");
+      toast.success("게시물이 수정 되었습니다!");
       navigate(`/post/${backTo}`);
     } else {
       await createPost(
@@ -107,7 +109,8 @@ export default function PostCreatePage() {
         imageFile ? imageFile : null
         // fortune ? fortune : ""
       );
-      alert("게시물이 업로드 되었습니다!");
+      // alert("게시물이 업로드 되었습니다!");
+      toast.success("게시물이 업로드 되었습니다!");
       navigate(`/post/${channel}`);
     }
   };
