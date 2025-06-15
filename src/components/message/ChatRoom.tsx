@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router";
 import ChatInput from "./ChatInput";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchMessages, subscribeToMessages } from "../../apis/message";
 import { useAuthStore } from "../../stores/authStore";
 import dayjs from "dayjs";
@@ -29,13 +29,13 @@ export default function ChatRoom({
     setMessages((prev) => [...prev, msg]);
   };
 
-  const updateSeen = () => {
+  const updateSeen = useCallback(() => {
     setMessages((prev) =>
       prev.map((msg) =>
         msg.sender_id === authId ? { ...msg, seen: true } : msg
       )
     );
-  };
+  }, [authId]);
 
   // 메세지 불러오기
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function ChatRoom({
         channel.unsubscribe();
       }
     };
-  });
+  }, [chatRoomId, authId, updateSeen]);
 
   // 메세지 오면 채팅창 맨아래로 이동
   useEffect(() => {
@@ -130,11 +130,16 @@ export default function ChatRoom({
                     </div>
                   )}
                   {message.sender_id === authId ? (
-                    <div className="flex items-center gap-2.5 mb-4 justify-end w-full">
-                      <span className="text-[10px] text-[#969696] self-end mb-1">
+                    <div className="flex items-end gap-2.5 mb-4 justify-end w-full">
+                      {message.sender_id === authId && !message.seen && (
+                        <span className="text-[10px] text-[var(--primary-pink-tone)] ml-1 self-end mb-1">
+                          1
+                        </span>
+                      )}
+                      <span className="text-[10px] text-[var(--gray-500)] self-end mb-1">
                         {dayjs(message.created_at).format("HH:mm")}
                       </span>
-                      <div className="max-w-96 px-4 py-3 bg-[#FFC7ED] text-black rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl rounded-br-none text-[11px] whitespace-pre-line">
+                      <div className="max-w-96 px-4 py-3 bg-[var(--primary-pink)] text-black rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl rounded-br-none text-[11px] whitespace-pre-line">
                         <p>{message.message}</p>
                       </div>
                     </div>
