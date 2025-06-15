@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
-import { followUser, unfollowUser } from "../../apis/follow";
-import { useAuthStore } from "../../stores/authstore";
+import { twMerge } from "tailwind-merge";
+import {
+  fetchFollowingList,
+  followUser,
+  unfollowUser,
+} from "../../apis/follow";
+import { notifyFollow } from "../../apis/notification";
+import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import FollowModal from "./FollowModal";
@@ -18,19 +24,22 @@ export default function CoupleProfile({
 }) {
   const { session } = useAuthStore();
   const navigate = useNavigate();
-  const { main_image, nickname, partner_nickname, couple, id } = coupleProfile;
+  const { main_image, nickname, partner_nickname, couple, id, gender } =
+    coupleProfile;
   const {
     posts,
     followers,
     followings,
   }: { posts: PostData[]; followers: UserData[]; followings: UserData[] } =
     useLoaderData();
+
   const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
   const [followerList, setFollowerList] = useState(followers);
-  const scrollToPosts = () => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const [myFollowings, setMyFollowings] = useState<string[]>([]);
+  const [isFollowing, setIsFollwing] = useState(
+    followerList.some((user) => user.id === session?.user.id)
+  );
 
   const partnerInfo = couple
     ? couple.user1.nickname === partner_nickname
@@ -38,9 +47,10 @@ export default function CoupleProfile({
       : couple.user2
     : "";
 
-  const [isFollowing, setIsFollwing] = useState(
-    followerList.some((user) => user.id === session?.user.id)
-  );
+  const scrollToPosts = () => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const handleFollowUser = async () => {
     try {
       if (!session) return;
@@ -54,6 +64,7 @@ export default function CoupleProfile({
         },
       ]);
       await followUser(id);
+      await notifyFollow(id);
     } catch (e) {
       console.error(e);
       setIsFollwing(false);
@@ -62,6 +73,7 @@ export default function CoupleProfile({
       );
     }
   };
+
   const handleUnfollowUser = async () => {
     try {
       setIsFollwing(false);
@@ -83,15 +95,21 @@ export default function CoupleProfile({
       ]);
     }
   };
+
   return (
-    <div className="w-full bg-[#FFFBFB] p-9 pb-[60px]">
+    <div className="w-full bg-[#FFFBFB] dark:bg-[var(--dark-bg-secondary)] p-9 pb-[60px]">
       {isFollowerModalOpen && (
         <>
           <div
             onClick={() => setIsFollowerModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followerList} type="팔로워" />
+          <FollowModal
+            users={followerList}
+            type="팔로워"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       {isFollowingModalOpen && (
@@ -100,11 +118,16 @@ export default function CoupleProfile({
             onClick={() => setIsFollowingModalOpen(false)}
             className="fixed inset-0 bg-black opacity-30 z-100"
           />
-          <FollowModal users={followings} type="팔로잉" />
+          <FollowModal
+            users={followings}
+            type="팔로잉"
+            myFollowings={myFollowings}
+            setMyFollowings={setMyFollowings}
+          />
         </>
       )}
       <div className="w-full text-center">
-        <h2 className="font-bold text-2xl">
+        <h2 className="font-bold text-2xl dark:text-white">
           {isMyProfile ? (
             "My Profile"
           ) : (
@@ -119,7 +142,12 @@ export default function CoupleProfile({
       </div>
       <div className="flex flex-col items-center">
         <div className="mt-8 flex gap-[45px]">
-          <ProfileCard nickname={nickname} image={main_image} isCouple />
+          <ProfileCard
+            nickname={nickname}
+            image={main_image}
+            isCouple
+            gender={gender}
+          />
           <Icon
             width="76px"
             height="70px"
@@ -135,25 +163,54 @@ export default function CoupleProfile({
             image={partnerInfo && partnerInfo.main_image}
             isPartner
             isCouple
+            gender={gender}
           />
         </div>
-        <div className="flex flex-col gap-[70px] justify-center">
+        <div className="flex flex-col gap-[70px] justify-center dark:text-white">
           <div className="flex flex-col items-center w-75">
             <div className="w-full flex justify-evenly gap-[29px] mt-[38px] font-semibold text-xl">
               <div
-                onClick={() => setIsFollowerModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowerModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로워</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로워
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followerList.length}
                 </span>
               </div>
               <div
-                onClick={() => setIsFollowingModalOpen(true)}
+                onMouseDown={async () => {
+                  if (session) {
+                    const followings = await fetchFollowingList(
+                      session.user.id
+                    );
+                    if (followings) {
+                      setMyFollowings(
+                        followings.map(({ following }) => following.id)
+                      );
+                    }
+                  }
+                  setIsFollowingModalOpen(true);
+                }}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로잉</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로잉
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followings.length}
                 </span>
@@ -162,17 +219,23 @@ export default function CoupleProfile({
                 onClick={scrollToPosts}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">게시글</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  게시글
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {posts.length}
                 </span>
               </div>
             </div>
             <div className="flex gap-7 mt-[22px]">
-              {!isMyProfile &&
+              {session &&
+                !isMyProfile &&
                 (isFollowing ? (
                   <Button
-                    className="w-[300px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]"
+                    className={twMerge(
+                      "w-[300px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]",
+                      "dark:bg-[var(--dark-bg-tertiary)] hover:dark:bg-[var(--dark-gray-300-50)]"
+                    )}
                     onClick={handleUnfollowUser}
                   >
                     <Icon

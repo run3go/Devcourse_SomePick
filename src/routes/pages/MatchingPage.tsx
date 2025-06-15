@@ -8,26 +8,83 @@ import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { useAuthStore } from "../../stores/authstore";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
+
+const mbtiPairs: Record<string, string[]> = {
+  ENFJ: ["INFP", "ISTP"],
+  INFP: ["ENFJ", "ENTJ"],
+  ISTJ: ["ESFP", "ENFP"],
+  ESFP: ["ISTJ", "INTJ"],
+  INTJ: ["ENFP", "ESFP"],
+  ENFP: ["INTJ", "ISTJ"],
+  ISFJ: ["ESTP", "ENTP"],
+  ESTP: ["ISFJ", "INFJ"],
+  INFJ: ["ESTP", "ENTP"],
+  ENTP: ["ISFJ", "INFJ"],
+  ENTJ: ["INFP", "ISFP"],
+  ISFP: ["ENTJ", "ESFJ"],
+  ESFJ: ["ISFP", "ISTP"],
+  ISTP: ["ESFJ", "ENFJ"],
+};
 
 export default function MatchingPage() {
   const [selectedProfile, setSelectedProfile] = useState<Profiles | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [matchedProfiles, setMatchedProfiles] = useState<Profiles[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const myGender: "male" | "female" = "male";
+  const session = useAuthStore((state) => state.session);
+  const name = session!.user.user_metadata?.nickname;
+  const gender = session!.user.user_metadata?.gender;
+  const mylocation = session!.user.user_metadata?.location;
+  const interests: string[] = session!.user.user_metadata?.interests || [];
+  const myMbti: string = session!.user.user_metadata?.mbti || "";
+  const [filterByLocation, setFilterByLocation] = useState(false);
+  const [filterByInterest, setFilterByInterest] = useState(false);
+  const [filterByMbti, setFilterByMbti] = useState(false);
+  console.log(myMbti);
 
   useEffect(() => {
     (async () => {
-      const list = await fetchMatchedUsers(myGender);
-      if (list) setMatchedProfiles(list);
+      const list = await fetchMatchedUsers(gender);
+      if (list) {
+        setMatchedProfiles(list);
+        // location만 따로 뽑아서 로그
+        const locations = list.map((profile) => profile.location);
+        console.log("Locations:", locations);
+      }
     })();
-  }, [myGender]);
+  }, [gender]);
 
-  const len = matchedProfiles.length;
+  // 변경: 필터링된 프로필 배열 계산 (지역 & 관심사)
+  let displayedProfiles = matchedProfiles;
+  if (filterByLocation || filterByInterest || filterByMbti) {
+    displayedProfiles = matchedProfiles.filter((profile) => {
+      if (filterByLocation && profile.location !== mylocation) return false;
+      if (filterByInterest && !profile.interests?.some((i) => interests.includes(i))) return false;
+      if (filterByMbti && !mbtiPairs[myMbti]?.includes(profile.mbti || "")) return false;
+      return true;
+    });
+  }
+
+  const len = displayedProfiles.length;
   const prevIndex = (currentIndex - 1 + len) % len;
   const nextIndex = (currentIndex + 1) % len;
+
+  // 변경: 필터 토글 시 인덱스 초기화
+  const toggleLocationFilter = () => {
+    setFilterByLocation((prev) => !prev);
+    setCurrentIndex(0);
+  };
+  const toggleInterestFilter = () => {
+    setFilterByInterest((prev) => !prev);
+    setCurrentIndex(0);
+  };
+  const toggleMbtiFilter = () => {
+    setFilterByMbti((prev) => !prev);
+    setCurrentIndex(0);
+  };
 
   const handlePrev = () => {
     if (len > 0) setCurrentIndex((prev) => (prev - 1 + len) % len);
@@ -36,11 +93,23 @@ export default function MatchingPage() {
     if (len > 0) setCurrentIndex((prev) => (prev + 1) % len);
   };
 
-  const slots = [
-    { idx: prevIndex, position: "side" },
-    { idx: currentIndex, position: "center" },
-    { idx: nextIndex, position: "side" },
-  ] as const;
+  let slots: readonly { idx: number; position: "side" | "center" }[];
+  if (len >= 3) {
+    slots = [
+      { idx: prevIndex, position: "side" },
+      { idx: currentIndex, position: "center" },
+      { idx: nextIndex, position: "side" },
+    ] as const;
+  } else if (len === 2) {
+    // 프로필 2개면 center + side 1개만
+    slots = [
+      { idx: currentIndex, position: "center" },
+      { idx: nextIndex, position: "side" },
+    ] as const;
+  } else {
+    // 프로필 1개면 center 1개만
+    slots = [{ idx: currentIndex, position: "center" }] as const;
+  }
 
   return (
     <>
@@ -50,18 +119,27 @@ export default function MatchingPage() {
 
         {/* 제목 */}
         <div className="text-[32px] font-bold">
-          <span className="text-[#FFC7ED]">지유</span>님이 원하시는 소개팅 상대를 찾았어요!
+          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅 상대를 찾았어요!
         </div>
 
         {/* 필터 버튼 그룹 */}
         <div className="flex space-x-8">
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleInterestFilter}
+          >
             <span className="inline-block leading-[1]">관심사</span>
           </Button>
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleLocationFilter}
+          >
             <span className="inline-block leading-[1]">지역</span>
           </Button>
-          <Button className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium">
+          <Button
+            className="w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium"
+            onClick={toggleMbtiFilter}
+          >
             <span className="inline-block leading-[1]">MBTI</span>
           </Button>
         </div>
@@ -76,7 +154,7 @@ export default function MatchingPage() {
 
               {len > 0 &&
                 slots.map(({ idx, position }) => {
-                  const profile = matchedProfiles[idx];
+                  const profile = displayedProfiles[idx];
                   const isCenter = position === "center";
                   return (
                     <motion.div
@@ -100,7 +178,6 @@ export default function MatchingPage() {
                         height="h-full"
                         imageWidth="w-full"
                         imageHeight="h-full"
-                        text="text-[18px]"
                         disableFlip={!isCenter}
                         onClick={isCenter ? () => setIsModalOpen(true) : undefined}
                       />
@@ -131,7 +208,7 @@ export default function MatchingPage() {
               height="h-[450px]"
               imageWidth="w-full"
               imageHeight="h-full"
-              text="text-[17px]"
+              text="text-[16px]"
               disableFlip={true}
               onClick={() => {
                 setSelectedProfile(profile);

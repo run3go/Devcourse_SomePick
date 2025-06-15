@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import image from "../../assets/images/image 8.png";
 import MatchingCardInfo from "./MatchingCardInfo";
 import type { Database } from "../../types/supabase";
+import { useAuthStore } from "../../stores/authstore";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardProps {
@@ -30,8 +30,18 @@ export default function MatchingCard({
   onClick,
 }: MatchingCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const session = useAuthStore((state) => state.session);
+  const ideal_types = session!.user.user_metadata?.ideal_types;
+  const idealArray = ideal_types
+    .split(",")
+    .map((t: string) => t.trim())
+    .filter(Boolean);
 
-  //hover 트리거용인 경우에만 group
+  const matched = idealArray.filter((type: string) => profile.keywords!.includes(type));
+
+  const matchPercent =
+    idealArray.length > 0 ? Math.round((matched.length / idealArray.length) * 100) : 0;
+
   const outerClasses = [
     width,
     height,
@@ -74,10 +84,16 @@ export default function MatchingCard({
           `}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <h2 className={`${text} text-center`}>{profile.nickname}님의 이상형과 100% 일치해요!</h2>
+          <h2 className={`${text} text-center`}>
+            {profile.nickname}님은 이상형과 {matchPercent}% 일치해요!
+          </h2>
           <div className="flex-grow flex items-center justify-center">
             <div className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}>
-              <img src={image} alt="매칭 이미지" className="w-full h-full object-cover" />
+              <img
+                src={profile.main_image!}
+                alt="매칭 이미지"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
