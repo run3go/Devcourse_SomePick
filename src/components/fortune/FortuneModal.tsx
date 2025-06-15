@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import ShareButton from "./ShareButton";
+import { useNavigate } from "react-router";
+import { useUploadImageStore } from "../../stores/useUploadImageStore";
 
 interface FortuneData {
   userName?: string | null;
@@ -29,6 +31,9 @@ export default function FortuneModal({
   // 카드 캡쳐
   const imgRef = useRef<HTMLDivElement | null>(null);
 
+  const navigate = useNavigate();
+  const { setImage } = useUploadImageStore();
+
   if (!isOpen || cardIndex === null) return null;
 
   const handleShare = async () => {
@@ -43,7 +48,11 @@ export default function FortuneModal({
 
       canvas.toBlob((blob) => {
         if (blob !== null) {
-          saveAs(blob, "result.png");
+          //   saveAs(blob, "result.png");
+          const file = new File([blob], "fotrune.png", { type: "image/png" });
+
+          setImage([file]);
+          navigate(`/post/create`);
         }
       });
     } catch (e) {
