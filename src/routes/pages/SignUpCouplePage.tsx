@@ -267,7 +267,7 @@ export default function SignUpCouplePage() {
                       top="-760px"
                     />
                   )} */}
-                  {(isEmailValid || !isEmailDuplicate) && (
+                  {isEmailValid && !isEmailDuplicate && (
                     <Icon
                       width="16px"
                       height="12px"

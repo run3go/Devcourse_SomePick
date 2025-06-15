@@ -229,7 +229,7 @@ export default function SignUpSoloStep1Page() {
                       top="-760px"
                     />
                   )} */}
-                  {isEmailDuplicate === false && (
+                  {isEmailValid && !isEmailDuplicate && (
                     <Icon
                       width="16px"
                       height="12px"
