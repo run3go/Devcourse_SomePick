@@ -262,6 +262,7 @@ export type Database = {
           created_at: string;
           id: number;
           is_matched: boolean;
+          is_rejected: boolean;
           matching_user_id: string;
           user_id: string;
         };
@@ -269,6 +270,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           is_matched?: boolean;
+          is_rejected?: boolean;
           matching_user_id: string;
           user_id: string;
         };
@@ -276,6 +278,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           is_matched?: boolean;
+          is_rejected?: boolean;
           matching_user_id?: string;
           user_id?: string;
         };
@@ -350,43 +353,28 @@ export type Database = {
       };
       notifications: {
         Row: {
-          chat_room_id: string | null;
-          comment_id: number | null;
           created_at: string;
           id: number;
-          is_matched: boolean | null;
-          like_id: number | null;
-          matching_id: number | null;
-          message_id: number | null;
           post_id: number | null;
           receiver_id: string;
           sender_id: string;
+          type: string | null;
         };
         Insert: {
-          chat_room_id?: string | null;
-          comment_id?: number | null;
           created_at?: string;
           id?: number;
-          is_matched?: boolean | null;
-          like_id?: number | null;
-          matching_id?: number | null;
-          message_id?: number | null;
           post_id?: number | null;
           receiver_id: string;
           sender_id: string;
+          type?: string | null;
         };
         Update: {
-          chat_room_id?: string | null;
-          comment_id?: number | null;
           created_at?: string;
           id?: number;
-          is_matched?: boolean | null;
-          like_id?: number | null;
-          matching_id?: number | null;
-          message_id?: number | null;
           post_id?: number | null;
           receiver_id?: string;
           sender_id?: string;
+          type?: string | null;
         };
         Relationships: [
           {
@@ -394,41 +382,6 @@ export type Database = {
             columns: ["sender_id"];
             isOneToOne: false;
             referencedRelation: "profiles";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "notifications_chat_room_id_fkey";
-            columns: ["chat_room_id"];
-            isOneToOne: false;
-            referencedRelation: "chat_rooms";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "notifications_comment_id_fkey";
-            columns: ["comment_id"];
-            isOneToOne: false;
-            referencedRelation: "comments";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "notifications_like_id_fkey";
-            columns: ["like_id"];
-            isOneToOne: false;
-            referencedRelation: "likes";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "notifications_matching_id_fkey";
-            columns: ["matching_id"];
-            isOneToOne: false;
-            referencedRelation: "matchings";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "notifications_message_id_fkey";
-            columns: ["message_id"];
-            isOneToOne: false;
-            referencedRelation: "messages";
             referencedColumns: ["id"];
           },
           {
@@ -469,7 +422,7 @@ export type Database = {
           created_at: string;
           fortune_telling: string | null;
           id: number;
-          image: string | null;
+          images: string[] | null;
           title: string;
         };
         Insert: {
@@ -479,7 +432,7 @@ export type Database = {
           created_at?: string;
           fortune_telling?: string | null;
           id?: number;
-          image?: string | null;
+          images?: string[] | null;
           title: string;
         };
         Update: {
@@ -489,7 +442,7 @@ export type Database = {
           created_at?: string;
           fortune_telling?: string | null;
           id?: number;
-          image?: string | null;
+          images?: string[] | null;
           title?: string;
         };
         Relationships: [
