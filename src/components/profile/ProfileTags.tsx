@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export default function ProfileTags({
   title,
   list,
@@ -12,7 +14,10 @@ export default function ProfileTags({
         {list.map((item) => (
           <li
             key={item}
-            className="flex px-2 py-[9px] border border-[var(--primary-pink)] rounded-[50px]"
+            className={twMerge(
+              "flex px-2 py-[9px] border border-[var(--primary-pink)] rounded-[50px]",
+              "dark:border-[var(--primary-pink-point)]"
+            )}
           >
             <span className="inline-block text-[var(--gray-50)] leading-[1] text-sm">
               {item}

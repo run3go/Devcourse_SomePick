@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 import { followUser, unfollowUser } from "../../apis/follow";
 import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
@@ -84,7 +85,7 @@ export default function CoupleProfile({
     }
   };
   return (
-    <div className="w-full bg-[#FFFBFB] p-9 pb-[60px]">
+    <div className="w-full bg-[#FFFBFB] dark:bg-[var(--dark-bg-secondary)] p-9 pb-[60px]">
       {isFollowerModalOpen && (
         <>
           <div
@@ -104,7 +105,7 @@ export default function CoupleProfile({
         </>
       )}
       <div className="w-full text-center">
-        <h2 className="font-bold text-2xl">
+        <h2 className="font-bold text-2xl dark:text-white">
           {isMyProfile ? (
             "My Profile"
           ) : (
@@ -137,14 +138,16 @@ export default function CoupleProfile({
             isCouple
           />
         </div>
-        <div className="flex flex-col gap-[70px] justify-center">
+        <div className="flex flex-col gap-[70px] justify-center dark:text-white">
           <div className="flex flex-col items-center w-75">
             <div className="w-full flex justify-evenly gap-[29px] mt-[38px] font-semibold text-xl">
               <div
                 onClick={() => setIsFollowerModalOpen(true)}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로워</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로워
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followerList.length}
                 </span>
@@ -153,7 +156,9 @@ export default function CoupleProfile({
                 onClick={() => setIsFollowingModalOpen(true)}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">팔로잉</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  팔로잉
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {followings.length}
                 </span>
@@ -162,7 +167,9 @@ export default function CoupleProfile({
                 onClick={scrollToPosts}
                 className="group flex flex-col items-center gap-2 cursor-pointer"
               >
-                <span className="group-hover:text-black">게시글</span>
+                <span className="group-hover:text-black dark:group-hover:text-[var(--dark-gray-300)]">
+                  게시글
+                </span>
                 <span className="text-[var(--primary-pink-tone)] group-hover:text-[var(--primary-pink-point)]">
                   {posts.length}
                 </span>
@@ -172,7 +179,10 @@ export default function CoupleProfile({
               {!isMyProfile &&
                 (isFollowing ? (
                   <Button
-                    className="w-[300px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]"
+                    className={twMerge(
+                      "w-[300px] h-[38px] gap-2 bg-[#d9d9d9] hover:bg-[#c2c2c2]",
+                      "dark:bg-[var(--dark-bg-tertiary)] hover:dark:bg-[var(--dark-gray-300-50)]"
+                    )}
                     onClick={handleUnfollowUser}
                   >
                     <Icon

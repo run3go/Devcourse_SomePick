@@ -1,18 +1,37 @@
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import BackButton from "../../components/common/BackButton";
-import { useSignUpStore } from "../../stores/signupstore";
+import { useSignUpStore } from "../../stores/signupStore";
+import supabase from "../../utils/supabase";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const { resetData } = useSignUpStore();
 
-  const { updateData } = useSignUpStore();
+  const [hasProfile, setHasProfile] = useState(false);
 
+  const getUserData = useCallback(async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      setHasProfile(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
   return (
     <>
       <div className="flex h-full flex-col justify-center">
-        <BackButton className="ml-20 mb-5" />
+        {hasProfile ? (
+          <BackButton className="ml-20" type="google" />
+        ) : (
+          <BackButton className="ml-20" />
+        )}
 
-        <div className="flex flex-col items-center justify-center h-[83.2%]">
+        <div className="flex flex-col items-center justify-center h-[861px]">
           <p className="text-[36px] cursor-default mb-9">
             Welcome to SomePick!
           </p>
@@ -27,7 +46,8 @@ export default function SignUpPage() {
             <div
               className="text-[20px] mb-5 flex justify-center items-center w-74 h-19 bg-[var(--white)] border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer"
               onClick={() => {
-                updateData({ status: "couple" });
+                // updateData({ status: "couple" });
+                resetData("couple");
                 navigate("couple");
               }}
             >
@@ -37,7 +57,8 @@ export default function SignUpPage() {
             <div
               className="text-[20px] flex justify-center items-center w-74 h-19 bg-[var(--white)] border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer"
               onClick={() => {
-                updateData({ status: "solo" });
+                // updateData({ status: "solo" });
+                resetData("solo");
                 navigate("solo/1");
               }}
             >

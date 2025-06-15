@@ -5,10 +5,18 @@ import { fetchProfile } from "../../apis/user";
 
 export const getUserProfile = async ({ params }: LoaderFunctionArgs) => {
   if (!params.id) return;
-  const userProfile = await fetchProfile(params.id);
-  const posts = await fetchPostsByAuthorId(params.id);
-  const followers = await fetchFollowerList(params.id);
-  const followings = await fetchFollowingList(params.id);
+  const [userProfile, posts, followers, followings] = await Promise.all([
+    fetchProfile(params.id),
+    fetchPostsByAuthorId(params.id),
+    fetchFollowerList(params.id),
+    fetchFollowingList(params.id),
+    new Promise((resolve) =>
+      setTimeout(() => {
+        resolve("");
+      }, 500)
+    ),
+  ]);
+
   return {
     userProfile,
     posts,

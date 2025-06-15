@@ -1,11 +1,11 @@
 // import email from "../../assets/icons/email.png";
-import { useNavigate } from "react-router";
-import google from "../../assets/images/google-login.png";
-import LoginInput from "../../components/login/LoginInput";
-import Button from "../../components/common/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { loginUser } from "../../apis/auth";
+import { loginUser, loginUserByGoogle } from "../../apis/auth";
+import google from "../../assets/images/google-login.png";
+import Button from "../../components/common/Button";
+import LoginInput from "../../components/login/LoginInput";
 // import { showErrorToast } from "../../components/common/Toast";
 
 export default function LoginPage() {
@@ -31,6 +31,10 @@ export default function LoginPage() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    await loginUserByGoogle();
   };
 
   return (
@@ -71,7 +75,7 @@ export default function LoginPage() {
             <hr className="w-[219px] border-[var(--gray-500)]" />
           </div>
 
-          <div className="cursor-pointer">
+          <div onClick={handleGoogleLogin} className="cursor-pointer">
             <img
               src={google}
               alt="구글 로그인"

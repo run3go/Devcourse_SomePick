@@ -1,35 +1,44 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { checkEmail } from "../apis/auth";
+import { useSignUpStore } from "../stores/signupStore";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{6,}$/;
 
 export default function useSignupValidation() {
-  const [email, setEmail] = useState("");
+  const { email, pw, setEmail, setPw } = useSignUpStore();
+
   const [isEmailValid, setIsEmailValid] = useState(true);
-
-  const [pw, setPw] = useState("");
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const [isPwValid, setIsPwValid] = useState(true);
-
   const [pwConfirm, setPwConfirm] = useState("");
   const [isPwConfirmValid, setIsPwConfirmValid] = useState(true);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    setIsEmailValid(EMAIL_REGEX.test(value));
-  };
+  useEffect(() => {
+    const valid = EMAIL_REGEX.test(email);
+    setIsEmailValid(valid);
 
-  const handlePwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPw(value);
-    setIsPwValid(PASSWORD_REGEX.test(value));
-  };
+    if (valid) {
+      const check = async () => {
+        const res = await checkEmail(email);
+        if (res?.email && !res.nickname) {
+          setIsEmailDuplicate(false);
+          return;
+        }
+        if (res) {
+          setIsEmailDuplicate(false);
+        } else setIsEmailDuplicate(true);
+      };
+      check();
+    } else {
+      setIsEmailDuplicate(false);
+    }
+  }, [email]);
 
-  const handlePwConfirmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPwConfirm(value);
-  };
+  useEffect(() => {
+    setIsPwValid(PASSWORD_REGEX.test(pw));
+  }, [pw]);
 
   useEffect(() => {
     setIsPwConfirmValid(pw === pwConfirm);
@@ -40,10 +49,17 @@ export default function useSignupValidation() {
     pw,
     pwConfirm,
     isEmailValid,
+    isEmailDuplicate,
     isPwValid,
     isPwConfirmValid,
-    handleEmailChange,
-    handlePwChange,
-    handlePwConfirmChange,
+    setIsEmailDuplicate,
+    setIsPwConfirmValid,
+    setPwConfirm,
+    handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setEmail(e.target.value),
+    handlePwChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setPw(e.target.value),
+    handlePwConfirmChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setPwConfirm(e.target.value),
   };
 }

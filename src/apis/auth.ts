@@ -39,6 +39,23 @@ export const checkNickname = async (nickname: string) => {
     console.error(e);
   }
 };
+// 이메일 중복 확인 (이메일)
+export const checkEmail = async (email: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("email", email)
+      .maybeSingle();
+    if (error) {
+      console.log("이메일 중복 확인 실패:", error.message);
+      return;
+    }
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
 // 로그인 (이메일, 비밀번호)
 export const loginUser = async (email: string, password: string) => {
   try {
@@ -48,6 +65,43 @@ export const loginUser = async (email: string, password: string) => {
     });
     if (error) {
       console.log("로그인 실패:", error.message);
+      return;
+    }
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+// 구글 로그인
+export const loginUserByGoogle = async () => {
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+    if (error) {
+      console.log(error);
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+// profile에 정보가 있는지 확인
+export const checkHasProfile = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+    if (error) {
+      console.log(error);
       return;
     }
     return data;
