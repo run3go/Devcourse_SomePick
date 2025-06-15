@@ -8,6 +8,7 @@ interface SelectBoxProps {
 }
 
 export default function SelectBox({ type, value, onChange }: SelectBoxProps) {
+  const isDarkMode = document.documentElement.classList.contains("dark");
   const options = optionsGroup[type];
   const selectedOption = options.find((option) => option.value === value);
 
@@ -46,6 +47,7 @@ export default function SelectBox({ type, value, onChange }: SelectBoxProps) {
               "&:hover": {
                 borderColor: "var(--primary-pink)",
               },
+              backgroundColor: isDarkMode ? "var( --dark-bg-secondary)" : "",
             }),
             dropdownIndicator: (base) => ({
               ...base,
@@ -75,13 +77,25 @@ export default function SelectBox({ type, value, onChange }: SelectBoxProps) {
               backgroundColor: state.isSelected
                 ? "var(--primary-pink)"
                 : state.isFocused
-                ? "var(--gray-300-50)"
+                ? isDarkMode
+                  ? "var(--gray-500)"
+                  : "var(--gray-300-50)"
+                : isDarkMode
+                ? "var(--dark-bg-secondary)"
                 : "white",
-              color: "black",
+              color: isDarkMode ? "white" : "black",
               paddingLeft: "20px",
             }),
             indicatorSeparator: () => ({
               display: "none",
+            }),
+            placeholder: (base) => ({
+              ...base,
+              color: isDarkMode ? "var(--dark-white)" : "",
+            }),
+            singleValue: (base) => ({
+              ...base,
+              color: isDarkMode ? "var(--dark-white)" : "",
             }),
           }}
         />

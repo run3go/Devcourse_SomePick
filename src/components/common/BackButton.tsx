@@ -51,7 +51,20 @@ export default function BackButton({
           className="flex justify-center items-center gap-1.5 cursor-pointer"
           onClick={handleButtonClick}
         >
-          <Icon width="12px" height="10px" left="-277px" top="-765px" />
+          <Icon
+            width="12px"
+            height="10px"
+            left="-277px"
+            top="-765px"
+            className="dark:hidden"
+          />
+          <Icon
+            width="12px"
+            height="10px"
+            left="-277px"
+            top="-790px"
+            className="hidden dark:block"
+          />
           Back
         </button>
       </div>

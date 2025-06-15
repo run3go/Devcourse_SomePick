@@ -272,7 +272,10 @@ export default function SignUpSoloStep1Page() {
               // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
 
-            <Button type="submit" className="mt-9 w-full h-12.5 rounded-full">
+            <Button
+              type="submit"
+              className="mt-9 w-full h-12.5 rounded-full dark:text-[var(--dark-black)]"
+            >
               다음
             </Button>
           </form>
