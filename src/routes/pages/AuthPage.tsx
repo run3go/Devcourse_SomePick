@@ -25,7 +25,7 @@ export default function AuthPage() {
           {/* <img src={logo} className="absolute top-5 left-5 h-14" /> */}
         </div>
 
-        <div className="bg-[var(--white)] w-[62%]">
+        <div className="bg-[var(--white)] dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-gray-100)] w-[62%]">
           <Outlet />
         </div>
       </div>

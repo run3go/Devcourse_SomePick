@@ -12,7 +12,7 @@ export default function InputBirthDate({ className }: { className?: string }) {
       <div className={className}>
         <span className="ml-5 mb-1">주민등록번호</span>
         <div
-          className={`flex pl-5 items-center border rounded-full h-[50px] group focus-within:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus-within:shadow-(color:--primary-pink-tone) ${
+          className={`flex pl-5 items-center border rounded-full h-[50px] dark:bg-[var(--dark-bg-secondary)] group focus-within:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus-within:shadow-(color:--primary-pink-tone) ${
             isTouched
               ? isValid
                 ? "border-[var(--primary-pink)]"

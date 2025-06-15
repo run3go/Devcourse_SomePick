@@ -118,7 +118,7 @@ export default function SignUpSoloStep2Page() {
 
             <Button
               type="submit"
-              className="mt-20 w-[490px] h-12.5 rounded-full"
+              className="mt-20 w-[490px] h-12.5 rounded-full dark:text-[var(--dark-black)]"
             >
               다음
             </Button>

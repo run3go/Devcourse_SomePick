@@ -280,7 +280,10 @@ export default function SignUpCouplePage() {
               onChange={(e) => updateData({ partner_nickname: e.target.value })}
             />
 
-            <Button type="submit" className="mt-9 w-full h-12.5 rounded-full">
+            <Button
+              type="submit"
+              className="mt-9 w-full h-12.5 rounded-full dark:text-[var(--dark-black)]"
+            >
               가입 완료
             </Button>
           </form>

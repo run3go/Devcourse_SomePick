@@ -86,7 +86,7 @@ export default function SignUpSoloStep3Page() {
 
             <Button
               type="submit"
-              className="mt-10 w-[490px] h-12.5 rounded-full"
+              className="mt-10 w-[490px] h-12.5 rounded-full dark:text-[var(--dark-black)]"
             >
               이제 소개팅 할 준비가 다 되었어요!
             </Button>

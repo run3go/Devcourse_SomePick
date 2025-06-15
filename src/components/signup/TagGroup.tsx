@@ -89,7 +89,7 @@ export default function TagGroup({
               onClick={() => toggleTag(tag)}
               className={`inline-block px-3 h-7 border rounded-[50px] text-center leading-7 hover:border-[var(--primary-pink-point)] cursor-pointer ${
                 selectedTags.includes(tag)
-                  ? "bg-[var(--primary-pink)] border-[var(--primary-pink)]"
+                  ? "bg-[var(--primary-pink)] border-[var(--primary-pink)] dark:text-[var(--black)]"
                   : "border-[var(--primary-pink)]"
               }`}
             >

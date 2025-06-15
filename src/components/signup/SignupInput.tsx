@@ -35,7 +35,7 @@ export default function SignupInput({
           value={value}
           onChange={onChange}
           className={twMerge(
-            `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
+            `pl-5 mb-5 w-full h-[50px] border rounded-full dark:bg-[var(--dark-bg-secondary)] focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
               isError ? "border-[var(--red)]" : "border-[var(--primary-pink)]"
             }`
           )}
