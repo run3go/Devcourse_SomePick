@@ -1,3 +1,4 @@
+import { formatDate } from "date-fns";
 import { useState } from "react";
 import { deleteSchedule } from "../../apis/calendar";
 import { useCalendarStore } from "../../stores/calendarStore";
@@ -11,12 +12,14 @@ export default function ScheduleItem({
   schedule: Schedule;
   scrollToInput: () => void;
 }) {
-  const { setTitle, setMemo, setTargetDate, removeSchedule } =
+  const { setTitle, setMemo, setId, setTargetDate, removeSchedule } =
     useCalendarStore();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleUpdateschedule = async () => {
-    setTargetDate(schedule.date);
+    const formattedDate = formatDate(new Date(schedule.date), "yyyy-M-dd");
+    setId(schedule.id);
+    setTargetDate(formattedDate);
     setTitle(schedule.title);
     setMemo(schedule.memo || "");
     scrollToInput();
@@ -33,7 +36,7 @@ export default function ScheduleItem({
             <Icon width="16px" height="16px" left="-416px" top="-694px" />
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col pr-4">
           <span className="inline-block grow-1">{schedule.title}</span>
           {schedule.memo && (
             <span className="text-xs text-[var(--gray-50)] pl-3">
@@ -44,18 +47,11 @@ export default function ScheduleItem({
         <div
           onClick={(e) => {
             e.stopPropagation();
-            console.log("삭제 버튼 클릭");
             setIsAlertOpen(true);
           }}
           className="hidden group-hover:block absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer py-2 px-2"
         >
-          <Icon
-            width="12px"
-            height="13px"
-            left="-624px"
-            top="-729px"
-            className=""
-          />
+          <Icon width="12px" height="13px" left="-624px" top="-729px" />
         </div>
       </li>
       {isAlertOpen && (

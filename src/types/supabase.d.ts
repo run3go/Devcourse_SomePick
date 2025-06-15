@@ -422,7 +422,7 @@ export type Database = {
           created_at: string;
           fortune_telling: string | null;
           id: number;
-          image: string | null;
+          images: string[] | null;
           title: string;
         };
         Insert: {
@@ -432,7 +432,7 @@ export type Database = {
           created_at?: string;
           fortune_telling?: string | null;
           id?: number;
-          image?: string | null;
+          images?: string[] | null;
           title: string;
         };
         Update: {
@@ -442,7 +442,7 @@ export type Database = {
           created_at?: string;
           fortune_telling?: string | null;
           id?: number;
-          image?: string | null;
+          images?: string[] | null;
           title?: string;
         };
         Relationships: [

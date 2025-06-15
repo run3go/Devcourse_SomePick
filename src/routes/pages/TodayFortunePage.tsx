@@ -3,6 +3,7 @@ import FortuneCards from "../../components/fortune/FortuneCards";
 import FortuneInfo from "../../components/fortune/FortuneInfo";
 import { useAuthStore } from "../../stores/authstore";
 import { GoogleGenAI } from "@google/genai";
+import ShareButton from "../../components/fortune/ShareButton";
 
 interface FortuneData {
   userName?: string | null;
