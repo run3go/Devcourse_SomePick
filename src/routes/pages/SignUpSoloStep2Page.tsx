@@ -117,7 +117,7 @@ export default function SignUpSoloStep2Page() {
             </div>
 
             <SignupInput
-              label="한줄소개 (최대30자)"
+              label="한줄소개 (선택, 최대30자)"
               type="text"
               name="intro"
               placeholder="첫인상을 결정짓는 한 문장!"
