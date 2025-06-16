@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { createLike, deleteLike } from "../../apis/like";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
-// import PostImg from "../../assets/images/post_image.png";
+import { notifyLike } from "../../apis/notification";
 
 export default function PostContent({
   post,
   postId,
+  onCommentAdd,
 }: {
   post: Post;
   postId: number;
+  onCommentAdd: () => void;
 }) {
   const { session } = useAuthStore();
   const [heart, setHeart] = useState(false);
@@ -30,6 +32,7 @@ export default function PostContent({
   const handleHeart = async () => {
     if (!heart) {
       await createLike(postId);
+      await notifyLike(post.author.id, postId);
       setHeart(true);
       setLikesCount((prev) => prev + 1);
     } else {
@@ -41,13 +44,16 @@ export default function PostContent({
   return (
     <>
       <section>
-        <div className="rounded-2xl bg-white mb-[30px] p-[20px]">
+        <div className="rounded-2xl bg-white mb-[30px] p-[20px] dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border">
           <div className="">
-            <p className="whitespace-pre-line mb-[26px] text-[16px]">
+            <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-100)]">
               {post.contents}
             </p>
             {post.image && (
-              <img className="w-[178.67px] h-[268px] mb-12" src={post.image} />
+              <img
+                className="w-[178.67px] h-[268px] mb-12 object-cover object-center"
+                src={post.image}
+              />
             )}
           </div>
           <div className="flex justify-between">
@@ -60,12 +66,21 @@ export default function PostContent({
                 className="cursor-pointer"
                 onClick={handleHeart}
               />
-              <span className="ml-1 text-[14px]">{likesCount}</span>
+              <span className="ml-1 text-[14px] dark:text-[var(--dark-gray-100)]">
+                {likesCount}
+              </span>
             </div>
-            <span className="text-[14px]">{post.comments.length}개의 댓글</span>
+            <span className="text-[14px] dark:text-[var(--dark-gray-100)]">
+              {post.comments.length}개의 댓글
+            </span>
           </div>
         </div>
-        <CommentForm isReply={false} postId={postId} />
+        <CommentForm
+          post={post}
+          isReply={false}
+          postId={postId}
+          onCommentAdd={onCommentAdd}
+        />
       </section>
     </>
   );

@@ -1,9 +1,18 @@
 import { v4 as uuid } from "uuid";
 import supabase from "../utils/supabase";
 
-export const storeImage = async (imageFile: File, type: string) => {
+export const storeImage = async (
+  imageFile: File,
+  type: string,
+  email?: string
+) => {
   try {
-    const newFileName = uuid();
+    let newFileName: string;
+    if (type === "main_image" || type === "sub_image") {
+      newFileName = email + "profileImage";
+    } else {
+      newFileName = uuid();
+    }
     const { data, error } = await supabase.storage
       .from("images")
       .upload(`${type}/${newFileName}`, imageFile);

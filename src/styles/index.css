@@ -94,7 +94,7 @@ body {
 }
 
 .days-wrap > div:nth-child(7n + 1) {
-  @apply text-[var(--primary-pink)];
+  @apply text-[var(--primary-pink)] dark:text-[#bd98b1];
 }
 
 .circle-bg::before {

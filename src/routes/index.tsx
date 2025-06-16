@@ -81,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/message",
-        loader: requireAuth,
+        loader: getUserMessage,
         Component: MessageLayoutPage,
         children: [
           {

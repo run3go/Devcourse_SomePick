@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
@@ -98,34 +99,40 @@ export default function CoupleProfile({
 
   return (
     <div className="w-full bg-[#FFFBFB] dark:bg-[var(--dark-bg-secondary)] p-9 pb-[60px]">
-      {isFollowerModalOpen && (
-        <>
-          <div
-            onClick={() => setIsFollowerModalOpen(false)}
-            className="fixed inset-0 bg-black opacity-30 z-100"
-          />
-          <FollowModal
-            users={followerList}
-            type="팔로워"
-            myFollowings={myFollowings}
-            setMyFollowings={setMyFollowings}
-          />
-        </>
-      )}
-      {isFollowingModalOpen && (
-        <>
-          <div
-            onClick={() => setIsFollowingModalOpen(false)}
-            className="fixed inset-0 bg-black opacity-30 z-100"
-          />
-          <FollowModal
-            users={followings}
-            type="팔로잉"
-            myFollowings={myFollowings}
-            setMyFollowings={setMyFollowings}
-          />
-        </>
-      )}
+      <AnimatePresence>
+        {isFollowerModalOpen && (
+          <>
+            <div
+              onClick={() => setIsFollowerModalOpen(false)}
+              className="fixed inset-0 bg-black opacity-30 z-100"
+            />
+            <FollowModal
+              users={followerList}
+              type="팔로워"
+              myFollowings={myFollowings}
+              setMyFollowings={setMyFollowings}
+              setModalOpen={setIsFollowerModalOpen}
+            />
+          </>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {isFollowingModalOpen && (
+          <>
+            <div
+              onClick={() => setIsFollowingModalOpen(false)}
+              className="fixed inset-0 bg-black opacity-30 z-100"
+            />
+            <FollowModal
+              users={followings}
+              type="팔로잉"
+              myFollowings={myFollowings}
+              setMyFollowings={setMyFollowings}
+              setModalOpen={setIsFollowingModalOpen}
+            />
+          </>
+        )}
+      </AnimatePresence>
       <div className="w-full text-center">
         <h2 className="font-bold text-2xl dark:text-white">
           {isMyProfile ? (

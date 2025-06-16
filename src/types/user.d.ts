@@ -86,7 +86,7 @@ type UserData = {
   nickname: string | null;
 };
 
-type Matching = {
+type MatchingUser = {
   created_at: string;
   id: number;
   is_matched: boolean;

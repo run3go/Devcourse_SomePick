@@ -3,12 +3,9 @@ import { useNavigate } from "react-router";
 import { followUser, unfollowUser } from "../../apis/follow"; // 경로를 실제 API 파일 위치로 조정하세요
 import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
+import { notifyFollow } from "../../apis/notification";
 
-export default function MiniProfilecard({
-  user,
-  onClose,
-  onFollowToggle,
-}: MiniProfilecardProps) {
+export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniProfilecardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { session } = useAuthStore();
@@ -25,10 +22,7 @@ export default function MiniProfilecard({
   // 외부 클릭 감지
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
         onClose();
       }
     }
@@ -49,6 +43,7 @@ export default function MiniProfilecard({
         onFollowToggle?.(user.id, false);
       } else {
         await followUser(user.id);
+        await notifyFollow(user.id);
         setIsFollowing(true);
         onFollowToggle?.(user.id, true);
       }
@@ -62,7 +57,7 @@ export default function MiniProfilecard({
   return (
     <div
       ref={wrapperRef}
-      className="w-[180px] h-[152px] border-2 border-[#FFC7ED] rounded-[20px] p-4 flex flex-col items-center justify-between bg-white shadow-lg"
+      className="w-[180px] h-[152px] border-2 border-[#FFC7ED] rounded-[20px] p-4 flex flex-col items-center justify-between bg-white shadow-lg dark:bg-[#4B4B4B]"
     >
       {/* 프로필 이미지 */}
       <img
@@ -72,7 +67,7 @@ export default function MiniProfilecard({
       />
 
       {/* 이름 */}
-      <span className="font-medium text-gray-800">{user.nickname}</span>
+      <span className="font-medium text-gray-800 dark:text-white">{user.nickname}</span>
 
       {/* 버튼 그룹 */}
       <div className="flex gap-3">
