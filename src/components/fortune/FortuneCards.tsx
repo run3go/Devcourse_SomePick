@@ -21,9 +21,10 @@ interface FortuneData {
 
 interface Props {
   fortuneData: FortuneData | null;
+  onModal?: boolean;
 }
 
-export default function FortuneCards({ fortuneData }: Props) {
+export default function FortuneCards({ fortuneData, onModal = true }: Props) {
   const [flipped, setFlipped] = useState<boolean[]>([false, false, false]);
 
   const frontCards = [firstCard, secondCard, lastCard];
@@ -111,7 +112,7 @@ export default function FortuneCards({ fortuneData }: Props) {
       </div>
 
       <AnimatePresence>
-        {showModal && selectedCard !== null && (
+        {onModal && showModal && selectedCard !== null && (
           <FortuneModal
             isOpen={showModal}
             onClose={closeModal}

@@ -14,7 +14,7 @@ import logoImage from "../../assets/images/headerlogo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
