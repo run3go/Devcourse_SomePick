@@ -31,15 +31,17 @@ export default function PostContent({
 
   // 사용자가 하트 누르면 옆에 숫자 올라감(내려감)
   const handleHeart = async () => {
-    if (!heart) {
-      await createLike(postId);
-      await notifyLike(post.author.id, postId);
-      setHeart(true);
-      setLikesCount((prev) => prev + 1);
-    } else {
-      await deleteLike(postId);
-      setHeart(false);
-      setLikesCount((prev) => prev - 1);
+    if (session) {
+      if (!heart) {
+        await createLike(postId);
+        await notifyLike(post.author.id, postId);
+        setHeart(true);
+        setLikesCount((prev) => prev + 1);
+      } else {
+        await deleteLike(postId);
+        setHeart(false);
+        setLikesCount((prev) => prev - 1);
+      }
     }
   };
   return (
