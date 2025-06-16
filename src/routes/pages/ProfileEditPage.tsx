@@ -1,6 +1,5 @@
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { deleteMatching } from "../../apis/matching";
 import { deleteChatRoom } from "../../apis/message";
 import { checkCouple, updateProfile } from "../../apis/user";
@@ -9,6 +8,7 @@ import CoupleEdit from "../../components/profile/CoupleEdit";
 import SoloEdit from "../../components/profile/SoloEdit";
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { handleError } from "../../utils/handleError";
+import { showWarnToast } from "../../components/common/ShowToast";
 
 export default function ProfileEditPage() {
   const { state: profile }: { state: ProfileData } = useLocation();
@@ -55,7 +55,7 @@ export default function ProfileEditPage() {
       "code" in error &&
       error.code === "23505"
     ) {
-      toast.warn("중복된 닉네임입니다");
+      showWarnToast("중복된 닉네임입니다");
       return;
     }
     if (status === "couple") {
