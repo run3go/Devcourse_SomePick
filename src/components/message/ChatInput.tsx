@@ -17,7 +17,7 @@ export default function ChatInput({
   const handleSend = async () => {
     if (!message.trim() || !chatRoomId || !receiverId) return;
     const newMessage = await sendMessage(chatRoomId, message, receiverId);
-    await notifyMessage(receiverId, chatRoomId);
+    await notifyMessage(receiverId);
     setMessage("");
     if (newMessage && onSend) {
       onSend(newMessage);
