@@ -37,15 +37,15 @@ export default function ChatRequest({
 
   return (
     <>
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="w-full h-full mx-5 box-shadow-custom rounded-2xl flex items-center justify-center bg-[var(--primary-pink)]/29">
-          <div className="w-[661px] h-[700px] border-[3px] rounded-2xl border-[var(--primary-pink)] bg-white px-[62px] py-9">
+      <div className="w-full h-full flex items-center justify-center dark:bg-[var(--dark-bg-secondary)]">
+        <div className="w-full h-full mx-5 box-shadow-custom rounded-2xl flex items-center justify-center bg-[var(--primary-pink)]/29 dark:bg-[var(--dark-bg-tertiary)] dark:text-[var(--dark-gray-100)]">
+          <div className="w-[661px] h-[700px] border-[3px] rounded-2xl border-[var(--primary-pink)] bg-white px-[62px] py-9 dark:bg-[var(--dark-bg-primary)]">
             <div className="flex flex-col items-center gap-2.5">
               <Icon width="52px" height="45px" left="-155px" top="-1054px" />
               <div className="flex flex-col items-center font-semibold gap-3">
                 <span>설렘도착</span>
                 <span>
-                  <span className="text-[var(--primary-pink-point)]">
+                  <span className="text-[var(--primary-pink-point)] dark:text-[var(--dark-gray-100)]">
                     {chatUserProfile.nickname}
                   </span>
                   님이 하트를 보냈어요!
@@ -69,15 +69,15 @@ export default function ChatRequest({
             />
             <div className="flex flex-col items-center gap-6">
               <span>{chatUserProfile.nickname}님과 연결하시겠습니까?</span>
-              <div className="flex gap-14">
+              <div className="flex gap-14 ">
                 <Button
-                  className="w-[157px] h-[47px] text-[14px]"
+                  className="w-[157px] h-[47px] text-[14px] dark:text-[var(--dark-black)]"
                   onClick={openAcceptAlert}
                 >
                   연결할래요
                 </Button>
                 <Button
-                  className="w-[157px] h-[47px] text-[14px] bg-[var(--gray-300)] hover:bg-[var(--gray-500)]/70"
+                  className="w-[157px] h-[47px] text-[14px] bg-[var(--gray-300)] hover:bg-[var(--gray-500)]/70 dark:text-[var(--dark-black)] dark:bg-[var(--gray-300)] dark:hover:bg-[var(--gray-500)]/70"
                   onClick={openRejectAlert}
                 >
                   다음에요

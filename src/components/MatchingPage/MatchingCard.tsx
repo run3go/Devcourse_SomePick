@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useAuthStore } from "../../stores/authStore";
-import type { Database } from "../../types/supabase";
+import React, { useState } from "react";
 import MatchingCardInfo from "./MatchingCardInfo";
+import type { Database } from "../../types/supabase";
+import { useAuthStore } from "../../stores/authStore";
+
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardProps {
@@ -37,14 +38,10 @@ export default function MatchingCard({
     .map((t: string) => t.trim())
     .filter(Boolean);
 
-  const matched = idealArray.filter((type: string) =>
-    profile.keywords!.includes(type)
-  );
+  const matched = idealArray.filter((type: string) => profile.keywords!.includes(type));
 
   const matchPercent =
-    idealArray.length > 0
-      ? Math.round((matched.length / idealArray.length) * 100)
-      : 0;
+    idealArray.length > 0 ? Math.round((matched.length / idealArray.length) * 100) : 0;
 
   const outerClasses = [
     width,
@@ -77,17 +74,14 @@ export default function MatchingCard({
   };
 
   return (
-    <div
-      style={{ perspective: "1000px" }}
-      className={outerClasses}
-      onClick={handleClick}
-    >
+    <div style={{ perspective: "1000px" }} className={outerClasses} onClick={handleClick}>
       <div className={innerClasses} style={{ transformStyle: "preserve-3d" }}>
         {/* 앞면 */}
         <div
           className={`
             absolute inset-0 
             rounded-[20px] bg-[#F6F6F6] shadow-md flex flex-col p-6
+           dark:bg-[#4B4B4B] dark:text-white
             ${blurClass}
           `}
           style={{ backfaceVisibility: "hidden" }}
@@ -96,9 +90,7 @@ export default function MatchingCard({
             {profile.nickname}님은 이상형과 {matchPercent}% 일치해요!
           </h2>
           <div className="flex-grow flex items-center justify-center">
-            <div
-              className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}
-            >
+            <div className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}>
               <img
                 src={profile.main_image!}
                 alt="매칭 이미지"

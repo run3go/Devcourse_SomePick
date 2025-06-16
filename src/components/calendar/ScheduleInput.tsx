@@ -64,7 +64,7 @@ export default function ScheduleInput({
         ref={scrollRef}
         className={twMerge(
           "flex flex-col gap-[27px] h-[453px] mt-[80px] px-[77px] py-[35px] ",
-          "border border-[var(--primary-pink)] mb-[150px]"
+          "border border-[var(--primary-pink)] mb-[150px] dark:bg-[var(--dark-bg-secondary)]"
         )}
       >
         <h2 className="text-[26px] text-[var(--primary-pink-point)]">
@@ -76,7 +76,9 @@ export default function ScheduleInput({
           placeholder="제목"
           className={twMerge(
             "bg-white border-b border-[var(--primary-pink)] py-[23px] px-[34px] focus:outline-0",
-            "text-xl text-[var(--gray-50)]"
+            "text-xl text-[var(--gray-50)] dark:bg-[var(--dark-bg-secondary)]",
+            "dark:placeholder:text-[var(--dark-gray-500)] dark:text-[var(--gray-200)]",
+            "dark:border-0"
           )}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -87,7 +89,8 @@ export default function ScheduleInput({
           placeholder="메모"
           className={twMerge(
             "bg-white h-[233px] py-[23px] px-[34px] focus:outline-0",
-            "text-xl text-[var(--gray-50)] resize-none"
+            "text-xl text-[var(--gray-50)] resize-none dark:bg-[var(--dark-bg-secondary)]",
+            "dark:placeholder:text-[var(--dark-gray-500)] dark:text-[var(--gray-200)]"
           )}
           value={memo}
           onChange={(e) => setMemo(e.target.value)}

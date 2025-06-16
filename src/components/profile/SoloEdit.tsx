@@ -13,18 +13,20 @@ import SelectTags from "./SelectTags";
 
 export default function SoloEdit({
   handleFileChange,
+  changeStatus,
 }: {
   handleFileChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => void;
+  changeStatus: () => void;
 }) {
   const { state: profile }: { state: ProfileData } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
 
-  const { watch, register, setValue } = useFormContext();
+  const { watch, register } = useFormContext();
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
   const watchedSubImage = watch("subImageUrl", profile.sub_image);
   const watchedNickname = watch("nickname", profile.nickname);
@@ -84,7 +86,7 @@ export default function SoloEdit({
           isOk="네"
           isNotOk="아니요"
           onClick={() => {
-            setValue("status", "couple");
+            changeStatus();
             setIsModalOpen(false);
           }}
           onCancel={() => setIsModalOpen(false)}
@@ -116,6 +118,7 @@ export default function SoloEdit({
                   type="text"
                   className="user-info-input"
                   autoComplete="off"
+                  maxLength={item === "nickname" ? 5 : 3}
                   {...register(item as "nickname" | "age" | "height", {
                     onChange: () => {
                       if (item === "nickname") {
@@ -124,26 +127,28 @@ export default function SoloEdit({
                     },
                   })}
                 />
-                {isTouched && item === "nickname" && (
-                  <div className="absolute left-1/4 top-1/2 -translate-y-1/2">
-                    {isDuplicate === true && (
-                      <Icon
-                        width="18px"
-                        height="18px"
-                        left="-888px"
-                        top="-759px"
-                      />
-                    )}
-                    {isDuplicate === false && (
-                      <Icon
-                        width="16px"
-                        height="12px"
-                        left="-929px"
-                        top="-762px"
-                      />
-                    )}
-                  </div>
-                )}
+                {isTouched &&
+                  item === "nickname" &&
+                  watchedNickname !== profile.nickname && (
+                    <div className="absolute left-1/4 top-1/2 -translate-y-1/2">
+                      {isDuplicate === true && (
+                        <Icon
+                          width="18px"
+                          height="18px"
+                          left="-888px"
+                          top="-759px"
+                        />
+                      )}
+                      {isDuplicate === false && (
+                        <Icon
+                          width="16px"
+                          height="12px"
+                          left="-929px"
+                          top="-762px"
+                        />
+                      )}
+                    </div>
+                  )}
               </li>
             ))}
             {/* 직업, 지역, mbti */}

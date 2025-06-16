@@ -65,7 +65,7 @@ export default function ProfilePage() {
               </span>
               님의 정보
             </h3>
-            <div className="dark:text-[var(--dark-white)] flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px]">
+            <div className="dark:text-[var(--dark-white)] flex gap-[76px] p-10 border-3 border-[var(--gray-200)] rounded-[20px] select-none">
               <ul className="flex flex-col justify-around">
                 {info.map((item, index) => (
                   <li key={index} className="flex items-center">

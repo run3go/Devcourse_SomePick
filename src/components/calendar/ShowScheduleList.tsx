@@ -1,4 +1,5 @@
 import { formatDate, isSameDay } from "date-fns";
+import { twMerge } from "tailwind-merge";
 import { useCalendarStore } from "../../stores/calendarStore";
 import { compareDate } from "../../utils/date";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -37,11 +38,21 @@ export default function ShowScheduleList({
 
   const today = formatDate(new Date(), "yyyy-M-dd");
   return (
-    <div className="flex flex-col px-4 py-7 h-[565px] border border-[var(--primary-pink)]">
-      <h2 className="text-center font-semibold text-xl text-[var(--primary-pink-point)] border-b pb-[10px] mb-[18px]">
+    <div
+      className={twMerge(
+        "flex flex-col px-4 py-7 h-[565px] border border-[var(--primary-pink)]",
+        "dark:bg-[var(--dark-bg-secondary)]"
+      )}
+    >
+      <h2 className="text-center font-semibold text-xl text-[var(--primary-pink-point)] border-b border-[var(--primary-pink)] pb-[10px] mb-[18px]">
         {targetDate === today ? "다음 일정" : "선택 일정"}
       </h2>
-      <h3 className="text-xl font-bold border-l-8 border-[var(--primary-pink)] pl-5">
+      <h3
+        className={twMerge(
+          "text-xl font-bold border-l-8 border-[var(--primary-pink)] pl-5",
+          "dark:text-[var(--dark-gray-200)]"
+        )}
+      >
         {targetDate === today ? (
           upcomingDate && <span>{formatDate(upcomingDate, "M월 dd일")}</span>
         ) : (
