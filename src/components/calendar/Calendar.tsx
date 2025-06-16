@@ -53,7 +53,7 @@ export default function Calendar({
             <span className="text-xl mr-[14px] text-[var(--primary-pink-point)]">
               {year}
             </span>
-            <span className="text-[40px]">
+            <span className="text-[40px] dark:text-[var(--dark-gray-200)]">
               {month + 1 < 10 ? "0" + (month + 1) : month + 1}
             </span>
           </div>
@@ -70,7 +70,7 @@ export default function Calendar({
           <motion.div>
             <div className="w-full text-[30px]">
               <div className="w-full">
-                <div className="flex h-[50px] text-xl">
+                <div className="flex h-[50px] text-xl dark:text-[var(--dark-gray-200)]">
                   {weeks.map((week, index) => (
                     <div
                       key={week}

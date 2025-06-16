@@ -1,5 +1,6 @@
 import { formatDate } from "date-fns";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { deleteSchedule } from "../../apis/calendar";
 import { useCalendarStore } from "../../stores/calendarStore";
 import Alert from "../common/Alert";
@@ -29,7 +30,10 @@ export default function ScheduleItem({
     <>
       <li
         onClick={handleUpdateschedule}
-        className="hover:text-black relative px-3 py-2 flex group hover:bg-[var(--primary-pink)] rounded-[10px] cursor-pointer"
+        className={twMerge(
+          "hover:text-black relative px-3 py-2 flex group hover:bg-[var(--primary-pink)] rounded-[10px] cursor-pointer",
+          "dark:hover:bg-[var(--primary-pink-tone)]"
+        )}
       >
         <div className="flex items-center">
           <div className="mr-5 group-hover:animate-bounce">
@@ -37,9 +41,11 @@ export default function ScheduleItem({
           </div>
         </div>
         <div className="flex flex-col pr-4">
-          <span className="inline-block grow-1">{schedule.title}</span>
+          <span className="inline-block grow-1 dark:text-[var(--dark-gray-200)] text-black">
+            {schedule.title}
+          </span>
           {schedule.memo && (
-            <span className="text-xs text-[var(--gray-50)] pl-3">
+            <span className="text-xs text-[var(--gray-50)] pl-3 dark:text-[var(--dark-gray-500)] ">
               {schedule.memo}
             </span>
           )}
