@@ -6,12 +6,12 @@ import { deleteComment } from "../../apis/comment";
 
 type MoreMenuProps = {
   id: number;
-  isParent: boolean;
+  isParent?: boolean;
   type: "post" | "comment";
   closeMenu: () => void;
   onClick: () => void;
-  onCommentAdd: () => void;
-  setEditCommentId: (id: number) => void;
+  onCommentAdd?: () => void;
+  setEditCommentId?: (id: number) => void;
 };
 
 export default function MoreMenu({
@@ -31,12 +31,19 @@ export default function MoreMenu({
       await deletePost(id);
       toast.success("게시글이 삭제되었습니다.");
       navigate(-1);
-    } else if (type === "comment") {
+    } else if (type === "comment" && isParent) {
       await deleteComment(id, isParent);
       toast.success("댓글이 삭제되었습니다.");
       onCommentAdd?.();
     }
     closeMenu();
+  };
+
+  const handleEdit = async () => {
+    if (type === "post") {
+      navigate(`/post/create/${id}`);
+      closeMenu();
+    }
   };
   return (
     <>
@@ -48,8 +55,12 @@ export default function MoreMenu({
           <button
             className="text-[10px] text-[var(--gray-700)] cursor-pointer dark:text-[var(--dark-gray-100)]"
             onClick={() => {
-              setEditCommentId(id);
-              closeMenu();
+              if (type === "post") {
+                handleEdit();
+              } else {
+                setEditCommentId?.(id);
+                closeMenu();
+              }
             }}
           >
             수정하기
