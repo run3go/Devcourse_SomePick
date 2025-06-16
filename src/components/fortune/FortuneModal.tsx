@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import html2canvas from "html2canvas";
+import { useRef } from "react";
 // import { saveAs } from "file-saver";
-import ShareButton from "./ShareButton";
 import { useNavigate } from "react-router";
 import { useUploadImageStore } from "../../stores/useUploadImageStore";
+import ShareButton from "./ShareButton";
 
 interface FortuneData {
   userName?: string | null;
@@ -56,7 +56,7 @@ export default function FortuneModal({
           const file = new File([blob], "fortune.png", { type: "image/png" });
 
           setImage([file]);
-          navigate(`/post/create`);
+          navigate(`/post/create/`, { state: "free" });
         }
       });
     } catch (e) {
