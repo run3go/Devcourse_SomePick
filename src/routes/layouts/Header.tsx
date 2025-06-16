@@ -31,7 +31,6 @@ export default function Header() {
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
-
   const couple = session?.user.user_metadata.status;
 
   // 초기 알림 데이터
@@ -42,6 +41,7 @@ export default function Header() {
       try {
         const data = await fetchNotifications();
         if (data) {
+          console.log(session);
           setNotifications(data);
           setHasUnreadNotifications(data.length > 0);
         }
@@ -75,6 +75,7 @@ export default function Header() {
 
   // 헤더에서는 상태 업데이트
   const addNotification = (newNotification: Notification) => {
+    if (newNotification.sender_id === session?.user.id) return;
     setNotifications((prev) => [newNotification, ...prev]);
     setHasUnreadNotifications(true);
   };
