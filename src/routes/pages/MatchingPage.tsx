@@ -130,7 +130,7 @@ export default function MatchingPage() {
         <img src={MatchingImage} alt="소개팅소개이미지" />
 
         {/* 제목 */}
-        <div className="text-[32px] font-bold">
+        <div className="text-[32px] font-bold dark:text-white">
           <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅 상대를 찾았어요!
         </div>
 
@@ -219,8 +219,10 @@ export default function MatchingPage() {
         )}
 
         {/* 하단 안내 텍스트 */}
-        <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px] text-black">
-          <span className="text-[#969696] text-[24px]">추천 상대가 마음에 안드신다면,</span>
+        <h2 className="text-[32px] font-bold text-center flex flex-col my-[100px] text-black dark:text-[#FFC7ED]">
+          <span className="text-[#969696] text-[24px] dark:text-white">
+            추천 상대가 마음에 안드신다면,
+          </span>
           다른 소개팅 상대들도 만나보세요!
         </h2>
 
