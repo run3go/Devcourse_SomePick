@@ -1,14 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FortuneCards from "../../components/fortune/FortuneCards";
 import FortuneInfo from "../../components/fortune/FortuneInfo";
-import ShareButton from "../../components/fortune/ShareButton";
 import { useAuthStore } from "../../stores/authstore";
 import { GoogleGenAI } from "@google/genai";
+import ShareButton from "../../components/fortune/ShareButton";
+
+interface FortuneData {
+  userName?: string | null;
+  status: string | null;
+  loveTitle: string | null;
+  loveDescription: string | null;
+  loveAdvice: string;
+}
 
 export default function TodayFortunePage() {
   const user = useAuthStore((state) => state.session?.user.user_metadata);
   const userName = user?.nickname;
   const isCouple = user?.status;
+
+  const [fortuneData, setFortuneData] = useState<FortuneData | null>(null);
+  // const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function main() {
@@ -22,8 +33,6 @@ export default function TodayFortunePage() {
   
         다음 JSON 형식으로 반환해주세요:
         {
-          "date": "${new Date().toISOString().split("T")[0]}",
-          "userName": "${userName}",
           "status": "${isCouple ? "couple" : "solo"}",
           "loveTitle": "운세 제목",
           "loveDescription": "오늘의 연애운 상세 설명",
@@ -37,6 +46,7 @@ export default function TodayFortunePage() {
         const responseText = response.text;
 
         if (!responseText) {
+          // setIsLoading(false)
           return null;
         }
 
@@ -45,9 +55,12 @@ export default function TodayFortunePage() {
           .replace("```json", "")
           .replace("```", "")
           .trim();
-        return JSON.parse(jsonResponseText);
+        const finalData = JSON.parse(jsonResponseText);
+        setFortuneData(finalData);
+        // setIsLoading(false)
       } catch (error) {
         console.error("API 호출 에러:", error);
+        // setIsLoading(false)
       }
     }
 
@@ -57,8 +70,7 @@ export default function TodayFortunePage() {
   return (
     <>
       <FortuneInfo />
-      <FortuneCards />
-      <ShareButton />
+      <FortuneCards fortuneData={fortuneData} />
     </>
   );
 }

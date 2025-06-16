@@ -2,6 +2,7 @@
 import { personalityTags, interestTags } from "./data/tagData";
 import Icon from "../common/Icon";
 import { useSignUpStore } from "../../stores/signupStore";
+import { toast } from "react-toastify";
 
 export default function TagGroup({
   title,
@@ -28,7 +29,8 @@ export default function TagGroup({
     const isSelected = selectedTags.includes(tag);
 
     if (!isSelected && selectedTags.length >= 8) {
-      alert("최대 8개까지 선택할 수 있어요.");
+      // alert("최대 8개까지 선택할 수 있어요.");
+      toast.warn("최대 8개까지 선택할 수 있어요.");
       return;
     }
 
@@ -89,7 +91,7 @@ export default function TagGroup({
               onClick={() => toggleTag(tag)}
               className={`inline-block px-3 h-7 border rounded-[50px] text-center leading-7 hover:border-[var(--primary-pink-point)] cursor-pointer ${
                 selectedTags.includes(tag)
-                  ? "bg-[var(--primary-pink)] border-[var(--primary-pink)]"
+                  ? "bg-[var(--primary-pink)] border-[var(--primary-pink)] dark:text-[var(--black)]"
                   : "border-[var(--primary-pink)]"
               }`}
             >

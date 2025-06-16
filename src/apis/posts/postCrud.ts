@@ -7,7 +7,7 @@ export const createPost = async (
   channel_name: "free" | "dating",
   title: string,
   contents: string,
-  imageFile?: File | null,
+  imageFiles?: File[] | null,
   fortune_telling?: string
 ) => {
   try {
@@ -15,14 +15,28 @@ export const createPost = async (
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
-    const image = imageFile ? await storeImage(imageFile, "post") : null;
+    const imageUrls: string[] = [];
+    // imageFiles?.forEach(async (file) => {
+    //   const image = await storeImage(file, "post");
+    //   if (image) {
+    //     imageUrls.push(image);
+    //   }
+    // });
+    if (imageFiles) {
+      for (let i = 0; i < imageFiles.length; i++) {
+        const image = await storeImage(imageFiles[i], "post");
+        if (image) {
+          imageUrls.push(image);
+        }
+      }
+    }
     const { error } = await supabase.from("posts").insert([
       {
         channel_name,
         author_id: session.user.id,
         title,
         contents,
-        image: image,
+        images: imageUrls ? imageUrls : null,
         fortune_telling,
       },
     ]);
@@ -45,7 +59,7 @@ export const fetchPostByPostId = async (postId: number) => {
         contents,
         created_at,
         fortune_telling,
-        image,
+        images,
         channel:channels!channel_name(
           name,
           description
@@ -87,7 +101,6 @@ export const fetchPostByPostId = async (postId: number) => {
       console.log("게시물 가져오기 실패:", error.message);
       return;
     }
-    console.log(post);
     return post;
   } catch (e) {
     console.error(e);
@@ -98,17 +111,26 @@ export const updatePost = async (
   postId: number,
   title: string,
   contents: string,
-  imageFile?: File | null,
+  prevImages?: string[],
+  imageFiles?: File[] | null,
   fortune_telling?: string
 ) => {
   try {
-    const image = imageFile ? await storeImage(imageFile, "post") : null;
+    const imageUrls: string[] = [];
+    if (imageFiles) {
+      for (let i = 0; i < imageFiles.length; i++) {
+        const image = await storeImage(imageFiles[i], "post");
+        if (image) {
+          imageUrls.push(image);
+        }
+      }
+    }
     const { error } = await supabase
       .from("posts")
       .update({
         title,
         contents,
-        image,
+        images: prevImages ? [...prevImages, ...imageUrls] : [...imageUrls],
         fortune_telling,
       })
       .eq("id", postId);
