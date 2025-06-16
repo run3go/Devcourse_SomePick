@@ -6,9 +6,4 @@ type Message = {
   message: string;
   seen: boolean;
   created_at: string;
-  user: {
-    id: string;
-    nickname: string;
-    main_image: string;
-  };
 };
