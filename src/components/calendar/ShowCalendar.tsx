@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import Icon from "../common/Icon";
 export default function ShowCalendar() {
   const days = Array.from({ length: 30 }, (_, index) => index + 1);
-  const today = 4;
+  const today = 19;
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[650px] flex justify-between items-center mt-[40px] mb-[40px]">
@@ -66,19 +66,23 @@ export default function ShowCalendar() {
               >
                 <span
                   className={twMerge(
-                    "day-text relative py-0.5 cursor-pointer leading-[1] inline-block gray-circle-bg",
+                    "day-text relative p-1 leading-[1] inline-block",
                     today === day && "circle-bg"
                   )}
                 >
                   {day}
                 </span>
-                {day === 10 && (
-                  <ul className="flex flex-col gap-[3px] text-[15px] pt-[2px]">
-                    <li className="overflow-hidden text-ellipsis text-nowrap pl-[13px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
-                      은우랑 데이트
+                {day === 23 && (
+                  <ul className="flex flex-col gap-[3px] text-[15px] ">
+                    <li className="text-ellipsis text-nowrap pl-[10px] bg-[var(--primary-pink-tone)] inline-block w-[70px] rounded-[5px] text-white">
+                      데이트
                     </li>
-                    <li className="overflow-hidden text-ellipsis text-nowrap bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
-                      부산 가기
+                  </ul>
+                )}
+                {day === 10 && (
+                  <ul className="flex flex-col gap-[3px] text-[15px] ">
+                    <li className="text-ellipsis text-nowrap pl-[10px] bg-[var(--primary-pink-tone)] inline-block w-[70px] rounded-[5px] text-white">
+                      부산 여행
                     </li>
                   </ul>
                 )}

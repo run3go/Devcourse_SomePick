@@ -5,19 +5,18 @@ const SomepickLanding = ({
   subtitle,
   button,
   onClick,
-  backGround,
+  className,
 }: {
   title: string;
   subtitle: string;
   button: string;
   onClick: () => void;
-  backGround: string;
+  className: string;
 }) => {
   const isLogin = useAuthStore((state) => state.isLogin);
   return (
     <div
-      className="min-h-screen flex flex-col justify-center items-center overflow-hidden relative"
-      style={{ background: backGround }}
+      className={`min-h-screen flex flex-col justify-center items-center overflow-hidden relative ${className}`}
     >
       <div className="blob-container">
         <svg

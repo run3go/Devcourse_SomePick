@@ -25,7 +25,7 @@ export default function Service({
         subtitle="연애의 시작부터 끝까지"
         button="지금 시작하기"
         onClick={() => navigate("/auth/login")}
-        backGround="linear-gradient(to bottom right, #ffc7ed, #ffeef9)"
+        className="bg-gradient-to-br from-[var(--primary-pink)] to-[#ffa5df] dark:from-[#ff91da] dark:to-[#8d8d8d]"
       />
       <div {...fadeIn}>
         <div className="mt-[200px] flex-col flex items-center justify-center">

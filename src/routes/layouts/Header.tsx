@@ -10,7 +10,7 @@ import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
-import logoImage from "../../assets/images/headerlogo.png";
+import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
@@ -107,7 +107,7 @@ export default function Header() {
             src={logoImage}
             alt="로고 이미지"
             onClick={() => navigate("/")}
-            className="cursor-pointer"
+            className="cursor-pointer w-[15%]"
           />
           <div className="relative flex items-center gap-[65px] dark:text-[var(--dark-gray-700)]">
             <NavLink

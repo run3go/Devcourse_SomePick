@@ -1,5 +1,5 @@
 import whiteLogo from "../../assets/images/logo_white.png";
-import Icon from "../../components/common/Icon";
+import { IoLogoGithub } from "react-icons/io5";
 // footer
 export default function Footer() {
   return (
@@ -16,14 +16,8 @@ export default function Footer() {
               <p className="text-[18px] dark:text-[var(--dark-gray-700)] pt-[15px] pl-[12px]">
                 © 2025 somepick. All rights reserved.
               </p>
-              <div className="mr-[110px] mt-[25px]">
-                <Icon
-                  width="120px"
-                  height="120px"
-                  left="-41px"
-                  top="-435.9px"
-                  className="hover:cursor-pointer"
-                ></Icon>
+              <div className="mr-[110px] mt-[25px] mb-[110px]">
+                <IoLogoGithub size={60} className="cursor-pointer" />
               </div>
             </div>
           </div>
