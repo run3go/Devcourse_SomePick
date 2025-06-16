@@ -45,7 +45,7 @@ type Post = {
   author: Author;
   comments: Comments[];
   likes: Like[];
-  image?: string | null;
+  images?: string[] | null;
 };
 
 type MiniProfilecardProps = {

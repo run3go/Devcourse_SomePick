@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { signupUser } from "../../apis/auth";
 import { updateProfile } from "../../apis/user";
 import { storeImage } from "../../apis/util";
@@ -7,6 +6,7 @@ import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import TagGroup from "../../components/signup/TagGroup";
 import { useSignUpStore } from "../../stores/signupStore";
+import { showWarnToast } from "../../components/common/ShowToast";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function SignUpSoloStep3Page() {
       soloData.ideal_types.split(",").length < 4
     ) {
       // alert("각 항목에서 최소 4개 이상 선택해주세요.");
-      toast.warn("각 항목에서 최소 4개 이상 선택해주세요.");
+      showWarnToast("각 항목에서 최소 4개 이상 선택해주세요.");
       return;
     }
     // }
