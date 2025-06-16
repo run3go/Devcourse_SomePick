@@ -106,11 +106,15 @@ body {
 }
 
 .header-menu::before {
-  @apply content-[""] absolute bottom-[-3px] block w-0 h-[2px] bg-black transition-all duration-200;
+  @apply content-[""] absolute bottom-[-3px] block w-0 h-[2px] transition-all duration-200;
 }
 
 .header-menu:hover {
   @apply text-black;
+}
+
+.dark .header-menu:hover {
+  @apply text-white;
 }
 
 .header-menu:hover::before {
@@ -119,6 +123,10 @@ body {
 
 .header-menu__active::before {
   @apply w-full;
+}
+
+.dark .header-menu::before {
+  @apply bg-white;
 }
 
 .user-info {

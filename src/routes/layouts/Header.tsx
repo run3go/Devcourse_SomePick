@@ -1,8 +1,8 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
-import { FaUser } from "react-icons/fa";
-import { IoNotifications } from "react-icons/io5";
-import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa6";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
 import { TbMessageHeart } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
@@ -164,19 +164,6 @@ export default function Header() {
                   </button>
                 </div>
               )}
-
-              {/* {isAlertOpen && (
-                <Alert
-                  title="로그인이 필요해요!"
-                  isOk="로그인하러 가기"
-                  isNotOk="취소"
-                  onClick={() => {
-                    navigate("/auth/login");
-                    setIsAlertOpen(false);
-                  }}
-                  onCancel={() => setIsAlertOpen(false)}
-                ></Alert>
-              )} */}
               <button
                 onClick={() => {
                   navigate("/todayfortune");
@@ -201,9 +188,12 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoNotifications size={25} />
+                    <IoMdNotificationsOutline
+                      size={29}
+                      className="dark:text-[var(--dark-gray-700)] cursor-pointer"
+                    />
                     {hasUnreadNotifications && (
-                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[16px]">
                         ●
                       </span>
                     )}
@@ -220,7 +210,10 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaUser size={23} />
+                    <FaRegUser
+                      size={23}
+                      className="dark:text-[var(--dark-gray-700)] cursor-pointer"
+                    />
                     {isModalOpen && (
                       <div ref={outsideRef}>
                         <HeaderModal onClose={() => setIsModalOpen(false)} />
@@ -231,7 +224,10 @@ export default function Header() {
               ) : (
                 <>
                   <Link to={"/message"}>
-                    <TbMessageHeart size={25} />
+                    <TbMessageHeart
+                      size={25}
+                      className="dark:text-[var(--dark-gray-700)] cursor-pointer"
+                    />
                   </Link>
                   <div
                     className="relative cursor-pointer"
@@ -239,7 +235,10 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoNotifications size={25} />
+                    <IoMdNotificationsOutline
+                      size={26}
+                      className="dark:text-[var(--dark-gray-700)] cursor-pointer"
+                    />
                     {hasUnreadNotifications && (
                       <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
                         ●
@@ -258,7 +257,10 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaUser size={23} />
+                    <FaRegUser
+                      size={23}
+                      className="dark:text-[var(--dark-gray-700)] cursor-pointer"
+                    />
                     {isModalOpen && (
                       <div ref={outsideRef}>
                         <HeaderModal onClose={() => setIsModalOpen(false)} />
@@ -272,8 +274,9 @@ export default function Header() {
               <NavLink
                 className={({ isActive }) =>
                   twMerge(
-                    "relative header-menu inline-block whitespace-nowrap",
-                    isActive && "header-menu__active text-black"
+                    "relative header-menu inline-block whitespace-nowrap dark:text-[var(--dark-gray-700)]",
+                    isActive && "header-menu__active text-black",
+                    isDark && "dark-mode-class"
                   )
                 }
                 to={"/auth/login"}
@@ -285,11 +288,17 @@ export default function Header() {
               <button onClick={toggleDarkMode}>
                 {isDark ? (
                   <div className="cursor-pointer">
-                    <MdOutlineLightMode size={28} />
+                    <HiMiniSun
+                      size={28}
+                      className="dark:text-[var(--dark-gray-700)]"
+                    />
                   </div>
                 ) : (
                   <div className="cursor-pointer">
-                    <MdOutlineNightlight size={28} />
+                    <HiMiniMoon
+                      size={28}
+                      className="dark:text-[var(--dark-gray-700)]"
+                    />
                   </div>
                 )}
               </button>
