@@ -49,11 +49,16 @@ export default function PostContent({
             <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-100)]">
               {post.contents}
             </p>
-            {post.image && (
-              <img
-                className="w-[178.67px] h-[268px] mb-12 object-cover object-center"
-                src={post.image}
-              />
+            {post.images && post.images.length > 0 && (
+              <div className="flex gap-4 flex-wrap">
+                {post.images.map((url, index) => (
+                  <img
+                    key={index}
+                    className="w-[375px] h-[600px] mb-12 object-cover object-center"
+                    src={url}
+                  />
+                ))}
+              </div>
             )}
           </div>
           <div className="flex justify-between">
