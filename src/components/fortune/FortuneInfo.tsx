@@ -4,7 +4,7 @@ import { useAuthStore } from "../../stores/authstore";
 export default function FortuneInfo() {
   const user = useAuthStore((state) => state.session?.user.user_metadata);
   const userName = user?.nickname;
-  const isCouple = user?.status;
+  // const isCouple = user?.status;
 
   return (
     <>
