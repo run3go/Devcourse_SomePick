@@ -51,7 +51,7 @@ export default function PostImageSwiper({ post }: { post: Post }) {
               <div className="w-full h-[600px] relative mb-12">
                 <img
                   key={index}
-                  className="w-full h-full  object-cover object-center"
+                  className="w-full h-full  object-cover object-center rounded-2xl"
                   src={url}
                 />
               </div>
