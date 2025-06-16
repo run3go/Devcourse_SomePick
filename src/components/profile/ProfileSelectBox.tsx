@@ -1,12 +1,23 @@
 import { useController, useFormContext } from "react-hook-form";
+import { useLocation } from "react-router";
 import Select from "react-select";
 import { optionsGroup } from "../signup/data/optionsData";
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
 }
 export default function ProfileSelectBox({ type }: SelectBoxProps) {
+  const { state: profile }: { state: ProfileData } = useLocation();
   const { control } = useFormContext();
-  const { field } = useController({ name: type, control });
+  const { field } = useController({
+    name: type,
+    control,
+    defaultValue:
+      type === "job"
+        ? profile.job
+        : type === "location"
+        ? profile.location
+        : profile.mbti,
+  });
   const options = optionsGroup[type];
   return (
     <Select

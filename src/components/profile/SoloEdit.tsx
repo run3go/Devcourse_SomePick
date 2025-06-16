@@ -118,6 +118,7 @@ export default function SoloEdit({
                   type="text"
                   className="user-info-input"
                   autoComplete="off"
+                  maxLength={item === "nickname" ? 5 : 3}
                   {...register(item as "nickname" | "age" | "height", {
                     onChange: () => {
                       if (item === "nickname") {

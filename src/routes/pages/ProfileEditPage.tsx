@@ -100,6 +100,7 @@ export default function ProfileEditPage() {
   const { handleSubmit, setValue, reset } = methods;
 
   useEffect(() => {
+    console.log(profile);
     reset(
       isSolo
         ? {
@@ -111,7 +112,7 @@ export default function ProfileEditPage() {
             nickname: profile.nickname || "",
             age: profile.age?.toString(),
             description: profile.description || "",
-            job: profile.job || "",
+            job: profile.job || "학생",
             location: profile.location || "",
             height: profile.height?.toString() || "",
             mbti: profile.mbti || "",
