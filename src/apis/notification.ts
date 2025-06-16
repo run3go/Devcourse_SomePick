@@ -64,8 +64,7 @@ export const notifyHeart = async (receiver_id: string) => {
 //매칭 수락/거절 알림 보내기 ( 상대방 아이디, 매칭 아이디 )
 export const notifyMatching = async (
   receiver_id: string,
-  is_matched: boolean,
-  chat_room_id?: string
+  is_matched: boolean
 ) => {
   try {
     const {
@@ -76,7 +75,6 @@ export const notifyMatching = async (
       {
         sender_id: session.user.id,
         receiver_id,
-        chat_room_id,
         type: is_matched ? "approve" : "reject",
       },
     ]);

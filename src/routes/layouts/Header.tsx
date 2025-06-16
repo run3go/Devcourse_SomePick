@@ -239,6 +239,7 @@ export default function Header() {
                       size={26}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
+
                     {hasUnreadNotifications && (
                       <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
                         ●
