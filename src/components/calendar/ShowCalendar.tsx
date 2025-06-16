@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import Icon from "../common/Icon";
 export default function ShowCalendar() {
   const days = Array.from({ length: 30 }, (_, index) => index + 1);
-  const today = 19;
+  const today = [19, 24, 10];
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[650px] flex justify-between items-center mt-[40px] mb-[40px]">
@@ -62,30 +62,41 @@ export default function ShowCalendar() {
             {days.map((day) => (
               <div
                 key={day}
-                className="w-[14.28%] h-20 text-center dark:text-[var(--dark-gray-700)]"
+                className={twMerge(
+                  "group relative basis-1/7 text-[#bdbdbd] border-t-3 rounded-lg border-t-transparent h-20 ",
+                  "dark:text-[var(--gray-700)]",
+                  day === today[0] && "border-t-[var(--primary-pink-point)]",
+                  day === today[0] && "bg-[#ffebf0]"
+                )}
               >
-                <span
-                  className={twMerge(
-                    "day-text relative p-1 leading-[1] inline-block",
-                    today === day && "circle-bg"
-                  )}
-                >
-                  {day}
-                </span>
-                {day === 23 && (
-                  <ul className="flex flex-col gap-[3px] text-[15px] ">
-                    <li className="text-ellipsis text-nowrap pl-[10px] bg-[var(--primary-pink-tone)] inline-block w-[70px] rounded-[5px] text-white">
+                <div className="relative w-full h-[30px] text-center text-xl leading-[1]">
+                  <span
+                    className={twMerge(
+                      "inline-block",
+                      day === today[0] &&
+                        "text-[#E870A2] font-bold dark:text-[#E870A2]"
+                    )}
+                  >
+                    {day}
+                  </span>
+                </div>
+                <ul className="flex flex-col gap-[3px] text-[13px] px-2">
+                  {day === 19 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
                       데이트
                     </li>
-                  </ul>
-                )}
-                {day === 10 && (
-                  <ul className="flex flex-col gap-[3px] text-[15px] ">
-                    <li className="text-ellipsis text-nowrap pl-[10px] bg-[var(--primary-pink-tone)] inline-block w-[70px] rounded-[5px] text-white">
-                      부산 여행
+                  )}
+                  {day === 10 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
+                      1주년
                     </li>
-                  </ul>
-                )}
+                  )}
+                  {day === 24 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
+                      부산여행
+                    </li>
+                  )}
+                </ul>
               </div>
             ))}
           </div>
