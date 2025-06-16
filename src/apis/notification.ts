@@ -109,10 +109,7 @@ export const notifyFollow = async (receiver_id: string) => {
   }
 };
 //메시지 알림 보내기
-export const notifyMessage = async (
-  receiver_id: string,
-  chat_room_id: string
-) => {
+export const notifyMessage = async (receiver_id: string) => {
   try {
     const {
       data: { session },
@@ -122,7 +119,6 @@ export const notifyMessage = async (
       {
         sender_id: session.user.id,
         receiver_id,
-        chat_room_id,
         type: "message",
       },
     ]);

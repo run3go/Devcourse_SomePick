@@ -12,8 +12,10 @@ export default function ChatItem({
   return (
     <>
       <div
-        className={`flex gap-2.5 items-center p-1 mx-2 my-1 cursor-pointer rounded-[10px] hover:bg-[var(--primary-pink-50)] ${
-          isSelected ? "bg-[var(--primary-pink-50)]" : ""
+        className={`flex gap-2.5 items-center p-1 mx-2 my-1 cursor-pointer rounded-[10px] hover:bg-[var(--primary-pink-50)] dark:hover:text-[var(--dark-black)] ${
+          isSelected
+            ? "bg-[var(--primary-pink-50)] dark:text-[var(--dark-black)]"
+            : "dark:text-[var(--dark-gray-100)] "
         }`}
         onClick={onClick}
       >

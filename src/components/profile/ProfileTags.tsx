@@ -31,7 +31,7 @@ export default function ProfileTags({
   return (
     <li className="flex flex-col items-start gap-5">
       <span className="user-info w-50!">{title}</span>
-      <ul className="flex gap-3 flex-wrap select-none">
+      <ul className="flex gap-3 flex-wrap">
         {list.map((item) => (
           <li
             key={item}
