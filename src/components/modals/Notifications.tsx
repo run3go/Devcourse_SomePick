@@ -41,6 +41,11 @@ export default function Notifications({
             navigate(`/post/detail/${notification.post_id}`);
           }
           break;
+        case "childComment":
+          if (notification.post_id) {
+            navigate(`/post/detail/${notification.post_id}`);
+          }
+          break;
         case "heart":
           if (notification.sender_id) {
             navigate(`/message/${notification.sender_id}/request`);
@@ -96,6 +101,8 @@ export default function Notifications({
         return `${senderName}님이 회원님의 게시글에 좋아요를 눌렀어요.`;
       case "comment":
         return `${senderName}님이 회원님의 게시글에 댓글을 달았어요.`;
+      case "childComment":
+        return `${senderName}님이 회원님의 댓글에 대댓글을 달았어요.`;
       case "heart":
         return `누군가가 회원님에게 소개팅 하트를 보냈어요!`;
       case "follow":

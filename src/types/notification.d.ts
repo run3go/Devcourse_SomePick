@@ -1,12 +1,12 @@
-type NotificationData = {
-  id: number;
+export interface Notification {
   created_at: string;
+  id: number;
+  post_id: number | null;
+  receiver_id: string;
+  sender_id: string;
+  type: string | null;
   sender: {
     id: string;
     nickname: string | null;
   };
-  sender_id: string;
-  receiver_id: string;
-  post_id: number | null;
-  type: string | null;
-};
+}

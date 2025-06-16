@@ -250,6 +250,7 @@ export const subscribeNotification = async (
           | "approve"
           | "reject"
           | "schedule"
+          | "childComment"
           | null;
       };
     }) => {

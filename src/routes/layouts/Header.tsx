@@ -15,6 +15,7 @@ import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import { useAuthStore } from "../../stores/authstore";
+import type { Notification } from "../../types/notification";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -25,7 +26,7 @@ export default function Header() {
   // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
-  const [notifications, setNotifications] = useState<NotificationData[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -73,12 +74,12 @@ export default function Header() {
   }, [isLogin]);
 
   // 헤더에서는 상태 업데이트
-  const addNotification = (newNotification: NotificationData) => {
+  const addNotification = (newNotification: Notification) => {
     setNotifications((prev) => [newNotification, ...prev]);
     setHasUnreadNotifications(true);
   };
 
-  const updateNotifications = (updatedNotifications: NotificationData[]) => {
+  const updateNotifications = (updatedNotifications: Notification[]) => {
     setNotifications(updatedNotifications);
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };
