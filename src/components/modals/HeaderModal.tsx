@@ -47,7 +47,7 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
           onClick={handleLogout}
           className={twMerge(
             "basis-1/2 flex justify-center items-center border-b border-[var(--primary-pink)]",
-            "hover:text-black cursor-pointer dark:hover:text-[var(--dark-gray-100)] hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
+            "hover:text-black cursor-pointer rounded-b-[20px] dark:hover:text-[var(--dark-gray-100)] hover:shadow-[inset_0_0_3px_rgba(0,0,0,0.5)] hover:shadow-(color:--primary-pink-tone)"
           )}
         >
           로그아웃
