@@ -3,6 +3,7 @@ import Icon from "../common/Icon";
 import MoreMenu from "./MoreMenu";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { useNavigate } from "react-router";
 
 export default function PostHeader({
   post,
@@ -13,6 +14,7 @@ export default function PostHeader({
   postId: number;
   authId?: string;
 }) {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu((prev) => !prev);
   return (
@@ -50,7 +52,10 @@ export default function PostHeader({
           className="w-[30px] h-[30px] rounded-full object-center object-cover"
           src={post.author.main_image ?? ""}
         />
-        <span className="cursor-pointer dark:text-[var(--dark-gray-100)]">
+        <span
+          className="cursor-pointer dark:text-[var(--dark-gray-100)]"
+          onClick={() => navigate(`/profile/${post.author.id}`)}
+        >
           {post.author.nickname}
         </span>
       </div>
