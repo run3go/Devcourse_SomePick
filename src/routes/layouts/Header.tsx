@@ -114,7 +114,11 @@ export default function Header() {
               className={({ isActive }) =>
                 twMerge(
                   "relative header-menu",
-                  isActive && "header-menu__active text-black"
+                  isActive &&
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black"),
+                  isDark && "dark-mode-class__active"
                 )
               }
               to={"/post/dating"}
@@ -125,7 +129,11 @@ export default function Header() {
               className={({ isActive }) =>
                 twMerge(
                   "relative header-menu",
-                  isActive && "header-menu__active text-black"
+                  isActive &&
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black"),
+                  isDark && "dark-mode-class__active"
                 )
               }
               to={"/post/free"}
@@ -142,7 +150,9 @@ export default function Header() {
                     className={twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",
                       location.pathname === "/calendar" &&
-                        "header-menu__active text-black"
+                        (isDark
+                          ? "header-menu__active text-white"
+                          : "header-menu__active text-black")
                     )}
                   >
                     커플 캘린더
@@ -157,7 +167,9 @@ export default function Header() {
                     className={twMerge(
                       "relative header-menu cursor-pointer mr-[65px]",
                       location.pathname === "/couplecalendar" &&
-                        "header-menu__active text-black"
+                        (isDark
+                          ? "header-menu__active text-white"
+                          : "header-menu__active text-black")
                     )}
                   >
                     소개팅
@@ -171,7 +183,9 @@ export default function Header() {
                 className={twMerge(
                   "relative header-menu cursor-pointer",
                   location.pathname === "/todayfortune" &&
-                    "header-menu__active text-black"
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black")
                 )}
               >
                 오늘의 운세
@@ -277,7 +291,7 @@ export default function Header() {
                   twMerge(
                     "relative header-menu inline-block whitespace-nowrap dark:text-[var(--dark-gray-700)]",
                     isActive && "header-menu__active text-black",
-                    isDark && "dark-mode-class"
+                    isDark && "dark-mode-class text-white"
                   )
                 }
                 to={"/auth/login"}
