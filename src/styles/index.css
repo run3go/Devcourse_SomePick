@@ -90,19 +90,19 @@ body {
 }
 
 .days-wrap > div:nth-child(7n + 1) {
-  @apply text-[var(--primary-pink-point)];
+  @apply text-[var(--primary-pink)];
 }
 
 .circle-bg::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2  bg-[var(--primary-pink)] rounded-full z-[-1];
+  @apply content-[""] absolute w-[45px] h-[45px] -top-[30%] left-1/2 -translate-x-1/2  bg-[var(--primary-pink)] rounded-full z-[-1];
 }
 
 .gray-circle-bg:hover::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+  @apply content-[""] absolute w-[45px] h-[45px] -top-[30%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 }
 
 .gray-circle__active::before {
-  @apply content-[""] absolute w-[55px] h-[55px] -top-[50%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
+  @apply content-[""] absolute w-[45px] h-[45px] -top-[30%] left-1/2 -translate-x-1/2 bg-[#e3e3e3] rounded-full z-[-1];
 }
 
 .header-menu::before {

@@ -47,7 +47,7 @@ export default function ProfileImgUpload({ type }: { type: string }) {
     <>
       <label
         htmlFor={`profileImg-${type}`}
-        className="relative flex justify-center items-center w-40 h-48 bg-[var(--gray-300-59)] rounded-[18px] shadow-[0_2.21px_8.85px_rgba(0,0,0,0.25)] cursor-pointer hover:bg-[var(--gray-300)]"
+        className="relative flex justify-center items-center w-40 h-48 bg-[var(--gray-300-59)] dark:bg-[var(--dark-bg-tertiary)] rounded-[18px] shadow-[0_2.21px_8.85px_rgba(0,0,0,0.25)] cursor-pointer hover:bg-[var(--gray-300)] dark:hover:bg-[var(--dark-gray-500)]"
       >
         {isLoading && <LoadingSpinner />}
 
@@ -67,7 +67,22 @@ export default function ProfileImgUpload({ type }: { type: string }) {
               </div>
             </>
           ) : (
-            <Icon width="30px" height="30px" left="-647px" top="-755px" />
+            <>
+              <Icon
+                width="30px"
+                height="30px"
+                left="-647px"
+                top="-755px"
+                className="dark:hidden"
+              />
+              <Icon
+                width="30px"
+                height="30px"
+                left="-647px"
+                top="-818px"
+                className="hidden dark:block"
+              />
+            </>
           ))}
         <input
           id={`profileImg-${type}`}

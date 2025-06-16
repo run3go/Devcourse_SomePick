@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MatchingCardInfo from "./MatchingCardInfo";
 import type { Database } from "../../types/supabase";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 

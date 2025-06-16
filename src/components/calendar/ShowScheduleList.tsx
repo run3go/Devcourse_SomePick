@@ -35,7 +35,7 @@ export default function ShowScheduleList({
     return isSameDay(dateA, dateB);
   });
 
-  const today = formatDate(new Date(), "yyyy-MM-dd");
+  const today = formatDate(new Date(), "yyyy-M-dd");
   return (
     <div className="flex flex-col px-4 py-7 h-[565px] border border-[var(--primary-pink)]">
       <h2 className="text-center font-semibold text-xl text-[var(--primary-pink-point)] border-b pb-[10px] mb-[18px]">

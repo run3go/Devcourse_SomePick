@@ -170,8 +170,8 @@ export const readMessage = async (
 // 메시지 실시간 확인
 export const subscribeToMessages = async (
   chat_room_id: string,
-  updateMessage: (msg: Message) => void
-  // updateSeen: () => void
+  updateMessage: (msg: Message) => void,
+  updateSeen: () => void
 ) => {
   try {
     const {
@@ -202,7 +202,7 @@ export const subscribeToMessages = async (
           console.log("메시지 읽기 실패:", error.message);
           return;
         }
-        updateMessage({ ...payload.new, seen: true });
+        updateMessage({ ...(payload.new as Message), seen: true });
       }
     );
     // 내가 보낸 메시지를 상대가 읽은 경우, 내가 보낸 메시지 전부 읽음 처리

@@ -8,7 +8,7 @@ import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
 import type { Database } from "../../types/supabase";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import Icon from "../../components/common/Icon";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
