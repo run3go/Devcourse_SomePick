@@ -10,7 +10,7 @@ export default function MessageLayoutPage() {
           matchingUserProfile={matchingUserProfile}
           matchedUserProfile={matchedUserProfile}
         />
-        <div className="w-[878px] h-[804px] py-5 box-shadow-custom rounded-2xl items-center justify-center flex">
+        <div className="w-[878px] h-[804px] py-5 box-shadow-custom rounded-2xl items-center justify-center flex dark:bg-[var(--dark-bg-secondary)] ">
           <Outlet />
         </div>
       </div>
