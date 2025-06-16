@@ -1,3 +1,5 @@
+import Icon from "../common/Icon";
+
 export type SortRule = "created_at" | "likes";
 
 interface SortDropdownProps {
@@ -23,6 +25,9 @@ export default function SortDropdown({ sortRule, onChange }: SortDropdownProps) 
         <option value="likes">인기순</option>
       </select>
       {/* 토글 아이콘 (화살표) */}
+      <div className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2">
+        <Icon width="14px" height="8px" left="-715px" top="-743px" />
+      </div>
     </div>
   );
 }
