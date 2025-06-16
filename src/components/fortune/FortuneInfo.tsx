@@ -1,7 +1,10 @@
 import firstCouple from "../../assets/images/taro.png";
 import { useAuthStore } from "../../stores/authstore";
 
-export default function FortuneInfo() {
+interface Props {
+  isTodayChecked: boolean;
+}
+export default function FortuneInfo({ isTodayChecked }: Props) {
   const user = useAuthStore((state) => state.session?.user.user_metadata);
   const userName = user?.nickname;
 
@@ -18,12 +21,23 @@ export default function FortuneInfo() {
         <div className="text-center mt-4">
           <p className="font-bold text-[28px]">
             <span className="text-[var(--primary-pink)]">{userName}</span>님,
-            오늘의 운세가 준비되었어요!
           </p>
-          <br />
-          <p className="font-bold text-[20px] text-[var(--gray-500)]">
-            셋 중 하나의 카드를 클릭해보세요.
-          </p>
+          {isTodayChecked ? (
+            <>
+              <p className="mt-2 font-bold text-[28px] text-[var(--gray-700)]">
+                오늘의 운세를 이미 확인했어요!
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-bold text-[28px] text-[var(--gray-700)]">
+                오늘의 운세가 준비되었어요! <br />{" "}
+              </p>
+              <p className="font-bold text-[28px] text-[var(--gray-500)]">
+                셋 중 하나의 카드를 클릭해보세요.
+              </p>
+            </>
+          )}
         </div>
       </div>
     </>
