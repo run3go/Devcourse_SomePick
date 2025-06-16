@@ -23,8 +23,11 @@ export default function PostCreatePage() {
 
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [prevImageUrls, setPrevImageUrls] = useState<string[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  // const [imageUrl, setImageUrl] = useState("");
+  // const [imageFile, setImageFile] = useState<File | null>(null);
   // const [fortune, setFortune] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [backTo, setBackTo] = useState("");
@@ -34,11 +37,12 @@ export default function PostCreatePage() {
   useEffect(() => {
     const loadPost = async () => {
       if (params.id) {
-        const postRes = await fetchPostByPostId(parseInt(params.id));
+        const postRes = await fetchPostByPostId(Number(params.id));
         if (postRes) {
           setTitle(postRes.title || "");
           setContents(postRes.contents || "");
-          setImageUrl(postRes.image || "");
+          setPrevImageUrls(postRes.images || []);
+          setImageUrls(postRes.images || []);
           // setFortune(postRes.fortune_telling || "");
           setBackTo(postRes.channel.name);
         }
@@ -49,52 +53,71 @@ export default function PostCreatePage() {
   }, [params.id]);
 
   const handleImgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setIsLoading(true);
+    if (!e.target.files || e.target.files.length === 0) return;
 
-      try {
-        const url = await storeImage(file, "temp");
+    const availableSlots = 8 - imageFiles.length;
+    if (availableSlots <= 0) {
+      toast.warn("이미지는 최대 8장까지 업로드할 수 있어요!");
+      return;
+    }
 
-        if (url) {
-          setImageUrl(url);
-          setImageFile(file);
+    const files = Array.from(e.target.files).slice(0, availableSlots);
 
-          console.log("image upload success!", url);
-        } else {
-          console.error("image upload failed.");
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
+    setIsLoading(true);
 
-      if (imageUrl) {
-        setTimeout(() => {
-          deleteImage(imageUrl);
-        }, 2000);
-      }
+    try {
+      const urls = await Promise.all(
+        files.map((file) => storeImage(file, "temp"))
+      );
+      setImageFiles((prev) => [...prev, ...files]);
+      setImageUrls((prev) => [
+        ...prev,
+        ...urls.filter((url): url is string => typeof url === "string"),
+      ]);
+    } catch (e) {
+      console.error("이미지 업로드 실패", e);
+    } finally {
+      setIsLoading(false);
+      e.target.value = "";
+    }
+
+    if (imageUrls) {
+      imageUrls.map(
+        (url) =>
+          setTimeout(() => {
+            deleteImage(url);
+          }, 300000) // 5분 후 삭제
+      );
     }
   };
 
-  const handleImgDelete = () => {
-    setImageUrl("");
-    setImageFile(null);
-    if (inputRef.current) {
-      inputRef.current.value = "";
+  const handleImgDelete = (index: number) => {
+    const urlToDelete = imageUrls[index];
+
+    if (prevImageUrls.includes(urlToDelete)) {
+      setPrevImageUrls((prev) => prev.filter((url) => url !== urlToDelete));
+    } else {
+      const deleteIndex = imageUrls
+        .slice(prevImageUrls.length)
+        .findIndex((url) => url === urlToDelete);
+
+      setImageFiles((prev) => prev.filter((_, i) => i !== deleteIndex));
     }
+
+    setImageUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
+    console.log(imageFiles);
 
     if (params.id) {
       await updatePost(
-        parseInt(params.id),
+        Number(params.id),
         title,
         contents,
-        imageFile ? imageFile : null
+        prevImageUrls.length > 0 ? prevImageUrls : undefined,
+        imageFiles.length > 0 ? imageFiles : null
         // fortune ? fortune : ""
       );
 
@@ -106,7 +129,7 @@ export default function PostCreatePage() {
         channel,
         title,
         contents,
-        imageFile ? imageFile : null
+        imageFiles ? imageFiles : null
         // fortune ? fortune : ""
       );
       // alert("게시물이 업로드 되었습니다!");
@@ -165,7 +188,67 @@ export default function PostCreatePage() {
               />
             </div>
 
-            <div className="relative flex justify-center ml-13 items-center size-26 group">
+            <div className="flex ml-13 gap-4">
+              {imageUrls.map((url, index) => (
+                <div
+                  key={`img-${index}`}
+                  className="relative flex justify-center items-center size-26 group"
+                >
+                  <img
+                    src={url}
+                    alt={`게시물 이미지 ${index}`}
+                    draggable="false"
+                    className="w-full h-full object-cover rounded-[18px]"
+                  />
+                  <div
+                    onClick={() => handleImgDelete(index)}
+                    className="absolute top-0 left-0 hidden group-hover:flex justify-center items-center size-26 rounded-2xl cursor-pointer hover:bg-[rgba(0,0,0,0.5)] z-10"
+                  >
+                    <div className="flex justify-center items-center size-12 bg-[#EAEAEA] rounded-full">
+                      <Icon
+                        width="22px"
+                        height="4px"
+                        left="-270px"
+                        top="-713px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {imageUrls.length < 8 && (
+                <div className="relative flex justify-center items-center size-26 group">
+                  <label
+                    htmlFor="postImg"
+                    className={`flex justify-center items-center size-26 bg-[var(--primary-pink)] rounded-2xl cursor-pointer`}
+                  >
+                    {isLoading ? (
+                      <LoadingSpinner />
+                    ) : (
+                      <Icon
+                        width="28px"
+                        height="28px"
+                        left="-219px"
+                        top="-701px"
+                      />
+                    )}
+
+                    <input
+                      id="postImg"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImgChange}
+                      disabled={isLoading}
+                      ref={inputRef}
+                      multiple
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+
+            {/* <div className="relative flex justify-center ml-13 items-center size-26 group">
               <label
                 htmlFor="postImg"
                 className={`${
@@ -217,7 +300,7 @@ export default function PostCreatePage() {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
 
             <div className="flex justify-center">
               <Button
