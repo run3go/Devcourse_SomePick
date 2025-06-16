@@ -14,7 +14,7 @@ export default function ChatRequestPage() {
     await connectMatching(id);
     await createChatRoom(id);
     const chatRoom = await fetchChatRoom(id);
-    await notifyMatching(id, true, chatRoom?.id);
+    await notifyMatching(id, true);
 
     // 수락하면 바로 채팅방으로 이동 -> 연결중 목록으로 사용자이름도 이동
     if (chatRoom?.id) {
@@ -31,8 +31,7 @@ export default function ChatRequestPage() {
   const handleReject = async (id: string) => {
     if (!id) return;
     await disconnectMatching(id);
-    const chatRoom = await fetchChatRoom(id);
-    await notifyMatching(id, false, chatRoom?.id);
+    await notifyMatching(id, false);
     navigate(`/message`);
     setTimeout(() => {
       window.location.reload();
