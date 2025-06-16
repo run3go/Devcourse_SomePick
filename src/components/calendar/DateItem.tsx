@@ -43,8 +43,10 @@ export default function DateItem({
       key={item}
       className={twMerge(
         "group relative basis-1/7 text-[#bdbdbd] border-t-3 rounded-lg border-t-transparent hover:rounded-lg h-25 hover:bg-[var(--gray-200)] cursor-pointer",
+        "dark:text-[var(--gray-500)] dark:hover:bg-[var(--dark-bg-secondary)]",
         today && "border-t-[var(--primary-pink-point)]",
-        selectedDate && "bg-[#ffebf0] hover:bg-[#ffebf0]"
+        selectedDate &&
+          "bg-[#ffebf0] hover:bg-[#ffebf0] dark:hover:bg-[#ffebf0]"
       )}
     >
       {schedules.length > 2 && (
@@ -69,8 +71,8 @@ export default function DateItem({
                 today &&
                   (thisDay === 0
                     ? "text-[var(--primary-pink-tone)] font-bold"
-                    : "text-[var(--gray-700)] font-bold"),
-                selectedDate && "text-[#E870A2] font-bold"
+                    : "text-[var(--gray-700)] font-bold dark:text-[var(--dark-gray-300)]"),
+                selectedDate && "text-[#E870A2] font-bold dark:text-[#E870A2]"
               )}
             >
               {item}

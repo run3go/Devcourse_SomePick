@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import ChatRequest from "../../components/message/ChatRequest";
 import { connectMatching, disconnectMatching } from "../../apis/matching";
 import { createChatRoom, fetchChatRoom } from "../../apis/message";
+import { notifyMatching } from "../../apis/notification";
 
 export default function ChatRequestPage() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function ChatRequestPage() {
     await connectMatching(id);
     await createChatRoom(id);
     const chatRoom = await fetchChatRoom(id);
-    console.log(chatRoom?.id);
+    await notifyMatching(id, true, chatRoom?.id);
 
     // 수락하면 바로 채팅방으로 이동 -> 연결중 목록으로 사용자이름도 이동
     if (chatRoom?.id) {
@@ -30,6 +31,8 @@ export default function ChatRequestPage() {
   const handleReject = async (id: string) => {
     if (!id) return;
     await disconnectMatching(id);
+    const chatRoom = await fetchChatRoom(id);
+    await notifyMatching(id, false, chatRoom?.id);
     navigate(`/message`);
     setTimeout(() => {
       window.location.reload();

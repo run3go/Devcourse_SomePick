@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
@@ -134,34 +135,46 @@ export default function SoloProfile({
           onCancel={() => setIsAlertOpen(false)}
         />
       )}
-      {isFollowerModalOpen && (
-        <>
-          <div
-            onClick={() => setIsFollowerModalOpen(false)}
-            className="fixed inset-0 bg-black opacity-30 z-100"
-          />
-          <FollowModal
-            users={followerList}
-            type="팔로워"
-            myFollowings={myFollowings}
-            setMyFollowings={setMyFollowings}
-          />
-        </>
-      )}
-      {isFollowingModalOpen && (
-        <>
-          <div
-            onClick={() => setIsFollowingModalOpen(false)}
-            className="fixed inset-0 bg-black opacity-30 z-100"
-          />
-          <FollowModal
-            users={followings}
-            type="팔로잉"
-            myFollowings={myFollowings}
-            setMyFollowings={setMyFollowings}
-          />
-        </>
-      )}
+      <AnimatePresence>
+        {isFollowerModalOpen && (
+          <>
+            <motion.div
+              onClick={() => setIsFollowerModalOpen(false)}
+              className="fixed inset-0 bg-black opacity-30 z-100 backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+            />
+            <FollowModal
+              users={followerList}
+              type="팔로워"
+              myFollowings={myFollowings}
+              setMyFollowings={setMyFollowings}
+              setModalOpen={setIsFollowerModalOpen}
+            />
+          </>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {isFollowingModalOpen && (
+          <>
+            <motion.div
+              onClick={() => setIsFollowingModalOpen(false)}
+              className="fixed inset-0 bg-black opacity-30 z-100 backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+            />
+            <FollowModal
+              users={followings}
+              type="팔로잉"
+              myFollowings={myFollowings}
+              setMyFollowings={setMyFollowings}
+              setModalOpen={setIsFollowingModalOpen}
+            />
+          </>
+        )}
+      </AnimatePresence>
       <div className="w-full text-center">
         <h2 className="font-bold text-2xl">
           {isMyProfile ? (
@@ -320,7 +333,7 @@ export default function SoloProfile({
               </span>
             </div>
             <div className="dark:text-[var(--dark-bg-primary)] py-3 px-5 w-full border-3 border-[var(--gray-200)] rounded-[20px] bg-white">
-              {description}
+              {description ? description : "..."}
             </div>
           </div>
         </div>

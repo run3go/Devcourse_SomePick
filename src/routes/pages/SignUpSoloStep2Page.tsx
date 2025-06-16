@@ -5,7 +5,7 @@ import SelectBox from "../../components/signup/SelectBox";
 import SignupInput from "../../components/signup/SignupInput";
 import { useState } from "react";
 import { useSignUpStore } from "../../stores/signupStore";
-import { toast } from "react-toastify";
+import { showWarnToast } from "../../components/common/ShowToast";
 // import TagGroup from "../../components/signup/TagGroup";
 
 export default function SignUpSoloStep2Page() {
@@ -26,31 +26,31 @@ export default function SignUpSoloStep2Page() {
 
     if (!job) {
       // alert("직업을 선택해주세요.");
-      toast.warn("직업을 선택해주세요.");
+      showWarnToast("직업을 선택해주세요.");
       return;
     }
 
     if (!location) {
       // alert("지역을 선택해주세요.");
-      toast.warn("지역을 선택해주세요.");
+      showWarnToast("지역을 선택해주세요.");
       return;
     }
 
     if (!height) {
       // alert("키를 입력해주세요");
-      toast.warn("키를 입력해주세요");
+      showWarnToast("키를 입력해주세요");
       return;
     }
 
     if (height && !isValidHeight) {
       // alert("정확한 키를 입력해주세요.");
-      toast.warn("정확한 키를 입력해주세요 (130~299cm).");
+      showWarnToast("정확한 키를 입력해주세요 (130~299cm).");
       return;
     }
 
     if (!mbti) {
       // alert("MBTI를 선택해주세요.");
-      toast.warn("MBTI를 선택해주세요.");
+      showWarnToast("MBTI를 선택해주세요.");
       return;
     }
 

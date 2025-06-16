@@ -46,7 +46,7 @@ export default function ChatCard({
             className="w-[200px] h-[200px] rounded-full object-cover object-center"
           />
           <Button
-            className="w-28 h-6 text-[10px]"
+            className="w-28 h-6 text-[10px] dark:text-[var(--dark-black)]"
             onClick={() => navigate(`/profile/${userId}`)}
           >
             프로필 보기
@@ -56,14 +56,14 @@ export default function ChatCard({
           <div className="flex flex-col gap-4 px-3 justify-center items-start">
             <div className="flex gap-1.5 items-end">
               <span className="text-[18px] font-bold">{name}</span>
-              <span className="text-[10px] font-bold text-[var(--gray-500)]/80">
+              <span className="text-[10px] font-bold text-[var(--gray-500)]/80 dark:text-[var(--gray-300)]">
                 {age}
               </span>
             </div>
             <span className="text-[11px]">{message}</span>
           </div>
           <hr className="border-[var(--primary-pink)] w-[248px] my-4" />
-          <div className="px-5 justify-between flex text-[14px] text-[var(--gray-500)] font-bold">
+          <div className="px-5 justify-between flex text-[14px] text-[var(--gray-500)] font-bold dark:text-[var(--gray-300)]">
             {items?.map((item, idx) => (
               <span key={idx}>{item}</span>
             ))}

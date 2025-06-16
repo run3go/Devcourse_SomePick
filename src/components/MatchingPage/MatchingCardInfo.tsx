@@ -3,6 +3,7 @@ import Button from "../common/Button";
 import type { Database } from "../../types/supabase";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
+import { notifyHeart } from "../../apis/notification";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -34,6 +35,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
         alert("이미 하트를 보낸 상대입니다.");
       } else {
         alert("하트를 성공적으로 보냈습니다!");
+        await notifyHeart(profile.id); // 하트 보낸 후 알림 전송
       }
     } catch (error) {
       console.error(error);
@@ -50,7 +52,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
   return (
     <div className="w-[600px] h-[800px] rounded-[20px] overflow-hidden shadow-md">
       {/* 상단 */}
-      <div className="w-full h-[400px] bg-[#F6F6F6] flex flex-col items-center justify-center space-y-4">
+      <div className="w-full h-[400px] bg-[#F6F6F6] flex flex-col items-center justify-center space-y-4 dark:bg-[#a8a8a8] dark:textwi">
         {/* 프로필이미지 */}
         <div className="w-[300px] h-[300px] rounded-full overflow-hidden">
           <img
@@ -60,11 +62,11 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
           />
           {/* 한줄소개 */}
         </div>
-        <p className="text-[24px] text-center">{profile.description}</p>
+        <p className="text-[24px] text-center dark:text-white">{profile.description}</p>
       </div>
 
       {/* 하단 */}
-      <div className="w-full h-[400px] bg-white flex flex-col items-center justify-center gap-[40px]">
+      <div className="w-full h-[400px] bg-white flex flex-col items-center justify-center gap-[40px] dark:bg-[#4B4B4B]">
         <h2 className="text-[32px] text-[#FFC7ED] font-semibold">{profile.nickname}</h2>
         <div className="flex gap-[30px]">
           {/* 하트 보내기 버튼 */}
@@ -86,7 +88,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
           </Button>
         </div>
         {/* 정보 */}
-        <div className="text-[20px] text-[#969696] flex gap-11">
+        <div className="text-[20px] text-[#969696] flex gap-11 dark:text-neutral-300">
           <span>만{profile.age}세</span>
           <span>{profile.height}cm</span>
           <span>{profile.location}</span>
@@ -100,7 +102,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
                 key={`${keyword}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[20px] text-black">{keyword}</span>
+                <span className="text-[20px] text-black dark:text-white">{keyword}</span>
               </li>
             ))}
           </ul>
@@ -110,7 +112,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
                 key={`${interest}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[20px] text-black">{interest}</span>
+                <span className="text-[20px] text-black dark:text-white">{interest}</span>
               </li>
             ))}
           </ul>
