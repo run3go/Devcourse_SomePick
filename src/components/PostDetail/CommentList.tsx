@@ -78,7 +78,14 @@ export default function CommentList({
                           height="4px"
                           left="-511px"
                           top="-768px"
-                          className="cursor-pointer"
+                          className="cursor-pointer dark:hidden"
+                        />
+                        <Icon
+                          width="14px"
+                          height="4px"
+                          left="-511px"
+                          top="-736px"
+                          className="cursor-pointer hidden dark:block"
                         />
                         {openMenuId === comment.id && (
                           <MoreMenu

@@ -88,7 +88,14 @@ export default function MoreMenu({
             height="12px"
             left="-556px"
             top="-764px"
-            className="cursor-pointer dark:left-[-558px] dark:top-[-732px]"
+            className="cursor-pointer dark:hidden"
+          />
+          <Icon
+            width="12px"
+            height="12px"
+            left="-558px"
+            top="-732px"
+            className="cursor-pointer hidden dark:block"
           />
         </div>
         <div className="flex items-center justify-center gap-[5px]">

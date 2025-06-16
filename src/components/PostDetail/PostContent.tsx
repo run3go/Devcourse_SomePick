@@ -59,7 +59,15 @@ export default function PostContent({
                 height="16px"
                 left={heart ? "-415px" : "-415px"}
                 top={heart ? "-727px" : "-762px"}
-                className="cursor-pointer"
+                className="cursor-pointer dark:hidden"
+                onClick={handleHeart}
+              />
+              <Icon
+                width="18px"
+                height="16px"
+                left={heart ? "-415px" : "-416px"}
+                top={heart ? "-727px" : "-793px"}
+                className="cursor-pointer hidden dark:block"
                 onClick={handleHeart}
               />
               <span className="ml-1 text-[14px] dark:text-[var(--dark-gray-100)]">
