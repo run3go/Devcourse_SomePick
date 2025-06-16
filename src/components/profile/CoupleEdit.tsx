@@ -9,17 +9,19 @@ import ProfileCard from "./ProfileCard";
 
 export default function CoupleEdit({
   handleFileChange,
+  changeStatus,
 }: {
   handleFileChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => void;
+  changeStatus: () => void;
 }) {
   const { state: profile }: { state: ProfileData } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { watch, register, setValue } = useFormContext();
+  const { watch, register } = useFormContext();
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
 
   return (
@@ -70,7 +72,7 @@ export default function CoupleEdit({
           isNotOk="아니요"
           onClick={() => {
             setIsModalOpen(false);
-            setValue("status", "solo");
+            changeStatus();
           }}
           onCancel={() => setIsModalOpen(false)}
         />
