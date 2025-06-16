@@ -8,10 +8,13 @@ import { useUploadImageStore } from "../../stores/useUploadImageStore";
 
 interface FortuneData {
   userName?: string | null;
-  status: string | null;
-  loveTitle: string | null;
-  loveDescription: string | null;
-  loveAdvice: string;
+  status?: string | null;
+  love_title: string | null;
+  love_description: string | null;
+  love_advice: string;
+  created_at?: string;
+  id?: string;
+  used_at: string;
 }
 interface Props {
   isOpen: boolean;
@@ -105,13 +108,13 @@ export default function FortuneModal({
                 {new Date().getDate()}일
               </p>
               <p className="text-[20px] font-bold mt-[10px] mb-6">
-                {fortuneData.loveTitle}
+                {fortuneData.love_title}
               </p>
               <p className="text-[16px] mt-[10px] mb-4 leading-relaxed">
-                {fortuneData.loveDescription}
+                {fortuneData.love_description}
               </p>
               <p className="text-[16px] mt-[10px] italic leading-relaxed">
-                💡 {fortuneData.loveAdvice}
+                💡 {fortuneData.love_advice}
               </p>
             </motion.div>
           ) : (
