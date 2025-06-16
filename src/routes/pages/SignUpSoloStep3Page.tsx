@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { signupUser } from "../../apis/auth";
 import { updateProfile } from "../../apis/user";
 import { storeImage } from "../../apis/util";
@@ -6,7 +7,6 @@ import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
 import TagGroup from "../../components/signup/TagGroup";
 import { useSignUpStore } from "../../stores/signupStore";
-import { toast } from "react-toastify";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();
@@ -44,8 +44,7 @@ export default function SignUpSoloStep3Page() {
     const mainImgUrl =
       mainImgFile && (await storeImage(mainImgFile, "main_image"));
 
-    const subImgUrl =
-      subImgFile && (await storeImage(subImgFile, "main_image"));
+    const subImgUrl = subImgFile && (await storeImage(subImgFile, "sub_image"));
 
     const fullPayload = {
       ...data,
