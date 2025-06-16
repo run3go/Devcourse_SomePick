@@ -14,11 +14,20 @@ import {
   showSuccessToast,
   showWarnToast,
 } from "../../components/common/ShowToast";
+// 운세 페이지에서 이미지 불러오기
+import { useUploadImageStore } from "../../stores/useUploadImageStore";
 
 export default function PostCreatePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams(); // id
+
+  // 운세 페이지에서 이미지 불러오기
+  const { image } = useUploadImageStore();
+
+  useEffect(() => {
+    console.log("zustand에 저장된 이미지:", image);
+  }, [image]);
 
   // console.log(params);
 
@@ -143,6 +152,16 @@ export default function PostCreatePage() {
 
   return (
     <>
+      {/* 이거 주석 없애면 이미지 볼 수 있어욤 */}
+      {/* {image.length > 0 ? (
+        <img
+          src={URL.createObjectURL(image[0])}
+          alt="운세 이미지"
+          width="300"
+        />
+      ) : (
+        <p>이미지가 없습니다</p>
+      )} */}
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-5">
           <BackButton className="mt-10" />

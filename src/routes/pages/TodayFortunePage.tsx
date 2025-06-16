@@ -26,6 +26,9 @@ export default function TodayFortunePage() {
   const [fortuneData, setFortuneData] = useState<FortuneData | null>(null);
   // const [isLoading, setIsLoading] = useState(true)
 
+  const [isTodayChecked, setIsTodayChecked] = useState(false);
+  // const [flippedCard, setFlippedCard] = useState<number|null>(null)
+
   useEffect(() => {
     async function main() {
       try {
@@ -40,6 +43,9 @@ export default function TodayFortunePage() {
 
         if (fortune && usedAt === today) {
           setFortuneData(fortune);
+          setIsTodayChecked(true);
+
+          // setFlippedCard(fortune.)
           return;
         }
 
@@ -95,8 +101,8 @@ export default function TodayFortunePage() {
 
   return (
     <>
-      <FortuneInfo />
-      <FortuneCards fortuneData={fortuneData} />
+      <FortuneInfo isTodayChecked={isTodayChecked} />
+      <FortuneCards fortuneData={fortuneData} isTodayChecked={isTodayChecked} />
     </>
   );
 }

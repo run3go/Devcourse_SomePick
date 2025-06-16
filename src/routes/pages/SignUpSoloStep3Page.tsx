@@ -44,8 +44,7 @@ export default function SignUpSoloStep3Page() {
     const mainImgUrl =
       mainImgFile && (await storeImage(mainImgFile, "main_image"));
 
-    const subImgUrl =
-      subImgFile && (await storeImage(subImgFile, "main_image"));
+    const subImgUrl = subImgFile && (await storeImage(subImgFile, "sub_image"));
 
     const fullPayload = {
       ...data,
