@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MatchingCardInfo from "./MatchingCardInfo";
 import type { Database } from "../../types/supabase";
 import { useAuthStore } from "../../stores/authstore";
+
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardProps {
@@ -80,6 +81,7 @@ export default function MatchingCard({
           className={`
             absolute inset-0 
             rounded-[20px] bg-[#F6F6F6] shadow-md flex flex-col p-6
+           dark:bg-[#4B4B4B] dark:text-white
             ${blurClass}
           `}
           style={{ backfaceVisibility: "hidden" }}

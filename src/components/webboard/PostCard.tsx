@@ -23,7 +23,7 @@ export default function Postcard({
       className={twMerge(
         "flex items-stretch w-[1360px] h-[280px] border-2 rounded-xl border-[#FFC7ED]",
         "hover:border-[#FF66B3] hover:shadow-lg transition-all duration-200",
-        "bg-white cursor-pointer p-8",
+        "bg-white cursor-pointer p-8 dark:bg-[#4B4B4B]",
         className
       )}
     >
@@ -48,22 +48,23 @@ export default function Postcard({
               className="w-[44px] h-[40px] rounded-full object-cover mr-2"
             />
             <div className="flex flex-col">
-              <span className="font-medium">{post.author.nickname}</span>
-              <span className="text-[#969696]">2025.06.07</span>
+              <span className="font-medium dark:text-white">{post.author.nickname}</span>
+              <span className="text-[#969696] dark:text-white">2025.06.07</span>
             </div>
           </div>
 
           {/* 제목 */}
-          <h2 className="text-lg font-bold">{post.title}</h2>
+          <h2 className="text-lg font-bold dark:text-white">{post.title}</h2>
 
           {/* 본문 */}
-          <p className="leading-relaxed line-clamp-2">{post.contents}</p>
+          <p className="leading-relaxed line-clamp-2 dark:text-white">{post.contents}</p>
         </div>
 
         {/* 좋아요 · 댓글 */}
-        <div className="flex items-center space-x-6 mt-auto">
+        <div className="flex items-center space-x-6 mt-auto dark:text-white">
           <div className="flex items-center gap-[5px]">
             <Icon width="18px" height="16px" left="-415px" top="-762px" />
+
             <span>{post.likes.length}</span>
           </div>
           <div className="flex items-center gap-[6px]">

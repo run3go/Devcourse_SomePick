@@ -57,7 +57,7 @@ export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniP
   return (
     <div
       ref={wrapperRef}
-      className="w-[180px] h-[152px] border-2 border-[#FFC7ED] rounded-[20px] p-4 flex flex-col items-center justify-between bg-white shadow-lg"
+      className="w-[180px] h-[152px] border-2 border-[#FFC7ED] rounded-[20px] p-4 flex flex-col items-center justify-between bg-white shadow-lg dark:bg-[#4B4B4B]"
     >
       {/* 프로필 이미지 */}
       <img
@@ -67,7 +67,7 @@ export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniP
       />
 
       {/* 이름 */}
-      <span className="font-medium text-gray-800">{user.nickname}</span>
+      <span className="font-medium text-gray-800 dark:text-white">{user.nickname}</span>
 
       {/* 버튼 그룹 */}
       <div className="flex gap-3">
