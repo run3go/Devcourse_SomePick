@@ -9,8 +9,9 @@ type Comments = {
   parent_id?: number | null;
   comment: string;
   author: Author;
-  created_at?: string;
+  created_at: string;
   comments: Comments[];
+  deleted?: boolean;
 };
 
 type Like = {

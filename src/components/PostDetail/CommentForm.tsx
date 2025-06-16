@@ -12,6 +12,7 @@ interface CommentProps {
   postId: number | null;
   post: Post;
   onCommentAdd: () => void;
+  toggleReply?: () => void;
 }
 
 export default function CommentForm({
@@ -21,6 +22,7 @@ export default function CommentForm({
   postId,
   post,
   onCommentAdd,
+  toggleReply,
 }: CommentProps) {
   const [input, setInput] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -38,6 +40,9 @@ export default function CommentForm({
     if (newComment) {
       setInput("");
       onCommentAdd?.();
+      if (isReply) {
+        toggleReply?.();
+      }
     }
   };
 
