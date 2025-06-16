@@ -1,10 +1,9 @@
 import firstCouple from "../../assets/images/taro.png";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function FortuneInfo() {
   const user = useAuthStore((state) => state.session?.user.user_metadata);
   const userName = user?.nickname;
-  const isCouple = user?.status;
 
   return (
     <>

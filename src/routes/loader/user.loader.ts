@@ -19,7 +19,6 @@ export const getUserProfile = async ({ params }: LoaderFunctionArgs) => {
         }, 500)
       ),
     ]);
-  console.log(matching);
   return {
     userProfile,
     posts,

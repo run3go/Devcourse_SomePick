@@ -9,6 +9,7 @@ interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isError?: boolean;
+  errorMessage?: string;
 }
 
 export default function SignupInput({
@@ -20,12 +21,16 @@ export default function SignupInput({
   value,
   onChange,
   isError = false,
+  errorMessage,
 }: InputProps) {
   return (
     <>
       <div className={twMerge("flex flex-col", className)}>
-        <label htmlFor={name} className="ml-5 mb-1">
+        <label htmlFor={name} className="ml-5 mb-1 flex gap-1">
           {label}
+          {isError && errorMessage && (
+            <span className="text-[var(--red)]">{errorMessage}</span>
+          )}
         </label>
 
         <input
@@ -35,8 +40,10 @@ export default function SignupInput({
           value={value}
           onChange={onChange}
           className={twMerge(
-            `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
-              isError ? "border-[var(--red)]" : "border-[var(--primary-pink)]"
+            `pl-5 mb-5 w-full h-[50px] bg-[var(--white)] border rounded-full dark:bg-[var(--dark-bg-secondary)] focus:outline-none focus:shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:shadow-(color:--primary-pink-tone) ${
+              isError
+                ? "border-[var(--red)] border-2"
+                : "border-[var(--primary-pink)]"
             }`
           )}
           {...(name === "height"

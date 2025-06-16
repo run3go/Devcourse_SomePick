@@ -39,6 +39,7 @@ type ProfileUpdatePayload = Partial<{
   ideal_types: string[];
   partner_nickname: string | null;
   status: "solo" | "couple";
+  fortune_telling_id: string;
 }>;
 
 type ProfileData = {
@@ -85,7 +86,7 @@ type UserData = {
   nickname: string | null;
 };
 
-type Matching = {
+type MatchingUser = {
   created_at: string;
   id: number;
   is_matched: boolean;

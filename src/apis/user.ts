@@ -18,7 +18,9 @@ export const fetchProfile = async (userId: string) => {
                 nickname,
                 main_image
             )
-        )
+        ),
+        fortuneData:fortune_telling_id (
+        *)
         `
       )
       .eq("id", userId)
@@ -39,6 +41,7 @@ export const updateProfile = async (payload: ProfileUpdatePayload) => {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
+    console.log(payload);
     const { data: profile, error } = await supabase
       .from("profiles")
       .update(payload)
