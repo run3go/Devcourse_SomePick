@@ -37,7 +37,6 @@ export default function PostsPage() {
   }, [session]);
 
   const handleFollowToggle = (userId: string, isNowFollowing: boolean) => {
-    // posts 의 author.is_followed 업데이트
     setPosts((prev) =>
       prev.map((post) =>
         post.author.id === userId
@@ -48,7 +47,6 @@ export default function PostsPage() {
           : post
       )
     );
-    // followings 리스트도 동기화
     setFollowings((prev) =>
       isNowFollowing ? [...prev, userId] : prev.filter((id) => id !== userId)
     );
@@ -60,30 +58,25 @@ export default function PostsPage() {
     setPosts([]);
   }, [safeChannel, sortRule, keyword]);
 
-  // 게시물 페치 및 append 로직
+  // 게시물 페치
   useEffect(() => {
     (async () => {
       const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
       if (!result) return;
 
       setPosts((prev) => {
-        // 1) offset 0 → 완전 교체, else → 기존 뒤에 추가
         const merged = offset === 0 ? result : [...prev, ...result];
-
-        // 2) 인기순 정렬이라면, 좋아요 개수 내림차순으로 정렬
+        //  내림차순으로 정렬
         if (sortRule === "likes") {
-          return merged
-            .slice() // 원본 보호
-            .sort((a, b) => b.likes.length - a.likes.length);
+          return merged.slice().sort((a, b) => b.likes.length - a.likes.length);
         }
 
-        // 3) 최신순 등 나머지일 땐 그대로
         return merged;
       });
     })();
   }, [safeChannel, offset, sortRule, keyword]);
 
-  // IntersectionObserver 콜백: loader가 보이면 offset 증가
+  // loader가 보이면 offset 증가
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
     if (target.isIntersecting) {
