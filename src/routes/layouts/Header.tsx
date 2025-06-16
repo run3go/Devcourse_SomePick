@@ -1,9 +1,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
-import { FaRegUser } from "react-icons/fa6";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
-import { TbMessageHeart } from "react-icons/tb";
+import { TbBell, TbUserCircle, TbMessageHeart } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
@@ -188,8 +186,8 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoMdNotificationsOutline
-                      size={29}
+                    <TbBell
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {hasUnreadNotifications && (
@@ -210,8 +208,8 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaRegUser
-                      size={23}
+                    <TbUserCircle
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {isModalOpen && (
@@ -235,8 +233,8 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoMdNotificationsOutline
-                      size={26}
+                    <TbBell
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
 
@@ -258,8 +256,8 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaRegUser
-                      size={23}
+                    <TbUserCircle
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {isModalOpen && (
@@ -290,14 +288,14 @@ export default function Header() {
                 {isDark ? (
                   <div className="cursor-pointer">
                     <HiMiniSun
-                      size={28}
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)]"
                     />
                   </div>
                 ) : (
                   <div className="cursor-pointer">
                     <HiMiniMoon
-                      size={28}
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)]"
                     />
                   </div>
