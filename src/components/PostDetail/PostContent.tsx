@@ -4,6 +4,7 @@ import { useAuthStore } from "../../stores/authstore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
 import { notifyLike } from "../../apis/notification";
+import PostImageSwiper from "./PostImageSwiper";
 
 export default function PostContent({
   post,
@@ -49,17 +50,7 @@ export default function PostContent({
             <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-100)]">
               {post.contents}
             </p>
-            {post.images && post.images.length > 0 && (
-              <div className="flex gap-4 flex-wrap">
-                {post.images.map((url, index) => (
-                  <img
-                    key={index}
-                    className="w-[375px] h-[600px] mb-12 object-cover object-center"
-                    src={url}
-                  />
-                ))}
-              </div>
-            )}
+            <PostImageSwiper post={post} />
           </div>
           <div className="flex justify-between">
             <div className="flex items-center">
