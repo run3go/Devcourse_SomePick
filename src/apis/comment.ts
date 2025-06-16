@@ -5,7 +5,7 @@ import supabase from "../utils/supabase";
 export const createComment = async (
   comment: string,
   post_id: number | null,
-  parent_id?: number
+  parent_id?: number | null
 ) => {
   try {
     const {

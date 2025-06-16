@@ -44,7 +44,7 @@ export default function SignUpPage() {
             </div>
 
             <div
-              className="text-[20px] mb-5 flex justify-center items-center w-74 h-19 bg-[var(--white)] border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer"
+              className="text-[20px] mb-5 flex justify-center items-center w-74 h-19 bg-[var(--white)] border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer dark:bg-[var(--dark-primary-pink)] dark:text-[var(--dark-black)] dark:border-0"
               onClick={() => {
                 // updateData({ status: "couple" });
                 resetData("couple");
@@ -55,7 +55,7 @@ export default function SignUpPage() {
             </div>
 
             <div
-              className="text-[20px] flex justify-center items-center w-74 h-19 bg-[var(--white)] border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer"
+              className="text-[20px] flex justify-center items-center w-74 h-19 bg-[var(--white)]  border border-[var(--primary-pink-point)] rounded-[75px] hover:bg-[var(--primary-pink-tone)] hover:shadow-[0_0_12px_rgba(0,0,0,0.7)] hover:shadow-(color:--primary-pink-point) hover:border-0 cursor-pointer dark:bg-[var(--dark-primary-pink)] dark:text-[var(--dark-black)] dark:border-0"
               onClick={() => {
                 // updateData({ status: "solo" });
                 resetData("solo");

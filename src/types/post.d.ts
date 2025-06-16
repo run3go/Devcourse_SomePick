@@ -6,11 +6,13 @@ type Author = {
 
 type Comments = {
   id: number;
-  parent_id: number | null;
+  parent_id?: number | null;
   comment: string;
   author: Author;
-  created_at?: string;
-  comments?: Comments[];
+  created_at: string;
+  comments: Comments[];
+  deleted?: boolean;
+  edited?: boolean;
 };
 
 type Like = {
@@ -44,7 +46,6 @@ type Post = {
   comments: Comments[];
   likes: Like[];
   image?: string | null;
-  description: string;
 };
 
 type MiniProfilecardProps = {

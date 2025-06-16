@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendMessage } from "../../apis/message";
 import Icon from "../common/Icon";
+import { notifyMessage } from "../../apis/notification";
 export default function ChatInput({
   chatRoomId,
   receiverId,
@@ -16,6 +17,7 @@ export default function ChatInput({
   const handleSend = async () => {
     if (!message.trim() || !chatRoomId || !receiverId) return;
     const newMessage = await sendMessage(chatRoomId, message, receiverId);
+    await notifyMessage(receiverId);
     setMessage("");
     if (newMessage && onSend) {
       onSend(newMessage);
@@ -27,7 +29,7 @@ export default function ChatInput({
     <>
       <div className="flex justify-between gap-2.5 px-7 items-end">
         <input
-          className="border border-[var(--gray-300)] rounded-full w-full py-2 px-4 h-full focus:outline-none text-[11px]"
+          className="border border-[var(--gray-300)] rounded-full w-full py-2 px-4 h-full focus:outline-none text-[11px] dark:bg-[var(--dark-white)]"
           placeholder="메세지를 입력해주세요."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
