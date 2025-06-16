@@ -150,7 +150,7 @@ export default function PostCreatePage() {
                 placeholder="제목을 작성해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="ml-5 placeholder:text-[var(--gray-500)] focus:outline-none bg-[var(--gray-100)] p-2 w-[94%] rounded-lg text-[var(--dark-black)]"
+                className="ml-5 placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-300)] focus:outline-none bg-[var(--gray-100)] dark:bg-[var(--dark-gray-500)] p-2 w-[94%] rounded-lg text-[var(--dark-black)]"
               />
             </label>
 
@@ -161,7 +161,7 @@ export default function PostCreatePage() {
                 placeholder="당신의 이야기를 자유롭게 들려주세요"
                 value={contents}
                 onChange={(e) => setContents(e.target.value)}
-                className="placeholder:text-[var(--gray-500)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] rounded-lg p-2 text-[var(--dark-black)]"
+                className="placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-300)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] dark:bg-[var(--dark-gray-500)] rounded-lg p-2 text-[var(--dark-black)]"
               />
             </div>
 
