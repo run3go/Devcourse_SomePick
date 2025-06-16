@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -17,6 +17,7 @@ export default function ProfileEditPage() {
   const navigate = useNavigate();
 
   const [isSolo, setIsSolo] = useState(profile.status === "solo");
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleFormSubmit = async (data: FormValues) => {
     if (data.status === "solo") {
@@ -92,6 +93,10 @@ export default function ProfileEditPage() {
     }
   };
 
+  const getSubmit = () => {
+    formRef.current?.requestSubmit();
+  };
+
   const changeStatus = () => {
     setIsSolo((state) => !state);
   };
@@ -134,12 +139,14 @@ export default function ProfileEditPage() {
       <main className="relative flex justify-center pb-[50px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
+            ref={formRef}
             onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
             <CoupleEdit
               handleFileChange={handleFileChange}
               changeStatus={changeStatus}
+              getSubmit={getSubmit}
             />
           </form>
         </FormProvider>
@@ -150,12 +157,14 @@ export default function ProfileEditPage() {
       <main className="relative flex justify-center pb-[150px] dark:bg-[var(--dark-bg-primary)]">
         <FormProvider {...methods}>
           <form
+            ref={formRef}
             onSubmit={handleSubmit(handleFormSubmit, handleError)}
             className="flex items-center flex-col w-270"
           >
             <SoloEdit
               handleFileChange={handleFileChange}
               changeStatus={changeStatus}
+              getSubmit={getSubmit}
             />
           </form>
         </FormProvider>

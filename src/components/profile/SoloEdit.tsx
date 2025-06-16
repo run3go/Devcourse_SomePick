@@ -14,16 +14,19 @@ import SelectTags from "./SelectTags";
 export default function SoloEdit({
   handleFileChange,
   changeStatus,
+  getSubmit,
 }: {
   handleFileChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => void;
   changeStatus: () => void;
+  getSubmit: () => void;
 }) {
   const { state: profile }: { state: ProfileData } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
 
   const { watch, register } = useFormContext();
@@ -81,8 +84,8 @@ export default function SoloEdit({
       </Button>
       {isModalOpen && (
         <Alert
-          title="정말로 커플로 전환하시겠습니까?"
-          subtitle="매칭과 채팅 기록이 모두 삭제됩니다."
+          title="커플로 전환하시겠습니까?"
+          subtitle="새로운 입력이 모두 취소됩니다"
           isOk="네"
           isNotOk="아니요"
           onClick={() => {
@@ -90,6 +93,19 @@ export default function SoloEdit({
             setIsModalOpen(false);
           }}
           onCancel={() => setIsModalOpen(false)}
+        />
+      )}
+      {isSubmitModalOpen && (
+        <Alert
+          title="정말로 저장하시겠습니까?"
+          subtitle="커플일 경우, 기존 커플 기록이 전부 삭제됩니다"
+          isOk="네"
+          isNotOk="아니요"
+          onClick={() => {
+            setIsSubmitModalOpen(false);
+            getSubmit();
+          }}
+          onCancel={() => setIsSubmitModalOpen(false)}
         />
       )}
       <div className="flex flex-col w-full mb-[137px] mt-[132px]">
@@ -180,7 +196,11 @@ export default function SoloEdit({
             />
           </ul>
         </div>
-        <Button type="submit" className="w-[264px] h-[38px] self-end mt-8">
+        <Button
+          onClick={() => setIsSubmitModalOpen(true)}
+          type="button"
+          className="w-[264px] h-[38px] self-end mt-8"
+        >
           <span className="leading-[1]">프로필 정보 저장</span>
         </Button>
       </div>
