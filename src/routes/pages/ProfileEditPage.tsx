@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { deleteMatching } from "../../apis/matching";
 import { deleteChatRoom } from "../../apis/message";
 import { checkCouple, updateProfile } from "../../apis/user";
@@ -10,7 +11,6 @@ import SoloEdit from "../../components/profile/SoloEdit";
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { handleError } from "../../utils/handleError";
 import type { FormValues } from "../../utils/profile.schema";
-import { toast } from "react-toastify";
 
 export default function ProfileEditPage() {
   const { state: profile }: { state: ProfileData } = useLocation();
