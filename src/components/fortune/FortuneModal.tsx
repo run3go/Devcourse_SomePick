@@ -47,12 +47,13 @@ export default function FortuneModal({
       const canvas = await html2canvas(image, {
         scale: 2,
         backgroundColor: null,
+        ignoreElements: (e) => e.classList.contains("html2canvas-ignore"),
       });
 
       canvas.toBlob((blob) => {
         if (blob !== null) {
           //   saveAs(blob, "result.png");
-          const file = new File([blob], "fotrune.png", { type: "image/png" });
+          const file = new File([blob], "fortune.png", { type: "image/png" });
 
           setImage([file]);
           navigate(`/post/create`);
@@ -91,7 +92,7 @@ export default function FortuneModal({
         >
           <button
             onClick={onClose}
-            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10"
+            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
           >
             X
           </button>

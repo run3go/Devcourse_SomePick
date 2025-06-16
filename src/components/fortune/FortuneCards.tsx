@@ -30,14 +30,25 @@ interface FortuneData {
 interface Props {
   fortuneData: FortuneData | null;
   onModal?: boolean;
+  isTodayChecked: boolean;
 }
 
-export default function FortuneCards({ fortuneData, onModal = true }: Props) {
+export default function FortuneCards({
+  fortuneData,
+  onModal = true,
+  isTodayChecked = false,
+}: Props) {
   const [flipped, setFlipped] = useState<boolean[]>([false, false, false]);
-
+  // const [flippedIndex, setFlippedIndex] = useState<number|null>(null)
   const frontCards = [firstCard, secondCard, lastCard];
   const backCards = [firstDarkCard, secondDarkCard, lastDarkCard];
   const session = useAuthStore((state) => state.session);
+
+  useEffect(() => {
+    if (isTodayChecked) {
+      setFlipped([false, true, false]);
+    }
+  }, [isTodayChecked]);
 
   useEffect(() => {
     const fortuneDay = async () => {
@@ -67,6 +78,7 @@ export default function FortuneCards({ fortuneData, onModal = true }: Props) {
     advice: string
   ) => {
     if (flipped.some((flip) => flip)) return;
+    if (isTodayChecked) return;
 
     setFlipped((prev) => prev.map((flip, i) => (i === index ? !flip : flip)));
     setSelectedCard(index);
@@ -141,7 +153,7 @@ export default function FortuneCards({ fortuneData, onModal = true }: Props) {
                     </p>
                   </div>
                 ) : (
-                  <div>
+                  <div className="mt-4 text-sm font-semibold text-yellow-300">
                     <p>운세를 불러오는 중..</p>
                   </div>
                 )}
