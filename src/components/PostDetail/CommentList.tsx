@@ -125,7 +125,6 @@ export default function CommentList({
                     defaultValue={comment.comment}
                     commentId={comment.id}
                     postId={postId}
-                    parentId={comment.parent_id}
                     post={post}
                     onCommentAdd={() => {
                       onCommentAdd();
@@ -158,6 +157,7 @@ export default function CommentList({
                 postId={null}
                 parentId={comment.id}
                 onCommentAdd={onCommentAdd}
+                parentAuthorId={comment.author.id}
                 toggleReply={() => toggleReply(comment.id)}
               />
             )}

@@ -3,13 +3,14 @@ import Button from "../common/Button";
 import Icon from "../common/Icon";
 import { createComment, updateComment } from "../../apis/comment";
 import Alert from "../common/Alert";
-import { notifyComment } from "../../apis/notification";
+import { notifyChildComment, notifyComment } from "../../apis/notification";
 
 interface CommentProps {
   className?: string;
   parentId?: number | null;
   isReply?: boolean;
   postId: number | null;
+  parentAuthorId?: string;
   post: Post;
   onCommentAdd: () => void;
   toggleReply?: () => void;
@@ -29,29 +30,39 @@ export default function CommentForm({
   isEdit = false,
   defaultValue = "",
   commentId,
+  parentAuthorId,
 }: CommentProps) {
   const [input, setInput] = useState(defaultValue);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
+  // 댓글 등록하기
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) {
       setIsAlertOpen(true);
       return;
     }
+    // 댓글 수정
     if (isEdit && commentId) {
       await updateComment(input, commentId);
       setInput("");
       onCommentAdd?.();
-    } else {
+    }
+    // 수정 아니면 새로운 댓글 등록
+    else {
       const newComment = await createComment(input, postId, parentId);
-      if (postId !== null) await notifyComment(post.author.id, postId);
-
       if (newComment) {
         setInput("");
         onCommentAdd?.();
+        // 대댓글일때
         if (isReply) {
-          toggleReply?.();
+          if (parentId !== null) {
+            await notifyChildComment(parentAuthorId!, postId!);
+            toggleReply?.();
+          }
+          // 댓글일때
+        } else {
+          if (postId !== null) await notifyComment(post.author.id, postId);
         }
       }
     }
