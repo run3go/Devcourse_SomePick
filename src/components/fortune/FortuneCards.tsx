@@ -50,8 +50,6 @@ export default function FortuneCards({
     }
   }, [isTodayChecked]);
 
-  const message = isTodayChecked ? "오늘의 운세를 이미 확인했어요!" : null;
-
   useEffect(() => {
     const fortuneDay = async () => {
       try {
@@ -153,7 +151,6 @@ export default function FortuneCards({
                     <p className="text-[14px] mt-[10px] italic leading-relaxed">
                       💡 {fortuneData.love_advice}
                     </p>
-                    {message && <p>{message}</p>}
                   </div>
                 ) : (
                   <div className="mt-4 text-sm font-semibold text-yellow-300">
