@@ -4,6 +4,7 @@ import type { Database } from "../../types/supabase";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
 import { notifyHeart } from "../../apis/notification";
+import { showWarnToast, showSuccessToast, showErrorToast } from "../common/ShowToast";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -22,24 +23,21 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
       ? profile.interests
       : ["관심사 정보가 없습니다."];
 
-  const keywordsToShow = keywords.slice(0, 5);
-  const interestsToShow = interests.slice(0, 5);
+  const keywordsToShow = keywords.slice(0, 4);
+  const interestsToShow = interests.slice(0, 4);
 
   const handleSendHeart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    try {
-      const alreadySent = await sendHeart(profile.id);
+    const alreadySent = await sendHeart(profile.id);
 
-      if (alreadySent) {
-        alert("이미 하트를 보낸 상대입니다.");
-      } else {
-        alert("하트를 성공적으로 보냈습니다!");
-        await notifyHeart(profile.id); // 하트 보낸 후 알림 전송
-      }
-    } catch (error) {
-      console.error(error);
-      alert("하트를 보내는 중 오류가 발생했습니다. 다시 시도해주세요.");
+    if (alreadySent === true) {
+      showWarnToast("이미 하트를 보낸 상대입니다.");
+    } else if (alreadySent === false) {
+      showSuccessToast("하트를 성공적으로 보냈습니다!");
+      await notifyHeart(profile.id);
+    } else {
+      showErrorToast("하트를 보내는 중 문제가 발생했습니다.");
     }
   };
 
@@ -102,7 +100,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
                 key={`${keyword}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[20px] text-black dark:text-white">{keyword}</span>
+                <span className="text-[17px] text-black dark:text-white">{keyword}</span>
               </li>
             ))}
           </ul>
@@ -112,7 +110,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
                 key={`${interest}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[20px] text-black dark:text-white">{interest}</span>
+                <span className="text-[17px] text-black dark:text-white">{interest}</span>
               </li>
             ))}
           </ul>
