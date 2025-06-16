@@ -1,18 +1,21 @@
 import { useState } from "react";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
-import { createComment } from "../../apis/comment";
+import { createComment, updateComment } from "../../apis/comment";
 import Alert from "../common/Alert";
 import { notifyComment } from "../../apis/notification";
 
 interface CommentProps {
   className?: string;
-  parentId?: number;
+  parentId?: number | null;
   isReply?: boolean;
   postId: number | null;
   post: Post;
   onCommentAdd: () => void;
   toggleReply?: () => void;
+  isEdit?: boolean;
+  defaultValue?: string;
+  commentId?: number;
 }
 
 export default function CommentForm({
@@ -23,8 +26,11 @@ export default function CommentForm({
   post,
   onCommentAdd,
   toggleReply,
+  isEdit = false,
+  defaultValue = "",
+  commentId,
 }: CommentProps) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(defaultValue);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,15 +39,20 @@ export default function CommentForm({
       setIsAlertOpen(true);
       return;
     }
-    const newComment = await createComment(input, postId, parentId);
-    if (postId !== null) {
-      await notifyComment(post.author.id, postId);
-    }
-    if (newComment) {
+    if (isEdit && commentId) {
+      await updateComment(input, commentId);
       setInput("");
       onCommentAdd?.();
-      if (isReply) {
-        toggleReply?.();
+    } else {
+      const newComment = await createComment(input, postId, parentId);
+      if (postId !== null) await notifyComment(post.author.id, postId);
+
+      if (newComment) {
+        setInput("");
+        onCommentAdd?.();
+        if (isReply) {
+          toggleReply?.();
+        }
       }
     }
   };

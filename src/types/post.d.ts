@@ -12,6 +12,7 @@ type Comments = {
   created_at: string;
   comments: Comments[];
   deleted?: boolean;
+  edited?: boolean;
 };
 
 type Like = {

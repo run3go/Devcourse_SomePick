@@ -23,6 +23,7 @@ export default function CommentList({
 }: CommentListProps) {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const [openReplyId, setOpenReplyId] = useState<number | null>(null);
+  const [editCommentId, setEditCommentId] = useState<number | null>(null);
 
   // 수정, 삭제 메뉴 열기
   const toggleMenu = (id: number) => {
@@ -87,18 +88,30 @@ export default function CommentList({
                             type="comment"
                             closeMenu={() => setOpenMenuId(null)}
                             onCommentAdd={onCommentAdd}
+                            setEditCommentId={() =>
+                              setEditCommentId(comment.id)
+                            }
                           />
                         )}
                       </div>
                     )}
                   </div>
-                  {!comment.deleted && (
-                    <span className="text-[12px] text-[#969696] ">
-                      {dayjs(comment.created_at).format(
-                        "YYYY년 MM월 DD일 HH:mm"
-                      )}
-                    </span>
-                  )}
+                  <div>
+                    {!comment.deleted && (
+                      <>
+                        <span className="text-[12px] text-[var(--gray-500)]">
+                          {dayjs(comment.created_at).format(
+                            "YYYY년 MM월 DD일 HH:mm"
+                          )}
+                        </span>
+                        {comment.edited && (
+                          <span className="text-[12px] text-[var(--gray-500)] ml-1">
+                            (수정됨)
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
               <div>
@@ -106,6 +119,19 @@ export default function CommentList({
                   <p className="my-[12px] text-[13px] italic text-[var(--gray-500)]">
                     삭제된 댓글입니다.
                   </p>
+                ) : editCommentId === comment.id ? (
+                  <CommentForm
+                    isEdit={true}
+                    defaultValue={comment.comment}
+                    commentId={comment.id}
+                    postId={postId}
+                    parentId={comment.parent_id}
+                    post={post}
+                    onCommentAdd={() => {
+                      onCommentAdd();
+                      setEditCommentId(null);
+                    }}
+                  />
                 ) : (
                   <p className="my-[12px] dark:text-[var(--dark-gray-100)]">
                     {comment.comment}

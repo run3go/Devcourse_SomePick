@@ -11,6 +11,7 @@ type MoreMenuProps = {
   closeMenu: () => void;
   onClick: () => void;
   onCommentAdd: () => void;
+  setEditCommentId: (id: number) => void;
 };
 
 export default function MoreMenu({
@@ -20,9 +21,11 @@ export default function MoreMenu({
   onClick,
   closeMenu,
   onCommentAdd,
+  setEditCommentId,
 }: MoreMenuProps) {
   const navigate = useNavigate();
 
+  // 게시글 삭제 or 댓글 삭제
   const handleDelte = async () => {
     if (type === "post") {
       await deletePost(id);
@@ -42,7 +45,13 @@ export default function MoreMenu({
         onClick={onClick}
       >
         <div className="flex items-center justify-center gap-[5px] pb-2.5">
-          <button className="text-[10px] text-[var(--gray-700)] cursor-pointer dark:text-[var(--dark-gray-100)]">
+          <button
+            className="text-[10px] text-[var(--gray-700)] cursor-pointer dark:text-[var(--dark-gray-100)]"
+            onClick={() => {
+              setEditCommentId(id);
+              closeMenu();
+            }}
+          >
             수정하기
           </button>
           <Icon
