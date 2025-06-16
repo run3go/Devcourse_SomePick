@@ -13,18 +13,20 @@ import SelectTags from "./SelectTags";
 
 export default function SoloEdit({
   handleFileChange,
+  changeStatus,
 }: {
   handleFileChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "main" | "sub"
   ) => void;
+  changeStatus: () => void;
 }) {
   const { state: profile }: { state: ProfileData } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
 
-  const { watch, register, setValue } = useFormContext();
+  const { watch, register } = useFormContext();
   const watchedMainImage = watch("mainImageUrl", profile.main_image);
   const watchedSubImage = watch("subImageUrl", profile.sub_image);
   const watchedNickname = watch("nickname", profile.nickname);
@@ -84,7 +86,7 @@ export default function SoloEdit({
           isOk="네"
           isNotOk="아니요"
           onClick={() => {
-            setValue("status", "couple");
+            changeStatus();
             setIsModalOpen(false);
           }}
           onCancel={() => setIsModalOpen(false)}
