@@ -10,6 +10,7 @@ import type { Database } from "../../types/supabase";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useAuthStore } from "../../stores/authStore";
 import Icon from "../../components/common/Icon";
+import { fetchProfile } from "../../apis/user";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -36,19 +37,37 @@ export default function MatchingPage() {
   const [matchedProfiles, setMatchedProfiles] = useState<Profiles[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const session = useAuthStore((state) => state.session);
-  const name = session!.user.user_metadata?.nickname;
-  const gender = session!.user.user_metadata?.gender;
-  const mylocation = session!.user.user_metadata?.location;
-  const interests: string[] = session!.user.user_metadata?.interests || [];
-  const myMbti: string = session!.user.user_metadata?.mbti || "";
+  const [gender, setGender] = useState<string>();
+  const [myMbti, setMyMbti] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  // const gender = session!.user.user_metadata?.gender;
+  const [myLocation, setMyLocation] = useState<string>("");
+  const [interests, setInterests] = useState<string[]>([]);
+  // const myMbti: string = session!.user.user_metadata?.mbti || "";
+  const [idealTypes, setIdealTypes] = useState<string[]>([]);
   const [filterByLocation, setFilterByLocation] = useState(false);
   const [filterByInterest, setFilterByInterest] = useState(false);
   const [filterByMbti, setFilterByMbti] = useState(false);
-  console.log(myMbti);
+
+  useEffect(() => {
+    const fetchMyProfileData = async () => {
+      if (!session) return;
+      const profile = await fetchProfile(session.user.id);
+      if (profile) {
+        setName(profile.nickname ?? "");
+        setGender(profile.gender ?? "");
+        setMyMbti(profile.mbti ?? "");
+        setMyLocation(profile.location ?? "");
+        setInterests(profile.interests ?? []);
+        setIdealTypes(profile.ideal_types ?? []);
+      }
+    };
+    fetchMyProfileData();
+  }, [session]);
 
   useEffect(() => {
     (async () => {
-      const list = await fetchMatchedUsers(gender);
+      const list = await fetchMatchedUsers(gender as "male" | "female");
       if (list) {
         setMatchedProfiles(list);
 
@@ -71,13 +90,24 @@ export default function MatchingPage() {
     };
   }, [isModalOpen]);
 
+  // 이상형 50%이상만
+  const filteredMatchedProfiles = matchedProfiles
+    .map((profile) => {
+      const matched = idealTypes.filter((type: string) => profile.keywords?.includes(type));
+      const matchPercent =
+        idealTypes.length > 0 ? Math.round((matched.length / idealTypes.length) * 100) : 0;
+      return { ...profile, matchPercent };
+    })
+    .filter((profile) => profile.matchPercent >= 50);
+
   //  필터링된 프로필 배열 계산
-  let displayedProfiles = matchedProfiles;
+  let displayedProfiles = filteredMatchedProfiles;
+
   if (filterByLocation || filterByInterest || filterByMbti) {
-    displayedProfiles = matchedProfiles.filter((profile) => {
-      if (filterByLocation && profile.location !== mylocation) return false;
+    displayedProfiles = filteredMatchedProfiles.filter((profile) => {
+      if (filterByLocation && profile.location !== myLocation) return false;
       if (filterByInterest && !profile.interests?.some((i) => interests.includes(i))) return false;
-      if (filterByMbti && !mbtiPairs[myMbti]?.includes(profile.mbti || "")) return false;
+      if (filterByMbti && !mbtiPairs[myMbti!]?.includes(profile.mbti || "")) return false;
       return true;
     });
   }
