@@ -149,11 +149,12 @@ export default function PostsPage() {
             }}
           />
         ))}
-
+        <div className="select-none dark:bg-[var(--dark-bg-primary)]">
+          <TopButton />
+        </div>
         {/* 관찰용 엘리먼트 (무한 스크롤 트리거) */}
         <div ref={loaderRef} className="h-1" />
       </div>
-      <TopButton />
     </div>
   );
 }
