@@ -9,9 +9,10 @@ type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
   profile: Profiles;
+  disableActionButton?: boolean; // 추가
 }
 
-export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
+export default function MatchingCardInfo({ profile, disableActionButton }: MatchingCardInfoProps) {
   const navigate = useNavigate();
   const keywords =
     profile.keywords && profile.keywords.length > 0
@@ -71,6 +72,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
           <Button
             className="w-[200px] h-[60px] text-[20px] text-[#FFFFFF] gap-2"
             onClick={handleSendHeart}
+            disabled={disableActionButton}
           >
             <Icon width="26px" height="24px" left="-564px" top="-227px" />
             <span className="inline-block leading-[1]">하트보내기</span>
@@ -80,6 +82,7 @@ export default function MatchingCardInfo({ profile }: MatchingCardInfoProps) {
           <Button
             className="w-[200px] h-[60px] text-[20px] text-[#FFFFFF] gap-2"
             onClick={handleViewProfile}
+            disabled={disableActionButton}
           >
             <Icon width="22px" height="28px" left="-621px" top="-224px" />
             <span className="inline-block leading-[1]">프로필 보기</span>

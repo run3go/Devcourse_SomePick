@@ -8,6 +8,7 @@ import WriteButton from "../../components/webboard/WriteButton";
 import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
 import { useAuthStore } from "../../stores/authStore";
 import { fetchFollowingList } from "../../apis/follow";
+import TopButton from "../../components/common/TopButton";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
@@ -152,6 +153,7 @@ export default function PostsPage() {
         {/* 관찰용 엘리먼트 (무한 스크롤 트리거) */}
         <div ref={loaderRef} className="h-1" />
       </div>
+      <TopButton />
     </div>
   );
 }
