@@ -6,8 +6,8 @@ import { useAuthStore } from "../../stores/authStore";
 import Icon from "../../components/common/Icon";
 
 type MessagePageProps = {
-  matchingUserProfile: Matching[];
-  matchedUserProfile: Matching[];
+  matchingUserProfile: MatchingUser[];
+  matchedUserProfile: MatchingUser[];
 };
 
 export default function MessagePage({
@@ -49,7 +49,7 @@ export default function MessagePage({
   });
   return (
     <>
-      <div className="w-[370px] h-full px-9 py-8 box-shadow-custom rounded-2xl">
+      <div className="w-[370px] h-full px-9 py-8 box-shadow-custom rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:text-[var(--dark-gray-700)]">
         <div>
           <div className="flex gap-[20px] justify-center items-center">
             <div

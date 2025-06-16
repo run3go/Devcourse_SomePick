@@ -1,10 +1,16 @@
 import { z } from "zod";
-export const profileSchema = z.object({
+
+const commonSchema = {
   mainImageUrl: z.string(),
-  subImageUrl: z.string().nullable(),
   mainImageFile: z.instanceof(File).nullable(),
-  subImageFile: z.instanceof(File).nullable(),
   status: z.union([z.literal("solo"), z.literal("couple")]),
+};
+
+const soloSchema = z.object({
+  ...commonSchema,
+  status: z.literal("solo"),
+  subImageUrl: z.string().min(1, "서브 이미지를 첨부해주세요"),
+  subImageFile: z.instanceof(File).nullable(),
   nickname: z
     .string()
     .min(2, "닉네임을 2자부터 5자까지 입력 가능합니다")
@@ -21,7 +27,6 @@ export const profileSchema = z.object({
     return !isNaN(num) && num >= 130 && num <= 220;
   }, "키는 130부터 220까지 입력 가능합니다"),
   mbti: z.string(),
-  partnerNickname: z.string(),
   keywordList: z
     .array(z.string())
     .min(4, "키워드는 최소 4개 이상 선택해야 합니다"),
@@ -32,3 +37,16 @@ export const profileSchema = z.object({
     .array(z.string())
     .min(4, "이상형은 최소 4개 이상 선택해야 합니다"),
 });
+
+const coupleSchema = z.object({
+  ...commonSchema,
+  status: z.literal("couple"),
+  partnerNickname: z.string(),
+});
+
+export const profileSchema = z.discriminatedUnion("status", [
+  soloSchema,
+  coupleSchema,
+]);
+
+export type FormValues = z.infer<typeof profileSchema>;

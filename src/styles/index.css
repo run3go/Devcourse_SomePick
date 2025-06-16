@@ -47,6 +47,10 @@
   --red: #e94235;
 
   --main-font: "inter";
+
+  --toastify-color-progress-success: var(--primary-pink-point);
+  --toastify-color-progress-warning: var(--primary-pink-point);
+  --toastify-color-progress-error: var(--primary-pink-point);
 }
 
 .dark {
@@ -90,7 +94,7 @@ body {
 }
 
 .days-wrap > div:nth-child(7n + 1) {
-  @apply text-[var(--primary-pink)];
+  @apply text-[var(--primary-pink)] dark:text-[#bd98b1];
 }
 
 .circle-bg::before {

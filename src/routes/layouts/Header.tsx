@@ -1,21 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { twMerge } from "tailwind-merge";
-import logoImage from "../../assets/images/headerlogo.png";
-
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
 import { TbMessageHeart } from "react-icons/tb";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
+import logoImage from "../../assets/images/headerlogo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -193,46 +192,82 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
-            {isLogin && (
-              <>
-                <Link to={"/message"}>
-                  <TbMessageHeart size={25} />
-                </Link>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => {
-                    setIsNotificationOpen((state) => !state);
-                  }}
-                >
-                  <IoNotifications size={25} />
-                  {/* 알림 뱃지 표시 */}
-                  {hasUnreadNotifications && (
-                    <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
-                      ●
-                    </span>
-                  )}
-                  {isNotificationOpen && (
-                    <div ref={outsideRef}>
-                      <Notifications
-                        notifications={notifications}
-                        onNotificationsChange={updateNotifications}
-                      />
-                    </div>
-                  )}
-                </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setIsModalOpen((state) => !state)}
-                >
-                  <FaUser size={23} />
-                  {isModalOpen && (
-                    <div ref={outsideRef}>
-                      <HeaderModal onClose={() => setIsModalOpen(false)} />
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
+            {isLogin &&
+              (couple === "couple" ? (
+                <>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      setIsNotificationOpen((state) => !state);
+                    }}
+                  >
+                    <IoNotifications size={25} />
+                    {hasUnreadNotifications && (
+                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                        ●
+                      </span>
+                    )}
+                    {isNotificationOpen && (
+                      <div ref={outsideRef}>
+                        <Notifications
+                          notifications={notifications}
+                          onNotificationsChange={updateNotifications}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => setIsModalOpen((state) => !state)}
+                  >
+                    <FaUser size={23} />
+                    {isModalOpen && (
+                      <div ref={outsideRef}>
+                        <HeaderModal onClose={() => setIsModalOpen(false)} />
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link to={"/message"}>
+                    <TbMessageHeart size={25} />
+                  </Link>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      setIsNotificationOpen((state) => !state);
+                    }}
+                  >
+                    <IoNotifications size={25} />
+                    {hasUnreadNotifications && (
+                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                        ●
+                      </span>
+                    )}
+                    {isNotificationOpen && (
+                      <div ref={outsideRef}>
+                        <Notifications
+                          notifications={notifications}
+                          onNotificationsChange={updateNotifications}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => setIsModalOpen((state) => !state)}
+                  >
+                    <FaUser size={23} />
+                    {isModalOpen && (
+                      <div ref={outsideRef}>
+                        <HeaderModal onClose={() => setIsModalOpen(false)} />
+                      </div>
+                    )}
+                  </div>
+                </>
+              ))}
+
             {!isLogin && (
               <NavLink
                 className={({ isActive }) =>

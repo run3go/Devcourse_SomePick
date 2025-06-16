@@ -12,7 +12,7 @@ export default function SelectTags({
 }) {
   const limit = 8;
   const { control } = useFormContext();
-  const { field } = useController({ name, control });
+  const { field } = useController({ name, control, defaultValue: [] });
   const selectTag = (tag: string) => {
     const values = field.value as string[];
     if (values.includes(tag))

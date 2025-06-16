@@ -1,15 +1,20 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import html2canvas from "html2canvas";
-import { saveAs } from "file-saver";
+import { useRef } from "react";
+// import { saveAs } from "file-saver";
+import { useNavigate } from "react-router";
+import { useUploadImageStore } from "../../stores/useUploadImageStore";
 import ShareButton from "./ShareButton";
 
 interface FortuneData {
   userName?: string | null;
-  status: string | null;
-  loveTitle: string | null;
-  loveDescription: string | null;
-  loveAdvice: string;
+  status?: string | null;
+  love_title: string | null;
+  love_description: string | null;
+  love_advice: string;
+  created_at?: string;
+  id?: string;
+  used_at: string;
 }
 interface Props {
   isOpen: boolean;
@@ -29,6 +34,9 @@ export default function FortuneModal({
   // 카드 캡쳐
   const imgRef = useRef<HTMLDivElement | null>(null);
 
+  const navigate = useNavigate();
+  const { setImage } = useUploadImageStore();
+
   if (!isOpen || cardIndex === null) return null;
 
   const handleShare = async () => {
@@ -39,11 +47,16 @@ export default function FortuneModal({
       const canvas = await html2canvas(image, {
         scale: 2,
         backgroundColor: null,
+        ignoreElements: (e) => e.classList.contains("html2canvas-ignore"),
       });
 
       canvas.toBlob((blob) => {
         if (blob !== null) {
-          saveAs(blob, "result.png");
+          //   saveAs(blob, "result.png");
+          const file = new File([blob], "fortune.png", { type: "image/png" });
+
+          setImage([file]);
+          navigate(`/post/create/`, { state: "free" });
         }
       });
     } catch (e) {
@@ -79,7 +92,7 @@ export default function FortuneModal({
         >
           <button
             onClick={onClose}
-            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10"
+            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
           >
             X
           </button>
@@ -96,13 +109,13 @@ export default function FortuneModal({
                 {new Date().getDate()}일
               </p>
               <p className="text-[20px] font-bold mt-[10px] mb-6">
-                {fortuneData.loveTitle}
+                {fortuneData.love_title}
               </p>
               <p className="text-[16px] mt-[10px] mb-4 leading-relaxed">
-                {fortuneData.loveDescription}
+                {fortuneData.love_description}
               </p>
               <p className="text-[16px] mt-[10px] italic leading-relaxed">
-                💡 {fortuneData.loveAdvice}
+                💡 {fortuneData.love_advice}
               </p>
             </motion.div>
           ) : (
