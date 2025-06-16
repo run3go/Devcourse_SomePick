@@ -192,46 +192,82 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
-            {isLogin && (
-              <>
-                <Link to={"/message"}>
-                  <TbMessageHeart size={25} />
-                </Link>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => {
-                    setIsNotificationOpen((state) => !state);
-                  }}
-                >
-                  <IoNotifications size={25} />
-                  {/* 알림 뱃지 표시 */}
-                  {hasUnreadNotifications && (
-                    <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
-                      ●
-                    </span>
-                  )}
-                  {isNotificationOpen && (
-                    <div ref={outsideRef}>
-                      <Notifications
-                        notifications={notifications}
-                        onNotificationsChange={updateNotifications}
-                      />
-                    </div>
-                  )}
-                </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setIsModalOpen((state) => !state)}
-                >
-                  <FaUser size={23} />
-                  {isModalOpen && (
-                    <div ref={outsideRef}>
-                      <HeaderModal onClose={() => setIsModalOpen(false)} />
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
+            {isLogin &&
+              (couple === "couple" ? (
+                <>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      setIsNotificationOpen((state) => !state);
+                    }}
+                  >
+                    <IoNotifications size={25} />
+                    {hasUnreadNotifications && (
+                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                        ●
+                      </span>
+                    )}
+                    {isNotificationOpen && (
+                      <div ref={outsideRef}>
+                        <Notifications
+                          notifications={notifications}
+                          onNotificationsChange={updateNotifications}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => setIsModalOpen((state) => !state)}
+                  >
+                    <FaUser size={23} />
+                    {isModalOpen && (
+                      <div ref={outsideRef}>
+                        <HeaderModal onClose={() => setIsModalOpen(false)} />
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link to={"/message"}>
+                    <TbMessageHeart size={25} />
+                  </Link>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      setIsNotificationOpen((state) => !state);
+                    }}
+                  >
+                    <IoNotifications size={25} />
+                    {hasUnreadNotifications && (
+                      <span className="absolute top-[-7px] right-[-2px] text-[var(--red)] text-[18px]">
+                        ●
+                      </span>
+                    )}
+                    {isNotificationOpen && (
+                      <div ref={outsideRef}>
+                        <Notifications
+                          notifications={notifications}
+                          onNotificationsChange={updateNotifications}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => setIsModalOpen((state) => !state)}
+                  >
+                    <FaUser size={23} />
+                    {isModalOpen && (
+                      <div ref={outsideRef}>
+                        <HeaderModal onClose={() => setIsModalOpen(false)} />
+                      </div>
+                    )}
+                  </div>
+                </>
+              ))}
+
             {!isLogin && (
               <NavLink
                 className={({ isActive }) =>
