@@ -19,21 +19,21 @@ export default function FortuneInfo({ isTodayChecked }: Props) {
           />
         </div>
         <div className="text-center mt-4">
-          <p className="font-bold text-[28px]">
+          <p className="font-bold text-[28px] dark:text-[var(--dark-gray-700)]">
             <span className="text-[var(--primary-pink)]">{userName}</span>님,
           </p>
           {isTodayChecked ? (
             <>
-              <p className="mt-2 font-bold text-[28px] text-[var(--gray-700)]">
+              <p className="mt-2 font-bold text-[28px] dark:text-[var(--dark-gray-700)] text-[var(--gray-700)]">
                 오늘의 운세를 이미 확인했어요!
               </p>
             </>
           ) : (
             <>
-              <p className="font-bold text-[28px] text-[var(--gray-700)]">
+              <p className="font-bold text-[28px] dark:text-[var(--dark-gray-700)] text-[var(--gray-700)]">
                 오늘의 운세가 준비되었어요! <br />{" "}
               </p>
-              <p className="font-bold text-[28px] text-[var(--gray-500)]">
+              <p className="font-bold text-[28px] dark:text-[var(--dark-gray-700)] text-[var(--gray-500)]">
                 셋 중 하나의 카드를 클릭해보세요.
               </p>
             </>
