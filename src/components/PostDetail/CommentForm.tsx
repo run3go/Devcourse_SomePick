@@ -2,7 +2,8 @@ import { useState } from "react";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import { createComment, updateComment } from "../../apis/comment";
-import Alert from "../common/Alert";
+// import Alert from "../common/Alert";
+import { showSuccessToast, showWarnToast } from "../common/ShowToast";
 import { notifyChildComment, notifyComment } from "../../apis/notification";
 
 interface CommentProps {
@@ -33,13 +34,13 @@ export default function CommentForm({
   parentAuthorId,
 }: CommentProps) {
   const [input, setInput] = useState(defaultValue);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // 댓글 등록하기
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) {
-      setIsAlertOpen(true);
+      showWarnToast("댓글을 작성해주세요!");
       return;
     }
     // 댓글 수정
@@ -47,19 +48,23 @@ export default function CommentForm({
       await updateComment(input, commentId);
       setInput("");
       onCommentAdd?.();
+      showSuccessToast("댓글수정이 완료되었습니다!");
     }
     // 수정 아니면 새로운 댓글 등록
     else {
       const newComment = await createComment(input, postId, parentId);
+      showSuccessToast("댓글이 등록되었습니다!");
       if (newComment) {
         setInput("");
         onCommentAdd?.();
+
         // 대댓글일때
         if (isReply) {
           if (parentId !== null) {
             await notifyChildComment(parentAuthorId!, postId!);
             toggleReply?.();
           }
+
           // 댓글일때
         } else {
           if (postId !== null) await notifyComment(post.author.id, postId);
@@ -99,13 +104,13 @@ export default function CommentForm({
           </Button>
         </div>
       </form>
-      {isAlertOpen && (
+      {/* {isAlertOpen && (
         <Alert
           title="댓글을 작성해주세요!"
           isOk="확인"
           onClick={() => setIsAlertOpen(false)}
         />
-      )}
+      )} */}
     </>
   );
 }
