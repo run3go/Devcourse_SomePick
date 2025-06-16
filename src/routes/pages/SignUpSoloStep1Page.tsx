@@ -11,7 +11,7 @@ import useCheckNickname from "../../hooks/useCheckNickname";
 import useSignupValidation from "../../hooks/useSignupValidation";
 import { useSignUpStore } from "../../stores/signupStore";
 import supabase from "../../utils/supabase";
-import { toast } from "react-toastify";
+import { showWarnToast } from "../../components/common/ShowToast";
 // import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep1Page() {
@@ -48,49 +48,49 @@ export default function SignUpSoloStep1Page() {
 
     if (!mainImgFile || !subImgFile) {
       // alert("이미지를 추가해주세요.");
-      toast.warn("이미지를 추가해주세요.");
+      showWarnToast("이미지를 추가해주세요.");
       return;
     }
 
     if (!nickname) {
       // alert("닉네임을 입력해주세요.");
-      toast.warn("닉네임을 입력해주세요.");
+      showWarnToast("닉네임을 입력해주세요.");
       return;
     }
 
     if (isDuplicate) {
       // alert("중복된 닉네임입니다.");
-      toast.warn("중복된 닉네임입니다.");
+      showWarnToast("중복된 닉네임입니다.");
       return;
     }
 
     if (data.age === 0 || data.gender === undefined) {
       // alert("주민등록번호를 입력해주세요.");
-      toast.warn("올바른 주민등록번호를 입력해주세요.");
+      showWarnToast("올바른 주민등록번호를 입력해주세요.");
       return;
     }
 
     if (!profile) {
       if (!email) {
-        toast.warn("이메일을 입력해주세요.");
+        showWarnToast("이메일을 입력해주세요.");
         return;
       }
 
       if (!isEmailValid) {
         // alert("올바른 이메일 형식이 아닙니다.");
-        toast.warn("올바른 이메일 형식이 아닙니다.");
+        showWarnToast("올바른 이메일 형식이 아닙니다.");
         return;
       }
 
       if (isEmailDuplicate) {
         // alert("중복된 이메일입니다.");
-        toast.warn("중복된 이메일입니다.");
+        showWarnToast("중복된 이메일입니다.");
         return;
       }
 
       if (!isPwValid) {
         // alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
-        toast.warn(
+        showWarnToast(
           "비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다."
         );
         return;
@@ -98,7 +98,7 @@ export default function SignUpSoloStep1Page() {
 
       if (pw !== pwConfirm) {
         // alert("비밀번호가 일치하지 않습니다.");
-        toast.warn("비밀번호가 일치하지 않습니다.");
+        showWarnToast("비밀번호가 일치하지 않습니다.");
         return;
       }
     }

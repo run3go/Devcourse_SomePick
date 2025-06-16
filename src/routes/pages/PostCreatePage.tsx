@@ -6,6 +6,10 @@ import {
   fetchPostByPostId,
   updatePost,
 } from "../../apis/posts/postCrud";
+import {
+  showSuccessToast,
+  showWarnToast,
+} from "../../components/common/ShowToast";
 import { deleteImage, storeImage } from "../../apis/util";
 import BackButton from "../../components/common/BackButton";
 import Button from "../../components/common/Button";
@@ -78,7 +82,7 @@ export default function PostCreatePage() {
 
     const availableSlots = 8 - imageFiles.length;
     if (availableSlots <= 0) {
-      toast.warn("이미지는 최대 8장까지 업로드할 수 있어요!");
+      showWarnToast("이미지는 최대 8장까지 업로드할 수 있어요!");
       return;
     }
 
@@ -143,7 +147,7 @@ export default function PostCreatePage() {
       );
 
       // alert("게시물이 수정 되었습니다!");
-      toast.success("게시물이 수정 되었습니다!");
+      showSuccessToast("게시물이 수정 되었습니다!");
       navigate(`/post/${backTo}`);
     } else {
       await createPost(
@@ -154,7 +158,7 @@ export default function PostCreatePage() {
         // fortune ? fortune : ""
       );
       // alert("게시물이 업로드 되었습니다!");
-      toast.success("게시물이 업로드 되었습니다!");
+      showSuccessToast("게시물이 업로드 되었습니다!");
       navigate(`/post/${channel}`);
     }
   };

@@ -1,11 +1,14 @@
 // import email from "../../assets/icons/email.png";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { loginUser, loginUserByGoogle } from "../../apis/auth";
 import google from "../../assets/images/google-login.png";
 import Button from "../../components/common/Button";
 import LoginInput from "../../components/login/LoginInput";
+import {
+  showErrorToast,
+  showWarnToast,
+} from "../../components/common/ShowToast";
 // import { showErrorToast } from "../../components/common/Toast";
 
 export default function LoginPage() {
@@ -18,7 +21,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.warn("이메일과 비밀번호를 모두 입력해주세요.");
+      showWarnToast("이메일과 비밀번호를 모두 입력해주세요.");
       return;
     }
 
@@ -28,7 +31,7 @@ export default function LoginPage() {
       if (login) {
         navigate("/");
       } else {
-        toast.error("이메일/비밀번호가 일치하지 않습니다.");
+        showErrorToast("이메일/비밀번호가 일치하지 않습니다.");
       }
     } catch (error) {
       console.error(error);
