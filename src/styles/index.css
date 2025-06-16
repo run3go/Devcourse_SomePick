@@ -47,6 +47,10 @@
   --red: #e94235;
 
   --main-font: "inter";
+
+  --toastify-color-progress-success: var(--primary-pink-point);
+  --toastify-color-progress-warning: var(--primary-pink-point);
+  --toastify-color-progress-error: var(--primary-pink-point);
 }
 
 .dark {

@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import Icon from "../../components/common/Icon";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
-import { deleteImage, storeImage } from "../../apis/util";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 import {
   createPost,
   fetchPostByPostId,
   updatePost,
 } from "../../apis/posts/postCrud";
-import { useLocation, useNavigate, useParams } from "react-router";
-import { toast } from "react-toastify";
+import {
+  showSuccessToast,
+  showWarnToast,
+} from "../../components/common/ShowToast";
+import { deleteImage, storeImage } from "../../apis/util";
+import BackButton from "../../components/common/BackButton";
+import Button from "../../components/common/Button";
+import Icon from "../../components/common/Icon";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 // 운세 페이지에서 이미지 불러오기
 import { useUploadImageStore } from "../../stores/useUploadImageStore";
 
@@ -21,10 +25,22 @@ export default function PostCreatePage() {
 
   // 운세 페이지에서 이미지 불러오기
   const { image } = useUploadImageStore();
+  const clearImage = useUploadImageStore((state) => state.clearImage);
 
   useEffect(() => {
-    console.log("zustand에 저장된 이미지:", image);
-  }, [image]);
+    if (image.length) {
+      const getFortuneImage = async () => {
+        const imageUrl = await storeImage(image[0], "temp");
+        setImageFiles((prev) => [...prev, image[0]]);
+        if (imageUrl) {
+          setImageUrls((prev) => [...prev, imageUrl]);
+        }
+        setTitle("[오늘 내 운세]");
+      };
+      getFortuneImage();
+      clearImage();
+    }
+  }, [image, clearImage]);
 
   // console.log(params);
 
@@ -34,7 +50,7 @@ export default function PostCreatePage() {
   const [contents, setContents] = useState("");
   const [prevImageUrls, setPrevImageUrls] = useState<string[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>(image ? [...image] : []);
   // const [imageUrl, setImageUrl] = useState("");
   // const [imageFile, setImageFile] = useState<File | null>(null);
   // const [fortune, setFortune] = useState("");
@@ -66,7 +82,7 @@ export default function PostCreatePage() {
 
     const availableSlots = 8 - imageFiles.length;
     if (availableSlots <= 0) {
-      toast.warn("이미지는 최대 8장까지 업로드할 수 있어요!");
+      showWarnToast("이미지는 최대 8장까지 업로드할 수 있어요!");
       return;
     }
 
@@ -131,7 +147,7 @@ export default function PostCreatePage() {
       );
 
       // alert("게시물이 수정 되었습니다!");
-      toast.success("게시물이 수정 되었습니다!");
+      showSuccessToast("게시물이 수정 되었습니다!");
       navigate(`/post/${backTo}`);
     } else {
       await createPost(
@@ -142,7 +158,7 @@ export default function PostCreatePage() {
         // fortune ? fortune : ""
       );
       // alert("게시물이 업로드 되었습니다!");
-      toast.success("게시물이 업로드 되었습니다!");
+      showSuccessToast("게시물이 업로드 되었습니다!");
       navigate(`/post/${channel}`);
     }
   };
