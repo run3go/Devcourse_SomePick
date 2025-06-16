@@ -35,7 +35,12 @@ export default function MeetDate({ couple }: { couple: Couple }) {
     }
   }, [setMeetDate, couple]);
   return (
-    <div className="flex flex-col h-[203px] items-center border-y-5 border-[var(--primary-pink)] py-9">
+    <div
+      className={twMerge(
+        "flex flex-col h-[203px] items-center border-y-5 border-[var(--primary-pink)] py-9",
+        "dark:text-[var(--dark-gray-200)]"
+      )}
+    >
       {isModalOpen ? (
         <>
           <span className="mb-[26px]">
@@ -60,7 +65,7 @@ export default function MeetDate({ couple }: { couple: Couple }) {
         </>
       ) : (
         <>
-          <h2 className="text-2xl font-medium">TODAY</h2>
+          <h2 className="text-2xl font-medium pb-2">TODAY</h2>
           <span className="text-xl">
             <strong className="font-semibold text-[var(--primary-pink-tone)]">
               {partnerInfo.nickname}
