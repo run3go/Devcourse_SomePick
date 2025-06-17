@@ -66,6 +66,7 @@ export default function PostsPage() {
       if (!result) return;
 
       console.log(result);
+      console.log(result[0].comments[0].nested);
 
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
