@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import Icon from "../common/Icon";
 export default function ShowCalendar() {
   const days = Array.from({ length: 30 }, (_, index) => index + 1);
-  const today = 4;
+  const today = [19, 24, 10];
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[650px] flex justify-between items-center mt-[40px] mb-[40px]">
@@ -62,26 +62,41 @@ export default function ShowCalendar() {
             {days.map((day) => (
               <div
                 key={day}
-                className="w-[14.28%] h-20 text-center dark:text-[var(--dark-gray-700)]"
-              >
-                <span
-                  className={twMerge(
-                    "day-text relative py-0.5 cursor-pointer leading-[1] inline-block gray-circle-bg",
-                    today === day && "circle-bg"
-                  )}
-                >
-                  {day}
-                </span>
-                {day === 10 && (
-                  <ul className="flex flex-col gap-[3px] text-[15px] pt-[2px]">
-                    <li className="overflow-hidden text-ellipsis text-nowrap pl-[13px] bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
-                      은우랑 데이트
-                    </li>
-                    <li className="overflow-hidden text-ellipsis text-nowrap bg-[var(--primary-pink-tone)] inline-block w-20 rounded-[5px] text-white">
-                      부산 가기
-                    </li>
-                  </ul>
+                className={twMerge(
+                  "group relative basis-1/7 text-[#bdbdbd] border-t-3 rounded-lg border-t-transparent h-20 ",
+                  "dark:text-[var(--gray-700)]",
+                  day === today[0] && "border-t-[var(--primary-pink-point)]",
+                  day === today[0] && "bg-[#ffebf0]"
                 )}
+              >
+                <div className="relative w-full h-[30px] text-center text-xl leading-[1]">
+                  <span
+                    className={twMerge(
+                      "inline-block",
+                      day === today[0] &&
+                        "text-[#E870A2] font-bold dark:text-[#E870A2]"
+                    )}
+                  >
+                    {day}
+                  </span>
+                </div>
+                <ul className="flex flex-col gap-[3px] text-[13px] px-2">
+                  {day === 19 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
+                      데이트
+                    </li>
+                  )}
+                  {day === 10 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
+                      1주년
+                    </li>
+                  )}
+                  {day === 24 && (
+                    <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
+                      부산여행
+                    </li>
+                  )}
+                </ul>
               </div>
             ))}
           </div>
