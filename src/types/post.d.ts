@@ -26,7 +26,7 @@ type PostData = {
   title: string;
   contents: string;
   fortune_telling: string | null;
-  image: string | null;
+  images?: string[] | null;
   comments: any[];
   likes: any[];
 };

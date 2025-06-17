@@ -8,10 +8,7 @@ interface PostcardProps {
   post: PostData;
   isProfile?: boolean;
   // 클릭 이벤트를 받아서 author와 event를 부모로 전달
-  onProfileClick?: (
-    author: Author,
-    e: React.MouseEvent<HTMLDivElement>
-  ) => void;
+  onProfileClick?: (author: Author, e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default function Postcard({
@@ -55,16 +52,12 @@ export default function Postcard({
               <span className="font-medium dark:text-[var(--dark-gray-700)]">
                 {post.author.nickname}
               </span>
-              <span className="text-[#969696]">
-                {dayjs(post.created_at).format("YYYY.MM.DD")}
-              </span>
+              <span className="text-[#969696]">{dayjs(post.created_at).format("YYYY.MM.DD")}</span>
             </div>
           </div>
 
           {/* 제목 */}
-          <h2 className="text-lg font-bold dark:text-[var(--dark-gray-700)]">
-            {post.title}
-          </h2>
+          <h2 className="text-lg font-bold dark:text-[var(--dark-gray-700)]">{post.title}</h2>
 
           {/* 본문 */}
           <p className="leading-relaxed line-clamp-2 dark:text-[var(--dark-gray-700)]">
@@ -117,9 +110,9 @@ export default function Postcard({
 
       {/* 우측 이미지 */}
       <div className="p-4 flex-shrink-0 self-center">
-        {post.image && (
+        {post.images && (
           <img
-            src={post.image}
+            src={post.images[0]}
             alt="Post"
             className={twMerge(
               "w-[241px] h-[214px] object-cover rounded-[16px]",
