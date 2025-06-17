@@ -2,7 +2,11 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
-import { fetchMessages, subscribeToMessages } from "../../apis/message";
+import {
+  fetchMessages,
+  readMessage,
+  subscribeToMessages,
+} from "../../apis/message";
 import { useAuthStore } from "../../stores/authStore";
 import ChatInput from "./ChatInput";
 
@@ -40,14 +44,15 @@ export default function ChatRoom({
   // 메세지 불러오기
   useEffect(() => {
     const loadMessages = async () => {
-      if (!chatRoomId) return;
+      if (!chatRoomId || !session) return;
+      await readMessage(chatRoomId, session.user.id);
       const data = await fetchMessages(chatRoomId);
       if (data) {
         setMessages(data);
       }
     };
     loadMessages();
-  }, [chatRoomId]);
+  }, [chatRoomId, session]);
 
   // 메세지 실시간 연동
   useEffect(() => {
@@ -79,7 +84,7 @@ export default function ChatRoom({
   // 메세지 오면 채팅창 맨아래로 이동
   useEffect(() => {
     if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messageEndRef.current.scrollIntoView({ behavior: "instant" });
     }
   }, [messages]);
 
@@ -105,7 +110,7 @@ export default function ChatRoom({
           </div>
         </div>
         <hr className="mx-5 my-3 border-[var(--gray-500)] dark:bg-[var(--dark-bg-primary)]" />
-        <div className="h-full overflow-y-scroll flex flex-col my-4">
+        <div className="h-full overflow-y-scroll flex flex-col my-4 scrollbar-hide">
           <div className="h-full w-full px-8">
             {messages.map((message, index) => {
               const currentDate = dayjs(message.created_at).format(

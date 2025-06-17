@@ -5,7 +5,7 @@ export default function MessageLayoutPage() {
   const { matchingUserProfile, matchedUserProfile } = useLoaderData() ?? {};
   return (
     <>
-      <div className="w-[1150px] h-full mx-auto gap-10 flex my-[5vh]">
+      <div className="w-[1150px] h-full mx-auto gap-10 flex my-[2.5vh]">
         <MessagePage
           matchingUserProfile={matchingUserProfile}
           matchedUserProfile={matchedUserProfile}
