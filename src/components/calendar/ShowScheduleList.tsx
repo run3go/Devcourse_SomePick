@@ -41,7 +41,7 @@ export default function ShowScheduleList({
     <div
       className={twMerge(
         "flex flex-col px-4 py-7 h-[565px] border border-[var(--primary-pink)]",
-        "dark:bg-[var(--dark-bg-secondary)]"
+        "dark:bg-[var(--dark-bg-secondary)] rounded-[30px]"
       )}
     >
       <h2 className="text-center font-semibold text-xl text-[var(--primary-pink-point)] border-b border-[var(--primary-pink)] pb-[10px] mb-[18px]">

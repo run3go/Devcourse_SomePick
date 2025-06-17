@@ -3,6 +3,8 @@ import { useLoaderData } from "react-router";
 import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 import { createSchedule } from "../../apis/calendar";
+import { notifySchedule } from "../../apis/notification";
+import { useAuthStore } from "../../stores/authStore";
 import { useCalendarStore } from "../../stores/calendarStore";
 import Button from "../common/Button";
 
@@ -26,6 +28,11 @@ export default function ScheduleInput({
   const { setTitle, setMemo, setId, addSchedule, updateSchedule } =
     useCalendarStore();
 
+  const session = useAuthStore((state) => state.session);
+
+  const partnerInfo =
+    session?.user.id === couple.user1.id ? couple.user2 : couple.user1;
+
   const handleSubmit = () => {
     if (!title.trim().length) {
       toast.warn("제목을 입력해주세요");
@@ -48,6 +55,7 @@ export default function ScheduleInput({
           updateSchedule(schedule);
         } else {
           addSchedule(schedule);
+          await notifySchedule(partnerInfo.id);
         }
         setTitle("");
         setMemo("");
@@ -63,7 +71,7 @@ export default function ScheduleInput({
       <div
         ref={scrollRef}
         className={twMerge(
-          "flex flex-col gap-[27px] h-[453px] mt-[80px] px-[77px] py-[35px] ",
+          "flex flex-col gap-[27px] h-[453px] mt-[80px] px-[77px] py-[35px] rounded-[30px]",
           "border border-[var(--primary-pink)] mb-[150px] dark:bg-[var(--dark-bg-secondary)]"
         )}
       >

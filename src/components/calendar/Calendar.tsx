@@ -4,12 +4,15 @@ import {
   getDaysInMonth,
   getMonth,
   getYear,
+  setMonth,
+  setYear,
   subMonths,
 } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { weeks } from "../../constants/data/calendar";
+import Button from "../common/Button";
 import Icon from "../common/Icon";
 import DateItem from "./DateItem";
 
@@ -24,6 +27,8 @@ export default function Calendar({
   const year = getYear(date);
   const month = getMonth(date);
   const firstDay = getDay(new Date(year, month, 1));
+  const thisYear = getYear(new Date());
+  const thisMonth = getMonth(new Date());
   const days = getDaysInMonth(new Date(year, month));
   const dayArray = Array.from(
     { length: days + firstDay },
@@ -37,8 +42,16 @@ export default function Calendar({
     setDate((date) => addMonths(date, 1));
   };
 
+  const setThisMonth = () => {
+    setDate((date) => {
+      const year = setYear(date, thisYear);
+      const month = setMonth(year, thisMonth);
+      return month;
+    });
+  };
+  console.log(month !== thisMonth);
   return (
-    <div className="overflow-x-hidden flex justify-center pl-[62px] py-[20px] flex-grow shadow-[0_2px_8px_0_rgba(0,0,0,0.4)] rounded-[30px]">
+    <div className="relative overflow-x-hidden flex justify-center pl-[62px] py-[20px] flex-grow shadow-[0_2px_8px_0_rgba(0,0,0,0.4)] rounded-[30px] dark:border dark:border-[var(--dark-white)]">
       <div className="w-[820px]">
         <div className="flex justify-between items-center mb-[30px] w-[735px] ml-[10px]">
           <Icon
@@ -50,6 +63,14 @@ export default function Calendar({
             onClick={prevMonth}
           />
           <div>
+            {(month !== thisMonth || year !== thisYear) && (
+              <Button
+                onClick={setThisMonth}
+                className="w-25 py-1 absolute text-sm right-[30%] top-13 -translate-y-1/2"
+              >
+                이번 달로 이동
+              </Button>
+            )}
             <span className="text-xl mr-[14px] text-[var(--primary-pink-point)]">
               {year}
             </span>
@@ -95,7 +116,7 @@ export default function Calendar({
                           schedule.date ===
                           `${year}-${
                             month + 1 < 10 ? "0" + (month + 1) : month + 1
-                          }-${item}`
+                          }-${item < 10 ? "0" + item : item}`
                       )}
                     />
                   ))}
