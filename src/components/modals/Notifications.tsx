@@ -3,12 +3,11 @@ import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { readAllNotification, readNotification } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
-import type { Notification } from "../../types/notification";
 import Icon from "../common/Icon";
 
 interface Props {
-  notifications: Notification[];
-  onNotificationsChange: (notifications: Notification[]) => void;
+  notifications: NotificationData[];
+  onNotificationsChange: (notifications: NotificationData[]) => void;
 }
 
 export default function Notifications({
@@ -19,7 +18,7 @@ export default function Notifications({
   const session = useAuthStore((state) => state.session);
   const [isLoading, setIsLoading] = useState(true);
   const [filterMyNotifications, setFilterMyNotifications] = useState<
-    Notification[]
+    NotificationData[]
   >([]);
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export default function Notifications({
   }, [notifications, session?.user.id]);
 
   // 알림 하나 하나 읽음 처리
-  const handleNotification = async (notification: Notification) => {
+  const handleNotification = async (notification: NotificationData) => {
     try {
       if (notification.id) {
         await readNotification(notification.id);
@@ -104,7 +103,7 @@ export default function Notifications({
   };
 
   //  알림 형태
-  const formatNotifications = (notification: Notification) => {
+  const formatNotifications = (notification: NotificationData) => {
     const senderName = notification.sender.nickname || "누군가";
     switch (notification.type) {
       case "like":

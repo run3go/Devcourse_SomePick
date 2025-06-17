@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export default function Tags() {
   const tags = [
     {
@@ -83,12 +85,16 @@ export default function Tags() {
             return (
               <span
                 key={index}
-                className={`border border-[var(--primary-pink)] px-2 py-1 rounded-full text-[18px] ${
-                  isWhiteText ? "font-bold" : ""
-                }`}
+                className={twMerge(
+                  `border border-[var(--primary-pink)] px-2 py-1 rounded-full text-[18px] ${
+                    isWhiteText
+                      ? "font-bold dark:text-[var(--dark-gray-700)]"
+                      : "dark:text-[var(--dark-white)]"
+                  }`,
+                  `text-[${tag.color}] font-normal`
+                )}
                 style={{
                   backgroundColor: tag.bg,
-                  color: tag.color,
                 }}
               >
                 {tag.text}

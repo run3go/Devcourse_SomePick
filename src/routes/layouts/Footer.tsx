@@ -1,7 +1,8 @@
-import whiteLogo from "../../assets/images/logo_white.png";
 import { IoLogoGithub } from "react-icons/io5";
+import whiteLogo from "../../assets/images/logo_white.png";
 // footer
 export default function Footer() {
+  const url = "https://github.com/run3go/Devcourse_SomePick";
   return (
     <>
       <footer className="bg-[#304463] dark:bg-[#1A1A1A]">
@@ -17,7 +18,11 @@ export default function Footer() {
                 © 2025 somepick. All rights reserved.
               </p>
               <div className="mr-[110px] mt-[25px] mb-[110px]">
-                <IoLogoGithub size={60} className="cursor-pointer" />
+                <IoLogoGithub
+                  onClick={() => window.open(url)}
+                  size={60}
+                  className="cursor-pointer"
+                />
               </div>
             </div>
           </div>
