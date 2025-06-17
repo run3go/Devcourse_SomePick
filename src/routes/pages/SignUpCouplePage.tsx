@@ -30,6 +30,7 @@ export default function SignUpCouplePage() {
   const [isTouched, setIsTouched] = useState(false);
   const [isEmailTouched, setIsEmailTouched] = useState(false);
   const [isPwTouched, setIsPwTouched] = useState(false);
+  const [isPwConfirmTouched, setIsPwConfirmTouched] = useState(false);
 
   const { isDuplicate } = useCheckNickname(nickname);
 
@@ -301,10 +302,15 @@ export default function SignUpCouplePage() {
               type="password"
               name="confirmPw"
               value={pwConfirm}
-              onChange={handlePwConfirmChange}
-              isError={!isPwConfirmValid}
+              onChange={(e) => {
+                handlePwConfirmChange(e);
+                setIsPwConfirmTouched(true);
+              }}
+              isError={isPwConfirmTouched && !isPwConfirmValid}
               errorMessage={
-                !isPwConfirmValid ? "(비밀번호가 일치하지 않습니다.)" : ""
+                isPwConfirmTouched && !isPwConfirmValid
+                  ? "(비밀번호가 일치하지 않습니다.)"
+                  : ""
               }
               className={twMerge(profile.id && "hidden")}
               // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}

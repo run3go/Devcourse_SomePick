@@ -16,7 +16,7 @@ export default function Tags() {
       color: "var(--white)",
     },
     { text: "예쁜", bg: "", color: "var(--gray-700)" },
-    { text: "스윗남 / 스윗녀", bg: "", color: "000000" },
+    { text: "스윗남 / 스윗녀", bg: "", color: "var(--gray-700)" },
     { text: "똑똑한", bg: "", color: "var(--gray-700)" },
     { text: "성격 좋음", bg: "", color: "var(--gray-700)" },
     { text: "낮져밤이", bg: "", color: "var(--gray-700)" },

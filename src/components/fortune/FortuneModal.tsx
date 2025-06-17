@@ -16,6 +16,7 @@ interface FortuneData {
   id?: string;
   used_at: string;
 }
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;

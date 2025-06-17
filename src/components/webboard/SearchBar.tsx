@@ -28,7 +28,7 @@ export default function SearchBar({ value, onSearch }: SearchBarProps) {
         onKeyDown={(e) => {
           if (e.key === "Enter") onSearch(input);
         }}
-        className="flex-1 bg-transparent focus:outline-none text-sm text-gray-800 placeholder-gray-400"
+        className="flex-1 bg-transparent focus:outline-none text-sm text-gray-800 placeholder-gray-400 dark:text-white"
       />
       <button onClick={() => onSearch(input)} className="btn-search-icon" />
     </div>

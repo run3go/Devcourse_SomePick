@@ -10,11 +10,12 @@ import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
-import logoImage from "../../assets/images/headerlogo.png";
+import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import { useAuthStore } from "../../stores/authstore";
+import type { Notification } from "../../types/notification";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -25,12 +26,11 @@ export default function Header() {
   // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
-  const [notifications, setNotifications] = useState<NotificationData[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
   const session = useAuthStore((state) => state.session);
-
   const couple = session?.user.user_metadata.status;
 
   // 초기 알림 데이터
@@ -41,6 +41,7 @@ export default function Header() {
       try {
         const data = await fetchNotifications();
         if (data) {
+          console.log(session);
           setNotifications(data);
           setHasUnreadNotifications(data.length > 0);
         }
@@ -73,12 +74,13 @@ export default function Header() {
   }, [isLogin]);
 
   // 헤더에서는 상태 업데이트
-  const addNotification = (newNotification: NotificationData) => {
+  const addNotification = (newNotification: Notification) => {
+    if (newNotification.sender_id === session?.user.id) return;
     setNotifications((prev) => [newNotification, ...prev]);
     setHasUnreadNotifications(true);
   };
 
-  const updateNotifications = (updatedNotifications: NotificationData[]) => {
+  const updateNotifications = (updatedNotifications: Notification[]) => {
     setNotifications(updatedNotifications);
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };
@@ -107,7 +109,7 @@ export default function Header() {
             src={logoImage}
             alt="로고 이미지"
             onClick={() => navigate("/")}
-            className="cursor-pointer"
+            className="cursor-pointer w-[15%]"
           />
           <div className="relative flex items-center gap-[65px] dark:text-[var(--dark-gray-700)]">
             <NavLink

@@ -29,8 +29,8 @@ export const sendHeart = async (receiverId: string) => {
     const { data } = await supabase
       .from("matchings")
       .select("*")
-      .eq("user_id", receiverId)
-      .eq("matching_user_id", session.user.id)
+      .eq("user_id", session.user.id)
+      .eq("matching_user_id", receiverId)
       .single();
     if (data) {
       return true;
@@ -41,12 +41,15 @@ export const sendHeart = async (receiverId: string) => {
       .insert([{ user_id: session.user.id, matching_user_id: receiverId }])
       .select("*")
       .single();
-    if (matchingError && matchingError.code === "23505") {
-      alert("이미 하트를 보낸 상대입니다.");
-      return;
+    if (matchingError) {
+      console.error("매칭 에러:", matchingError);
+      return undefined; // 실패
     }
+
+    return false; // 새로 보냄
   } catch (e) {
-    console.error(e);
+    console.error("sendHeart error:", e);
+    return undefined; // 실패
   }
 };
 
