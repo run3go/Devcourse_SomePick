@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MatchingCardInfo from "./MatchingCardInfo";
 import type { Database } from "../../types/supabase";
 import { useAuthStore } from "../../stores/authStore";
@@ -7,6 +7,7 @@ type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardProps {
   profile: Profiles;
+  disableActionButton?: boolean;
   blurClass?: string;
   disableFlip?: boolean;
   flipOnHover?: boolean;
@@ -19,6 +20,7 @@ interface MatchingCardProps {
 }
 
 export default function MatchingCard({
+  disableActionButton,
   profile,
   blurClass = "",
   disableFlip = false,
@@ -32,13 +34,16 @@ export default function MatchingCard({
 }: MatchingCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const session = useAuthStore((state) => state.session);
-  const ideal_types = session!.user.user_metadata?.ideal_types;
+  const ideal_types = session?.user.user_metadata?.ideal_types ?? "";
   const idealArray = ideal_types
     .split(",")
     .map((t: string) => t.trim())
     .filter(Boolean);
 
-  const matched = idealArray.filter((type: string) => profile.keywords!.includes(type));
+  const matched =
+    idealArray.length && profile.keywords
+      ? idealArray.filter((type: string) => profile.keywords!.includes(type))
+      : [];
 
   const matchPercent =
     idealArray.length > 0 ? Math.round((matched.length / idealArray.length) * 100) : 0;
@@ -108,7 +113,7 @@ export default function MatchingCard({
             backfaceVisibility: "hidden",
           }}
         >
-          <MatchingCardInfo profile={profile} />
+          <MatchingCardInfo profile={profile} disableActionButton={disableActionButton} />
         </div>
       </div>
     </div>

@@ -36,7 +36,7 @@ export default function Postcard({
         <div className="space-y-2">
           {/* 프로필 (클릭 영역) */}
           <div
-            className="flex items-center cursor-pointer"
+            className="inline-flex items-center cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
               onProfileClick?.(post.author, e);
@@ -60,15 +60,44 @@ export default function Postcard({
           <p className="leading-relaxed line-clamp-2 dark:text-white">{post.contents}</p>
         </div>
 
-        {/* 좋아요 · 댓글 */}
+        {/* 좋아요  댓글 */}
         <div className="flex items-center space-x-6 mt-auto dark:text-white">
           <div className="flex items-center gap-[5px]">
-            <Icon width="18px" height="16px" left="-415px" top="-762px" />
-
+            {/* 기본모드용 아이콘 */}
+            <Icon
+              className="block dark:hidden"
+              width="18px"
+              height="16px"
+              left="-415px"
+              top="-762px"
+            />
+            {/* 다크모드용 아이콘 */}
+            <Icon
+              className="hidden dark:block"
+              width="17px"
+              height="16px"
+              left="-415px"
+              top="-793px"
+            />
             <span>{post.likes.length}</span>
           </div>
           <div className="flex items-center gap-[6px]">
-            <Icon width="16px" height="16px" left="-463px" top="-762px" />
+            {/* 기본모드용 아이콘 */}
+            <Icon
+              className="block dark:hidden"
+              width="16px"
+              height="16px"
+              left="-463px"
+              top="-762px"
+            />
+            {/* 다크모드용 아이콘 */}
+            <Icon
+              className="hidden dark:block"
+              width="17px"
+              height="17px"
+              left="-375px"
+              top="-792px"
+            />
             <span>{post.comments.length}</span>
           </div>
         </div>
