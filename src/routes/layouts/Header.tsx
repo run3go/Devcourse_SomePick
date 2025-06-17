@@ -1,5 +1,5 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
 import { TbBell, TbMessageHeart, TbUserCircle } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
@@ -13,7 +13,6 @@ import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import { useAuthStore } from "../../stores/authStore";
-import type { Notification } from "../../types/notification";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -24,7 +23,7 @@ export default function Header() {
   // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -39,7 +38,6 @@ export default function Header() {
       try {
         const data = await fetchNotifications();
         if (data) {
-          console.log(session);
           setNotifications(data);
           setHasUnreadNotifications(data.length > 0);
         }
@@ -49,7 +47,17 @@ export default function Header() {
     };
 
     loadNotifications();
-  }, [isLogin]);
+  }, [isLogin, session]);
+
+  // 헤더에서는 상태 업데이트
+  const addNotification = useCallback(
+    (newNotification: NotificationData) => {
+      if (newNotification.sender_id === session?.user.id) return;
+      setNotifications((prev) => [newNotification, ...prev]);
+      setHasUnreadNotifications(true);
+    },
+    [session]
+  );
 
   // 실시간 알림 구독
   useEffect(() => {
@@ -69,16 +77,9 @@ export default function Header() {
         channel.unsubscribe();
       }
     };
-  }, [isLogin]);
+  }, [isLogin, addNotification]);
 
-  // 헤더에서는 상태 업데이트
-  const addNotification = (newNotification: Notification) => {
-    if (newNotification.sender_id === session?.user.id) return;
-    setNotifications((prev) => [newNotification, ...prev]);
-    setHasUnreadNotifications(true);
-  };
-
-  const updateNotifications = (updatedNotifications: Notification[]) => {
+  const updateNotifications = (updatedNotifications: NotificationData[]) => {
     setNotifications(updatedNotifications);
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };

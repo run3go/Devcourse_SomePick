@@ -27,8 +27,8 @@ type PostData = {
   contents: string;
   fortune_telling: string | null;
   image: string | null;
-  comments: any[];
-  likes: any[];
+  comments: { nested: { id: string }[] }[];
+  likes: Like[];
 };
 
 type Channel = {

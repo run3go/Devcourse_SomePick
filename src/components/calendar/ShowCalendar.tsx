@@ -5,7 +5,7 @@ export default function ShowCalendar() {
   const today = [19, 24, 10];
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="w-[650px] flex justify-between items-center mt-[40px] mb-[40px]">
+      <div className="w-[580px] flex justify-between items-center mt-[20px] mb-[30px]">
         <div className="pl-[10px]">
           <Icon
             width="22px"
@@ -23,7 +23,7 @@ export default function ShowCalendar() {
             06
           </span>
         </div>
-        <div className="pr-[10px]">
+        <div className="pr-[25px]">
           <Icon
             width="22px"
             height="29px"
@@ -34,27 +34,27 @@ export default function ShowCalendar() {
         </div>
       </div>
       <div className="w-full text-[20px]">
-        <div className="w-full">
+        <div className="w-full pl-12">
           <div className="flex h-[30px] text-[16px]">
-            <div className="w-[14.28%] text-[var(--primary-pink-point)] text-center">
+            <div className="w-[14.28%] text-[var(--primary-pink-point)]">
               Sun
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Mon
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Tue
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Wed
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Thu
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Fri
             </div>
-            <div className="w-[14.28%] text-center dark:text-[var(--dark-gray-700)]">
+            <div className="w-[14.28%] dark:text-[var(--dark-gray-700)]">
               Sat
             </div>
           </div>
@@ -63,13 +63,13 @@ export default function ShowCalendar() {
               <div
                 key={day}
                 className={twMerge(
-                  "group relative basis-1/7 text-[#bdbdbd] border-t-3 rounded-lg border-t-transparent h-20 ",
+                  "group relative basis-1/7 text-[#bdbdbd] border-t-3 rounded-lg border-t-transparent h-18",
                   "dark:text-[var(--gray-700)]",
                   day === today[0] && "border-t-[var(--primary-pink-point)]",
                   day === today[0] && "bg-[#ffebf0]"
                 )}
               >
-                <div className="relative w-full h-[30px] text-center text-xl leading-[1]">
+                <div className="relative p-2 w-full h-[30px] text-xl leading-[1]">
                   <span
                     className={twMerge(
                       "inline-block",
@@ -80,7 +80,7 @@ export default function ShowCalendar() {
                     {day}
                   </span>
                 </div>
-                <ul className="flex flex-col gap-[3px] text-[13px] px-2">
+                <ul className="flex flex-col gap-[3px] text-[13px] pl-2 pt-1">
                   {day === 19 && (
                     <li className="font-[inter] overflow-hidden text-ellipsis text-nowrap pl-[10px] pr-[3px] bg-[#E870A2] inline-block w-18 rounded-[5px] text-white">
                       데이트
