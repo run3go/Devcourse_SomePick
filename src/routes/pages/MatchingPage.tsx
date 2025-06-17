@@ -1,11 +1,11 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { fetchMatchedUsers } from "../../apis/matching";
 import { fetchProfile } from "../../apis/user";
 import LeftBtn from "../../assets/images/Left.png";
 import MatchingImage from "../../assets/images/MatchingImage.png";
 import RightBtn from "../../assets/images/right.png";
-import Button from "../../components/common/Button";
 import Icon from "../../components/common/Icon";
 import MatchingCard from "../../components/MatchingPage/MatchingCard";
 import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
@@ -79,30 +79,55 @@ export default function MatchingPage() {
 
   //추천카드모달 나올시 스크롤 안되게
   useEffect(() => {
+    const header = document.querySelector(".header") as HTMLDivElement;
     if (isModalOpen) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.offsetWidth;
+      header.style.paddingRight = `${scrollbarWidth}px`;
       document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
     } else {
+      header.style.paddingRight = "";
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
 
     return () => {
+      header.style.paddingRight = "";
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isModalOpen]);
-
+  // 매칭 퍼센트 계산 함수
+  const calcMatchPercent = (matched: string[]) => {
+    return idealTypes.length > 0
+      ? Math.round((matched.length / idealTypes.length) * 100)
+      : 0;
+  };
+  // 전체 프로필
+  const mappedMatchedProfiles = matchedProfiles.map((profile) => {
+    const matched = idealTypes.filter((type: string) =>
+      profile.keywords?.includes(type)
+    );
+    const matchPercent = calcMatchPercent(matched);
+    return { ...profile, matchPercent };
+  });
   // 이상형 50%이상만
-  const filteredMatchedProfiles = matchedProfiles
-    .map((profile) => {
-      const matched = idealTypes.filter((type: string) =>
-        profile.keywords?.includes(type)
+  const filteredMatchedProfiles = mappedMatchedProfiles.filter(
+    (profile) => profile.matchPercent >= 50
+  );
+
+  const unfilteredMatchedProfiles = mappedMatchedProfiles
+    .filter((profile) => profile.matchPercent < 50)
+    .sort((a, b) => {
+      const aMatched = idealTypes.filter((type: string) =>
+        a.keywords?.includes(type)
       );
-      const matchPercent =
-        idealTypes.length > 0
-          ? Math.round((matched.length / idealTypes.length) * 100)
-          : 0;
-      return { ...profile, matchPercent };
-    })
-    .filter((profile) => profile.matchPercent >= 50);
+      const bMatched = idealTypes.filter((type: string) =>
+        b.keywords?.includes(type)
+      );
+      return calcMatchPercent(bMatched) - calcMatchPercent(aMatched);
+    });
 
   //  필터링된 프로필 배열 계산
   let displayedProfiles = filteredMatchedProfiles;
@@ -176,30 +201,42 @@ export default function MatchingPage() {
 
         {/* 필터 버튼 그룹 */}
         <div className="flex space-x-8">
-          <Button
-            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
-              filterByInterest ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
-            }`}
+          <button
+            className={twMerge(
+              "bg-white relative cursor-pointer w-[150px] h-[50px] rounded-full text-sm transition-all duration-300",
+              "border-2 border-[var(--primary-pink)] shadow-[5px_10px_10px_rgba(0,0,0,0.2)]",
+              filterByInterest
+                ? "hover:scale-[1.0] hover:bg-[var(--primary-pink-point)] bg-[var(--primary-pink-tone)] text-white border-transparent shadow-[0_4px_14px_var(--primary-pink)] dark:shadow-none scale-[1.05]"
+                : "hover:border-[var(--primary-pink-tone)] hover:shadow-[0_2px_12px_var(--primary-pink)] hover:scale-[1.03] dark:hover:shadow-[0_2px_12px_var(--dark-primary-pink-point-50)]"
+            )}
             onClick={toggleInterestFilter}
           >
-            <span className="inline-block leading-[1]">관심사</span>
-          </Button>
-          <Button
-            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
-              filterByLocation ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
-            }`}
+            <span>관심사</span>
+          </button>
+          <button
+            className={twMerge(
+              "bg-white relative cursor-pointer w-[150px] h-[50px] rounded-full text-sm transition-all duration-300",
+              "border-2 border-[var(--primary-pink)] shadow-[5px_10px_10px_rgba(0,0,0,0.2)]",
+              filterByLocation
+                ? "hover:scale-[1.0] hover:bg-[var(--primary-pink-point)] bg-[var(--primary-pink-tone)] text-white border-transparent shadow-[0_4px_14px_var(--primary-pink)] dark:shadow-none scale-[1.05]"
+                : "hover:border-[var(--primary-pink-tone)] hover:shadow-[0_2px_12px_var(--primary-pink)] hover:scale-[1.03] dark:hover:shadow-[0_2px_12px_var(--dark-primary-pink-point-50)]"
+            )}
             onClick={toggleLocationFilter}
           >
             <span className="inline-block leading-[1]">지역</span>
-          </Button>
-          <Button
-            className={`w-[300px] h-[50px] text-[20px] rounded-[100px] gap-2 text-sm font-medium ${
-              filterByMbti ? "bg-[#E7E6F9]" : "bg-[var(--primary-pink)]"
-            }`}
+          </button>
+          <button
+            className={twMerge(
+              "bg-white relative cursor-pointer w-[150px] h-[50px] rounded-full text-sm transition-all duration-300",
+              "border-2 border-[var(--primary-pink)] shadow-[5px_10px_10px_rgba(0,0,0,0.2)]",
+              filterByMbti
+                ? "hover:scale-[1.0] hover:bg-[var(--primary-pink-point)] bg-[var(--primary-pink-tone)] text-white border-transparent shadow-[0_4px_14px_var(--primary-pink)] dark:shadow-none scale-[1.05]"
+                : "hover:border-[var(--primary-pink-tone)] hover:shadow-[0_2px_12px_var(--primary-pink)] hover:scale-[1.03] dark:hover:shadow-[0_2px_12px_var(--dark-primary-pink-point-50)]"
+            )}
             onClick={toggleMbtiFilter}
           >
             <span className="inline-block leading-[1]">MBTI</span>
-          </Button>
+          </button>
         </div>
         {/* 추천카드 */}
         {displayedProfiles.length > 0 && (
@@ -276,11 +313,11 @@ export default function MatchingPage() {
 
         {/* 추천 카드 전체*/}
         <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 w-[1500px]">
-          {matchedProfiles.map((profile) => (
+          {unfilteredMatchedProfiles.map((profile) => (
             <MatchingCard
               key={profile.id}
               profile={profile}
-              width="w-[300px]"
+              width="w-[320px]"
               height="h-[450px]"
               imageWidth="w-full"
               imageHeight="h-full"
