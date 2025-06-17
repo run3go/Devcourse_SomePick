@@ -42,6 +42,33 @@ export const notifyComment = async (receiver_id: string, post_id: number) => {
     console.error(e);
   }
 };
+//대댓글 작성 알림 보내기 ( 대댓글 작성자 아이디, 게시글 아이디 )
+export const notifyChildComment = async (
+  receiver_id: string,
+  post_id: number
+) => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase.from("notifications").insert([
+      {
+        sender_id: session.user.id,
+        receiver_id,
+        post_id,
+        type: "childComment",
+      },
+    ]);
+    if (error) {
+      console.log("댓글 알림 실패:", error.message);
+      return;
+    }
+    console.log("댓글 알림 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};
 //소개팅 하트 알림 보내기 ( 상대방 아이디, 매칭 아이디 )
 export const notifyHeart = async (receiver_id: string) => {
   try {
@@ -129,7 +156,7 @@ export const notifyMessage = async (receiver_id: string) => {
     console.error(e);
   }
 };
-
+// 스케쥴 작성 알림 보내기
 export const notifySchedule = async (receiver_id: string) => {
   try {
     const {
@@ -152,7 +179,6 @@ export const notifySchedule = async (receiver_id: string) => {
     console.error(e);
   }
 };
-
 //알림 가져오기
 export const fetchNotifications = async () => {
   try {
