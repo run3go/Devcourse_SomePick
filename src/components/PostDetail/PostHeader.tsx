@@ -54,15 +54,15 @@ export default function PostHeader({
         </span>
       </header>
       <hr className="my-[15px] border-white border dark:border-[var(--dark-gray-500)]" />
-      <div className="flex gap-2.5 mb-5 items-center">
+      <div
+        className="flex gap-2.5 mb-5 items-center cursor-pointer w-24"
+        onClick={() => navigate(`/profile/${post.author.id}`)}
+      >
         <img
           className="w-[30px] h-[30px] rounded-full object-center object-cover"
           src={post.author.main_image ?? ""}
         />
-        <span
-          className="cursor-pointer dark:text-[var(--dark-gray-700)]"
-          onClick={() => navigate(`/profile/${post.author.id}`)}
-        >
+        <span className="cursor-pointer dark:text-[var(--dark-gray-700)]">
           {post.author.nickname}
         </span>
       </div>

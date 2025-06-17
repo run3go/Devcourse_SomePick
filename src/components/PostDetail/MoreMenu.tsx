@@ -34,7 +34,7 @@ export default function MoreMenu({
       showSuccessToast("게시글이 삭제되었습니다.");
       navigate(-1);
     } else if (type === "comment") {
-      await deleteComment(id, !!isParent);
+      await deleteComment(id, isParent!);
       showSuccessToast("댓글이 삭제되었습니다.");
       onCommentAdd?.();
     }
