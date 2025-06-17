@@ -110,7 +110,7 @@ export default function Postcard({
 
       {/* 우측 이미지 */}
       <div className="p-4 flex-shrink-0 self-center">
-        {post.images && (
+        {post.images?.[0] && (
           <img
             src={post.images[0]}
             alt="Post"
