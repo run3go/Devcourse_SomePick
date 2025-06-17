@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { optionsGroup } from "./data/optionsData";
+import { optionsGroup } from "../../constants/data/optionsData";
 
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";

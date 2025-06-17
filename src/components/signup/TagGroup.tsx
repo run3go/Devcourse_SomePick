@@ -1,8 +1,8 @@
 // import { useEffect, useState } from "react";
+import { personalityTags, interestTags } from "../../constants/data/tagData";
 import { useSignUpStore } from "../../stores/signUpStore";
 import Icon from "../common/Icon";
 import { showWarnToast } from "../common/ShowToast";
-import { interestTags, personalityTags } from "./data/tagData";
 
 export default function TagGroup({
   title,
