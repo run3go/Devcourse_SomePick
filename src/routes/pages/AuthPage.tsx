@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 
-import bg from "../../../assets/images/auth-bg.png";
-import logo from "../../../assets/images/new_logo.png";
+import bg from "../../assets/images/auth-bg.png";
+import logo from "../../assets/images/new_logo.png";
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function AuthPage() {
           <img
             src={logo}
             alt="로고"
-            className="absolute top-3 left-7 w-45 cursor-pointer"
+            className="absolute top-3 left-5 w-45 cursor-pointer"
             onClick={() => navigate("/")}
           />
         </div>
