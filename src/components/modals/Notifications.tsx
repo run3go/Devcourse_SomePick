@@ -62,7 +62,7 @@ export default function Notifications({
           break;
         case "message":
           if (notification.sender_id) {
-            navigate(`/message/${notification.sender_id}/room`);
+            navigate(`/message/${notification.sender_id}`);
           }
           break;
         case "approve":
