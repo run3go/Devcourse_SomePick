@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import man from "../../assets/images/man.png";
-import woman from "../../assets/images/woman.png";
+import man from "../../assets/images/new_man_profile.png";
+import woman from "../../assets/images/new_woman_profile.png";
 import Icon from "../common/Icon";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -107,17 +107,19 @@ export default function ProfileCard({
         </div>
       ) : (
         <>
-          <img
-            draggable="false"
-            className={twMerge(
-              "w-[236px] h-[294px] rounded-2xl object-cover",
-              !isMain && "w-[190px] h-[239px]",
-              (isCouple || isEdited) && "w-[300px] h-[373px]"
-            )}
-            src={gender === "male" ? woman : man}
-            onLoad={() => setIsImageLoaded(true)}
-            alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
-          />
+          <div className="fle">
+            <img
+              draggable="false"
+              className={twMerge(
+                "w-[236px] h-[294px] rounded-2xl object-cover",
+                !isMain && "w-[190px] h-[239px]",
+                (isCouple || isEdited) && "w-[300px] h-[373px]"
+              )}
+              src={gender === "male" ? woman : man}
+              onLoad={() => setIsImageLoaded(true)}
+              alt={isMain || isCouple ? "메인 이미지" : "서브 이미지"}
+            />
+          </div>
           {isCouple && (
             <span className="text-lg mt-[15px]">연결 대기 중..</span>
           )}
