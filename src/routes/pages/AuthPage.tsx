@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 
 import bg from "../../assets/images/auth-bg.png";
-// import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -16,13 +16,18 @@ export default function AuthPage() {
             className="h-full w-full object-cover"
             draggable="false"
           />
-          <p
+          {/* <p
             className="absolute top-5 left-5 font-bold text-[36px] cursor-pointer text-[var(--black)]"
             onClick={() => navigate("/")}
           >
             somepick
-          </p>
-          {/* <img src={logo} className="absolute top-5 left-5 h-14" /> */}
+          </p> */}
+          <img
+            src={logo}
+            alt="로고"
+            className="absolute top-3 left-7 w-45 cursor-pointer"
+            onClick={() => navigate("/")}
+          />
         </div>
 
         <div className="bg-[var(--white)] dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-gray-700)] w-[62%]">
