@@ -59,7 +59,7 @@ export default function ProfilePage() {
         )}
         {status === "solo" && (
           <div className="flex flex-col w-full">
-            <h3 className="dark:text-[var(--dark-white)] mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
+            <h3 className="dark:text-[var(--dark-white)] mb-[40px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]">
               <span className="text-[var(--primary-pink-tone)]">
                 {nickname}
               </span>

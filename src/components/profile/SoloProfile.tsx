@@ -121,8 +121,8 @@ export default function SoloProfile({
   return (
     <div
       className={twMerge(
-        "w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[30px] dark:bg-[var(--dark-bg-secondary)]",
-        "dark:text-[var(--dark-white)]"
+        "w-full bg-[#FFFBFB] p-9 pb-[60px] mb-[60px] dark:bg-[var(--dark-bg-secondary)]",
+        "dark:text-[var(--dark-white)] rounded-[20px]"
       )}
     >
       {isAlertOpen && (
@@ -175,7 +175,7 @@ export default function SoloProfile({
           </>
         )}
       </AnimatePresence>
-      <div className="w-full text-center">
+      <div className="w-full text-center ">
         <h2 className="font-bold text-2xl">
           {isMyProfile ? (
             "My Profile"
