@@ -78,7 +78,14 @@ export default function CommentList({
                           height="4px"
                           left="-511px"
                           top="-768px"
-                          className="cursor-pointer"
+                          className="cursor-pointer dark:hidden"
+                        />
+                        <Icon
+                          width="14px"
+                          height="4px"
+                          left="-511px"
+                          top="-736px"
+                          className="cursor-pointer hidden dark:block"
                         />
                         {openMenuId === comment.id && (
                           <MoreMenu
@@ -125,7 +132,6 @@ export default function CommentList({
                     defaultValue={comment.comment}
                     commentId={comment.id}
                     postId={postId}
-                    parentId={comment.parent_id}
                     post={post}
                     onCommentAdd={() => {
                       onCommentAdd();
@@ -158,6 +164,7 @@ export default function CommentList({
                 postId={null}
                 parentId={comment.id}
                 onCommentAdd={onCommentAdd}
+                parentAuthorId={comment.author.id}
                 toggleReply={() => toggleReply(comment.id)}
               />
             )}

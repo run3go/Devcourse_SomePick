@@ -4,6 +4,7 @@ import { useAuthStore } from "../../stores/authstore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
 import { notifyLike } from "../../apis/notification";
+import PostImageSwiper from "./PostImageSwiper";
 
 export default function PostContent({
   post,
@@ -30,15 +31,17 @@ export default function PostContent({
 
   // 사용자가 하트 누르면 옆에 숫자 올라감(내려감)
   const handleHeart = async () => {
-    if (!heart) {
-      await createLike(postId);
-      await notifyLike(post.author.id, postId);
-      setHeart(true);
-      setLikesCount((prev) => prev + 1);
-    } else {
-      await deleteLike(postId);
-      setHeart(false);
-      setLikesCount((prev) => prev - 1);
+    if (session) {
+      if (!heart) {
+        await createLike(postId);
+        await notifyLike(post.author.id, postId);
+        setHeart(true);
+        setLikesCount((prev) => prev + 1);
+      } else {
+        await deleteLike(postId);
+        setHeart(false);
+        setLikesCount((prev) => prev - 1);
+      }
     }
   };
   return (
@@ -49,17 +52,7 @@ export default function PostContent({
             <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-100)]">
               {post.contents}
             </p>
-            {post.images && post.images.length > 0 && (
-              <div className="flex gap-4 flex-wrap">
-                {post.images.map((url, index) => (
-                  <img
-                    key={index}
-                    className="w-[375px] h-[600px] mb-12 object-cover object-center"
-                    src={url}
-                  />
-                ))}
-              </div>
-            )}
+            <PostImageSwiper post={post} />
           </div>
           <div className="flex justify-between">
             <div className="flex items-center">
@@ -68,7 +61,15 @@ export default function PostContent({
                 height="16px"
                 left={heart ? "-415px" : "-415px"}
                 top={heart ? "-727px" : "-762px"}
-                className="cursor-pointer"
+                className="cursor-pointer dark:hidden"
+                onClick={handleHeart}
+              />
+              <Icon
+                width="18px"
+                height="16px"
+                left={heart ? "-415px" : "-416px"}
+                top={heart ? "-727px" : "-793px"}
+                className="cursor-pointer hidden dark:block"
                 onClick={handleHeart}
               />
               <span className="ml-1 text-[14px] dark:text-[var(--dark-gray-100)]">
