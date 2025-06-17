@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import MiniProfilecard from "../../components/webboard/MiniProfilecard";
-import Postcard from "../../components/webboard/PostCard";
-import SearchBar from "../../components/webboard/SearchBar";
-import SortDropdown from "../../components/webboard/SortDropdown";
-import WriteButton from "../../components/webboard/WriteButton";
-import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
-import { useAuthStore } from "../../stores/authStore";
-import { fetchFollowingList } from "../../apis/follow";
-import TopButton from "../../components/common/TopButton";
+import { fetchFollowingList } from "../../../apis/follow";
+import { fetchPostsByChannelName } from "../../../apis/posts/fetchPosts";
+import TopButton from "../../../components/common/TopButton";
+import MiniProfilecard from "../../../components/webboard/MiniProfilecard";
+import Postcard from "../../../components/webboard/PostCard";
+import SearchBar from "../../../components/webboard/SearchBar";
+import SortDropdown from "../../../components/webboard/SortDropdown";
+import WriteButton from "../../../components/webboard/WriteButton";
+import { useAuthStore } from "../../../stores/authStore";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
@@ -64,6 +64,9 @@ export default function PostsPage() {
     (async () => {
       const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
       if (!result) return;
+
+      console.log(result);
+      console.log(result[0].comments[0].nested);
 
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];

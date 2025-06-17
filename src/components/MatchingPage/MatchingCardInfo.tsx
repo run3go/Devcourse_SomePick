@@ -1,10 +1,15 @@
-import Icon from "../common/Icon";
-import Button from "../common/Button";
-import type { Database } from "../../types/supabase";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
 import { notifyHeart } from "../../apis/notification";
-import { showWarnToast, showSuccessToast, showErrorToast } from "../common/ShowToast";
+import type { Database } from "../../types/supabase";
+import Button from "../common/Button";
+import Icon from "../common/Icon";
+import {
+  showErrorToast,
+  showSuccessToast,
+  showWarnToast,
+} from "../common/ShowToast";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -12,8 +17,13 @@ interface MatchingCardInfoProps {
   disableActionButton?: boolean; // 추가
 }
 
-export default function MatchingCardInfo({ profile, disableActionButton }: MatchingCardInfoProps) {
+export default function MatchingCardInfo({
+  profile,
+  disableActionButton,
+}: MatchingCardInfoProps) {
   const navigate = useNavigate();
+  const [isAlreadySent, setIsAlreadySent] = useState(false);
+
   const keywords =
     profile.keywords && profile.keywords.length > 0
       ? profile.keywords
@@ -31,11 +41,12 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
     e.stopPropagation();
 
     const alreadySent = await sendHeart(profile.id);
-
     if (alreadySent === true) {
       showWarnToast("이미 하트를 보낸 상대입니다.");
+      setIsAlreadySent(alreadySent);
     } else if (alreadySent === false) {
       showSuccessToast("하트를 성공적으로 보냈습니다!");
+      setIsAlreadySent(!alreadySent);
       await notifyHeart(profile.id);
     } else {
       showErrorToast("하트를 보내는 중 문제가 발생했습니다.");
@@ -55,27 +66,34 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
         {/* 프로필이미지 */}
         <div className="w-[300px] h-[300px] rounded-full overflow-hidden">
           <img
+            draggable={false}
             src={profile.sub_image!}
             alt="프로필 이미지"
             className="w-full h-full object-cover"
           />
           {/* 한줄소개 */}
         </div>
-        <p className="text-[24px] text-center dark:text-white">{profile.description}</p>
+        <p className="text-[24px] text-center dark:text-white">
+          {profile.description}
+        </p>
       </div>
 
       {/* 하단 */}
       <div className="w-full h-[400px] bg-white flex flex-col items-center justify-center gap-[40px] dark:bg-[#4B4B4B]">
-        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">{profile.nickname}</h2>
+        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">
+          {profile.nickname}
+        </h2>
         <div className="flex gap-[30px]">
           {/* 하트 보내기 버튼 */}
           <Button
             className="w-[200px] h-[60px] text-[20px] text-[#FFFFFF] gap-2"
             onClick={handleSendHeart}
-            disabled={disableActionButton}
+            disabled={disableActionButton || isAlreadySent}
           >
             <Icon width="26px" height="24px" left="-564px" top="-227px" />
-            <span className="inline-block leading-[1]">하트보내기</span>
+            <span className="inline-block leading-[1]">
+              {isAlreadySent ? "연결 대기중.." : "하트보내기"}
+            </span>
           </Button>
 
           {/* 프로필 보기 버튼 */}
@@ -103,7 +121,9 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
                 key={`${keyword}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[17px] text-black dark:text-white">{keyword}</span>
+                <span className="text-[17px] text-black dark:text-white">
+                  {keyword}
+                </span>
               </li>
             ))}
           </ul>
@@ -113,7 +133,9 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
                 key={`${interest}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[17px] text-black dark:text-white">{interest}</span>
+                <span className="text-[17px] text-black dark:text-white">
+                  {interest}
+                </span>
               </li>
             ))}
           </ul>

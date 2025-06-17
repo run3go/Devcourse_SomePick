@@ -1,7 +1,8 @@
 import { useState } from "react";
-import MatchingCardInfo from "./MatchingCardInfo";
-import type { Database } from "../../types/supabase";
+import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "../../stores/authStore";
+import type { Database } from "../../types/supabase";
+import MatchingCardInfo from "./MatchingCardInfo";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -46,7 +47,9 @@ export default function MatchingCard({
       : [];
 
   const matchPercent =
-    idealArray.length > 0 ? Math.round((matched.length / idealArray.length) * 100) : 0;
+    idealArray.length > 0
+      ? Math.round((matched.length / idealArray.length) * 100)
+      : 0;
 
   const outerClasses = [
     width,
@@ -79,7 +82,11 @@ export default function MatchingCard({
   };
 
   return (
-    <div style={{ perspective: "1000px" }} className={outerClasses} onClick={handleClick}>
+    <div
+      style={{ perspective: "1000px" }}
+      className={twMerge(outerClasses, "select-none")}
+      onClick={handleClick}
+    >
       <div className={innerClasses} style={{ transformStyle: "preserve-3d" }}>
         {/* 앞면 */}
         <div
@@ -91,12 +98,24 @@ export default function MatchingCard({
           `}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <h2 className={`${text} text-center`}>
-            {profile.nickname}님은 이상형과 {matchPercent}% 일치해요!
+          <h2 className={`${text} text-center mb-3`}>
+            <strong className="text-[var(--primary-pink-point)]">
+              {profile.nickname}
+            </strong>
+            님은 이상형과 {matchPercent}% 일치해요!
           </h2>
-          <div className="flex-grow flex items-center justify-center">
-            <div className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}>
+          <div
+            className={twMerge(
+              "flex-grow flex items-center justify-center",
+              height === "h-[450px]" && "max-h-[366px]",
+              height === "h-full" && "max-h-[704px]"
+            )}
+          >
+            <div
+              className={`${imageWidth} ${imageHeight} rounded-lg overflow-hidden`}
+            >
               <img
+                draggable={false}
                 src={profile.main_image!}
                 alt="매칭 이미지"
                 className="w-full h-full object-cover"
@@ -113,7 +132,10 @@ export default function MatchingCard({
             backfaceVisibility: "hidden",
           }}
         >
-          <MatchingCardInfo profile={profile} disableActionButton={disableActionButton} />
+          <MatchingCardInfo
+            profile={profile}
+            disableActionButton={disableActionButton}
+          />
         </div>
       </div>
     </div>

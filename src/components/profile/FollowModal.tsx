@@ -54,7 +54,7 @@ export default function FollowModal({
       exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
       className={twMerge(
         "fixed left-1/2 -translate-x-1/2 z-100 bg-white p-6 flex flex-col w-[400px] h-[600px] shadow-[0_2px_8px_0_rgba(0,0,0,0.1)] rounded-[10px]",
-        "dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-white)]"
+        "dark:bg-[var(--dark-bg-primary)] dark:text-[var(--dark-gray-200)]"
       )}
     >
       <Icon
@@ -83,17 +83,26 @@ export default function FollowModal({
               />
               <span className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
                 {user.nickname}
+                {session?.user.id === user.id && (
+                  <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
+                    {" "}
+                    (나)
+                  </span>
+                )}
               </span>
             </div>
-            {session?.user.id !== user.id ? (
-              session &&
+            {session &&
+              session.user.id !== user.id &&
               (isFollwingUser(user.id) ? (
                 <Button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleUnfollowUser(user.id);
                   }}
-                  className="w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2] text-sm"
+                  className={twMerge(
+                    "w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2] text-sm",
+                    "dark:bg-[var(--dark-bg-tertiary)] dark:hover:bg-[var(--dark-gray-300-59)]"
+                  )}
                 >
                   팔로우 취소
                 </Button>
@@ -107,10 +116,7 @@ export default function FollowModal({
                 >
                   팔로우
                 </Button>
-              ))
-            ) : (
-              <span className="pr-9 group-hover:text-black text-sm">본인</span>
-            )}
+              ))}
           </li>
         ))}
       </ul>

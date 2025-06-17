@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import BackButton from "../../components/common/BackButton";
-import { useSignUpStore } from "../../stores/signupStore";
-import supabase from "../../utils/supabase";
+import BackButton from "../../../components/common/BackButton";
+import { useSignUpStore } from "../../../stores/signUpStore";
+import supabase from "../../../utils/supabase";
 
 export default function SignUpPage() {
   const navigate = useNavigate();

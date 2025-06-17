@@ -202,7 +202,6 @@ export const fetchNotifications = async () => {
       console.log("알림 조회 실패:", error.message);
       return;
     }
-    console.log(data);
     return data;
   } catch (e) {
     console.error(e);

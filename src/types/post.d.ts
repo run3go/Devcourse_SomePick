@@ -10,13 +10,23 @@ type Comments = {
   comment: string;
   author: Author;
   created_at: string;
-  comments: Comments[];
+  comments: ChildComments[];
+  deleted?: boolean;
+  edited?: boolean;
+};
+
+type ChildComments = {
+  id: number;
+  parent_id?: number | null;
+  comment: string;
+  author: Author;
+  created_at: string;
   deleted?: boolean;
   edited?: boolean;
 };
 
 type Like = {
-  user_id: string;
+  id: number;
 };
 type PostData = {
   id: number;
@@ -26,9 +36,9 @@ type PostData = {
   title: string;
   contents: string;
   fortune_telling: string | null;
-  image: string | null;
-  comments: any[];
-  likes: any[];
+  images?: string[] | null;
+  comments: { nested: { id: number }[] }[];
+  likes: Like[];
 };
 
 type Channel = {

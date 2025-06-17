@@ -1,18 +1,18 @@
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import {
+  createFortuneTelling,
+  updateFortuneTelling,
+} from "../../apis/fortuneTelling";
 import firstCard from "../../assets/images/card1.png";
 import secondCard from "../../assets/images/card2.png";
 import lastCard from "../../assets/images/card3.png";
 import firstDarkCard from "../../assets/images/darkcard1.png";
 import secondDarkCard from "../../assets/images/darkcard2.png";
 import lastDarkCard from "../../assets/images/darkcard3.png";
+import { useAuthStore } from "../../stores/authStore";
 import styles from "../../styles/FortuneCards.module.css";
-import { AnimatePresence } from "framer-motion";
 import FortuneModal from "./FortuneModal";
-import { useAuthStore } from "../../stores/authstore";
-import {
-  createFortuneTelling,
-  updateFortuneTelling,
-} from "../../apis/fortuneTelling";
 // import { IoSpeedometer } from "react-icons/io5";
 // import ShareButton from "./ShareButton";
 
@@ -30,7 +30,7 @@ interface FortuneData {
 interface Props {
   fortuneData: FortuneData | null;
   onModal?: boolean;
-  isTodayChecked: boolean;
+  isTodayChecked?: boolean;
 }
 
 export default function FortuneCards({

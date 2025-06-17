@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import Icon from "../common/Icon";
+import dayjs from "dayjs";
 
 interface PostcardProps {
   className?: string;
@@ -45,23 +46,27 @@ export default function Postcard({
             <img
               src={post.author.main_image ?? undefined}
               alt="사진"
-              className="w-[44px] h-[40px] rounded-full object-cover mr-2"
+              className="w-[44px] h-[44px] rounded-full object-cover mr-2"
             />
             <div className="flex flex-col">
-              <span className="font-medium dark:text-white">{post.author.nickname}</span>
-              <span className="text-[#969696] dark:text-white">2025.06.07</span>
+              <span className="font-medium dark:text-[var(--dark-gray-700)]">
+                {post.author.nickname}
+              </span>
+              <span className="text-[#969696]">{dayjs(post.created_at).format("YYYY.MM.DD")}</span>
             </div>
           </div>
 
           {/* 제목 */}
-          <h2 className="text-lg font-bold dark:text-white">{post.title}</h2>
+          <h2 className="text-lg font-bold dark:text-[var(--dark-gray-700)]">{post.title}</h2>
 
           {/* 본문 */}
-          <p className="leading-relaxed line-clamp-2 dark:text-white">{post.contents}</p>
+          <p className="leading-relaxed line-clamp-2 dark:text-[var(--dark-gray-700)]">
+            {post.contents}
+          </p>
         </div>
 
         {/* 좋아요  댓글 */}
-        <div className="flex items-center space-x-6 mt-auto dark:text-white">
+        <div className="flex items-center space-x-6 mt-auto dark:text-[var(--dark-gray-700)]">
           <div className="flex items-center gap-[5px]">
             {/* 기본모드용 아이콘 */}
             <Icon
@@ -105,9 +110,9 @@ export default function Postcard({
 
       {/* 우측 이미지 */}
       <div className="p-4 flex-shrink-0 self-center">
-        {post.image && (
+        {post.images?.[0] && (
           <img
-            src={post.image}
+            src={post.images[0]}
             alt="Post"
             className={twMerge(
               "w-[241px] h-[214px] object-cover rounded-[16px]",

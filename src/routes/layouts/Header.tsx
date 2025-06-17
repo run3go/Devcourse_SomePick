@@ -1,9 +1,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import { useEffect, useRef, useState } from "react";
-import { FaRegUser } from "react-icons/fa6";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
-import { TbMessageHeart } from "react-icons/tb";
+import { TbBell, TbMessageHeart, TbUserCircle } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
@@ -14,8 +12,7 @@ import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authstore";
-import type { Notification } from "../../types/notification";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
@@ -26,7 +23,7 @@ export default function Header() {
   // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const outsideRef = useRef<HTMLDivElement | null>(null);
 
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -41,7 +38,6 @@ export default function Header() {
       try {
         const data = await fetchNotifications();
         if (data) {
-          console.log(session);
           setNotifications(data);
           setHasUnreadNotifications(data.length > 0);
         }
@@ -51,7 +47,17 @@ export default function Header() {
     };
 
     loadNotifications();
-  }, [isLogin]);
+  }, [isLogin, session]);
+
+  // 헤더에서는 상태 업데이트
+  const addNotification = useCallback(
+    (newNotification: NotificationData) => {
+      if (newNotification.sender_id === session?.user.id) return;
+      setNotifications((prev) => [newNotification, ...prev]);
+      setHasUnreadNotifications(true);
+    },
+    [session]
+  );
 
   // 실시간 알림 구독
   useEffect(() => {
@@ -71,16 +77,9 @@ export default function Header() {
         channel.unsubscribe();
       }
     };
-  }, [isLogin]);
+  }, [isLogin, addNotification]);
 
-  // 헤더에서는 상태 업데이트
-  const addNotification = (newNotification: Notification) => {
-    if (newNotification.sender_id === session?.user.id) return;
-    setNotifications((prev) => [newNotification, ...prev]);
-    setHasUnreadNotifications(true);
-  };
-
-  const updateNotifications = (updatedNotifications: Notification[]) => {
+  const updateNotifications = (updatedNotifications: NotificationData[]) => {
     setNotifications(updatedNotifications);
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };
@@ -103,20 +102,24 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex justify-center items-center bg-white dark:bg-[var(--dark-bg-primary)] border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
+      <div className="header flex justify-center items-center bg-white dark:bg-[var(--dark-bg-primary)] border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
         <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
             alt="로고 이미지"
             onClick={() => navigate("/")}
-            className="cursor-pointer w-[15%]"
+            className="cursor-pointer w-[8%]"
           />
           <div className="relative flex items-center gap-[65px] dark:text-[var(--dark-gray-700)]">
             <NavLink
               className={({ isActive }) =>
                 twMerge(
                   "relative header-menu",
-                  isActive && "header-menu__active text-black"
+                  isActive &&
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black"),
+                  isDark && "dark-mode-class__active"
                 )
               }
               to={"/post/dating"}
@@ -127,7 +130,11 @@ export default function Header() {
               className={({ isActive }) =>
                 twMerge(
                   "relative header-menu",
-                  isActive && "header-menu__active text-black"
+                  isActive &&
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black"),
+                  isDark && "dark-mode-class__active"
                 )
               }
               to={"/post/free"}
@@ -144,7 +151,9 @@ export default function Header() {
                     className={twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",
                       location.pathname === "/calendar" &&
-                        "header-menu__active text-black"
+                        (isDark
+                          ? "header-menu__active text-white"
+                          : "header-menu__active text-black")
                     )}
                   >
                     커플 캘린더
@@ -159,7 +168,9 @@ export default function Header() {
                     className={twMerge(
                       "relative header-menu cursor-pointer mr-[65px]",
                       location.pathname === "/couplecalendar" &&
-                        "header-menu__active text-black"
+                        (isDark
+                          ? "header-menu__active text-white"
+                          : "header-menu__active text-black")
                     )}
                   >
                     소개팅
@@ -173,7 +184,9 @@ export default function Header() {
                 className={twMerge(
                   "relative header-menu cursor-pointer",
                   location.pathname === "/todayfortune" &&
-                    "header-menu__active text-black"
+                    (isDark
+                      ? "header-menu__active text-white"
+                      : "header-menu__active text-black")
                 )}
               >
                 오늘의 운세
@@ -190,8 +203,8 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoMdNotificationsOutline
-                      size={29}
+                    <TbBell
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {hasUnreadNotifications && (
@@ -212,8 +225,8 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaRegUser
-                      size={23}
+                    <TbUserCircle
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {isModalOpen && (
@@ -237,8 +250,8 @@ export default function Header() {
                       setIsNotificationOpen((state) => !state);
                     }}
                   >
-                    <IoMdNotificationsOutline
-                      size={26}
+                    <TbBell
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
 
@@ -260,8 +273,8 @@ export default function Header() {
                     className="relative cursor-pointer"
                     onClick={() => setIsModalOpen((state) => !state)}
                   >
-                    <FaRegUser
-                      size={23}
+                    <TbUserCircle
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)] cursor-pointer"
                     />
                     {isModalOpen && (
@@ -279,7 +292,7 @@ export default function Header() {
                   twMerge(
                     "relative header-menu inline-block whitespace-nowrap dark:text-[var(--dark-gray-700)]",
                     isActive && "header-menu__active text-black",
-                    isDark && "dark-mode-class"
+                    isDark && "dark-mode-class text-white"
                   )
                 }
                 to={"/auth/login"}
@@ -292,14 +305,14 @@ export default function Header() {
                 {isDark ? (
                   <div className="cursor-pointer">
                     <HiMiniSun
-                      size={28}
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)]"
                     />
                   </div>
                 ) : (
                   <div className="cursor-pointer">
                     <HiMiniMoon
-                      size={28}
+                      size={25}
                       className="dark:text-[var(--dark-gray-700)]"
                     />
                   </div>

@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { createComment, updateComment } from "../../apis/comment";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
-import { createComment, updateComment } from "../../apis/comment";
-import Alert from "../common/Alert";
-import { notifyComment } from "../../apis/notification";
+// import Alert from "../common/Alert";
+import { notifyChildComment, notifyComment } from "../../apis/notification";
+import { useAuthStore } from "../../stores/authStore";
+import { showSuccessToast, showWarnToast } from "../common/ShowToast";
 
 interface CommentProps {
   className?: string;
   parentId?: number | null;
   isReply?: boolean;
   postId: number | null;
+  parentAuthorId?: string;
   post: Post;
   onCommentAdd: () => void;
   toggleReply?: () => void;
@@ -29,30 +32,56 @@ export default function CommentForm({
   isEdit = false,
   defaultValue = "",
   commentId,
+  parentAuthorId,
 }: CommentProps) {
   const [input, setInput] = useState(defaultValue);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const { session } = useAuthStore();
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
 
+  // 댓글 등록하기
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) {
-      setIsAlertOpen(true);
+      showWarnToast("댓글을 작성해주세요!");
       return;
     }
+    // 댓글 수정
     if (isEdit && commentId) {
       await updateComment(input, commentId);
       setInput("");
       onCommentAdd?.();
-    } else {
+      showSuccessToast("댓글수정이 완료되었습니다!");
+    }
+    // 수정 아니면 새로운 댓글 등록
+    else {
       const newComment = await createComment(input, postId, parentId);
-      if (postId !== null) await notifyComment(post.author.id, postId);
-
+      showSuccessToast("댓글이 등록되었습니다!");
       if (newComment) {
         setInput("");
         onCommentAdd?.();
+
+        // 대댓글일때
         if (isReply) {
-          toggleReply?.();
+          if (parentId !== null) {
+            await notifyChildComment(parentAuthorId!, postId!);
+            toggleReply?.();
+          }
+          // 댓글일때
+        } else {
+          if (postId !== null) await notifyComment(post.author.id, postId);
         }
+      }
+    }
+  };
+
+  // Enter로 댓글 작성
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+
+      const form = e.currentTarget.form;
+      if (form) {
+        form.requestSubmit();
       }
     }
   };
@@ -73,28 +102,37 @@ export default function CommentForm({
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="댓글을 작성해주세요."
-            className={`bg-white rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border dark:text-[var(--dark-gray-100)] ${
+            placeholder={
+              session
+                ? "댓글을 작성해주세요."
+                : "로그인 후 댓글을 작성할 수 있어요."
+            }
+            className={`bg-white rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border dark:text-[var(--dark-gray-700)] ${
               isReply ? "w-[918px]" : "w-[980px]"
-            } resize-none px-[18px] py-[12px] text-[14px] mb-[10px] focus:outline-none focus:ring-2 focus:ring-[#FFC7ED]`}
+            } resize-none px-[18px] py-[12px] text-[14px] mb-[10px] focus:outline-none focus:ring-2 focus:ring-[#FFC7ED] ${
+              !session && "bg-[var(--gray-200)] text-gray-400"
+            }`}
+            disabled={!session}
+            onKeyDown={handleKeyDown}
           ></textarea>
         </div>
         <div className="flex w-full">
           <Button
             type="submit"
             className="ml-auto w-[98px] h-[38px] dark:text-[var(--dark-black)]"
+            disabled={!session}
           >
             등록
           </Button>
         </div>
       </form>
-      {isAlertOpen && (
+      {/* {isAlertOpen && (
         <Alert
           title="댓글을 작성해주세요!"
           isOk="확인"
           onClick={() => setIsAlertOpen(false)}
         />
-      )}
+      )} */}
     </>
   );
 }
