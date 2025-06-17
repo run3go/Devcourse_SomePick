@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createLike, deleteLike } from "../../apis/like";
 import { notifyLike } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
 import PostImageSwiper from "./PostImageSwiper";

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { default as Flatpickr } from "react-flatpickr";
 import { twMerge } from "tailwind-merge";
 import { updateMeetDate } from "../../apis/calendar";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import Button from "../common/Button";
 
 export default function MeetDate({ couple }: { couple: Couple }) {

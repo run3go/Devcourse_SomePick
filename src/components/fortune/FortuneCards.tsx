@@ -10,7 +10,7 @@ import lastCard from "../../assets/images/card3.png";
 import firstDarkCard from "../../assets/images/darkcard1.png";
 import secondDarkCard from "../../assets/images/darkcard2.png";
 import lastDarkCard from "../../assets/images/darkcard3.png";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import styles from "../../styles/FortuneCards.module.css";
 import FortuneModal from "./FortuneModal";
 // import { IoSpeedometer } from "react-icons/io5";
@@ -30,7 +30,7 @@ interface FortuneData {
 interface Props {
   fortuneData: FortuneData | null;
   onModal?: boolean;
-  isTodayChecked: boolean;
+  isTodayChecked?: boolean;
 }
 
 export default function FortuneCards({

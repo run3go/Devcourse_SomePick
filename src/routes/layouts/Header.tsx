@@ -12,7 +12,7 @@ import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import type { Notification } from "../../types/notification";
 
 export default function Header() {

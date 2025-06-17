@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import type { Database } from "../../types/supabase";
 import MatchingCardInfo from "./MatchingCardInfo";
 

@@ -1,5 +1,5 @@
 import firstCouple from "../../assets/images/taro.png";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 
 interface Props {
   isTodayChecked: boolean;

@@ -5,7 +5,7 @@ import CoupleProfile from "../../components/profile/CoupleProfile";
 import ProfileTags from "../../components/profile/ProfileTags";
 import SoloProfile from "../../components/profile/SoloProfile";
 import { default as PostCard } from "../../components/webboard/PostCard";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 
 export default function ProfilePage() {
   const {

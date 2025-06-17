@@ -9,7 +9,7 @@ import Button from "../../components/common/Button";
 import Icon from "../../components/common/Icon";
 import MatchingCard from "../../components/MatchingPage/MatchingCard";
 import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import type { Database } from "../../types/supabase";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import { showWarnToast } from "../../components/common/ShowToast";
-import SelectBox from "../../components/signup/SelectBox";
-import SignupInput from "../../components/signup/SignupInput";
-import { useSignUpStore } from "../../stores/signUpStore";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
+import { showWarnToast } from "../../../components/common/ShowToast";
+import SelectBox from "../../../components/signup/SelectBox";
+import SignupInput from "../../../components/signup/SignupInput";
+import { useSignUpStore } from "../../../stores/signUpStore";
 // import TagGroup from "../../components/signup/TagGroup";
 
 export default function SignUpSoloStep2Page() {

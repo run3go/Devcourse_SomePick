@@ -4,18 +4,18 @@ import {
   createPost,
   fetchPostByPostId,
   updatePost,
-} from "../../apis/posts/postCrud";
-import { deleteImage, storeImage } from "../../apis/util";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import Icon from "../../components/common/Icon";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
+} from "../../../apis/posts/postCrud";
+import { deleteImage, storeImage } from "../../../apis/util";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
+import Icon from "../../../components/common/Icon";
+import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import {
   showSuccessToast,
   showWarnToast,
-} from "../../components/common/ShowToast";
+} from "../../../components/common/ShowToast";
 // 운세 페이지에서 이미지 불러오기
-import { useUploadImageStore } from "../../stores/useUploadImageStore";
+import { useUploadImageStore } from "../../../stores/useUploadImageStore";
 
 export default function PostCreatePage() {
   const navigate = useNavigate();

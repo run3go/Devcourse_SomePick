@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
-import SignupInput from "../../components/signup/SignupInput";
-import useCheckNickname from "../../hooks/useCheckNickname";
-import { useSignUpStore } from "../../stores/signUpStore";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
+import ProfileImgUpload from "../../../components/signup/ProfileImgUpload";
+import SignupInput from "../../../components/signup/SignupInput";
+import useCheckNickname from "../../../hooks/useCheckNickname";
+import { useSignUpStore } from "../../../stores/signUpStore";
 // import LoadingSpinner from "../../components/signup/LoadingSpinner";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
-import { signupUser } from "../../apis/auth";
-import { updateProfile } from "../../apis/user";
-import { storeImage } from "../../apis/util";
-import Icon from "../../components/common/Icon";
-import { showWarnToast } from "../../components/common/ShowToast";
-import InputBirthDate from "../../components/signup/InputBirthDate";
-import useSignupValidation from "../../hooks/useSignupValidation";
-import supabase from "../../utils/supabase";
+import { signupUser } from "../../../apis/auth";
+import { updateProfile } from "../../../apis/user";
+import { storeImage } from "../../../apis/util";
+import Icon from "../../../components/common/Icon";
+import { showWarnToast } from "../../../components/common/ShowToast";
+import InputBirthDate from "../../../components/signup/InputBirthDate";
+import useSignupValidation from "../../../hooks/useSignupValidation";
+import supabase from "../../../utils/supabase";
 
 export default function SignUpCouplePage() {
   const navigate = useNavigate();

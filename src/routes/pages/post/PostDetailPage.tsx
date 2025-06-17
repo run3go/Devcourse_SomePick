@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchPostByPostId } from "../../apis/posts/postCrud";
-import CommentList from "../../components/PostDetail/CommentList";
-import PostContent from "../../components/PostDetail/PostContent";
-import PostHeader from "../../components/PostDetail/PostHeader";
-import BackButton from "../../components/common/BackButton";
-import { useAuthStore } from "../../stores/authstore";
+import { fetchPostByPostId } from "../../../apis/posts/postCrud";
+import CommentList from "../../../components/PostDetail/CommentList";
+import PostContent from "../../../components/PostDetail/PostContent";
+import PostHeader from "../../../components/PostDetail/PostHeader";
+import BackButton from "../../../components/common/BackButton";
+import { useAuthStore } from "../../../stores/authtore";
 
 export default function PostDetailPage() {
   const { id } = useParams();

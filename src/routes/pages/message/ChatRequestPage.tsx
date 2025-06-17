@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router";
-import ChatRequest from "../../components/message/ChatRequest";
-import { connectMatching, disconnectMatching } from "../../apis/matching";
-import { createChatRoom, fetchChatRoom } from "../../apis/message";
-import { notifyMatching } from "../../apis/notification";
+import { connectMatching, disconnectMatching } from "../../../apis/matching";
+import { createChatRoom, fetchChatRoom } from "../../../apis/message";
+import { notifyMatching } from "../../../apis/notification";
+import ChatRequest from "../../../components/message/ChatRequest";
 
 export default function ChatRequestPage() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { followUser, unfollowUser } from "../../apis/follow"; // 경로를 실제 API 파일 위치로 조정하세요
 import { notifyFollow } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import Button from "../common/Button";
 
 export default function MiniProfilecard({

@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData } from "react-router";
-import MessagePage from "./MessagePage";
+import MessagePage from "../MessagePage";
 
 export default function MessageLayoutPage() {
   const { matchingUserProfile, matchedUserProfile } = useLoaderData() ?? {};

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { fetchFollowingList } from "../../apis/follow";
-import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
-import TopButton from "../../components/common/TopButton";
-import MiniProfilecard from "../../components/webboard/MiniProfilecard";
-import Postcard from "../../components/webboard/PostCard";
-import SearchBar from "../../components/webboard/SearchBar";
-import SortDropdown from "../../components/webboard/SortDropdown";
-import WriteButton from "../../components/webboard/WriteButton";
-import { useAuthStore } from "../../stores/authtore";
+import { fetchFollowingList } from "../../../apis/follow";
+import { fetchPostsByChannelName } from "../../../apis/posts/fetchPosts";
+import TopButton from "../../../components/common/TopButton";
+import MiniProfilecard from "../../../components/webboard/MiniProfilecard";
+import Postcard from "../../../components/webboard/PostCard";
+import SearchBar from "../../../components/webboard/SearchBar";
+import SortDropdown from "../../../components/webboard/SortDropdown";
+import WriteButton from "../../../components/webboard/WriteButton";
+import { useAuthStore } from "../../../stores/authtore";
 
 export default function PostsPage() {
   const { session } = useAuthStore();

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import Icon from "../../components/common/Icon";
 import ChatList from "../../components/message/ChatList";
 import EmptyList from "../../components/message/EmptyList";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 
 type MessagePageProps = {
   matchingUserProfile: MatchingUser[];

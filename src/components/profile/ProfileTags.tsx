@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router";
 import { twMerge } from "tailwind-merge";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 
 export default function ProfileTags({
   title,

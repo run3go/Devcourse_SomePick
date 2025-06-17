@@ -5,7 +5,7 @@ import { updateFortuneTelling } from "../../apis/fortuneTelling";
 import { fetchProfile } from "../../apis/user";
 import FortuneCards from "../../components/fortune/FortuneCards";
 import FortuneInfo from "../../components/fortune/FortuneInfo";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 interface FortuneData {
   userName?: string | null;
   status?: string | null;

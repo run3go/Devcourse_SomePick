@@ -8,7 +8,7 @@ import {
   unfollowUser,
 } from "../../apis/follow";
 import { notifyFollow } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authtore";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
 import FollowModal from "./FollowModal";

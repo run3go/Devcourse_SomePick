@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import Icon from "../../components/common/Icon";
-import { showWarnToast } from "../../components/common/ShowToast";
-import InputBirthDate from "../../components/signup/InputBirthDate";
-import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
-import SignupInput from "../../components/signup/SignupInput";
-import useCheckNickname from "../../hooks/useCheckNickname";
-import useSignupValidation from "../../hooks/useSignupValidation";
-import { useSignUpStore } from "../../stores/signUpStore";
-import supabase from "../../utils/supabase";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
+import Icon from "../../../components/common/Icon";
+import { showWarnToast } from "../../../components/common/ShowToast";
+import InputBirthDate from "../../../components/signup/InputBirthDate";
+import ProfileImgUpload from "../../../components/signup/ProfileImgUpload";
+import SignupInput from "../../../components/signup/SignupInput";
+import useCheckNickname from "../../../hooks/useCheckNickname";
+import useSignupValidation from "../../../hooks/useSignupValidation";
+import { useSignUpStore } from "../../../stores/signUpStore";
+import supabase from "../../../utils/supabase";
 // import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep1Page() {
