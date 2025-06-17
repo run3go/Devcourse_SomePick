@@ -15,9 +15,7 @@ export default function PostsPage() {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [followings, setFollowings] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
-  const [sortRule, setSortRule] = useState<"created_at" | "likes">(
-    "created_at"
-  );
+  const [sortRule, setSortRule] = useState<"created_at" | "likes">("created_at");
   const [keyword, setKeyword] = useState("");
   const [selected, setSelected] = useState<Selected | null>(null);
   const navigate = useNavigate();
@@ -64,15 +62,11 @@ export default function PostsPage() {
   // 게시물 페치
   useEffect(() => {
     (async () => {
-      const result = await fetchPostsByChannelName(
-        safeChannel,
-        offset,
-        sortRule,
-        keyword
-      );
+      const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
       if (!result) return;
 
       console.log(result);
+      console.log(result[0].comments[0].nested);
 
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
@@ -140,11 +134,7 @@ export default function PostsPage() {
             }}
           />
         </div>
-        <WriteButton
-          onClick={() =>
-            navigate(`/post/create`, { state: params.channelName })
-          }
-        />
+        <WriteButton onClick={() => navigate(`/post/create`, { state: params.channelName })} />
       </div>
 
       {/* 게시물 리스트 */}

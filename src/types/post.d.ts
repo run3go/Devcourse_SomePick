@@ -16,7 +16,7 @@ type Comments = {
 };
 
 type Like = {
-  user_id: string;
+  id: number;
 };
 type PostData = {
   id: number;
@@ -26,8 +26,8 @@ type PostData = {
   title: string;
   contents: string;
   fortune_telling: string | null;
-  image: string | null;
-  comments: { nested: { id: string }[] }[];
+  images?: string[] | null;
+  comments: { nested: { id: number }[] }[];
   likes: Like[];
 };
 
