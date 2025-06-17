@@ -26,7 +26,8 @@ type ChildComments = {
 };
 
 type Like = {
-  id: number;
+  id?: number;
+  user_id?: string;
 };
 type PostData = {
   id: number;
