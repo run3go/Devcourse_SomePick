@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { createLike, deleteLike } from "../../apis/like";
-import { useAuthStore } from "../../stores/authstore";
+import { notifyLike } from "../../apis/notification";
+import { useAuthStore } from "../../stores/authStore";
 import Icon from "../common/Icon";
 import CommentForm from "./CommentForm";
-import { notifyLike } from "../../apis/notification";
 import PostImageSwiper from "./PostImageSwiper";
 
 export default function PostContent({

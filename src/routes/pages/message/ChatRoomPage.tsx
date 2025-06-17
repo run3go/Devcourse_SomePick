@@ -1,8 +1,8 @@
-import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { fetchChatRoom, createChatRoom } from "../../apis/message";
-import ChatRoom from "../../components/message/ChatRoom";
-import { useAuthStore } from "../../stores/authStore";
+import { useParams } from "react-router";
+import { createChatRoom, fetchChatRoom } from "../../../apis/message";
+import ChatRoom from "../../../components/message/ChatRoom";
+import { useAuthStore } from "../../../stores/authStore";
 
 export default function ChatRoomPage() {
   const { id: chatPartnerId } = useParams();

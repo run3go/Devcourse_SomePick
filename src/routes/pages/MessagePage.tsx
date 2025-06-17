@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router";
-import ChatList from "../../components/message/ChatList";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import Icon from "../../components/common/Icon";
+import ChatList from "../../components/message/ChatList";
 import EmptyList from "../../components/message/EmptyList";
 import { useAuthStore } from "../../stores/authStore";
-import Icon from "../../components/common/Icon";
 
 type MessagePageProps = {
   matchingUserProfile: MatchingUser[];

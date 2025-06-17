@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { checkEmail } from "../apis/auth";
-import { useSignUpStore } from "../stores/signupStore";
+import { useSignUpStore } from "../stores/signUpStore";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX =

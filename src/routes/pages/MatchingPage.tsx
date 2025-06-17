@@ -1,16 +1,16 @@
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import MatchingCard from "../../components/MatchingPage/MatchingCard";
-import MatchingImage from "../../assets/images/MatchingImage.png";
-import Button from "../../components/common/Button";
-import LeftBtn from "../../assets/images/Left.png";
-import RightBtn from "../../assets/images/right.png";
-import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { fetchMatchedUsers } from "../../apis/matching";
-import type { Database } from "../../types/supabase";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useAuthStore } from "../../stores/authStore";
-import Icon from "../../components/common/Icon";
 import { fetchProfile } from "../../apis/user";
+import LeftBtn from "../../assets/images/Left.png";
+import MatchingImage from "../../assets/images/MatchingImage.png";
+import RightBtn from "../../assets/images/right.png";
+import Button from "../../components/common/Button";
+import Icon from "../../components/common/Icon";
+import MatchingCard from "../../components/MatchingPage/MatchingCard";
+import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
+import { useAuthStore } from "../../stores/authStore";
+import type { Database } from "../../types/supabase";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -93,9 +93,13 @@ export default function MatchingPage() {
   // 이상형 50%이상만
   const filteredMatchedProfiles = matchedProfiles
     .map((profile) => {
-      const matched = idealTypes.filter((type: string) => profile.keywords?.includes(type));
+      const matched = idealTypes.filter((type: string) =>
+        profile.keywords?.includes(type)
+      );
       const matchPercent =
-        idealTypes.length > 0 ? Math.round((matched.length / idealTypes.length) * 100) : 0;
+        idealTypes.length > 0
+          ? Math.round((matched.length / idealTypes.length) * 100)
+          : 0;
       return { ...profile, matchPercent };
     })
     .filter((profile) => profile.matchPercent >= 50);
@@ -106,8 +110,13 @@ export default function MatchingPage() {
   if (filterByLocation || filterByInterest || filterByMbti) {
     displayedProfiles = filteredMatchedProfiles.filter((profile) => {
       if (filterByLocation && profile.location !== myLocation) return false;
-      if (filterByInterest && !profile.interests?.some((i) => interests.includes(i))) return false;
-      if (filterByMbti && !mbtiPairs[myMbti!]?.includes(profile.mbti || "")) return false;
+      if (
+        filterByInterest &&
+        !profile.interests?.some((i) => interests.includes(i))
+      )
+        return false;
+      if (filterByMbti && !mbtiPairs[myMbti!]?.includes(profile.mbti || ""))
+        return false;
       return true;
     });
   }
@@ -161,7 +170,8 @@ export default function MatchingPage() {
 
         {/* 제목 */}
         <div className="text-[32px] font-bold dark:text-white">
-          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅 상대를 찾았어요!
+          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅
+          상대를 찾았어요!
         </div>
 
         {/* 필터 버튼 그룹 */}
@@ -197,7 +207,10 @@ export default function MatchingPage() {
             <div className="flex flex-col items-center justify-center space-y-8 p-6">
               <div className="flex items-center justify-center space-x-8 relative">
                 {len >= 3 && (
-                  <button onClick={handlePrev} className="absolute left-[-50px] z-10">
+                  <button
+                    onClick={handlePrev}
+                    className="absolute left-[-50px] z-10"
+                  >
                     <img src={LeftBtn} alt="이전" className="cursor-pointer" />
                   </button>
                 )}
@@ -225,14 +238,19 @@ export default function MatchingPage() {
                         imageWidth="w-full"
                         imageHeight="h-full"
                         disableFlip={!isCenter}
-                        onClick={isCenter ? () => setIsModalOpen(true) : undefined}
+                        onClick={
+                          isCenter ? () => setIsModalOpen(true) : undefined
+                        }
                       />
                     </motion.div>
                   );
                 })}
 
                 {len >= 3 && (
-                  <button onClick={handleNext} className="absolute right-[-50px] z-10">
+                  <button
+                    onClick={handleNext}
+                    className="absolute right-[-50px] z-10"
+                  >
                     <img src={RightBtn} alt="다음" className="cursor-pointer" />
                   </button>
                 )}

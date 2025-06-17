@@ -1,7 +1,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
-import { TbBell, TbUserCircle, TbMessageHeart } from "react-icons/tb";
+import { TbBell, TbMessageHeart, TbUserCircle } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
@@ -12,7 +12,7 @@ import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";
-import { useAuthStore } from "../../stores/authstore";
+import { useAuthStore } from "../../stores/authStore";
 import type { Notification } from "../../types/notification";
 
 export default function Header() {

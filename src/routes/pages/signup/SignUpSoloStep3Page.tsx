@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router";
-import { signupUser } from "../../apis/auth";
-import { updateProfile } from "../../apis/user";
-import { storeImage } from "../../apis/util";
-import BackButton from "../../components/common/BackButton";
-import Button from "../../components/common/Button";
-import TagGroup from "../../components/signup/TagGroup";
-import { useSignUpStore } from "../../stores/signupStore";
-import { showWarnToast } from "../../components/common/ShowToast";
+import { signupUser } from "../../../apis/auth";
+import { updateProfile } from "../../../apis/user";
+import { storeImage } from "../../../apis/util";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
+import { showWarnToast } from "../../../components/common/ShowToast";
+import TagGroup from "../../../components/signup/TagGroup";
+import { useSignUpStore } from "../../../stores/signUpStore";
 
 export default function SignUpSoloStep3Page() {
   const navigate = useNavigate();

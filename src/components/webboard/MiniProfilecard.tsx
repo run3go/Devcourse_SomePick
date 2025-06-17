@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { followUser, unfollowUser } from "../../apis/follow"; // 경로를 실제 API 파일 위치로 조정하세요
+import { notifyFollow } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import Button from "../common/Button";
-import { notifyFollow } from "../../apis/notification";
 
-export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniProfilecardProps) {
+export default function MiniProfilecard({
+  user,
+  onClose,
+  onFollowToggle,
+}: MiniProfilecardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { session } = useAuthStore();
@@ -22,7 +26,10 @@ export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniP
   // 외부 클릭 감지
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     }
@@ -67,7 +74,9 @@ export default function MiniProfilecard({ user, onClose, onFollowToggle }: MiniP
       />
 
       {/* 이름 */}
-      <span className="font-medium text-gray-800 dark:text-white">{user.nickname}</span>
+      <span className="font-medium text-gray-800 dark:text-white">
+        {user.nickname}
+      </span>
 
       {/* 버튼 그룹 */}
       <div className="flex gap-3">

@@ -1,10 +1,10 @@
-import { useLoaderData, useNavigate } from "react-router";
-import ChatInput from "./ChatInput";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router";
 import { fetchMessages, subscribeToMessages } from "../../apis/message";
 import { useAuthStore } from "../../stores/authStore";
-import dayjs from "dayjs";
-import type { RealtimeChannel } from "@supabase/supabase-js";
+import ChatInput from "./ChatInput";
 
 export default function ChatRoom({
   userId,

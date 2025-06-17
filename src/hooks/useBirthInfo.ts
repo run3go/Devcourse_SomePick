@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSignUpStore } from "../stores/signupStore";
+import { useSignUpStore } from "../stores/signUpStore";
 
 export default function useBirthInfo() {
   const { updateData, birthDate, setBirthDate, genderNum, setGenderNum } =
