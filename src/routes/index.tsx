@@ -8,6 +8,7 @@ import {
 import { getCoupleInfo } from "./loader/calendar.loader";
 import { getUserMessage } from "./loader/message.loader";
 import { getUserProfile } from "./loader/user.loader";
+import AuthPage from "./pages/AuthPage";
 import Back from "./pages/Back";
 import CalendarPage from "./pages/CalendarPage";
 import LoginPage from "./pages/LoginPage";
@@ -30,7 +31,6 @@ import SignUpSoloStep1Page from "./pages/signup/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/signup/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/signup/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
-import AuthPage from "./pages/AuthPage";
 
 const router = createBrowserRouter([
   {
@@ -90,17 +90,17 @@ const router = createBrowserRouter([
           },
           {
             path: ":id/request",
-            // loader: getUserMessage,
+            loader: getUserMessage,
             Component: ChatRequestPage,
           },
           {
             path: ":id",
-            // loader: getUserMessage,
+            loader: getUserMessage,
             Component: ChatRoomPage,
           },
           {
             path: ":id/waiting",
-            // loader: getUserMessage,
+            loader: getUserMessage,
             Component: ChatWaitingPage,
           },
         ],
