@@ -12,7 +12,6 @@ import useSignupValidation from "../../hooks/useSignupValidation";
 import { useSignUpStore } from "../../stores/signupStore";
 import supabase from "../../utils/supabase";
 import { showWarnToast } from "../../components/common/ShowToast";
-// import { storeImage } from "../../apis/util";
 
 export default function SignUpSoloStep1Page() {
   const navigate = useNavigate();
@@ -21,9 +20,10 @@ export default function SignUpSoloStep1Page() {
     email: "",
   });
 
-  const [isTouched, setIsTouched] = useState(false);
+  const [isNicknameTouched, setIsNicknameTouched] = useState(false);
   const [isEmailTouched, setIsEmailTouched] = useState(false);
   const [isPwTouched, setIsPwTouched] = useState(false);
+  const [isPwConfirmTouched, setIsPwConfirmTouched] = useState(false);
 
   const { mainImgFile, subImgFile, data, updateData, setId } = useSignUpStore();
   const nickname = data.nickname;
@@ -47,25 +47,26 @@ export default function SignUpSoloStep1Page() {
     e.preventDefault();
 
     if (!mainImgFile || !subImgFile) {
-      // alert("이미지를 추가해주세요.");
       showWarnToast("이미지를 추가해주세요.");
       return;
     }
 
     if (!nickname) {
-      // alert("닉네임을 입력해주세요.");
       showWarnToast("닉네임을 입력해주세요.");
       return;
     }
 
+    if (nickname.length < 2) {
+      showWarnToast("닉네임을 2글자 이상 입력해주세요.");
+      return;
+    }
+
     if (isDuplicate) {
-      // alert("중복된 닉네임입니다.");
       showWarnToast("중복된 닉네임입니다.");
       return;
     }
 
     if (data.age === 0 || data.gender === undefined) {
-      // alert("주민등록번호를 입력해주세요.");
       showWarnToast("올바른 주민등록번호를 입력해주세요.");
       return;
     }
@@ -77,19 +78,16 @@ export default function SignUpSoloStep1Page() {
       }
 
       if (!isEmailValid) {
-        // alert("올바른 이메일 형식이 아닙니다.");
         showWarnToast("올바른 이메일 형식이 아닙니다.");
         return;
       }
 
       if (isEmailDuplicate) {
-        // alert("중복된 이메일입니다.");
         showWarnToast("중복된 이메일입니다.");
         return;
       }
 
       if (!isPwValid) {
-        // alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
         showWarnToast(
           "비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다."
         );
@@ -97,7 +95,6 @@ export default function SignUpSoloStep1Page() {
       }
 
       if (pw !== pwConfirm) {
-        // alert("비밀번호가 일치하지 않습니다.");
         showWarnToast("비밀번호가 일치하지 않습니다.");
         return;
       }
@@ -158,43 +155,39 @@ export default function SignUpSoloStep1Page() {
                   value={nickname}
                   onChange={(e) => {
                     updateData({ nickname: e.target.value });
-                    setIsTouched(true);
+                    setIsNicknameTouched(true);
                   }}
                   className="w-[290px]"
-                  isError={isDuplicate}
-                  errorMessage={isDuplicate ? "(중복된 닉네임입니다.)" : ""}
+                  isError={
+                    isNicknameTouched && (nickname.length < 2 || isDuplicate)
+                  }
+                  errorMessage={
+                    !isNicknameTouched
+                      ? ""
+                      : nickname.length < 2
+                      ? "(2글자 이상 작성해주세요.)"
+                      : isDuplicate
+                      ? "(중복된 닉네임입니다.)"
+                      : ""
+                  }
                 />
-                {isTouched && (
-                  <div className="absolute left-18 top-1">
-                    {/* {isDuplicate === true && (
-                      <Icon
-                        width="18px"
-                        height="18px"
-                        left="-888px"
-                        top="-759px"
-                      />
-                    )} */}
-                    {isDuplicate === false && (
-                      <Icon
-                        width="16px"
-                        height="12px"
-                        left="-929px"
-                        top="-762px"
-                      />
+                {isNicknameTouched && (
+                  <>
+                    {isDuplicate === false && nickname.length >= 2 && (
+                      <div className="absolute left-18 top-1">
+                        <Icon
+                          width="16px"
+                          height="12px"
+                          left="-929px"
+                          top="-762px"
+                        />
+                      </div>
                     )}
-                  </div>
+                  </>
                 )}
               </div>
 
               <InputBirthDate className="w-[290px]" />
-              {/* <SignupInput
-                label="주민등록번호"
-                type="number"
-                name="birthDate"
-                className="w-[223px]"
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-              /> */}
             </div>
             <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
@@ -221,14 +214,6 @@ export default function SignUpSoloStep1Page() {
               />
               {isEmailTouched && (
                 <div className="absolute left-17.5 top-1">
-                  {/* {isEmailDuplicate === true && (
-                    <Icon
-                      width="20px"
-                      height="20px"
-                      left="-889px"
-                      top="-760px"
-                    />
-                  )} */}
                   {isEmailValid && !isEmailDuplicate && (
                     <Icon
                       width="16px"
@@ -256,20 +241,23 @@ export default function SignUpSoloStep1Page() {
                   : ""
               }
               className={profile.id && "hidden"}
-              // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
               label="비밀번호 확인"
               type="password"
               name="confirmPw"
               value={pwConfirm}
-              onChange={handlePwConfirmChange}
-              isError={!isPwConfirmValid}
+              onChange={(e) => {
+                handlePwConfirmChange(e);
+                setIsPwConfirmTouched(true);
+              }}
+              isError={isPwConfirmTouched && !isPwConfirmValid}
               errorMessage={
-                !isPwConfirmValid ? "(비밀번호가 일치하지 않습니다.)" : ""
+                isPwConfirmTouched && !isPwConfirmValid
+                  ? "(비밀번호가 일치하지 않습니다.)"
+                  : ""
               }
               className={profile.id && "hidden"}
-              // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
 
             <Button

@@ -1,7 +1,7 @@
 import { useController, useFormContext } from "react-hook-form";
 import { useLocation } from "react-router";
 import Select from "react-select";
-import { optionsGroup } from "../signup/data/optionsData";
+import { optionsGroup } from "../../constants/data/optionsData";
 interface SelectBoxProps {
   type: "job" | "location" | "mbti";
 }

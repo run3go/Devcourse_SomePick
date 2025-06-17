@@ -1,5 +1,5 @@
 // import { useEffect, useState } from "react";
-import { personalityTags, interestTags } from "./data/tagData";
+import { personalityTags, interestTags } from "../../constants/data/tagData";
 import Icon from "../common/Icon";
 import { useSignUpStore } from "../../stores/signupStore";
 import { showWarnToast } from "../common/ShowToast";

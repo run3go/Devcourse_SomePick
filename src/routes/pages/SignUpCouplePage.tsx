@@ -5,7 +5,6 @@ import ProfileImgUpload from "../../components/signup/ProfileImgUpload";
 import SignupInput from "../../components/signup/SignupInput";
 import useCheckNickname from "../../hooks/useCheckNickname";
 import { useSignUpStore } from "../../stores/signupStore";
-// import LoadingSpinner from "../../components/signup/LoadingSpinner";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { signupUser } from "../../apis/auth";
@@ -27,7 +26,7 @@ export default function SignUpCouplePage() {
   const coupleData = data as CoupleOptions;
   const { nickname, partner_nickname: partner } = coupleData;
 
-  const [isTouched, setIsTouched] = useState(false);
+  const [isNicknameTouched, setIsNicknameTouched] = useState(false);
   const [isEmailTouched, setIsEmailTouched] = useState(false);
   const [isPwTouched, setIsPwTouched] = useState(false);
   const [isPwConfirmTouched, setIsPwConfirmTouched] = useState(false);
@@ -50,21 +49,26 @@ export default function SignUpCouplePage() {
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!mainImgFile) {
-      alert("이미지를 추가해주세요.");
+      showWarnToast("이미지를 추가해주세요.");
       return;
     }
     if (!nickname) {
-      alert("닉네임을 입력해주세요.");
+      showWarnToast("닉네임을 입력해주세요.");
+      return;
+    }
+
+    if (nickname.length < 2) {
+      showWarnToast("닉네임을 2글자 이상 입력해주세요.");
       return;
     }
 
     if (isDuplicate) {
-      alert("중복된 닉네임입니다.");
+      showWarnToast("중복된 닉네임입니다.");
       return;
     }
 
     if (data.age === 0 || data.gender === undefined) {
-      alert("주민등록번호를 입력해주세요.");
+      showWarnToast("주민등록번호를 입력해주세요.");
       return;
     }
     const imgUrl = mainImgFile && (await storeImage(mainImgFile, "main_image"));
@@ -85,25 +89,26 @@ export default function SignUpCouplePage() {
     e.preventDefault();
 
     if (!mainImgFile) {
-      // alert("이미지를 추가해주세요.");
       showWarnToast("이미지를 추가해주세요.");
       return;
     }
 
     if (!nickname) {
-      // alert("닉네임을 입력해주세요.");
       showWarnToast("닉네임을 입력해주세요.");
       return;
     }
 
+    if (nickname.length < 2) {
+      showWarnToast("닉네임을 2글자 이상 입력해주세요.");
+      return;
+    }
+
     if (isDuplicate) {
-      // alert("중복된 닉네임입니다.");
       showWarnToast("중복된 닉네임입니다.");
       return;
     }
 
     if (data.age === 0 || data.gender === undefined) {
-      // alert("주민등록번호를 입력해주세요.");
       showWarnToast("올바른 주민등록번호를 입력해주세요.");
       return;
     }
@@ -114,19 +119,16 @@ export default function SignUpCouplePage() {
     }
 
     if (!isEmailValid) {
-      // alert("올바른 이메일 형식이 아닙니다.");
       showWarnToast("올바른 이메일 형식이 아닙니다.");
       return;
     }
 
     if (isEmailDuplicate) {
-      // alert("중복된 이메일입니다.");
       showWarnToast("중복된 이메일입니다.");
       return;
     }
 
     if (!isPwValid) {
-      // alert("비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다.");
       showWarnToast(
         "비밀번호는 6자 이상, 영문과 숫자, 특수문자를 포함해야 합니다."
       );
@@ -134,7 +136,6 @@ export default function SignUpCouplePage() {
     }
 
     if (pw !== pwConfirm) {
-      // alert("비밀번호가 일치하지 않습니다.");
       showWarnToast("비밀번호가 일치하지 않습니다.");
       return;
     }
@@ -148,7 +149,7 @@ export default function SignUpCouplePage() {
 
     await signupUser(email, pw, fullPayload);
     navigate("/");
-    resetData();
+    // resetData();
   };
 
   const getUserData = useCallback(async () => {
@@ -195,26 +196,25 @@ export default function SignUpCouplePage() {
                     value={nickname}
                     onChange={(e) => {
                       updateData({ nickname: e.target.value });
-                      setIsTouched(true);
+                      setIsNicknameTouched(true);
                     }}
                     className="mb-5"
-                    isError={isDuplicate}
-                    errorMessage={isDuplicate ? "(중복된 닉네임입니다.)" : ""}
+                    isError={
+                      isNicknameTouched && (nickname.length < 2 || isDuplicate)
+                    }
+                    errorMessage={
+                      !isNicknameTouched
+                        ? ""
+                        : nickname.length < 2
+                        ? "(2글자 이상 작성해주세요.)"
+                        : isDuplicate
+                        ? "(중복된 닉네임입니다.)"
+                        : ""
+                    }
                   />
-                  {isTouched && (
-                    // <div className="absolute right-18 top-[0.2px]">
+                  {isNicknameTouched && (
                     <>
-                      {/* {isDuplicate === true && (
-                        <div className="flex items-center absolute top-[0.2px] left-18">
-                          <Icon
-                            width="20px"
-                            height="20px"
-                            left="-889px"
-                            top="-760px"
-                          />
-                        </div>
-                      )} */}
-                      {isDuplicate === false && (
+                      {isDuplicate === false && nickname.length >= 2 && (
                         <div className="flex items-center absolute top-[5px] right-54">
                           <Icon
                             width="16px"
@@ -225,8 +225,6 @@ export default function SignUpCouplePage() {
                         </div>
                       )}
                     </>
-
-                    // </div>
                   )}
                 </div>
 
@@ -256,18 +254,9 @@ export default function SignUpCouplePage() {
                     ? "(중복된 이메일입니다.)"
                     : ""
                 }
-                // className={`${isEmailValid ? "" : "border-[var(--red)]"}`}
               />
               {isEmailTouched && (
                 <div className="absolute left-17.5 top-1">
-                  {/* {(!isEmailValid || isEmailDuplicate) && (
-                    <Icon
-                      width="20px"
-                      height="20px"
-                      left="-889px"
-                      top="-760px"
-                    />
-                  )} */}
                   {isEmailValid && !isEmailDuplicate && (
                     <Icon
                       width="16px"
@@ -295,7 +284,6 @@ export default function SignUpCouplePage() {
                   : ""
               }
               className={twMerge(profile.id && "hidden")}
-              // className={`${isPwValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
               label="비밀번호 확인"
@@ -313,7 +301,6 @@ export default function SignUpCouplePage() {
                   : ""
               }
               className={twMerge(profile.id && "hidden")}
-              // className={`${isPwConfirmValid ? "" : "border-[var(--red)]"}`}
             />
             <SignupInput
               label="내 연인의 닉네임 (선택)"

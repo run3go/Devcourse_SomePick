@@ -90,17 +90,17 @@ const router = createBrowserRouter([
           },
           {
             path: ":id/request",
-            loader: getUserMessage,
+            // loader: getUserMessage,
             Component: ChatRequestPage,
           },
           {
             path: ":id",
-            loader: getUserMessage,
+            // loader: getUserMessage,
             Component: ChatRoomPage,
           },
           {
             path: ":id/waiting",
-            loader: getUserMessage,
+            // loader: getUserMessage,
             Component: ChatWaitingPage,
           },
         ],

@@ -87,6 +87,7 @@ export default function LoginPage() {
               src={google}
               alt="구글 로그인"
               className="h-12.5  object-cover"
+              draggable="false"
             />
           </div>
 
