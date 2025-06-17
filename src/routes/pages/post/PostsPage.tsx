@@ -9,6 +9,7 @@ import SearchBar from "../../../components/webboard/SearchBar";
 import SortDropdown from "../../../components/webboard/SortDropdown";
 import WriteButton from "../../../components/webboard/WriteButton";
 import { useAuthStore } from "../../../stores/authStore";
+import Icon from "../../../components/common/Icon";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
@@ -139,23 +140,39 @@ export default function PostsPage() {
 
       {/* 게시물 리스트 */}
       <div className="space-y-6 w-full max-w-[1370px] px-4">
-        {posts.map((post) => (
-          <Postcard
-            key={post.id}
-            post={post}
-            onProfileClick={(author, e) => {
-              e.stopPropagation();
-              setSelected({
-                user: author,
-                anchor: { x: e.clientX, y: e.clientY },
-              });
-            }}
-          />
-        ))}
+        {/* 포스트배열 0이면 표시 */}
+        {posts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+            <Icon
+              width="100px"
+              height="100px"
+              left="-41px"
+              top="-605.09px"
+              className="cursor-pointer"
+            />
+            <div className="text-lg text-gray-600 dark:text-gray-300">
+              관련된 글을 찾지 못했어요!
+            </div>
+          </div>
+        ) : (
+          posts.map((post) => (
+            <Postcard
+              key={post.id}
+              post={post}
+              onProfileClick={(author, e) => {
+                e.stopPropagation();
+                setSelected({
+                  user: author,
+                  anchor: { x: e.clientX, y: e.clientY },
+                });
+              }}
+            />
+          ))
+        )}
+
         <div className="select-none dark:bg-[var(--dark-bg-primary)]">
           <TopButton />
         </div>
-        {/* 관찰용 엘리먼트 (무한 스크롤 트리거) */}
         <div ref={loaderRef} className="h-1" />
       </div>
     </div>
