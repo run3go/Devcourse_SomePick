@@ -128,6 +128,9 @@ export default function FortuneModal({
       </motion.div>
       <div>
         <ShareButton onClick={handleShare} />
+        {/* <p className="text-[var(--gray-700)]">
+          이 창을 나가면 다시 게시판에 업로드를 못해요!
+        </p> */}
       </div>
     </motion.div>
   );
