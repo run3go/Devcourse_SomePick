@@ -9,7 +9,7 @@ import {
 } from "../../apis/follow";
 import { sendHeart } from "../../apis/matching";
 import { notifyFollow, notifyHeart } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
 import Icon from "../common/Icon";

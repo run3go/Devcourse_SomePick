@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 
 import bg from "../../assets/images/auth-bg.png";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/new_logo.png";
 
 export default function AuthPage() {
   const navigate = useNavigate();

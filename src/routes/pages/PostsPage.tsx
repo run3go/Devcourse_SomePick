@@ -1,21 +1,23 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { fetchFollowingList } from "../../apis/follow";
+import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
+import TopButton from "../../components/common/TopButton";
 import MiniProfilecard from "../../components/webboard/MiniProfilecard";
 import Postcard from "../../components/webboard/PostCard";
 import SearchBar from "../../components/webboard/SearchBar";
 import SortDropdown from "../../components/webboard/SortDropdown";
 import WriteButton from "../../components/webboard/WriteButton";
-import { fetchPostsByChannelName } from "../../apis/posts/fetchPosts";
-import { useAuthStore } from "../../stores/authStore";
-import { fetchFollowingList } from "../../apis/follow";
-import TopButton from "../../components/common/TopButton";
+import { useAuthStore } from "../../stores/authtore";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
   const [posts, setPosts] = useState<PostData[]>([]);
   const [followings, setFollowings] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
-  const [sortRule, setSortRule] = useState<"created_at" | "likes">("created_at");
+  const [sortRule, setSortRule] = useState<"created_at" | "likes">(
+    "created_at"
+  );
   const [keyword, setKeyword] = useState("");
   const [selected, setSelected] = useState<Selected | null>(null);
   const navigate = useNavigate();
@@ -62,7 +64,12 @@ export default function PostsPage() {
   // 게시물 페치
   useEffect(() => {
     (async () => {
-      const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
+      const result = await fetchPostsByChannelName(
+        safeChannel,
+        offset,
+        sortRule,
+        keyword
+      );
       if (!result) return;
 
       setPosts((prev) => {
@@ -131,7 +138,11 @@ export default function PostsPage() {
             }}
           />
         </div>
-        <WriteButton onClick={() => navigate(`/post/create`, { state: params.channelName })} />
+        <WriteButton
+          onClick={() =>
+            navigate(`/post/create`, { state: params.channelName })
+          }
+        />
       </div>
 
       {/* 게시물 리스트 */}

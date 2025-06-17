@@ -1,7 +1,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
-import { TbBell, TbUserCircle, TbMessageHeart } from "react-icons/tb";
+import { TbBell, TbMessageHeart, TbUserCircle } from "react-icons/tb";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {

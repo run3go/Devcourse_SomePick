@@ -1,10 +1,10 @@
-import { twMerge } from "tailwind-merge";
-import { readNotification, readAllNotification } from "../../apis/notification";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Icon from "../common/Icon";
-import type { Notification } from "../../types/notification";
+import { twMerge } from "tailwind-merge";
+import { readAllNotification, readNotification } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authstore";
+import type { Notification } from "../../types/notification";
+import Icon from "../common/Icon";
 
 interface Props {
   notifications: Notification[];

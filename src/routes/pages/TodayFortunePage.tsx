@@ -1,11 +1,11 @@
+import { GoogleGenAI } from "@google/genai";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { updateFortuneTelling } from "../../apis/fortuneTelling";
+import { fetchProfile } from "../../apis/user";
 import FortuneCards from "../../components/fortune/FortuneCards";
 import FortuneInfo from "../../components/fortune/FortuneInfo";
 import { useAuthStore } from "../../stores/authstore";
-import { GoogleGenAI } from "@google/genai";
-import { updateFortuneTelling } from "../../apis/fortuneTelling";
-import { fetchProfile } from "../../apis/user";
 interface FortuneData {
   userName?: string | null;
   status?: string | null;

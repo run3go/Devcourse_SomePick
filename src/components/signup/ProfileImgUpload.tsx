@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Icon from "../common/Icon";
 import { deleteImage, storeImage } from "../../apis/util";
-import { useSignUpStore } from "../../stores/signupStore";
+import { useSignUpStore } from "../../stores/signUpStore";
+import Icon from "../common/Icon";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function ProfileImgUpload({ type }: { type: string }) {

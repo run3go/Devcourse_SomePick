@@ -1,4 +1,4 @@
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../stores/authstore";
 import ChatItem from "./ChatItem";
 
 export default function ChatList({
