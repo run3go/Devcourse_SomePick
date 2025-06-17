@@ -24,13 +24,13 @@ import PostDetailPage from "./pages/post/PostDetailPage";
 import PostsPage from "./pages/post/PostsPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
-import AuthPage from "./pages/signup/AuthPage";
 import SignUpCouplePage from "./pages/signup/SignUpCouplePage";
 import SignUpPage from "./pages/signup/SignUpPage";
 import SignUpSoloStep1Page from "./pages/signup/SignUpSoloStep1Page";
 import SignUpSoloStep2Page from "./pages/signup/SignUpSoloStep2Page";
 import SignUpSoloStep3Page from "./pages/signup/SignUpSoloStep3Page";
 import TodayFortunePage from "./pages/TodayFortunePage";
+import AuthPage from "./pages/AuthPage";
 
 const router = createBrowserRouter([
   {
