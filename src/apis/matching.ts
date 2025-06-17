@@ -33,6 +33,7 @@ export const sendHeart = async (receiverId: string) => {
       .eq("matching_user_id", receiverId)
       .single();
     if (data) {
+      console.log(data);
       return true;
     }
 
@@ -70,7 +71,9 @@ export const fetchMatchingUsers = async () => {
         `
       )
       .eq("is_matched", false)
-      .or(`user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`);
+      .or(
+        `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
+      );
     if (error) {
       console.log("유저 목록 조회 실패:", error.message);
       return;
@@ -122,7 +125,9 @@ export const fetchChatUsers = async () => {
         `
       )
       .eq("is_matched", true)
-      .or(`user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`);
+      .or(
+        `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
+      );
     if (error) {
       console.log("유저 목록 조회 실패:", error.message);
       return;
@@ -186,7 +191,9 @@ export const deleteMatching = async () => {
     const { error } = await supabase
       .from("matchings")
       .delete()
-      .or(`user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`);
+      .or(
+        `user_id.eq.${session.user.id}, matching_user_id.eq.${session.user.id}`
+      );
     if (error) {
       console.log("매칭 전부 삭제 실패:", error.message);
       return;

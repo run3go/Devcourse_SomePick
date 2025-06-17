@@ -98,20 +98,20 @@ export default function SoloProfile({
   };
 
   const handleSendHeart = async () => {
-    const hasHeartAlready = await sendHeart(id);
-    if (hasHeartAlready) {
+    if (matching) {
       setIsAlertOpen(true);
-    } else {
-      setMatching({
-        id: 1,
-        created_at: "",
-        is_matched: false,
-        is_rejected: false,
-        matching_user_id: id,
-        user_id: "",
-      });
-      await notifyHeart(id);
+      return;
     }
+    await sendHeart(id);
+    setMatching({
+      id: 1,
+      created_at: "",
+      is_matched: false,
+      is_rejected: false,
+      matching_user_id: id,
+      user_id: "",
+    });
+    await notifyHeart(id);
   };
 
   const navigateMessage = () => {
@@ -299,7 +299,7 @@ export default function SoloProfile({
                       matching
                         ? matching.is_matched
                           ? false
-                          : matching.user_id === id
+                          : matching.matching_user_id === session.user.id
                           ? false
                           : true
                         : false
@@ -315,8 +315,8 @@ export default function SoloProfile({
                       {matching
                         ? matching.is_matched
                           ? "DM 보내기"
-                          : matching.user_id === id
-                          ? "받은 하트 보기"
+                          : matching.matching_user_id === session.user.id
+                          ? "하트 보내기"
                           : "연결 대기중..."
                         : "하트 보내기"}
                     </span>
