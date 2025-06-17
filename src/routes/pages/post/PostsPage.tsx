@@ -72,6 +72,8 @@ export default function PostsPage() {
       );
       if (!result) return;
 
+      console.log(result);
+
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
         //  내림차순으로 정렬

@@ -7,18 +7,21 @@ interface SortDropdownProps {
   onChange: (rule: SortRule) => void;
 }
 
-export default function SortDropdown({ sortRule, onChange }: SortDropdownProps) {
+export default function SortDropdown({
+  sortRule,
+  onChange,
+}: SortDropdownProps) {
   return (
     <div className="relative inline-block">
       <select
         value={sortRule}
         onChange={(e) => onChange(e.target.value as SortRule)}
         className="
-          h-[32px] px-2 pr-8
+          h-[40px] px-2 pr-8
           text-[16px] leading-none text-[#666666]
-          bg-white border border-[#666666] rounded-md
+          bg-white border border-[#666666] rounded-[10px]
           appearance-none cursor-pointer
-          focus:outline-none focus:ring-1 dark:bg-[#333333] dark:text-white
+          focus:outline-none focus:ring-1 dark:bg-[#333333] dark:text-[var(--dark-gray-700)]
         "
       >
         <option value="created_at">최신순</option>

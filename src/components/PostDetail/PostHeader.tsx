@@ -20,7 +20,7 @@ export default function PostHeader({
   return (
     <>
       <header>
-        <div className="flex justify-between items-center dark:text-[var(--dark-gray-100)]">
+        <div className="flex justify-between items-center dark:text-[var(--dark-gray-700)]">
           <h1 className="text-[20px]">{post.title}</h1>
           {post.author.id === authId && (
             <div className="relative inline-block" onClick={toggleMenu}>
@@ -60,7 +60,7 @@ export default function PostHeader({
           src={post.author.main_image ?? ""}
         />
         <span
-          className="cursor-pointer dark:text-[var(--dark-gray-100)]"
+          className="cursor-pointer dark:text-[var(--dark-gray-700)]"
           onClick={() => navigate(`/profile/${post.author.id}`)}
         >
           {post.author.nickname}

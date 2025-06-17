@@ -49,7 +49,7 @@ export default function PostContent({
       <section>
         <div className="rounded-2xl bg-white mb-[30px] p-[20px] dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border">
           <div className="">
-            <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-100)]">
+            <p className="whitespace-pre-line mb-[26px] text-[16px] dark:text-[var(--dark-gray-700)]">
               {post.contents}
             </p>
             <PostImageSwiper post={post} />
@@ -72,11 +72,11 @@ export default function PostContent({
                 className="cursor-pointer hidden dark:block"
                 onClick={handleHeart}
               />
-              <span className="ml-1 text-[14px] dark:text-[var(--dark-gray-100)]">
+              <span className="ml-1 text-[14px] dark:text-[var(--dark-gray-700)]">
                 {likesCount}
               </span>
             </div>
-            <span className="text-[14px] dark:text-[var(--dark-gray-100)]">
+            <span className="text-[14px] dark:text-[var(--dark-gray-700)]">
               {post.comments.length}개의 댓글
             </span>
           </div>
