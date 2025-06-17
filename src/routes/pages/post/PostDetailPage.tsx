@@ -5,7 +5,7 @@ import CommentList from "../../../components/PostDetail/CommentList";
 import PostContent from "../../../components/PostDetail/PostContent";
 import PostHeader from "../../../components/PostDetail/PostHeader";
 import BackButton from "../../../components/common/BackButton";
-import { useAuthStore } from "../../../stores/authtore";
+import { useAuthStore } from "../../../stores/authStore";
 
 export default function PostDetailPage() {
   const { id } = useParams();

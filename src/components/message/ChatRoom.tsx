@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { fetchMessages, subscribeToMessages } from "../../apis/message";
-import { useAuthStore } from "../../stores/authtore";
+import { useAuthStore } from "../../stores/authStore";
 import ChatInput from "./ChatInput";
 
 export default function ChatRoom({

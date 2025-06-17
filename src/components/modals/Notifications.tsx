@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { readAllNotification, readNotification } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authtore";
+import { useAuthStore } from "../../stores/authStore";
 import type { Notification } from "../../types/notification";
 import Icon from "../common/Icon";
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { logoutUser } from "../../apis/auth";
-import { useAuthStore } from "../../stores/authtore";
+import { useAuthStore } from "../../stores/authStore";
 import Icon from "./Icon";
 // import { useSignUpStore } from "../../stores/signUpStore";
 

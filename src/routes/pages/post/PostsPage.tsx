@@ -8,7 +8,7 @@ import Postcard from "../../../components/webboard/PostCard";
 import SearchBar from "../../../components/webboard/SearchBar";
 import SortDropdown from "../../../components/webboard/SortDropdown";
 import WriteButton from "../../../components/webboard/WriteButton";
-import { useAuthStore } from "../../../stores/authtore";
+import { useAuthStore } from "../../../stores/authStore";
 
 export default function PostsPage() {
   const { session } = useAuthStore();

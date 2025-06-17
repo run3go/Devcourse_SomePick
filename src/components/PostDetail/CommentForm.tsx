@@ -4,7 +4,7 @@ import Button from "../common/Button";
 import Icon from "../common/Icon";
 // import Alert from "../common/Alert";
 import { notifyChildComment, notifyComment } from "../../apis/notification";
-import { useAuthStore } from "../../stores/authtore";
+import { useAuthStore } from "../../stores/authStore";
 import { showSuccessToast, showWarnToast } from "../common/ShowToast";
 
 interface CommentProps {
