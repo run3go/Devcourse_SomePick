@@ -10,7 +10,17 @@ type Comments = {
   comment: string;
   author: Author;
   created_at: string;
-  comments: Comments[];
+  comments: ChildComments[];
+  deleted?: boolean;
+  edited?: boolean;
+};
+
+type ChildComments = {
+  id: number;
+  parent_id?: number | null;
+  comment: string;
+  author: Author;
+  created_at: string;
   deleted?: boolean;
   edited?: boolean;
 };

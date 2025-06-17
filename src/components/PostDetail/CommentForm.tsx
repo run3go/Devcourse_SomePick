@@ -74,6 +74,18 @@ export default function CommentForm({
     }
   };
 
+  // Enter로 댓글 작성
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+
+      const form = e.currentTarget.form;
+      if (form) {
+        form.requestSubmit();
+      }
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -101,6 +113,7 @@ export default function CommentForm({
               !session && "bg-[var(--gray-200)] text-gray-400"
             }`}
             disabled={!session}
+            onKeyDown={handleKeyDown}
           ></textarea>
         </div>
         <div className="flex w-full">

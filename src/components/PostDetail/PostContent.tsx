@@ -44,6 +44,15 @@ export default function PostContent({
       }
     }
   };
+
+  // 댓글 갯수
+  const totalCommentCount = post.comments.reduce((acc, parentComment) => {
+    const validChildCount = parentComment.comments.filter(
+      (child) => !child.deleted
+    ).length;
+    return acc + 1 + validChildCount;
+  }, 0);
+
   return (
     <>
       <section>
@@ -77,7 +86,7 @@ export default function PostContent({
               </span>
             </div>
             <span className="text-[14px] dark:text-[var(--dark-gray-700)]">
-              {post.comments.length}개의 댓글
+              {totalCommentCount}개의 댓글
             </span>
           </div>
         </div>

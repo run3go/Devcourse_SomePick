@@ -69,7 +69,7 @@ export const updateComment = async (comment: string, commentId: number) => {
 };
 //댓글 삭제 (commentId, 대댓글 여부)
 export const deleteComment = async (commentId: number, isParent: boolean) => {
-  if (isParent) {
+  if (!isParent) {
     try {
       const { error } = await supabase
         .from("comments")
