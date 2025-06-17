@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Icon from "../common/Icon";
 import type { Notification } from "../../types/notification";
+import { useAuthStore } from "../../stores/authstore";
 
 interface Props {
   notifications: Notification[];
@@ -15,13 +16,21 @@ export default function Notifications({
   onNotificationsChange,
 }: Props) {
   const navigate = useNavigate();
+  const session = useAuthStore((state) => state.session);
   const [isLoading, setIsLoading] = useState(true);
+  const [filterMyNotifications, setFilterMyNotifications] = useState<
+    Notification[]
+  >([]);
 
   useEffect(() => {
-    if (notifications) {
+    if (notifications && session?.user.id) {
+      const filtered = notifications.filter(
+        (n) => n.sender_id !== session.user.id
+      );
+      setFilterMyNotifications(filtered);
       setIsLoading(false);
     }
-  }, [notifications]);
+  }, [notifications, session?.user.id]);
 
   // 알림 하나 하나 읽음 처리
   const handleNotification = async (notification: Notification) => {
@@ -29,14 +38,20 @@ export default function Notifications({
       if (notification.id) {
         await readNotification(notification.id);
       }
-      const updatedNotifications = notifications.filter(
+      const updatedNotifications = filterMyNotifications.filter(
         (n) => n.id !== notification.id
       );
       onNotificationsChange(updatedNotifications);
+      setFilterMyNotifications(updatedNotifications);
 
       switch (notification.type) {
         case "like":
         case "comment":
+          if (notification.post_id) {
+            navigate(`/post/detail/${notification.post_id}`);
+          }
+          break;
+        case "childComment":
           if (notification.post_id) {
             navigate(`/post/detail/${notification.post_id}`);
           }
@@ -96,6 +111,8 @@ export default function Notifications({
         return `${senderName}님이 회원님의 게시글에 좋아요를 눌렀어요.`;
       case "comment":
         return `${senderName}님이 회원님의 게시글에 댓글을 달았어요.`;
+      case "childComment":
+        return `${senderName}님이 회원님의 댓글에 대댓글을 달았어요.`;
       case "heart":
         return `누군가가 회원님에게 소개팅 하트를 보냈어요!`;
       case "follow":
@@ -141,7 +158,7 @@ export default function Notifications({
             불러오는 중..
           </li>
         ) : notifications.length > 0 ? (
-          notifications.map((notification) => (
+          filterMyNotifications.map((notification) => (
             <li
               key={notification.id}
               onClick={() => handleNotification(notification)}
