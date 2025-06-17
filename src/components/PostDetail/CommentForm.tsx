@@ -95,7 +95,7 @@ export default function CommentForm({
                 ? "댓글을 작성해주세요."
                 : "로그인 후 댓글을 작성할 수 있어요."
             }
-            className={`bg-white rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border dark:text-[var(--dark-gray-100)] ${
+            className={`bg-white rounded-2xl dark:bg-[var(--dark-bg-secondary)] dark:border-[var(--primary-pink)] dark:border dark:text-[var(--dark-gray-700)] ${
               isReply ? "w-[918px]" : "w-[980px]"
             } resize-none px-[18px] py-[12px] text-[14px] mb-[10px] focus:outline-none focus:ring-2 focus:ring-[#FFC7ED] ${
               !session && "bg-[var(--gray-200)] text-gray-400"

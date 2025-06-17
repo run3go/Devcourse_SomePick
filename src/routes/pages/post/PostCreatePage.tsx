@@ -41,8 +41,6 @@ export default function PostCreatePage() {
     }
   }, [image, clearImage]);
 
-  // console.log(params);
-
   const { state: channel } = location;
 
   const [title, setTitle] = useState("");
@@ -50,10 +48,8 @@ export default function PostCreatePage() {
   const [prevImageUrls, setPrevImageUrls] = useState<string[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>(image ? [...image] : []);
-  // const [imageUrl, setImageUrl] = useState("");
-  // const [imageFile, setImageFile] = useState<File | null>(null);
-  // const [fortune, setFortune] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [imageLoadStates, setImageLoadStates] = useState<boolean[]>([]);
   const [backTo, setBackTo] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -67,7 +63,6 @@ export default function PostCreatePage() {
           setContents(postRes.contents || "");
           setPrevImageUrls(postRes.images || []);
           setImageUrls(postRes.images || []);
-          // setFortune(postRes.fortune_telling || "");
           setBackTo(postRes.channel.name);
         }
       }
@@ -133,7 +128,6 @@ export default function PostCreatePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log(imageFiles);
 
     if (params.id) {
       await updatePost(
@@ -142,10 +136,8 @@ export default function PostCreatePage() {
         contents,
         prevImageUrls.length > 0 ? prevImageUrls : undefined,
         imageFiles.length > 0 ? imageFiles : null
-        // fortune ? fortune : ""
       );
 
-      // alert("게시물이 수정 되었습니다!");
       showSuccessToast("게시물이 수정 되었습니다!");
       navigate(`/post/${backTo}`);
     } else {
@@ -154,9 +146,7 @@ export default function PostCreatePage() {
         title,
         contents,
         imageFiles ? imageFiles : null
-        // fortune ? fortune : ""
       );
-      // alert("게시물이 업로드 되었습니다!");
       showSuccessToast("게시물이 업로드 되었습니다!");
       navigate(`/post/${channel}`);
     }
@@ -207,7 +197,7 @@ export default function PostCreatePage() {
                 placeholder="제목을 작성해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="ml-5 placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-300)] focus:outline-none bg-[var(--gray-100)] dark:bg-[var(--dark-bg-secondary)] p-2 w-[94%] rounded-lg text-[var(--dark-black)] dark:text-[var(--dark-gray-100)]"
+                className="ml-5 placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-700)] focus:outline-none bg-[var(--gray-100)] dark:bg-[var(--dark-bg-secondary)] p-2 w-[94%] rounded-lg text-[var(--dark-black)] dark:text-[var(--dark-gray-700)]"
               />
             </label>
 
@@ -218,7 +208,7 @@ export default function PostCreatePage() {
                 placeholder="당신의 이야기를 자유롭게 들려주세요"
                 value={contents}
                 onChange={(e) => setContents(e.target.value)}
-                className="placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-300)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] dark:bg-[var(--dark-bg-secondary)] rounded-lg p-2 text-[var(--dark-black)] dark:text-[var(--dark-gray-100)]"
+                className="placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-700)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] dark:bg-[var(--dark-bg-secondary)] rounded-lg p-2 text-[var(--dark-black)] dark:text-[var(--dark-gray-700)]"
               />
             </div>
 
@@ -228,11 +218,20 @@ export default function PostCreatePage() {
                   key={`img-${index}`}
                   className="relative flex justify-center items-center size-26 group"
                 >
+                  {!imageLoadStates[index] && <LoadingSpinner />}
+
                   <img
                     src={url}
                     alt={`게시물 이미지 ${index}`}
                     draggable="false"
                     className="w-full h-full object-cover rounded-[18px]"
+                    onLoad={() => {
+                      setImageLoadStates((prev) => {
+                        const newStates = [...prev];
+                        newStates[index] = true;
+                        return newStates;
+                      });
+                    }}
                   />
                   <div
                     onClick={() => handleImgDelete(index)}
@@ -281,60 +280,6 @@ export default function PostCreatePage() {
                 </div>
               )}
             </div>
-
-            {/* <div className="relative flex justify-center ml-13 items-center size-26 group">
-              <label
-                htmlFor="postImg"
-                className={`${
-                  imageUrl ? "" : "hover:bg-[var(--primary-pink-tone)]"
-                } flex justify-center items-center size-26 bg-[var(--primary-pink)] rounded-2xl cursor-pointer`}
-              >
-                {isLoading && <LoadingSpinner />}
-
-                {!isLoading &&
-                  (imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="게시물 이미지"
-                      draggable="false"
-                      className="w-full h-full object-cover rounded-[18px]"
-                    />
-                  ) : (
-                    <Icon
-                      width="28px"
-                      height="28px"
-                      left="-219px"
-                      top="-701px"
-                    />
-                  ))}
-
-                <input
-                  id="postImg"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImgChange}
-                  disabled={isLoading}
-                  ref={inputRef}
-                />
-              </label>
-
-              {imageUrl && !isLoading && (
-                <div
-                  onClick={handleImgDelete}
-                  className="absolute top-0 left-0 hidden group-hover:flex justify-center items-center size-26 rounded-2xl cursor-pointer hover:bg-[rgba(0,0,0,0.5)] z-10"
-                >
-                  <div className="flex justify-center items-center size-12 bg-[#EAEAEA] rounded-full">
-                    <Icon
-                      width="22px"
-                      height="4px"
-                      left="-270px"
-                      top="-713px"
-                    />
-                  </div>
-                </div>
-              )}
-            </div> */}
 
             <div className="flex justify-center">
               <Button

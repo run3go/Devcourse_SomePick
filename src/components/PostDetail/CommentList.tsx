@@ -58,7 +58,7 @@ export default function CommentList({
                   ))}
 
                 <div className="flex flex-col w-full">
-                  <div className="flex justify-between items-center dark:text-[var(--dark-gray-100)]">
+                  <div className="flex justify-between items-center dark:text-[var(--dark-gray-700)]">
                     <span className="cursor-pointer">
                       {comment.deleted ? (
                         <p className="my-[12px] text-[13px] italic text-[var(--gray-500)]">
@@ -139,7 +139,7 @@ export default function CommentList({
                     }}
                   />
                 ) : (
-                  <p className="my-[12px] dark:text-[var(--dark-gray-100)]">
+                  <p className="my-[12px] dark:text-[var(--dark-gray-700)]">
                     {comment.comment}
                   </p>
                 )}
@@ -156,7 +156,7 @@ export default function CommentList({
             <hr
               className={`${
                 isReply ? "ml-[33px]" : ""
-              } my-[12px] border-white border-1`}
+              } my-[12px] border-white border-1 dark:border-[var(--dark-gray-500)]`}
             />
             {openReplyId === comment.id && (
               <CommentForm
