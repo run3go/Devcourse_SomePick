@@ -67,11 +67,8 @@ export default function PostsPage() {
       if (!result) return;
 
       console.log(result);
-      console.log(result[0].comments[0].nested);
-
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
-        //  내림차순으로 정렬
         if (sortRule === "likes") {
           return merged.slice().sort((a, b) => b.likes.length - a.likes.length);
         }
