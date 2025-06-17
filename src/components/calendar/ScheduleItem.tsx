@@ -31,8 +31,8 @@ export default function ScheduleItem({
       <li
         onClick={handleUpdateschedule}
         className={twMerge(
-          "hover:text-black relative px-3 py-2 flex group hover:bg-[var(--primary-pink)] rounded-[10px] cursor-pointer",
-          "dark:hover:bg-[var(--primary-pink-tone)]"
+          "hover:text-black relative px-3 py-2 flex items-center group hover:bg-[var(--primary-pink)] rounded-[10px] cursor-pointer",
+          "dark:hover:bg-[var(--primary-pink-tone)] h-[56px]"
         )}
       >
         <div className="flex items-center">
