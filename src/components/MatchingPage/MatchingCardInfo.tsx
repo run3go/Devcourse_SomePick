@@ -1,10 +1,14 @@
-import Icon from "../common/Icon";
-import Button from "../common/Button";
-import type { Database } from "../../types/supabase";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
 import { notifyHeart } from "../../apis/notification";
-import { showWarnToast, showSuccessToast, showErrorToast } from "../common/ShowToast";
+import type { Database } from "../../types/supabase";
+import Button from "../common/Button";
+import Icon from "../common/Icon";
+import {
+  showErrorToast,
+  showSuccessToast,
+  showWarnToast,
+} from "../common/ShowToast";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface MatchingCardInfoProps {
@@ -12,7 +16,10 @@ interface MatchingCardInfoProps {
   disableActionButton?: boolean; // 추가
 }
 
-export default function MatchingCardInfo({ profile, disableActionButton }: MatchingCardInfoProps) {
+export default function MatchingCardInfo({
+  profile,
+  disableActionButton,
+}: MatchingCardInfoProps) {
   const navigate = useNavigate();
   const keywords =
     profile.keywords && profile.keywords.length > 0
@@ -55,18 +62,23 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
         {/* 프로필이미지 */}
         <div className="w-[300px] h-[300px] rounded-full overflow-hidden">
           <img
+            draggable={false}
             src={profile.sub_image!}
             alt="프로필 이미지"
             className="w-full h-full object-cover"
           />
           {/* 한줄소개 */}
         </div>
-        <p className="text-[24px] text-center dark:text-white">{profile.description}</p>
+        <p className="text-[24px] text-center dark:text-white">
+          {profile.description}
+        </p>
       </div>
 
       {/* 하단 */}
       <div className="w-full h-[400px] bg-white flex flex-col items-center justify-center gap-[40px] dark:bg-[#4B4B4B]">
-        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">{profile.nickname}</h2>
+        <h2 className="text-[32px] text-[#FFC7ED] font-semibold">
+          {profile.nickname}
+        </h2>
         <div className="flex gap-[30px]">
           {/* 하트 보내기 버튼 */}
           <Button
@@ -103,7 +115,9 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
                 key={`${keyword}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[17px] text-black dark:text-white">{keyword}</span>
+                <span className="text-[17px] text-black dark:text-white">
+                  {keyword}
+                </span>
               </li>
             ))}
           </ul>
@@ -113,7 +127,9 @@ export default function MatchingCardInfo({ profile, disableActionButton }: Match
                 key={`${interest}-${idx}`}
                 className="px-[13px] py-[5px] border border-[var(--primary-pink)] rounded-[50px]"
               >
-                <span className="text-[17px] text-black dark:text-white">{interest}</span>
+                <span className="text-[17px] text-black dark:text-white">
+                  {interest}
+                </span>
               </li>
             ))}
           </ul>
