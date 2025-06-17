@@ -79,14 +79,23 @@ export default function MatchingPage() {
 
   //추천카드모달 나올시 스크롤 안되게
   useEffect(() => {
+    const header = document.querySelector(".header") as HTMLDivElement;
     if (isModalOpen) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.offsetWidth;
+      header.style.paddingRight = `${scrollbarWidth}px`;
       document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
     } else {
+      header.style.paddingRight = "";
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
 
     return () => {
+      header.style.paddingRight = "";
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isModalOpen]);
   // 매칭 퍼센트 계산 함수

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { sendHeart } from "../../apis/matching";
 import { notifyHeart } from "../../apis/notification";
@@ -21,6 +22,8 @@ export default function MatchingCardInfo({
   disableActionButton,
 }: MatchingCardInfoProps) {
   const navigate = useNavigate();
+  const [isAlreadySent, setIsAlreadySent] = useState(false);
+
   const keywords =
     profile.keywords && profile.keywords.length > 0
       ? profile.keywords
@@ -38,11 +41,12 @@ export default function MatchingCardInfo({
     e.stopPropagation();
 
     const alreadySent = await sendHeart(profile.id);
-
     if (alreadySent === true) {
       showWarnToast("이미 하트를 보낸 상대입니다.");
+      setIsAlreadySent(alreadySent);
     } else if (alreadySent === false) {
       showSuccessToast("하트를 성공적으로 보냈습니다!");
+      setIsAlreadySent(!alreadySent);
       await notifyHeart(profile.id);
     } else {
       showErrorToast("하트를 보내는 중 문제가 발생했습니다.");
@@ -84,10 +88,12 @@ export default function MatchingCardInfo({
           <Button
             className="w-[200px] h-[60px] text-[20px] text-[#FFFFFF] gap-2"
             onClick={handleSendHeart}
-            disabled={disableActionButton}
+            disabled={disableActionButton || isAlreadySent}
           >
             <Icon width="26px" height="24px" left="-564px" top="-227px" />
-            <span className="inline-block leading-[1]">하트보내기</span>
+            <span className="inline-block leading-[1]">
+              {isAlreadySent ? "연결 대기중.." : "하트보내기"}
+            </span>
           </Button>
 
           {/* 프로필 보기 버튼 */}

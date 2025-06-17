@@ -101,7 +101,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex justify-center items-center bg-white dark:bg-[var(--dark-bg-primary)] border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
+      <div className="header flex justify-center items-center bg-white dark:bg-[var(--dark-bg-primary)] border-b-2 border-b-[var(--primary-pink)] fixed w-full z-40 h-[66px]">
         <div className="w-[1350px] flex items-center justify-between">
           <img
             src={logoImage}
