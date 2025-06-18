@@ -8,7 +8,10 @@ interface PostcardProps {
   post: PostData;
   isProfile?: boolean;
   // 클릭 이벤트를 받아서 author와 event를 부모로 전달
-  onProfileClick?: (author: Author, e: React.MouseEvent<HTMLDivElement>) => void;
+  onProfileClick?: (
+    author: Author,
+    e: React.MouseEvent<HTMLDivElement>
+  ) => void;
 }
 
 export default function Postcard({
@@ -18,6 +21,22 @@ export default function Postcard({
   onProfileClick,
 }: PostcardProps) {
   const navigate = useNavigate();
+
+  // 댓글 갯수
+  const totalCommentCount = post.comments.reduce((acc, parentComment) => {
+    const validChildCount = (parentComment.comments ?? []).filter(
+      (child) => !child.deleted
+    ).length;
+
+    // 부모 댓글이 살아있을때 + 대댓글
+    if (!parentComment.deleted) {
+      return acc + 1 + validChildCount;
+    }
+
+    // 부모 댓글 삭제되고 대댓글만 남을때
+    return acc + validChildCount;
+  }, 0);
+
   return (
     <div
       onClick={() => navigate(`/post/detail/${post.id}`)}
@@ -52,12 +71,16 @@ export default function Postcard({
               <span className="font-medium dark:text-[var(--dark-gray-700)]">
                 {post.author.nickname}
               </span>
-              <span className="text-[#969696]">{dayjs(post.created_at).format("YYYY.MM.DD")}</span>
+              <span className="text-[#969696]">
+                {dayjs(post.created_at).format("YYYY.MM.DD")}
+              </span>
             </div>
           </div>
 
           {/* 제목 */}
-          <h2 className="text-lg font-bold dark:text-[var(--dark-gray-700)]">{post.title}</h2>
+          <h2 className="text-lg font-bold dark:text-[var(--dark-gray-700)]">
+            {post.title}
+          </h2>
 
           {/* 본문 */}
           <p className="leading-relaxed line-clamp-2 dark:text-[var(--dark-gray-700)]">
@@ -103,7 +126,7 @@ export default function Postcard({
               left="-375px"
               top="-792px"
             />
-            <span>{post.comments.length}</span>
+            <span>{totalCommentCount ?? 0}</span>
           </div>
         </div>
       </div>

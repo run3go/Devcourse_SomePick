@@ -149,7 +149,6 @@ export default function SignUpCouplePage() {
 
     await signupUser(email, pw, fullPayload);
     navigate("/");
-    // resetData();
   };
 
   const getUserData = useCallback(async () => {

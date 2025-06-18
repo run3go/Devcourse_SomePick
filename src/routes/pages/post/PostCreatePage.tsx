@@ -37,7 +37,6 @@ export default function PostCreatePage() {
         setTitle("[오늘 내 운세]");
       };
       getFortuneImage();
-      clearImage();
     }
   }, [image, clearImage]);
 
@@ -47,13 +46,12 @@ export default function PostCreatePage() {
   const [contents, setContents] = useState("");
   const [prevImageUrls, setPrevImageUrls] = useState<string[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>(image ? [...image] : []);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [imageLoadStates, setImageLoadStates] = useState<boolean[]>([]);
   const [backTo, setBackTo] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     const loadPost = async () => {
       if (params.id) {
@@ -128,7 +126,8 @@ export default function PostCreatePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-
+    // 운세 이미지 초기화
+    clearImage();
     if (params.id) {
       await updatePost(
         Number(params.id),
@@ -154,16 +153,6 @@ export default function PostCreatePage() {
 
   return (
     <>
-      {/* 이거 주석 없애면 이미지 볼 수 있어욤 */}
-      {/* {image.length > 0 ? (
-        <img
-          src={URL.createObjectURL(image[0])}
-          alt="운세 이미지"
-          width="300"
-        />
-      ) : (
-        <p>이미지가 없습니다</p>
-      )} */}
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-5">
           <BackButton className="mt-10" />

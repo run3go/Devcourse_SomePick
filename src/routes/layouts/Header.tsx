@@ -108,7 +108,7 @@ export default function Header() {
             src={logoImage}
             alt="로고 이미지"
             onClick={() => navigate("/")}
-            className="cursor-pointer w-[8%]"
+            className="cursor-pointer w-[10%]"
           />
           <div className="relative flex items-center gap-[65px] dark:text-[var(--dark-gray-700)]">
             <NavLink

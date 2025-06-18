@@ -10,6 +10,7 @@ import SortDropdown from "../../../components/webboard/SortDropdown";
 import WriteButton from "../../../components/webboard/WriteButton";
 import { useAuthStore } from "../../../stores/authStore";
 import Icon from "../../../components/common/Icon";
+import PostcardSkeleton from "../../../components/webboard/PostcardSkeleton";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
@@ -21,6 +22,8 @@ export default function PostsPage() {
   const [selected, setSelected] = useState<Selected | null>(null);
   const navigate = useNavigate();
   const params = useParams();
+
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const { channelName } = useParams<{ channelName: string }>();
   const safeChannel = channelName! as ChannelName;
@@ -64,17 +67,21 @@ export default function PostsPage() {
   useEffect(() => {
     (async () => {
       const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
-      if (!result) return;
+      if (!result) {
+        return;
+      }
 
-      console.log(result);
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
         if (sortRule === "likes") {
           return merged.slice().sort((a, b) => b.likes.length - a.likes.length);
         }
-
         return merged;
       });
+
+      if (offset === 0) {
+        setIsInitialLoading(false);
+      }
     })();
   }, [safeChannel, offset, sortRule, keyword]);
 
@@ -96,6 +103,10 @@ export default function PostsPage() {
       if (el) observer.unobserve(el);
     };
   }, [handleObserver]);
+
+  useEffect(() => {
+    setIsInitialLoading(true);
+  }, [safeChannel, sortRule, keyword]);
 
   return (
     <div className="relative flex flex-col items-center">
@@ -137,8 +148,14 @@ export default function PostsPage() {
 
       {/* 게시물 리스트 */}
       <div className="space-y-6 w-full max-w-[1370px] px-4">
-        {/* 포스트배열 0이면 표시 */}
-        {posts.length === 0 ? (
+        {/* 스켈레톤 표시 */}
+        {isInitialLoading ? (
+          <>
+            <PostcardSkeleton />
+            <PostcardSkeleton />
+            <PostcardSkeleton />
+          </>
+        ) : posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
             <Icon
               width="100px"

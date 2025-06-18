@@ -71,7 +71,7 @@ export default function SignUpSoloStep1Page() {
       return;
     }
 
-    if (!profile) {
+    if (profile.id === "" && profile.email === "") {
       if (!email) {
         showWarnToast("이메일을 입력해주세요.");
         return;

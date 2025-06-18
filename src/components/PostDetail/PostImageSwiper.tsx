@@ -33,32 +33,46 @@ function CustomNextArrow({ onClick }: ArrowProps) {
 
 export default function PostImageSwiper({ post }: { post: Post }) {
   const images = post.images ?? [];
+
+  if (images.length === 1) {
+    // 1장
+    return (
+      <div className="flex justify-center mb-12">
+        <img
+          src={images[0]}
+          alt="post"
+          className="max-w-full max-h-[600px] object-contain rounded-2xl"
+        />
+      </div>
+    );
+  }
+
+  // 2장 이상
   const settings = {
     arrows: true,
     infinite: false,
-    slidesToShow: images.length >= 2 ? 2.4 : 1,
+    slidesToShow: 2.4,
     slidesToScroll: 1,
     swipeToSlide: true,
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,
   };
+
   return (
-    <>
-      <div className="slider-container">
-        <Slider {...settings}>
-          {images.map((url, index) => (
-            <div key={index} className="px-[2px]">
-              <div className="w-full h-[600px] relative mb-12">
-                <img
-                  key={index}
-                  className="w-full h-full  object-cover object-center rounded-2xl"
-                  src={url}
-                />
-              </div>
+    <div className="slider-container">
+      <Slider {...settings}>
+        {images.map((url, index) => (
+          <div key={index} className="px-[2px]">
+            <div className="w-full h-[600px] relative mb-12">
+              <img
+                src={url}
+                className="w-full h-full object-cover object-center rounded-2xl"
+                alt={`post-${index}`}
+              />
             </div>
-          ))}
-        </Slider>
-      </div>
-    </>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 }

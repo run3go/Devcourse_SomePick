@@ -4,13 +4,11 @@ import { checkNickname } from "../apis/auth";
 
 export default function useCheckNickname(nickname: string) {
   const [isDuplicate, setIsDuplicate] = useState(false);
-  //   const [loading, setLoading] = useState(true);
   const debouncedNickname = useDebounce(nickname, 300);
 
   useEffect(() => {
     if (!debouncedNickname.trim()) {
       setIsDuplicate(false);
-      //   setLoading(false);
       return;
     }
 

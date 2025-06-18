@@ -6,7 +6,6 @@ import { showWarnToast } from "../../../components/common/ShowToast";
 import SelectBox from "../../../components/signup/SelectBox";
 import SignupInput from "../../../components/signup/SignupInput";
 import { useSignUpStore } from "../../../stores/signUpStore";
-// import TagGroup from "../../components/signup/TagGroup";
 
 export default function SignUpSoloStep2Page() {
   const navigate = useNavigate();
@@ -25,44 +24,29 @@ export default function SignUpSoloStep2Page() {
     e.preventDefault();
 
     if (!job) {
-      // alert("직업을 선택해주세요.");
       showWarnToast("직업을 선택해주세요.");
       return;
     }
 
     if (!location) {
-      // alert("지역을 선택해주세요.");
       showWarnToast("지역을 선택해주세요.");
       return;
     }
 
     if (!height) {
-      // alert("키를 입력해주세요");
       showWarnToast("키를 입력해주세요");
       return;
     }
 
     if (height && !isValidHeight) {
-      // alert("정확한 키를 입력해주세요.");
       showWarnToast("정확한 키를 입력해주세요 (130~299cm).");
       return;
     }
 
     if (!mbti) {
-      // alert("MBTI를 선택해주세요.");
       showWarnToast("MBTI를 선택해주세요.");
       return;
     }
-
-    // const fullPayload = {
-    //   job,
-    //   height: heightNum,
-    //   location,
-    //   mbti,
-    //   ...(intro ? { description: intro } : {}),
-    // };
-
-    // updateData(fullPayload);
 
     navigate("/auth/signup/solo/3");
   };

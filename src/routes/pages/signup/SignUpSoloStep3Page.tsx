@@ -15,16 +15,9 @@ export default function SignUpSoloStep3Page() {
 
   const soloData = data as SoloOptions;
 
-  // function isSoloOptions(
-  //   data: SoloOptions | CoupleOptions
-  // ): data is SoloOptions {
-  //   return data.status === "solo";
-  // }
-
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // if (isSoloOptions(data)) {
     if (
       !soloData.keywords ||
       soloData.keywords.split(",").length < 4 ||
@@ -33,13 +26,9 @@ export default function SignUpSoloStep3Page() {
       !soloData.ideal_types ||
       soloData.ideal_types.split(",").length < 4
     ) {
-      // alert("각 항목에서 최소 4개 이상 선택해주세요.");
       showWarnToast("각 항목에서 최소 4개 이상 선택해주세요.");
       return;
     }
-    // }
-
-    console.log(data, email, pw);
 
     const mainImgUrl =
       mainImgFile && (await storeImage(mainImgFile, "main_image"));

@@ -4,7 +4,7 @@ interface ShareButtonProps {
 export default function ShareButton({ onClick }: ShareButtonProps) {
   return (
     <>
-      <div className="flex justify-center mt-[20px] mb-[60px]">
+      <div className="flex justify-center mt-[10px] mb-[10px]">
         <button
           onClick={onClick}
           className="border border-[var(--primary-pink)] bg-[var(--primary-pink)] shadow-md rounded-[20px] 
