@@ -1,12 +1,12 @@
 import { addDays, getYear } from "date-fns";
 import { useLoaderData } from "react-router";
-import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 import { createSchedule } from "../../apis/calendar";
 import { notifySchedule } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import { useCalendarStore } from "../../stores/calendarStore";
 import Button from "../common/Button";
+import { showErrorToast, showWarnToast } from "../common/ShowToast";
 
 export default function ScheduleInput({
   addOptimisticSchedule,
@@ -35,7 +35,7 @@ export default function ScheduleInput({
 
   const handleSubmit = () => {
     if (!title.trim().length) {
-      toast.warn("제목을 입력해주세요");
+      showWarnToast("제목을 입력해주세요");
       return;
     }
     startTransiton(async () => {
@@ -62,7 +62,7 @@ export default function ScheduleInput({
         setId(0);
         scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        toast.error("일정 등록에 실패했습니다");
+        showErrorToast("일정 등록에 실패했습니다");
       }
     });
   };

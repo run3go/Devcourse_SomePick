@@ -1,6 +1,6 @@
 import { redirect } from "react-router";
-import { toast } from "react-toastify";
 import { fetchCouple } from "../../apis/calendar";
+import { showWarnToast } from "../../components/common/ShowToast";
 import supabase from "../../utils/supabase";
 
 export const getCoupleInfo = async () => {
@@ -13,7 +13,7 @@ export const getCoupleInfo = async () => {
   }
   const data = await fetchCouple();
   if (!data) {
-    toast.warn("연결된 상대가 없습니다");
+    showWarnToast("연결된 상대가 없습니다");
     return redirect("/back");
   }
 
