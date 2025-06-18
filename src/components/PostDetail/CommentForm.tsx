@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createComment, updateComment } from "../../apis/comment";
 import Button from "../common/Button";
 import Icon from "../common/Icon";
-// import Alert from "../common/Alert";
 import { notifyChildComment, notifyComment } from "../../apis/notification";
 import { useAuthStore } from "../../stores/authStore";
 import { showSuccessToast, showWarnToast } from "../common/ShowToast";
@@ -36,7 +35,6 @@ export default function CommentForm({
 }: CommentProps) {
   const [input, setInput] = useState(defaultValue);
   const { session } = useAuthStore();
-  // const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // 댓글 등록하기
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,7 +74,7 @@ export default function CommentForm({
 
   // Enter로 댓글 작성
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
 
       const form = e.currentTarget.form;
@@ -126,13 +124,6 @@ export default function CommentForm({
           </Button>
         </div>
       </form>
-      {/* {isAlertOpen && (
-        <Alert
-          title="댓글을 작성해주세요!"
-          isOk="확인"
-          onClick={() => setIsAlertOpen(false)}
-        />
-      )} */}
     </>
   );
 }
