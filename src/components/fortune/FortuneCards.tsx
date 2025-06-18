@@ -65,7 +65,7 @@ export default function FortuneCards({
       }
     };
     fortuneDay();
-  }, []);
+  }, [session]);
 
   // 운세 모달
   const [showModal, setShowModal] = useState(false);

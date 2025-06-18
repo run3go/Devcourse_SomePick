@@ -93,7 +93,7 @@ export default function FortuneModal({
         >
           <button
             onClick={onClose}
-            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
+            className="cursor-pointer absolute top-[30px] right-[30px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
           >
             X
           </button>
@@ -128,6 +128,9 @@ export default function FortuneModal({
       </motion.div>
       <div>
         <ShareButton onClick={handleShare} />
+      </div>
+      <div className="text-[#f87171] font-bold">
+        이 창을 닫으면 공유가 불가능합니다
       </div>
     </motion.div>
   );

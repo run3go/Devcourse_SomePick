@@ -97,12 +97,12 @@ export default function TodayFortunePage() {
     }
 
     main();
-  }, []);
+  }, [isCouple, userId, userName]);
 
   return (
-    <>
+    <div className="overflow-hidden">
       <FortuneInfo isTodayChecked={isTodayChecked} />
       <FortuneCards fortuneData={fortuneData} isTodayChecked={isTodayChecked} />
-    </>
+    </div>
   );
 }

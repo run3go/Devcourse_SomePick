@@ -32,12 +32,12 @@ export default function PostCreatePage() {
         const imageUrl = await storeImage(image[0], "temp");
         setImageFiles((prev) => [...prev, image[0]]);
         if (imageUrl) {
+          console.log("hi");
           setImageUrls((prev) => [...prev, imageUrl]);
         }
         setTitle("[오늘 내 운세]");
       };
       getFortuneImage();
-      clearImage();
     }
   }, [image, clearImage]);
 
@@ -128,7 +128,8 @@ export default function PostCreatePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-
+    // 운세 이미지 초기화
+    clearImage();
     if (params.id) {
       await updatePost(
         Number(params.id),
