@@ -29,7 +29,6 @@ export default function ChatCard({
     keyword && keyword.length > 0
       ? keyword.slice(0, 4)
       : ["키워드 정보가 없습니다."];
-  console.log(keywords);
 
   // 태그에서 관심사 출력
   const interests: string[] =
