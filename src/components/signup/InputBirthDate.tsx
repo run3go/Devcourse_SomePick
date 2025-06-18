@@ -11,7 +11,7 @@ export default function InputBirthDate({ className }: { className?: string }) {
     <>
       <div className={className}>
         <div className="flex gap-1 ml-5 mb-1">
-          <span>주민등록번호</span>
+          <span>*주민등록번호</span>
           {isTouched && !isValid && (
             <p className="text-[var(--red)]">(입력값을 확인해주세요.)</p>
           )}
