@@ -81,15 +81,19 @@ export default function FollowModal({
                 alt="프로필 이미지"
                 className="w-[45px] h-[45px] rounded-full object-cover"
               />
-              <span className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
+              <div className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
                 {user.nickname}
-                {session?.user.id === user.id && (
+                {session?.user.id === user.id ? (
                   <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
                     {" "}
                     (나)
                   </span>
+                ) : (
+                  <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
+                    {user.status === "solo" ? " (솔로)" : " (커플)"}
+                  </span>
                 )}
-              </span>
+              </div>
             </div>
             {session &&
               session.user.id !== user.id &&
