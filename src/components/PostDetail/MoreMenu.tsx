@@ -2,8 +2,9 @@ import { useNavigate } from "react-router";
 import { deletePost } from "../../apis/posts/postCrud";
 import Icon from "../common/Icon";
 import { deleteComment } from "../../apis/comment";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { showSuccessToast } from "../common/ShowToast";
+import Alert from "../common/Alert";
 
 type MoreMenuProps = {
   id: number;
@@ -26,9 +27,10 @@ export default function MoreMenu({
 }: MoreMenuProps) {
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // 게시글 삭제 or 댓글 삭제
-  const handleDelte = async () => {
+  const handleDelete = async () => {
     if (type === "post") {
       await deletePost(id);
       showSuccessToast("게시글이 삭제되었습니다.");
@@ -39,6 +41,10 @@ export default function MoreMenu({
       onCommentAdd?.();
     }
     closeMenu();
+  };
+
+  const openDeleteAlert = () => {
+    setIsAlertOpen(true);
   };
 
   // 마우스 다른곳 클릭했을때 메뉴 종료
@@ -101,7 +107,9 @@ export default function MoreMenu({
         <div className="flex items-center justify-center gap-[5px]">
           <button
             className="text-[var(--red)]/60 text-[12px] cursor-pointer dark:text-[var(--dark-red)]"
-            onClick={handleDelte}
+            onClick={() =>
+              type === "post" ? openDeleteAlert() : handleDelete()
+            }
           >
             삭제하기
           </button>
@@ -113,6 +121,18 @@ export default function MoreMenu({
             className="cursor-pointer"
           />
         </div>
+        {isAlertOpen && (
+          <Alert
+            title="게시글을 삭제하시겠습니까?"
+            isOk="네"
+            isNotOk="아니요"
+            onClick={() => {
+              setIsAlertOpen(false);
+              handleDelete();
+            }}
+            onCancel={() => setIsAlertOpen(false)}
+          />
+        )}
       </div>
     </>
   );
