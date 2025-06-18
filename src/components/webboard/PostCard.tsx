@@ -83,7 +83,7 @@ export default function Postcard({
           </h2>
 
           {/* 본문 */}
-          <p className="leading-relaxed line-clamp-2 dark:text-[var(--dark-gray-700)]">
+          <p className="whitespace-pre-line leading-relaxed line-clamp-2 dark:text-[var(--dark-gray-700)]">
             {post.contents}
           </p>
         </div>

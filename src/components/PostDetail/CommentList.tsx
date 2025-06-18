@@ -3,6 +3,7 @@ import Icon from "../common/Icon";
 import { useState } from "react";
 import MoreMenu from "./MoreMenu";
 import CommentForm from "./CommentForm";
+import { useNavigate } from "react-router";
 
 type CommentListProps = {
   className?: string;
@@ -21,6 +22,7 @@ export default function CommentList({
   postId,
   onCommentAdd,
 }: CommentListProps) {
+  const navigate = useNavigate();
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const [openReplyId, setOpenReplyId] = useState<number | null>(null);
   const [editCommentId, setEditCommentId] = useState<number | null>(null);
@@ -59,7 +61,10 @@ export default function CommentList({
 
                 <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center dark:text-[var(--dark-gray-700)]">
-                    <span className="cursor-pointer">
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => navigate(`/profile/${comment.author.id}`)}
+                    >
                       {comment.deleted ? (
                         <p className="my-[12px] text-[13px] italic text-[var(--gray-500)]">
                           알 수 없음
