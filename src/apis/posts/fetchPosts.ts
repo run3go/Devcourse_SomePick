@@ -19,8 +19,11 @@ export const fetchPostsByChannelName = async (
           nickname
         ),
         comments(
-          nested:comments(
-            id
+          id,
+          deleted,
+          comments(
+              id,
+              deleted
           )
         ),
         likes(
