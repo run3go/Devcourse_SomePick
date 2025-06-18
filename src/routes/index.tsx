@@ -8,6 +8,7 @@ import {
 import { getCoupleInfo } from "./loader/calendar.loader";
 import { getUserMessage } from "./loader/message.loader";
 import { getUserProfile } from "./loader/user.loader";
+import AuthCallback from "./pages/AuthCallback";
 import AuthPage from "./pages/AuthPage";
 import Back from "./pages/Back";
 import CalendarPage from "./pages/CalendarPage";
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
     path: "/auth",
     Component: AuthPage,
     children: [
+      { path: "callback", Component: AuthCallback },
       {
         path: "login",
         loader: requireNoAuth,
