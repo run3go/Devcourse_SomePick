@@ -21,6 +21,7 @@ export default function PostDetailPage() {
     const loadPost = async () => {
       if (!postId) return;
       setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 300));
       const data = await fetchPostByPostId(postId);
       if (data) {
         setPost(data);
@@ -48,7 +49,11 @@ export default function PostDetailPage() {
           ) : (
             <>
               <PostHeader post={post!} postId={postId} authId={authId} />
-              <PostContent post={post!} postId={postId} onCommentAdd={reloadPost} />
+              <PostContent
+                post={post!}
+                postId={postId}
+                onCommentAdd={reloadPost}
+              />
               <section className="mt-[12px]">
                 <article>
                   <CommentList
