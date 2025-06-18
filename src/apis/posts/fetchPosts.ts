@@ -16,7 +16,8 @@ export const fetchPostsByChannelName = async (
         author:profiles!author_id(
           id,
           main_image,
-          nickname
+          nickname,
+          status
         ),
         comments(
           id,
@@ -69,7 +70,8 @@ export const fetchPostsByAuthorId = async (
         author:profiles!author_id(
           id,
           main_image,
-          nickname
+          nickname,
+          status
         ),
         comments(
           nested:comments(

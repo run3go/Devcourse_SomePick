@@ -84,7 +84,7 @@ type UserData = {
   id: string;
   main_image: string | null;
   nickname: string | null;
-  status?: "couple" | "solo";
+  status: string | null;
 };
 
 type MatchingUser = {

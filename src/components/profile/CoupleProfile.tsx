@@ -62,6 +62,7 @@ export default function CoupleProfile({
           id: session?.user.id,
           main_image: session?.user.user_metadata.main_image,
           nickname: session?.user.user_metadata.nickname,
+          status: session?.user.user_metadata.status,
         },
       ]);
       await followUser(id);
@@ -92,6 +93,7 @@ export default function CoupleProfile({
           id: session.user.id,
           main_image: session.user.user_metadata.main_image,
           nickname: session.user.user_metadata.nickname,
+          status: session.user.user_metadata.status,
         },
       ]);
     }

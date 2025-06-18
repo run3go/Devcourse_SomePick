@@ -2,6 +2,7 @@ type Author = {
   id: string;
   main_image: string | null;
   nickname: string | null;
+  status?: stirng | null;
 };
 
 type Comments = {
@@ -76,6 +77,7 @@ type MiniProfilecardProps = {
     id: string;
     main_image: string | null;
     nickname: string | null;
+    status?: "solo" | "couple";
     is_followed?: boolean;
   };
   onClose: () => void;

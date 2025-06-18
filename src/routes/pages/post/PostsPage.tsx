@@ -2,22 +2,27 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { fetchFollowingList } from "../../../apis/follow";
 import { fetchPostsByChannelName } from "../../../apis/posts/fetchPosts";
+import Icon from "../../../components/common/Icon";
 import TopButton from "../../../components/common/TopButton";
 import MiniProfilecard from "../../../components/webboard/MiniProfilecard";
 import Postcard from "../../../components/webboard/PostCard";
+import PostcardSkeleton from "../../../components/webboard/PostcardSkeleton";
 import SearchBar from "../../../components/webboard/SearchBar";
-import SortDropdown from "../../../components/webboard/SortDropdown";
+import SortDropdown, {
+  type SortRule,
+} from "../../../components/webboard/SortDropdown";
 import WriteButton from "../../../components/webboard/WriteButton";
 import { useAuthStore } from "../../../stores/authStore";
-import Icon from "../../../components/common/Icon";
-import PostcardSkeleton from "../../../components/webboard/PostcardSkeleton";
 
 export default function PostsPage() {
   const { session } = useAuthStore();
   const [posts, setPosts] = useState<PostData[]>([]);
   const [followings, setFollowings] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
-  const [sortRule, setSortRule] = useState<"created_at" | "likes">("created_at");
+  const [sortRule, setSortRule] = useState<SortRule>({
+    value: "created_at",
+    label: "최신순",
+  });
   const [keyword, setKeyword] = useState("");
   const [selected, setSelected] = useState<Selected | null>(null);
   const navigate = useNavigate();
@@ -76,15 +81,20 @@ export default function PostsPage() {
       if (isFetchingRef.current || !hasMore) return;
       isFetchingRef.current = true;
 
-      const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
+      const result = await fetchPostsByChannelName(
+        safeChannel,
+        offset,
+        sortRule.value,
+        keyword
+      );
       if (!result) {
         isFetchingRef.current = false;
         return;
       }
-
+      await new Promise((resolve) => setTimeout(() => resolve(""), 300));
       setPosts((prev) => {
         const merged = offset === 0 ? result : [...prev, ...result];
-        if (sortRule === "likes") {
+        if (sortRule.value === "likes") {
           return merged.slice().sort((a, b) => b.likes.length - a.likes.length);
         }
         return merged;
@@ -165,7 +175,11 @@ export default function PostsPage() {
             }}
           />
         </div>
-        <WriteButton onClick={() => navigate(`/post/create`, { state: params.channelName })} />
+        <WriteButton
+          onClick={() =>
+            navigate(`/post/create`, { state: params.channelName })
+          }
+        />
       </div>
 
       {/* 게시물 리스트 */}
