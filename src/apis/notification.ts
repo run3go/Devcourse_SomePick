@@ -197,7 +197,8 @@ export const fetchNotifications = async () => {
         )
         `
       )
-      .eq("receiver_id", session.user.id);
+      .eq("receiver_id", session.user.id)
+      .order("created_at", { ascending: false });
     if (error) {
       console.log("알림 조회 실패:", error.message);
       return;
