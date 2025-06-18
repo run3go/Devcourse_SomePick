@@ -29,6 +29,18 @@ type Like = {
   id?: number;
   user_id?: string;
 };
+
+type SimpleComment = {
+  id: number;
+  deleted: boolean;
+  comments: SimpleChildComments[];
+};
+
+type SimpleChildComments = {
+  id: number;
+  deleted?: boolean;
+};
+
 type PostData = {
   id: number;
   created_at: string;
@@ -38,7 +50,7 @@ type PostData = {
   contents: string;
   fortune_telling: string | null;
   images?: string[] | null;
-  comments: { nested: { id: number }[] }[];
+  comments: SimpleComment[];
   likes: Like[];
 };
 

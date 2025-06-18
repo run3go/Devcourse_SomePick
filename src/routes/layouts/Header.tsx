@@ -8,7 +8,7 @@ import {
   fetchNotifications,
   subscribeNotification,
 } from "../../apis/notification";
-import logoImage from "../../assets/images/new_logo_final.png";
+import logoImage from "../../assets/images/new_logo.png";
 import HeaderModal from "../../components/modals/HeaderModal";
 import Notifications from "../../components/modals/Notifications";
 import { useDarkMode } from "../../hooks/useDarkMode";

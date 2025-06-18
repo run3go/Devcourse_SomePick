@@ -30,8 +30,6 @@ export default function SignUpSoloStep3Page() {
       return;
     }
 
-    console.log(data, email, pw);
-
     const mainImgUrl =
       mainImgFile && (await storeImage(mainImgFile, "main_image"));
 

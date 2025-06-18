@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
 // import { saveAs } from "file-saver";
+import Lottie from "lottie-react";
 import { useNavigate } from "react-router";
+import loading from "../../assets/images/crystalBall.json";
 import { useUploadImageStore } from "../../stores/useUploadImageStore";
 import ShareButton from "./ShareButton";
 
@@ -53,7 +55,6 @@ export default function FortuneModal({
 
       canvas.toBlob((blob) => {
         if (blob !== null) {
-          //   saveAs(blob, "result.png");
           const file = new File([blob], "fortune.png", { type: "image/png" });
 
           setImage([file]);
@@ -93,7 +94,7 @@ export default function FortuneModal({
         >
           <button
             onClick={onClose}
-            className="absolute top-[30px] right-[20px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
+            className="cursor-pointer absolute top-[30px] right-[30px] text-white text-2xl hover:text-gray-500 z-10 html2canvas-ignore"
           >
             X
           </button>
@@ -120,14 +121,21 @@ export default function FortuneModal({
               </p>
             </motion.div>
           ) : (
-            <div className="text-center">
-              <p>운세를 불러오는 중..</p>
+            <div className="flex items-center justify-center">
+              <Lottie
+                animationData={loading}
+                loop={true}
+                className="w-150 h-150"
+              />
             </div>
           )}
         </div>
       </motion.div>
       <div>
         <ShareButton onClick={handleShare} />
+      </div>
+      <div className="text-[#f87171] font-bold">
+        이 창을 닫으면 공유가 불가능합니다
       </div>
     </motion.div>
   );

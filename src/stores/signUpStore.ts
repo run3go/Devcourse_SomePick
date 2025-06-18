@@ -103,14 +103,6 @@ export const useSignUpStore = create<SignUpStore>()(
       setBirthDate: (string) => set({ birthDate: string }),
       genderNum: "",
       setGenderNum: (string) => set({ genderNum: string }),
-      // resetPartialData: (keys) => set((state) => {
-      //   keys.forEach((key) => {
-      //     const value = state.data[key];
-      //     if(typeof value === 'string') {
-      //       state.data[key] = "";
-      //     }
-      //   })
-      // })
     })),
     { name: "signUpStore" }
   )
