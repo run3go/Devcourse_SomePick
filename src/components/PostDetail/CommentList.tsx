@@ -39,7 +39,10 @@ export default function CommentList({
     <>
       {post.comments
         .slice()
-        .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+        .sort(
+          (a, b) =>
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        )
         .map((comment) => (
           <div key={comment.id}>
             <div className={`${isReply ? "ml-[51px] mr-[18px]" : "mx-[18px]"}`}>
@@ -66,7 +69,10 @@ export default function CommentList({
                       )}
                     </span>
                     {authId === comment.author.id && !comment.deleted && (
-                      <div className="relative inline-block" onClick={() => toggleMenu(comment.id)}>
+                      <div
+                        className="relative inline-block"
+                        onClick={() => toggleMenu(comment.id)}
+                      >
                         <Icon
                           width="14px"
                           height="4px"
@@ -85,11 +91,13 @@ export default function CommentList({
                           <MoreMenu
                             onClick={() => toggleMenu(comment.id)}
                             id={comment.id}
-                            isParent={!isReply}
+                            comment={comment}
                             type="comment"
                             closeMenu={() => setOpenMenuId(null)}
                             onCommentAdd={onCommentAdd}
-                            setEditCommentId={() => setEditCommentId(comment.id)}
+                            setEditCommentId={() =>
+                              setEditCommentId(comment.id)
+                            }
                           />
                         )}
                       </div>
@@ -99,10 +107,14 @@ export default function CommentList({
                     {!comment.deleted && (
                       <>
                         <span className="text-[12px] text-[var(--gray-500)]">
-                          {dayjs(comment.created_at).format("YYYY년 MM월 DD일 HH:mm")}
+                          {dayjs(comment.created_at).format(
+                            "YYYY년 MM월 DD일 HH:mm"
+                          )}
                         </span>
                         {comment.edited && (
-                          <span className="text-[12px] text-[var(--gray-500)] ml-1">(수정됨)</span>
+                          <span className="text-[12px] text-[var(--gray-500)] ml-1">
+                            (수정됨)
+                          </span>
                         )}
                       </>
                     )}
@@ -127,7 +139,9 @@ export default function CommentList({
                     }}
                   />
                 ) : (
-                  <p className="my-[12px] dark:text-[var(--dark-gray-700)]">{comment.comment}</p>
+                  <p className="my-[12px] dark:text-[var(--dark-gray-700)]">
+                    {comment.comment}
+                  </p>
                 )}
                 {!isReply && !comment.deleted && (
                   <a
@@ -157,7 +171,11 @@ export default function CommentList({
             {comment.comments?.length > 0 &&
               comment.comments
                 .slice()
-                .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+                .sort(
+                  (a, b) =>
+                    new Date(a.created_at).getTime() -
+                    new Date(b.created_at).getTime()
+                )
                 .map((reply) => (
                   <CommentList
                     key={reply.id}
