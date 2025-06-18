@@ -14,16 +14,17 @@ type MoreMenuProps = {
   onClick: () => void;
   onCommentAdd?: () => void;
   setEditCommentId?: (id: number) => void;
+  comment?: Comments;
 };
 
 export default function MoreMenu({
   id,
-  isParent,
   type,
   onClick,
   closeMenu,
   onCommentAdd,
   setEditCommentId,
+  comment,
 }: MoreMenuProps) {
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -36,7 +37,12 @@ export default function MoreMenu({
       showSuccessToast("게시글이 삭제되었습니다.");
       navigate(-1);
     } else if (type === "comment") {
-      await deleteComment(id, isParent!);
+      const isActuallyParent = comment?.parent_id === null; // 부모아이디가 없다? 그냥 댓글이다
+      const hasChild = (comment?.comments?.length ?? 0) > 0; // 대댓글이 없다
+
+      const isDelete = isActuallyParent && hasChild; // 그냥 댓글이고 대댓글이 없으면
+
+      await deleteComment(id, !isDelete);
       showSuccessToast("댓글이 삭제되었습니다.");
       onCommentAdd?.();
     }
