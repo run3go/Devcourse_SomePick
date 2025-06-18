@@ -30,6 +30,11 @@ export default function PostsPage() {
 
   // 무한 스크롤 관찰용 레퍼런스
   const loaderRef = useRef<HTMLDivElement | null>(null);
+  //  중복 fetch 방지용 플래그
+  const isFetchingRef = useRef(false);
+
+  // 더 로드할 게시물이 있는지 여부
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (!session) return;
@@ -61,13 +66,19 @@ export default function PostsPage() {
   useEffect(() => {
     setOffset(0);
     setPosts([]);
+    setIsInitialLoading(true);
+    setHasMore(true);
   }, [safeChannel, sortRule, keyword]);
 
   // 게시물 페치
   useEffect(() => {
     (async () => {
+      if (isFetchingRef.current || !hasMore) return;
+      isFetchingRef.current = true;
+
       const result = await fetchPostsByChannelName(safeChannel, offset, sortRule, keyword);
       if (!result) {
+        isFetchingRef.current = false;
         return;
       }
 
@@ -79,19 +90,30 @@ export default function PostsPage() {
         return merged;
       });
 
+      // 더 이상 불러올 게 없으면 hasMore = false
+      if (result.length === 0) {
+        setHasMore(false);
+      }
+
       if (offset === 0) {
         setIsInitialLoading(false);
       }
+
+      isFetchingRef.current = false;
     })();
-  }, [safeChannel, offset, sortRule, keyword]);
+  }, [safeChannel, offset, sortRule, keyword, hasMore]);
 
   // loader가 보이면 offset 증가
-  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setOffset((prev) => prev + 1);
-    }
-  }, []);
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && !isFetchingRef.current && hasMore) {
+        //  중복 요청 방지 더 불러올 것이 있는 경우만
+        setOffset((prev) => prev + 1);
+      }
+    },
+    [hasMore]
+  );
 
   // IntersectionObserver 세팅
   useEffect(() => {
