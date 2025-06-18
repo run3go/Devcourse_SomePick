@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { checkEmail } from "../apis/auth";
 import { useSignUpStore } from "../stores/signUpStore";
+import useDebounce from "./useDebounce";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX =
@@ -15,13 +16,15 @@ export default function useSignupValidation() {
   const [pwConfirm, setPwConfirm] = useState("");
   const [isPwConfirmValid, setIsPwConfirmValid] = useState(true);
 
+  const debouncedEmail = useDebounce(email, 300);
+
   useEffect(() => {
-    const valid = EMAIL_REGEX.test(email);
+    const valid = EMAIL_REGEX.test(debouncedEmail);
     setIsEmailValid(valid);
 
     if (valid) {
       const check = async () => {
-        const res = await checkEmail(email);
+        const res = await checkEmail(debouncedEmail);
         console.log(res);
         if (res?.email && !res.nickname) {
           setIsEmailDuplicate(false);
@@ -35,7 +38,7 @@ export default function useSignupValidation() {
     } else {
       setIsEmailDuplicate(false);
     }
-  }, [email]);
+  }, [debouncedEmail]);
 
   useEffect(() => {
     setIsPwValid(PASSWORD_REGEX.test(pw));
