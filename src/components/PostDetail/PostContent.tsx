@@ -50,7 +50,14 @@ export default function PostContent({
     const validChildCount = parentComment.comments.filter(
       (child) => !child.deleted
     ).length;
-    return acc + 1 + validChildCount;
+
+    // 부모 댓글이 살아있을때 + 대댓글
+    if (!parentComment.deleted) {
+      return acc + 1 + validChildCount;
+    }
+
+    // 부모 댓글 삭제되고 대댓글만 남을때
+    return acc + validChildCount;
   }, 0);
 
   return (
