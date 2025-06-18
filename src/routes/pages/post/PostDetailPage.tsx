@@ -6,22 +6,26 @@ import PostContent from "../../../components/PostDetail/PostContent";
 import PostHeader from "../../../components/PostDetail/PostHeader";
 import BackButton from "../../../components/common/BackButton";
 import { useAuthStore } from "../../../stores/authStore";
+import PostDetailSkeleton from "../../../components/PostDetail/PostDetailSkeleton";
 
 export default function PostDetailPage() {
   const { id } = useParams();
   const postId = Number(id);
   const session = useAuthStore((state) => state.session);
   const authId = session?.user.id;
+  const [isLoading, setIsLoading] = useState(true);
 
   const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
     const loadPost = async () => {
       if (!postId) return;
+      setIsLoading(true);
       const data = await fetchPostByPostId(postId);
       if (data) {
         setPost(data);
       }
+      setIsLoading(false);
     };
     loadPost();
   }, [postId]);
@@ -39,26 +43,24 @@ export default function PostDetailPage() {
       <div className="mx-auto w-[1080px] pt-[2vh] pb-[5vh]">
         <BackButton className="mb-[18px] text-[18px] dark:text-[var(--dark-gray-100)]" />
         <article className="border w-[1080px] h-full rounded-2xl border-[var(--primary-pink)] bg-[var(--primary-pink)]/24 px-[50px] py-[30px] dark:bg-[var(--dark-bg-secondary)]">
-          {post && <PostHeader post={post} postId={postId} authId={authId} />}
-          {post && (
-            <PostContent
-              post={post}
-              postId={postId}
-              onCommentAdd={reloadPost}
-            />
+          {isLoading ? (
+            <PostDetailSkeleton />
+          ) : (
+            <>
+              <PostHeader post={post!} postId={postId} authId={authId} />
+              <PostContent post={post!} postId={postId} onCommentAdd={reloadPost} />
+              <section className="mt-[12px]">
+                <article>
+                  <CommentList
+                    post={post!}
+                    authId={authId}
+                    postId={postId}
+                    onCommentAdd={reloadPost}
+                  />
+                </article>
+              </section>
+            </>
           )}
-          <section className="mt-[12px]">
-            <article>
-              {post && (
-                <CommentList
-                  post={post}
-                  authId={authId}
-                  postId={postId}
-                  onCommentAdd={reloadPost}
-                />
-              )}
-            </article>
-          </section>
         </article>
       </div>
     </>
