@@ -6,7 +6,7 @@ import { logoutUser } from "../../apis/auth";
 import { useAuthStore } from "../../stores/authStore";
 
 interface HeaderModalPropds {
-  onClose: () => void;
+  onClose: (e: React.MouseEvent<HTMLLIElement>) => void;
 }
 
 export default function HeaderModal({ onClose }: HeaderModalPropds) {
@@ -24,11 +24,10 @@ export default function HeaderModal({ onClose }: HeaderModalPropds) {
       console.error(error);
     }
   };
-
-  const handleMyProfile = () => {
+  const handleMyProfile = (e: React.MouseEvent<HTMLLIElement>) => {
+    onClose(e);
     if (session?.user.id) {
       navigate(`/profile/${session.user.id}`);
-      onClose();
     }
   };
   return (

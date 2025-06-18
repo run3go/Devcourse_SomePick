@@ -2,7 +2,7 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HiMiniMoon, HiMiniSun } from "react-icons/hi2";
 import { TbBell, TbMessageHeart, TbUserCircle } from "react-icons/tb";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
   fetchNotifications,
@@ -17,7 +17,6 @@ import { useAuthStore } from "../../stores/authStore";
 export default function Header() {
   const { isDark, toggleDarkMode } = useDarkMode();
   const navigate = useNavigate();
-  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   // const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -84,6 +83,11 @@ export default function Header() {
     setHasUnreadNotifications(updatedNotifications.length > 0);
   };
 
+  const closeHeaderModal = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.stopPropagation();
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -143,54 +147,50 @@ export default function Header() {
             </NavLink>
             <div className="flex items-center">
               {couple === "couple" ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      navigate("/couplecalendar");
-                    }}
-                    className={twMerge(
+                <NavLink
+                  to={"/couplecalendar"}
+                  className={({ isActive }) =>
+                    twMerge(
                       "relative flex header-menu cursor-pointer mr-[65px]",
-                      location.pathname === "/calendar" &&
+                      isActive &&
                         (isDark
                           ? "header-menu__active text-white"
                           : "header-menu__active text-black")
-                    )}
-                  >
-                    커플 캘린더
-                  </button>
-                </div>
+                    )
+                  }
+                >
+                  커플 캘린더
+                </NavLink>
               ) : (
-                <div>
-                  <button
-                    onClick={() => {
-                      navigate("/matching");
-                    }}
-                    className={twMerge(
+                <NavLink
+                  to={"/matching"}
+                  className={({ isActive }) =>
+                    twMerge(
                       "relative header-menu cursor-pointer mr-[65px]",
-                      location.pathname === "/couplecalendar" &&
+                      isActive &&
                         (isDark
                           ? "header-menu__active text-white"
                           : "header-menu__active text-black")
-                    )}
-                  >
-                    소개팅
-                  </button>
-                </div>
+                    )
+                  }
+                >
+                  소개팅
+                </NavLink>
               )}
-              <button
-                onClick={() => {
-                  navigate("/todayfortune");
-                }}
-                className={twMerge(
-                  "relative header-menu cursor-pointer",
-                  location.pathname === "/todayfortune" &&
-                    (isDark
-                      ? "header-menu__active text-white"
-                      : "header-menu__active text-black")
-                )}
+              <NavLink
+                to={"/todayfortune"}
+                className={({ isActive }) =>
+                  twMerge(
+                    "relative header-menu cursor-pointer",
+                    isActive &&
+                      (isDark
+                        ? "header-menu__active text-white"
+                        : "header-menu__active text-black")
+                  )
+                }
               >
                 오늘의 운세
-              </button>
+              </NavLink>
             </div>
           </div>
           <div className="flex items-center gap-[35px] text-[var(--gray-700)]">
@@ -279,7 +279,7 @@ export default function Header() {
                     />
                     {isModalOpen && (
                       <div ref={outsideRef}>
-                        <HeaderModal onClose={() => setIsModalOpen(false)} />
+                        <HeaderModal onClose={closeHeaderModal} />
                       </div>
                     )}
                   </div>
