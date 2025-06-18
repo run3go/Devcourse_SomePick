@@ -22,7 +22,6 @@ export default function ChatInput({
     if (newMessage && onSend) {
       onSend(newMessage);
     }
-    console.log("전송완료");
   };
 
   return (

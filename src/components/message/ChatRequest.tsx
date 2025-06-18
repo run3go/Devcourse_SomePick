@@ -18,7 +18,6 @@ export default function ChatRequest({
   }: {
     chatUserProfile: ProfileData;
   } = useLoaderData();
-  // const navigate = useNavigate();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertType, setAlertType] = useState<"reject" | "accept" | null>(null);
 
