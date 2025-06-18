@@ -55,7 +55,7 @@ export default function PostHeader({
       </header>
       <hr className="my-[15px] border-white border dark:border-[var(--dark-gray-500)]" />
       <div
-        className="flex gap-2.5 mb-5 items-center cursor-pointer w-24"
+        className="flex gap-2.5 mb-5 items-center cursor-pointer w-30"
         onClick={() => navigate(`/profile/${post.author.id}`)}
       >
         <img

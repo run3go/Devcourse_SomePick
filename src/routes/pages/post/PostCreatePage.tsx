@@ -126,6 +126,17 @@ export default function PostCreatePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
+
+    if (!title) {
+      showWarnToast("제목을 작성해주세요.");
+      return;
+    }
+
+    if (!contents || contents.trim().length === 0) {
+      showWarnToast("내용을 작성해주세요.");
+      return;
+    }
+
     // 운세 이미지 초기화
     clearImage();
     if (params.id) {
@@ -155,7 +166,7 @@ export default function PostCreatePage() {
     <>
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-5">
-          <BackButton className="mt-10" />
+          <BackButton className="mt-5" />
 
           <div className="text-center dark:text-[var(--dark-gray-700)]">
             {channel === "dating" || backTo === "dating" ? (
@@ -190,7 +201,7 @@ export default function PostCreatePage() {
               />
             </label>
 
-            <div className="w-full mb-5 flex">
+            <div className="w-full flex">
               <label htmlFor="content">내용</label>
               <textarea
                 id="content"
@@ -200,6 +211,8 @@ export default function PostCreatePage() {
                 className="placeholder:text-[var(--gray-500)] dark:placeholder:text-[var(--dark-gray-700)] ml-5 h-[380px] w-[94%] focus:outline-none resize-none bg-[var(--gray-100)] dark:bg-[var(--dark-bg-secondary)] rounded-lg p-2 text-[var(--dark-black)] dark:text-[var(--dark-gray-700)]"
               />
             </div>
+
+            <p className="my-3 ml-13 text-[14px]">* 이미지 첨부 최대 8장</p>
 
             <div className="flex ml-13 gap-4">
               {imageUrls.map((url, index) => (
