@@ -22,7 +22,7 @@ export default function SignUpCouplePage() {
     id: "",
     email: "",
   });
-  const { data, mainImgFile, resetData, updateData } = useSignUpStore();
+  const { data, mainImgFile, updateData } = useSignUpStore();
   const coupleData = data as CoupleOptions;
   const { nickname, partner_nickname: partner } = coupleData;
 
@@ -82,7 +82,6 @@ export default function SignUpCouplePage() {
     };
     await updateProfile(fullPayload);
     navigate("/");
-    resetData();
   };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
