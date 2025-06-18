@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
 // import { saveAs } from "file-saver";
+import Lottie from "lottie-react";
 import { useNavigate } from "react-router";
+import loading from "../../assets/images/crystalBall.json";
 import { useUploadImageStore } from "../../stores/useUploadImageStore";
 import ShareButton from "./ShareButton";
 
@@ -53,7 +55,6 @@ export default function FortuneModal({
 
       canvas.toBlob((blob) => {
         if (blob !== null) {
-          //   saveAs(blob, "result.png");
           const file = new File([blob], "fortune.png", { type: "image/png" });
 
           setImage([file]);
@@ -120,8 +121,12 @@ export default function FortuneModal({
               </p>
             </motion.div>
           ) : (
-            <div className="text-center">
-              <p>운세를 불러오는 중..</p>
+            <div className="flex items-center justify-center">
+              <Lottie
+                animationData={loading}
+                loop={true}
+                className="w-150 h-150"
+              />
             </div>
           )}
         </div>

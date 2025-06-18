@@ -7,7 +7,6 @@ interface Props {
 export default function FortuneInfo({ isTodayChecked }: Props) {
   const user = useAuthStore((state) => state.session?.user.user_metadata);
   const userName = user?.nickname;
-  // const isCouple = user?.status;
 
   return (
     <>

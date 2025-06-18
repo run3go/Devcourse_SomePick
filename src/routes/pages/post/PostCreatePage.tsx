@@ -32,7 +32,6 @@ export default function PostCreatePage() {
         const imageUrl = await storeImage(image[0], "temp");
         setImageFiles((prev) => [...prev, image[0]]);
         if (imageUrl) {
-          console.log("hi");
           setImageUrls((prev) => [...prev, imageUrl]);
         }
         setTitle("[오늘 내 운세]");
@@ -47,13 +46,12 @@ export default function PostCreatePage() {
   const [contents, setContents] = useState("");
   const [prevImageUrls, setPrevImageUrls] = useState<string[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>(image ? [...image] : []);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [imageLoadStates, setImageLoadStates] = useState<boolean[]>([]);
   const [backTo, setBackTo] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     const loadPost = async () => {
       if (params.id) {

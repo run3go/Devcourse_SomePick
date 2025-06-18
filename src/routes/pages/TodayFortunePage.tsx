@@ -34,7 +34,6 @@ export default function TodayFortunePage() {
       try {
         if (!userId) return;
         const profile = await fetchProfile(userId);
-        console.log(profile);
         const fortune = profile?.fortuneData;
         const today = format(new Date(), "yyyy-MM-dd");
         const usedAt = fortune?.used_at
@@ -74,21 +73,20 @@ export default function TodayFortunePage() {
           return null;
         }
 
-        console.log("AI 응답:", responseText);
         const jsonResponseText = responseText
           .replace("```json", "")
           .replace("```", "")
           .trim();
         const finalData = JSON.parse(jsonResponseText);
-        console.log(finalData);
 
         await updateFortuneTelling(
           finalData.love_title,
           finalData.love_advice,
           finalData.love_description
         );
-        setFortuneData(finalData);
-
+        setTimeout(() => {
+          setFortuneData(finalData);
+        }, 2000);
         // setIsLoading(false)
       } catch (error) {
         console.error("API 호출 에러:", error);

@@ -54,11 +54,7 @@ export default function FortuneCards({
     const fortuneDay = async () => {
       try {
         if (!session?.user.user_metadata.fortune_telling_id) {
-          const data = await createFortuneTelling();
-          console.log(data);
-        } else {
-          const data = session?.user.user_metadata.fortune_telling_id;
-          console.log(data);
+          await createFortuneTelling();
         }
       } catch (e) {
         console.log("운세 로딩 실패", e);
@@ -153,7 +149,7 @@ export default function FortuneCards({
                     </p>
                   </div>
                 ) : (
-                  <div className="mt-4 text-sm font-semibold text-yellow-300">
+                  <div className="mt-4 text-sm font-semibold text-[var(--gray-500)] text-center">
                     <p>운세를 불러오는 중..</p>
                   </div>
                 )}
