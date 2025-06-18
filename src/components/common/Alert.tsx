@@ -1,17 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
 export default function Alert({
-  //예시
-  //   <Alert
-  //     title="죄송해요!"
-  //     subtitle="로그인 한 유저만 사용할 수 있어요."
-  //     isOk="로그인하러 가기"
-  //     isNotOk="취소"
-  //     onClick={() => {
-  //       navigate("/auth/login");
-  //     }}
-  //     onCancel={() => setIsAlertOpen(false)}
-  //   />
   title,
   subtitle,
   isOk,

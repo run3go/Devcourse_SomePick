@@ -2,7 +2,6 @@ import { useNavigate } from "react-router";
 import { logoutUser } from "../../apis/auth";
 import { useAuthStore } from "../../stores/authStore";
 import Icon from "./Icon";
-// import { useSignUpStore } from "../../stores/signUpStore";
 
 export default function BackButton({
   className,
@@ -13,32 +12,13 @@ export default function BackButton({
 }) {
   const navigate = useNavigate();
   const { setLogout } = useAuthStore();
-  // const { data, resetData, updateData } = useSignUpStore();
-  // const soloData = data as SoloOptions;
 
   const handleButtonClick = async () => {
-    if (type && type === "solo3") {
-      // updateData({
-      //   keywords: "",
-      //   interests: "",
-      //   ideal_types: "",
-      //   job: "",
-      //   height: 0,
-      //   location: "",
-      //   mbti: "",
-      //   ...(soloData.description ? { description: "" } : {}),
-      // });
-    }
-
     if (type == "google") {
       await logoutUser();
       setLogout();
       navigate("/auth/login");
       return;
-    }
-
-    if (!type) {
-      // resetData();
     }
 
     navigate(-1);
