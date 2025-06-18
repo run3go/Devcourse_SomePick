@@ -9,7 +9,8 @@ export const fetchFollowingList = async (userId: string) => {
         following:profiles!follow_id(
             id,
             nickname,
-            main_image
+            main_image,
+            status
         )
         `
       )
@@ -33,7 +34,8 @@ export const fetchFollowerList = async (userId: string) => {
       follower:profiles!user_id(
         id,
         nickname,
-        main_image
+        main_image,
+        status
         )
         `
       )
