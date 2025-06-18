@@ -11,6 +11,7 @@ import MatchingCard from "../../components/MatchingPage/MatchingCard";
 import MatchingCardInfo from "../../components/MatchingPage/MatchingCardInfo";
 import { useAuthStore } from "../../stores/authStore";
 import type { Database } from "../../types/supabase";
+import MatchingCardSkeleton from "../../components/MatchingPage/MatchingcardSkeleton";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -48,6 +49,7 @@ export default function MatchingPage() {
   const [filterByLocation, setFilterByLocation] = useState(false);
   const [filterByInterest, setFilterByInterest] = useState(false);
   const [filterByMbti, setFilterByMbti] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMyProfileData = async () => {
@@ -66,7 +68,9 @@ export default function MatchingPage() {
   }, [session]);
 
   useEffect(() => {
+    if (!gender) return;
     (async () => {
+      setIsLoading(true);
       const list = await fetchMatchedUsers(gender as "male" | "female");
       if (list) {
         setMatchedProfiles(list);
@@ -74,6 +78,7 @@ export default function MatchingPage() {
         const locations = list.map((profile) => profile.location);
         console.log("Locations:", locations);
       }
+      setIsLoading(false);
     })();
   }, [gender]);
 
@@ -81,8 +86,7 @@ export default function MatchingPage() {
   useEffect(() => {
     const header = document.querySelector(".header") as HTMLDivElement;
     if (isModalOpen) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.offsetWidth;
+      const scrollbarWidth = window.innerWidth - document.documentElement.offsetWidth;
       header.style.paddingRight = `${scrollbarWidth}px`;
       document.body.style.overflow = "hidden";
       document.body.style.paddingRight = `${scrollbarWidth}px`;
@@ -100,15 +104,11 @@ export default function MatchingPage() {
   }, [isModalOpen]);
   // 매칭 퍼센트 계산 함수
   const calcMatchPercent = (matched: string[]) => {
-    return idealTypes.length > 0
-      ? Math.round((matched.length / idealTypes.length) * 100)
-      : 0;
+    return idealTypes.length > 0 ? Math.round((matched.length / idealTypes.length) * 100) : 0;
   };
   // 전체 프로필
   const mappedMatchedProfiles = matchedProfiles.map((profile) => {
-    const matched = idealTypes.filter((type: string) =>
-      profile.keywords?.includes(type)
-    );
+    const matched = idealTypes.filter((type: string) => profile.keywords?.includes(type));
     const matchPercent = calcMatchPercent(matched);
     return { ...profile, matchPercent };
   });
@@ -120,12 +120,8 @@ export default function MatchingPage() {
   const unfilteredMatchedProfiles = mappedMatchedProfiles
     .filter((profile) => profile.matchPercent < 50)
     .sort((a, b) => {
-      const aMatched = idealTypes.filter((type: string) =>
-        a.keywords?.includes(type)
-      );
-      const bMatched = idealTypes.filter((type: string) =>
-        b.keywords?.includes(type)
-      );
+      const aMatched = idealTypes.filter((type: string) => a.keywords?.includes(type));
+      const bMatched = idealTypes.filter((type: string) => b.keywords?.includes(type));
       return calcMatchPercent(bMatched) - calcMatchPercent(aMatched);
     });
 
@@ -135,13 +131,8 @@ export default function MatchingPage() {
   if (filterByLocation || filterByInterest || filterByMbti) {
     displayedProfiles = filteredMatchedProfiles.filter((profile) => {
       if (filterByLocation && profile.location !== myLocation) return false;
-      if (
-        filterByInterest &&
-        !profile.interests?.some((i) => interests.includes(i))
-      )
-        return false;
-      if (filterByMbti && !mbtiPairs[myMbti!]?.includes(profile.mbti || ""))
-        return false;
+      if (filterByInterest && !profile.interests?.some((i) => interests.includes(i))) return false;
+      if (filterByMbti && !mbtiPairs[myMbti!]?.includes(profile.mbti || "")) return false;
       return true;
     });
   }
@@ -195,8 +186,7 @@ export default function MatchingPage() {
 
         {/* 제목 */}
         <div className="text-[32px] font-bold dark:text-white">
-          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅
-          상대를 찾았어요!
+          <span className="text-[#FFC7ED]">{name}</span>님이 원하시는 소개팅 상대를 찾았어요!
         </div>
 
         {/* 필터 버튼 그룹 */}
@@ -239,15 +229,17 @@ export default function MatchingPage() {
           </button>
         </div>
         {/* 추천카드 */}
-        {displayedProfiles.length > 0 && (
+        {/* 추천카드 (로딩 상태 포함) */}
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center space-y-8 p-6">
+            <MatchingCardSkeleton />
+          </div>
+        ) : displayedProfiles.length > 0 ? (
           <LayoutGroup>
             <div className="flex flex-col items-center justify-center space-y-8 p-6">
               <div className="flex items-center justify-center space-x-8 relative">
                 {len >= 3 && (
-                  <button
-                    onClick={handlePrev}
-                    className="absolute left-[-50px] z-10"
-                  >
+                  <button onClick={handlePrev} className="absolute left-[-50px] z-10">
                     <img src={LeftBtn} alt="이전" className="cursor-pointer" />
                   </button>
                 )}
@@ -275,29 +267,21 @@ export default function MatchingPage() {
                         imageWidth="w-full"
                         imageHeight="h-full"
                         disableFlip={!isCenter}
-                        onClick={
-                          isCenter ? () => setIsModalOpen(true) : undefined
-                        }
+                        onClick={isCenter ? () => setIsModalOpen(true) : undefined}
                       />
                     </motion.div>
                   );
                 })}
 
                 {len >= 3 && (
-                  <button
-                    onClick={handleNext}
-                    className="absolute right-[-50px] z-10"
-                  >
+                  <button onClick={handleNext} className="absolute right-[-50px] z-10">
                     <img src={RightBtn} alt="다음" className="cursor-pointer" />
                   </button>
                 )}
               </div>
             </div>
           </LayoutGroup>
-        )}
-
-        {/* 필터 결과 없을 때 메시지 */}
-        {displayedProfiles.length === 0 && (
+        ) : (
           <div className="text-center text-[20px] text-[#999] mt-12">
             😥 조건에 맞는 상대가 없어요. <br /> 아래에서 더 찾아볼까요?
           </div>
