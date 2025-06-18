@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { deleteMatching } from "../../apis/matching";
 import { deleteChatRoom } from "../../apis/message";
 import { checkCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
+import { showWarnToast } from "../../components/common/ShowToast";
 import CoupleEdit from "../../components/profile/CoupleEdit";
 import SoloEdit from "../../components/profile/SoloEdit";
 import { useProfileForm } from "../../hooks/useProfileForm";
@@ -50,7 +50,7 @@ export default function ProfileEditPage() {
         "code" in error &&
         error.code === "23505"
       ) {
-        toast.warn("중복된 닉네임입니다");
+        showWarnToast("중복된 닉네임입니다");
         return;
       }
     } else {
