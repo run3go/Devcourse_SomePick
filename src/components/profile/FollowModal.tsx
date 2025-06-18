@@ -69,60 +69,66 @@ export default function FollowModal({
         {type}
       </span>
       <ul className="flex flex-col">
-        {users.map((user) => (
-          <li
-            onClick={() => navigate(`/profile/${user.id}`)}
-            key={user.id}
-            className="group cursor-pointer flex justify-between mt-5 pb-[10px] items-center border-b border-[var(--primary-pink)]"
-          >
-            <div className="flex items-center gap-5">
-              <img
-                src={user.main_image!}
-                alt="프로필 이미지"
-                className="w-[45px] h-[45px] rounded-full object-cover"
-              />
-              <div className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
-                {user.nickname}
-                {session?.user.id === user.id ? (
-                  <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
-                    {" "}
-                    (나)
-                  </span>
-                ) : (
-                  <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
-                    {user.status === "solo" ? " (솔로)" : " (커플)"}
-                  </span>
-                )}
-              </div>
-            </div>
-            {session &&
-              session.user.id !== user.id &&
-              (isFollwingUser(user.id) ? (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleUnfollowUser(user.id);
-                  }}
-                  className={twMerge(
-                    "w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2] text-sm",
-                    "dark:bg-[var(--dark-bg-tertiary)] dark:hover:bg-[var(--dark-gray-300-59)]"
+        {users.length ? (
+          users.map((user) => (
+            <li
+              onClick={() => navigate(`/profile/${user.id}`)}
+              key={user.id}
+              className="group cursor-pointer flex justify-between mt-5 pb-[10px] items-center border-b border-[var(--primary-pink)]"
+            >
+              <div className="flex items-center gap-5">
+                <img
+                  src={user.main_image!}
+                  alt="프로필 이미지"
+                  className="w-[45px] h-[45px] rounded-full object-cover"
+                />
+                <div className="group-hover:text-black group-hover:dark:text-[var(--dark-gray-300-59)]">
+                  {user.nickname}
+                  {session?.user.id === user.id ? (
+                    <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
+                      {" "}
+                      (나)
+                    </span>
+                  ) : (
+                    <span className="text-[var(--dark-gray-700)] text-xs group-hover:dark:text-[var(--dark-gray-300-59)]">
+                      {user.status === "solo" ? " (솔로)" : " (커플)"}
+                    </span>
                   )}
-                >
-                  팔로우 취소
-                </Button>
-              ) : (
-                <Button
-                  className="w-[94px] h-[33px] text-sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleFollowUser(user.id);
-                  }}
-                >
-                  팔로우
-                </Button>
-              ))}
-          </li>
-        ))}
+                </div>
+              </div>
+              {session &&
+                session.user.id !== user.id &&
+                (isFollwingUser(user.id) ? (
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleUnfollowUser(user.id);
+                    }}
+                    className={twMerge(
+                      "w-[94px] h-[33px] bg-[#d9d9d9] hover:bg-[#c2c2c2] text-sm",
+                      "dark:bg-[var(--dark-bg-tertiary)] dark:hover:bg-[var(--dark-gray-300-59)]"
+                    )}
+                  >
+                    팔로우 취소
+                  </Button>
+                ) : (
+                  <Button
+                    className="w-[94px] h-[33px] text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFollowUser(user.id);
+                    }}
+                  >
+                    팔로우
+                  </Button>
+                ))}
+            </li>
+          ))
+        ) : (
+          <span className="text-center mt-55 text-xl text-[var(--gray-300)] dark:text-[var(--dark-bg-tertiary)]">
+            {type} 유저가 없습니다
+          </span>
+        )}
       </ul>
     </motion.div>
   );
