@@ -7,19 +7,6 @@ export default function useBirthInfo() {
 
   const [isValid, setIsValid] = useState(true);
 
-  // useEffect(() => {
-  //   if (!["1", "2", "3", "4"].includes(genderNum)) {
-  //     // 에러메세지
-  //     setIsValid(false);
-  //     return;
-  //   }
-
-  //   setIsValid(true);
-
-  //   const gender = ["2", "4"].includes(genderNum) ? "female" : "male";
-  //   updateData({ gender });
-  // }, [genderNum, updateData]);
-
   useEffect(() => {
     let valid = true;
 
@@ -33,9 +20,7 @@ export default function useBirthInfo() {
 
     // 생년월일 유효성 검사
     if (birthDate.length !== 6 || !/^\d{6}$/.test(birthDate)) {
-      // setIsValid(false);
       valid = false;
-      // return;
     } else {
       const now = new Date();
       const currentYear = now.getFullYear();
@@ -47,8 +32,6 @@ export default function useBirthInfo() {
       const date = parseInt(birthDate.slice(4, 6), 10);
 
       if (month < 1 || month > 12 || date < 1 || date > 31) {
-        // setIsValid(false);
-        // return;
         valid = false;
       } else {
         const birthYear = (["1", "2"].includes(genderNum) ? 1900 : 2000) + year;

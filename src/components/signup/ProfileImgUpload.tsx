@@ -26,8 +26,6 @@ export default function ProfileImgUpload({ type }: { type: string }) {
             setSubImgFile(file, url);
           }
 
-          // console.log("image upload success!", url);
-
           setTimeout(() => {
             deleteImage(url);
           }, 600000); // 10분 뒤 삭제

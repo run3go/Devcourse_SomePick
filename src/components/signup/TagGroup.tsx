@@ -11,7 +11,6 @@ export default function TagGroup({
   title: string;
   tagName: "keywords" | "interests" | "ideal_types";
 }) {
-  // const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, updateData } = useSignUpStore();
   const soloData = data as SoloOptions;
 
@@ -22,14 +21,12 @@ export default function TagGroup({
   };
 
   const tags = tagGroup[tagName] || [];
-  // const selectedTags = soloData[tagName];
   const selectedTags = soloData[tagName] ? soloData[tagName].split(",") : [];
 
   const toggleTag = (tag: string) => {
     const isSelected = selectedTags.includes(tag);
 
     if (!isSelected && selectedTags.length >= 8) {
-      // alert("최대 8개까지 선택할 수 있어요.");
       showWarnToast("최대 8개까지 선택할 수 있어요.");
       return;
     }
@@ -40,10 +37,6 @@ export default function TagGroup({
 
     updateData({ [tagName]: newTags.join(",") });
   };
-
-  // useEffect(() => {
-  //   updateData({ [tagName]: selectedTags.join(",") });
-  // }, [selectedTags, tagName, updateData]);
 
   return (
     <>

@@ -25,7 +25,6 @@ export default function useSignupValidation() {
     if (valid) {
       const check = async () => {
         const res = await checkEmail(debouncedEmail);
-        console.log(res);
         if (res?.email && !res.nickname) {
           setIsEmailDuplicate(false);
           return;
