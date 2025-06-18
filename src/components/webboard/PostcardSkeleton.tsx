@@ -1,5 +1,5 @@
 export default function PostcardSkeleton() {
   return (
-    <div className="w-full max-w-[1370px] h-[180px] bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
+    <div className="w-[1360px] h-[280px] bg-[var(--gray-300-59)] dark:bg-[var(--dark-bg-tertiary)] rounded-xl animate-pulse" />
   );
 }

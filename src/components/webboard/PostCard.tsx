@@ -1,7 +1,7 @@
+import dayjs from "dayjs";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import Icon from "../common/Icon";
-import dayjs from "dayjs";
 
 interface PostcardProps {
   className?: string;
@@ -104,10 +104,10 @@ export default function Postcard({
               className="hidden dark:block"
               width="17px"
               height="16px"
-              left="-415px"
+              left="-416px"
               top="-793px"
             />
-            <span>{post.likes.length}</span>
+            <span className="h-5.5">{post.likes.length}</span>
           </div>
           <div className="flex items-center gap-[6px]">
             {/* 기본모드용 아이콘 */}
@@ -126,7 +126,7 @@ export default function Postcard({
               left="-375px"
               top="-792px"
             />
-            <span>{totalCommentCount ?? 0}</span>
+            <span className="h-5.5">{totalCommentCount ?? 0}</span>
           </div>
         </div>
       </div>

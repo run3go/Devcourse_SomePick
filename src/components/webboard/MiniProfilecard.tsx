@@ -76,6 +76,9 @@ export default function MiniProfilecard({
       {/* 이름 */}
       <span className="font-medium text-gray-800 dark:text-white">
         {user.nickname}
+        <span className="text-xs text-[var(--gray-700)]">
+          {user.status === "solo" ? " (솔로)" : " (커플)"}
+        </span>
       </span>
 
       {/* 버튼 그룹 */}

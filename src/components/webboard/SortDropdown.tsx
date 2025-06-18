@@ -1,11 +1,18 @@
-import Icon from "../common/Icon";
+import Select from "react-select";
 
-export type SortRule = "created_at" | "likes";
+export type SortRule =
+  | { value: "created_at"; label: "최신순" }
+  | { value: "likes"; label: "인기순" };
 
 interface SortDropdownProps {
   sortRule: SortRule;
   onChange: (rule: SortRule) => void;
 }
+
+const options: SortRule[] = [
+  { value: "created_at", label: "최신순" },
+  { value: "likes", label: "인기순" },
+];
 
 export default function SortDropdown({
   sortRule,
@@ -13,24 +20,71 @@ export default function SortDropdown({
 }: SortDropdownProps) {
   return (
     <div className="relative inline-block">
-      <select
-        value={sortRule}
-        onChange={(e) => onChange(e.target.value as SortRule)}
-        className="
-          h-[40px] px-2 pr-8
-          text-[16px] leading-none text-[#666666]
-          bg-white border border-[#666666] rounded-[10px]
-          appearance-none cursor-pointer
-          focus:outline-none focus:ring-1 dark:bg-[#333333] dark:text-[var(--dark-gray-700)]
-        "
-      >
-        <option value="created_at">최신순</option>
-        <option value="likes">인기순</option>
-      </select>
-      {/* 토글 아이콘 (화살표) */}
-      <div className="pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2">
-        <Icon width="14px" height="8px" left="-715px" top="-743px" />
-      </div>
+      <Select
+        isSearchable={false}
+        onChange={(newValue) => onChange(newValue as SortRule)}
+        defaultValue={sortRule}
+        options={options}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            backgroundColor: "none",
+            boxSizing: "border-box",
+            borderRadius: "10px",
+            width: "115px",
+            height: "38px",
+            paddingRight: "15px",
+            paddingLeft: "5px",
+            cursor: "pointer",
+            borderColor: state.isFocused
+              ? "var(--primary-pink-point)"
+              : "var(--gray-700)",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: "none",
+            },
+          }),
+          dropdownIndicator: (base) => ({
+            ...base,
+            marginRight: "-10px",
+            color: "var(--gray-700)",
+          }),
+          menu: (base) => ({
+            ...base,
+            border: "1px solid var(--primary-pink)",
+            borderRadius: "10px",
+            overflow: "hidden",
+          }),
+          menuList: (base) => ({
+            ...base,
+            padding: 0,
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }),
+          option: (base, state) => ({
+            ...base,
+            cursor: "pointer",
+            fontSize: "14px",
+            backgroundColor: state.isSelected
+              ? "var(--primary-pink)"
+              : state.isFocused
+              ? "var(--gray-300-50)"
+              : "white",
+            color: "var(--gray-700)",
+          }),
+          singleValue: (base) => ({
+            ...base,
+            color: "var(--gray-700)",
+            fontSize: "14px",
+          }),
+          indicatorSeparator: () => ({
+            display: "none",
+          }),
+        }}
+      />
     </div>
   );
 }
