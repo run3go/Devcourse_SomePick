@@ -1,7 +1,26 @@
+import { Outlet, useNavigation } from "react-router";
+import ScrollToTop from "../../components/common/ScrollToTop";
+import LoadingPage from "../pages/LoadingPage";
+import Header from "./Header";
+
 export default function RootLayout() {
+  const navigation = useNavigation();
+  const isProfile = navigation.location?.pathname.includes("/profile");
+  const isLoading = navigation.state === "loading";
   return (
-    <>
-      <h1>RootLayout Component</h1>
-    </>
+    <div>
+      {isLoading && isProfile ? (
+        <>
+          <Header />
+          <LoadingPage />
+        </>
+      ) : (
+        <>
+          <Header />
+          <Outlet />
+          <ScrollToTop />
+        </>
+      )}
+    </div>
   );
 }

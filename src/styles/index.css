@@ -1,1 +1,135 @@
 @import "./tailwind.css";
+
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_regular.ttf") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_bold.ttf") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NPSfontBold";
+  src: url("/fonts/NPSfont_extrabold.ttf") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@layer utilities {
+  .box-shadow-custom {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .hover\:button-shadow-custom:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+:root {
+  --black: #000000;
+  --gray-700: #666666;
+  --gray-500: #969696;
+  --gray-300: #d9d9d9;
+  --gray-300-50: #d9d9d980;
+  --gray-300-59: #d9d9d995;
+  --gray-200: #f3f3f3;
+  --gray-100: #f8f8f8;
+  --white: #ffffff;
+
+  --primary-pink: #ffc7ed;
+  --primary-pink-tone: #ff9fd6;
+  --primary-pink-point: #ff66b3;
+  --primary-pink-point-50: #ff66b380;
+  --primary-pink-50: #ffeffa;
+
+  --red: #e94235;
+
+  --main-font: "inter";
+
+  --toastify-color-progress-success: var(--primary-pink-point);
+  --toastify-color-progress-warning: var(--primary-pink-point);
+  --toastify-color-progress-error: var(--primary-pink-point);
+}
+
+.dark {
+  --dark-bg-primary: #333333;
+  --dark-bg-secondary: #4b4b4b;
+  --dark-bg-tertiary: #7b7b7b;
+
+  --dark-black: #000000;
+
+  /* 다크모드 기본 글자 색상 */
+  --dark-gray-700: #cacaca;
+
+  /* 다크모드 서브 글자 색상 (날짜 등..) */
+  --dark-gray-500: #969696;
+  --dark-gray-300: #d9d9d9;
+  --dark-gray-300-50: #d9d9d980;
+  --dark-gray-300-59: #d9d9d995;
+  --dark-gray-200: #f3f3f3;
+  --dark-gray-100: #f8f8f8;
+  --dark-white: #ffffff;
+
+  --dark-primary-pink: #ffc7ed;
+  --dark-primary-pink-tone: #ff9fd6;
+  --dark-primary-pink-point: #ff66b3;
+  --dark-primary-pink-point-50: #ff66b380;
+
+  --dark-red: #e94235;
+}
+
+body {
+  @apply text-base font-(family-name:--main-font) text-[var(--gray-700)] overflow-y-scroll dark:bg-[var(--dark-bg-primary)];
+  font-family: "NPSfontBold";
+}
+
+.notification_item {
+  @apply py-[6px] border border-[var(--primary-pink)] rounded-[20px] bg-white hover:text-black cursor-pointer hover:border-[var(--primary-pink-point)];
+}
+
+.notification_list::-webkit-scrollbar {
+  display: none;
+}
+
+.days-wrap > div:nth-child(7n + 1) {
+  @apply text-[var(--primary-pink)] dark:text-[#bd98b1];
+}
+
+.header-menu::before {
+  @apply content-[""] absolute bottom-[-3px] block w-0 h-[2px] transition-all duration-200 bg-black;
+}
+
+.header-menu:hover {
+  @apply text-black;
+}
+
+.dark .header-menu:hover {
+  @apply text-white;
+}
+
+.header-menu:hover::before {
+  @apply w-full;
+}
+
+.header-menu__active::before {
+  @apply w-full;
+}
+
+.dark .header-menu::before {
+  @apply bg-white;
+}
+
+.user-info {
+  @apply text-[var(--primary-pink-point)] font-bold inline-block w-[90px];
+}
+
+.user-info-input {
+  @apply bg-white text-sm px-[15px] w-[131px] h-[38px] border border-[var(--gray-300)] rounded-[10px] focus:border-0 focus:outline-[var(--primary-pink)] focus:outline-1;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

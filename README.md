@@ -1,54 +1,182 @@
-# React + TypeScript + Vite
+# 💘 커플, 솔로 모두를 위한 연애 플랫폼, SomePick
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br>
 
-Currently, two official plugins are available:
+## 프로젝트 소개
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+솔로와 커플 모두를 위한 맞춤형 연애 서비스, 관심사 기반 소개팅, 커플 일정 공유,
+연애 커뮤니티까지 연애 상황에 따라 맞춤 기능을 제공하는 소개팅 플랫폼
 
-## Expanding the ESLint configuration
+- ‘SomePick’은 사용자의 연애 상태(솔로/커플)에 따라 맞춤형 기능을 제공하는 연애 기반 플랫폼입니다.
+- 솔로에게는 이상형, 관심사, MBTI, 지역 등을 기반으로 한 소개팅과 하트/채팅 기능을 제공하고,
+- 커플에게는 기념일 및 일정공유 캘린더, 커플 프로필 등 연애 기록을 남겨 연인끼리 공유할 수 있습니다.
+- 더불어 커뮤니티, 게시판, 운세 확인, 프로필 탐색 등 다양한 기능을 통해
+- 사용자가 연애의 시작부터 관계의 유지를 모두 경험할 수 있도록 돕는 것이 목적입니다.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<br>
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 팀원 구성
+
+<div align="center">
+
+|                                                            **박정수**                                                            |                                                               **권유정**                                                               |                                                                    **이현우**                                                                     |                                                               **정지유**                                                               |                                                              **한상아**                                                              |
+| :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/68907573?v=4" height=150 width=150> <br/> @run3go](https://github.com/run3go) | [<img src="https://avatars.githubusercontent.com/u/67456002?v=4" height=150 width=150> <br/> @best106yj](https://github.com/best106yj) | [<img src="https://avatars.githubusercontent.com/u/139132330?v=4" height=150 width=150> <br/> @manto123123123](https://github.com/manto123123123) | [<img src="https://avatars.githubusercontent.com/u/86185120?v=4" height=150 width=150> <br/> @JINJIYU23](https://github.com/JINJIYU23) | [<img src="https://avatars.githubusercontent.com/u/89959007?v=4" height=150 width=150> <br/> @hansanga](https://github.com/hansanga) |
+
+</div>
+
+<br>
+
+## 개발 환경
+
+<br>
+
+## 디렉토리 구조
+
+```
+🗂️ 디렉토리 구조
+📦public                  # 정적 파일 (아이콘 이미지)
+📦src
+ ┣ 📂apis                 # API 호출 관련 함수
+ ┃ ┣ 📂posts
+ ┣ 📂assets
+ ┃ ┗images                 # 이미지 파일
+ ┣ 📂components           # 공통 및 기능별 UI 컴포넌트
+ ┃ ┣ 📂MatchingPage              # 소개팅
+ ┃ ┣ 📂PostDetail                # 게시글 상세
+ ┃ ┣ 📂calendar                  # 커플캘린더
+ ┃ ┣ 📂common
+ ┃ ┣ 📂fortune                   # 운세
+ ┃ ┣ 📂login                     # 로그인
+ ┃ ┣ 📂main                      # 메인페이지
+ ┃ ┣ 📂message                   # 메세지
+ ┃ ┣ 📂modals                    # 알림
+ ┃ ┣ 📂profile                   # 유저 프로필
+ ┃ ┣ 📂signup                    # 회원가입
+ ┃ ┣ 📂webboard
+ ┣ 📂constants              # 상수 정의
+ ┣ 📂hooks                  # 커스텀 훅
+ ┣ 📂routes
+ ┃ ┣ 📂layouts              # 레이아웃 컴포넌트(헤더, 푸터)
+ ┃ ┣ 📂loader               # 페이지 로더
+ ┃ ┣ 📂pages                # 라우트 페이지
+ ┃ ┗ 📜index.tsx
+ ┣ 📂stores                 # zustand 전역 상태 관리
+ ┣ 📂styles                 # 스타일
+ ┣ 📂types                  # 타입 정의
+ ┣ 📂utils                  # 유틸 함수
+ ┣ 📜App.tsx
+ ┣ 📜main.tsx
+ ┗ 📜vite-env.d.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 역할 분담
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 박정수
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **UI**
+
+- **기능**
+
+<br>
+    
+### 권유정
+
+- **UI**
+
+- **기능**
+
+<br>
+
+### 이현우
+
+- **UI**
+
+- **기능**
+
+<br>
+
+### 정지유
+
+- **UI**
+
+- **기능**
+
+<br>
+
+### 한상아
+
+- **UI**
+
+- **기능**
+
+<br>
+
+## 프로젝트 수행 기간
+
+- 전체 개발 기간 : 2025-5-29 ~ 2025-6-18
+- 주제 선정 및 역할 분담 : 2025-5-29 ~ 2025-6-2
+- 디자인 및 API 구현 : 2025-6-4 ~ 2025-6-6
+- UI 구현 : 2025-6-7 ~ 2025-6-10
+- 기능 구현 : 2025-6-11 ~ 2025-6-18
+
+<br>
+
+## 페이지별 기능
+
+<br>
+
+## 트러블 슈팅
+
+<br>
+
+## 프로젝트 후기
+
+### 🟪 권유정
+
+프로젝트 주제가 **흥미로워서** 진행하면서도 재미있었습니다!  
+새로 배운 **supabase**를 많이 활용해 보질 못해서 아쉬웠고,  
+이전과는 다른 기능 구현들을 맡아서 하다보니 도움이 많이 된 것 같습니다.  
+팀원분들 그동안 너무 고생 많으셨습니다!
+
+---
+
+### 🟪 박정수
+
+기존에 제공받던 **api 없이 직접 만들어서** 개발하려니  
+생각보다 공부할 것이 많았습니다.  
+**supabase** 포함해서 최근에 수업시간에 배운 많은 기능들을  
+활용할 수 있는 기회였기에 굉장히 만족하고 있습니다.  
+좋은 팀원들을 만나 큰 문제 없이 수월하게 진행한 것 같습니다.  
+다들 고생하셨습니다!
+
+---
+
+### 🟪 이현우
+
+2차 프로젝트보다 더 재미있게 프로젝트를 진행한 것 같고  
+팀장님이 **api 설계로 고생을 많이 해주신 덕분에**  
+프로그래머스에서 제공하는 api보다 더 나은 방향으로  
+개발할 수 있었습니다.  
+다음에 기회가 된다면 저도 **supabase**를 더 공부해보고 싶네요.  
+다들 재미있었어요!
+
+---
+
+### 🟪 한상아
+
+2차 프로젝트 때와 달리 **supabase를 활용해 구현한 프로젝트**라  
+기능도 더 다양하게 넣을 수 있어서 좋았습니다.  
+구현하는 데 있어서 막히는 부분도 많았지만  
+그만큼 많이 배운 것 같아서 좋은 경험이 된 것 같습니다.  
+좋은 팀원들 덕분에 프로젝트 성공적으로 마무리할 수 있었습니다.  
+다들 고생하셨습니다!
+
+---
+
+### 🟪 정지유
+
+**supabase로 개발**하니 더 다양한 기능을 추가할 수 있어서 좋았습니다.  
+또한 흥미로운 주제로 프로젝트를 진행하게 되어서 더 재미있었습니다.  
+함께 프로젝트를 진행한 팀원분들이 많은 역할을 잘 수행해주시고  
+서로 도움을 많이 주면서 협업이 잘 된 것 같아서 만족스런 프로젝트였습니다!
