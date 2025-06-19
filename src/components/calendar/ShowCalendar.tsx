@@ -7,13 +7,7 @@ export default function ShowCalendar() {
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[580px] flex justify-between items-center mt-[20px] mb-[30px]">
         <div className="pl-[10px]">
-          <Icon
-            width="22px"
-            height="29px"
-            left="-208px"
-            top="-394px"
-            className="hover:cursor-pointer"
-          />
+          <Icon width="22px" height="29px" left="-208px" top="-394px" />
         </div>
         <div>
           <span className="text-lg mr-[14px] text-[var(--primary-pink-point)]">
@@ -24,13 +18,7 @@ export default function ShowCalendar() {
           </span>
         </div>
         <div className="pr-[25px]">
-          <Icon
-            width="22px"
-            height="29px"
-            left="-265px"
-            top="-395px"
-            className="hover:cursor-pointer"
-          />
+          <Icon width="22px" height="29px" left="-265px" top="-395px" />
         </div>
       </div>
       <div className="w-full text-[20px]">
