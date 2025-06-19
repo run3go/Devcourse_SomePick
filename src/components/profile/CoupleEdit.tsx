@@ -51,7 +51,7 @@ export default function CoupleEdit({
         <input
           className={twMerge(
             "w-[150px] box-border py-2 border-3 border-[var(--gray-200)] rounded-[20px] pl-[20px] focus:outline-[var(--primary-pink)]",
-            "dark:border-[var(--primary-pink-tone)] dark:focus:outline-0 dark:focus:border-[var(--primary-pink-point)]",
+            "dark:border-[var(--primary-pink-tone)] dark:focus:outline-0 dark:focus:border-[var(--primary-pink-point)] h-[56px]",
             "dark:text-[var(--dark-white)]"
           )}
           minLength={2}
@@ -93,7 +93,7 @@ export default function CoupleEdit({
           onCancel={() => setIsSubmitModalOpen(false)}
         />
       )}
-      <div className="flex flex-col w-full  mt-[50px]">
+      <div className="flex flex-col w-full mt-10">
         <Button
           onClick={() => setIsSubmitModalOpen(true)}
           type="button"

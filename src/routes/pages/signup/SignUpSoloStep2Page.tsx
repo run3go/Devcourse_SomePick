@@ -79,7 +79,7 @@ export default function SignUpSoloStep2Page() {
 
             <div className="flex justify-between mb-10">
               <SignupInput
-                label="키"
+                label="*키"
                 type="text"
                 name="height"
                 className="w-[220px] mb-0"

@@ -149,7 +149,7 @@ export default function SignUpSoloStep1Page() {
             <div className="flex justify-between">
               <div className="relative">
                 <SignupInput
-                  label="닉네임"
+                  label="*닉네임"
                   type="text"
                   name="userName"
                   value={nickname}
@@ -191,7 +191,7 @@ export default function SignUpSoloStep1Page() {
             </div>
             <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
-                label="이메일"
+                label="*이메일"
                 type="email"
                 name="email"
                 placeholder="user@email.com"
@@ -226,7 +226,7 @@ export default function SignUpSoloStep1Page() {
               )}
             </div>
             <SignupInput
-              label="비밀번호"
+              label="*비밀번호"
               type="password"
               name="password"
               value={pw}
@@ -243,7 +243,7 @@ export default function SignUpSoloStep1Page() {
               className={profile.id && "hidden"}
             />
             <SignupInput
-              label="비밀번호 확인"
+              label="*비밀번호 확인"
               type="password"
               name="confirmPw"
               value={pwConfirm}

@@ -85,3 +85,12 @@ export const interestTags = [
   "인테리어",
   "반려식물",
 ];
+
+export const profileInfo = {
+  nickname: "닉네임",
+  age: "나이",
+  height: "키",
+  job: "직업",
+  location: "지역",
+  mbti: "MBTI",
+};

@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
-import { interests, keywords, profileInfo } from "../../constants/data/tags";
+import {
+  interestTags,
+  personalityTags,
+  profileInfo,
+} from "../../constants/data/tagData";
 import useCheckNickname from "../../hooks/useCheckNickname";
 import Alert from "../common/Alert";
 import Button from "../common/Button";
@@ -108,7 +112,14 @@ export default function SoloEdit({
           onCancel={() => setIsSubmitModalOpen(false)}
         />
       )}
-      <div className="flex flex-col w-full mb-[137px] mt-[132px]">
+      <Button
+        onClick={() => setIsSubmitModalOpen(true)}
+        type="button"
+        className="w-[264px] h-[38px] self-end mt-18"
+      >
+        <span className="leading-[1]">프로필 정보 저장</span>
+      </Button>
+      <div className="flex flex-col w-full mb-[137px] mt-[10px]">
         <h3
           className={twMerge(
             "mb-[55px] text-xl font-bold border-l-8 border-[var(--primary-pink)] px-4 py-[10px]",
@@ -181,28 +192,21 @@ export default function SoloEdit({
           <ul className="dark:text-[var(--dark-white)] flex flex-col gap-[38px] border-l border-[var(--gray-50)] pl-10">
             <SelectTags
               type="나를 표현하는 키워드"
-              list={keywords}
+              list={personalityTags}
               name="keywordList"
             />
             <SelectTags
               type="나의 관심사"
-              list={interests}
+              list={interestTags}
               name="interestList"
             />
             <SelectTags
               type="나의 이상형"
-              list={keywords}
+              list={personalityTags}
               name="idealTypeList"
             />
           </ul>
         </div>
-        <Button
-          onClick={() => setIsSubmitModalOpen(true)}
-          type="button"
-          className="w-[264px] h-[38px] self-end mt-8"
-        >
-          <span className="leading-[1]">프로필 정보 저장</span>
-        </Button>
       </div>
     </>
   );

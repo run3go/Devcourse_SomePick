@@ -22,7 +22,7 @@ export default function SignUpCouplePage() {
     id: "",
     email: "",
   });
-  const { data, mainImgFile, resetData, updateData } = useSignUpStore();
+  const { data, mainImgFile, updateData } = useSignUpStore();
   const coupleData = data as CoupleOptions;
   const { nickname, partner_nickname: partner } = coupleData;
 
@@ -82,7 +82,6 @@ export default function SignUpCouplePage() {
     };
     await updateProfile(fullPayload);
     navigate("/");
-    resetData();
   };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -189,7 +188,7 @@ export default function SignUpCouplePage() {
               <div className="w-76">
                 <div className="relative">
                   <SignupInput
-                    label="닉네임"
+                    label="*닉네임"
                     type="text"
                     name="userName"
                     value={nickname}
@@ -233,7 +232,7 @@ export default function SignUpCouplePage() {
 
             <div className={twMerge("relative", profile.id && "hidden")}>
               <SignupInput
-                label="이메일"
+                label="*이메일"
                 type="text"
                 name="email"
                 placeholder="user@email.com"
@@ -268,7 +267,7 @@ export default function SignUpCouplePage() {
               )}
             </div>
             <SignupInput
-              label="비밀번호"
+              label="*비밀번호"
               type="password"
               name="password"
               value={pw}
@@ -285,7 +284,7 @@ export default function SignUpCouplePage() {
               className={twMerge(profile.id && "hidden")}
             />
             <SignupInput
-              label="비밀번호 확인"
+              label="*비밀번호 확인"
               type="password"
               name="confirmPw"
               value={pwConfirm}

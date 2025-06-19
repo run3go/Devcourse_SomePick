@@ -113,9 +113,7 @@ export default function MoreMenu({
         <div className="flex items-center justify-center gap-[5px]">
           <button
             className="text-[var(--red)]/60 text-[12px] cursor-pointer dark:text-[var(--dark-red)]"
-            onClick={() =>
-              type === "post" ? openDeleteAlert() : handleDelete()
-            }
+            onClick={() => openDeleteAlert()}
           >
             삭제하기
           </button>
@@ -129,7 +127,11 @@ export default function MoreMenu({
         </div>
         {isAlertOpen && (
           <Alert
-            title="게시글을 삭제하시겠습니까?"
+            title={
+              type === "post"
+                ? "게시글을 삭제하시겠습니까?"
+                : "댓글을 삭제하시겠습니까?"
+            }
             isOk="네"
             isNotOk="아니요"
             onClick={() => {

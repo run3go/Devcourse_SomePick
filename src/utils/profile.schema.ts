@@ -17,14 +17,14 @@ const soloSchema = z.object({
     .max(5, "닉네임을 2자부터 5자까지 입력 가능합니다"),
   age: z.string().refine((age) => {
     const num = Number(age);
-    return !isNaN(num) && num >= 20 && num < 40;
+    return !isNaN(num) && num >= 20 && num < 100;
   }, "나이는 20부터 40까지 입력 가능합니다"),
   description: z.string().optional(),
   job: z.string(),
   location: z.string(),
   height: z.string().refine((height) => {
     const num = Number(height);
-    return !isNaN(num) && num >= 130 && num <= 220;
+    return !isNaN(num) && num >= 130 && num <= 299;
   }, "키는 130부터 220까지 입력 가능합니다"),
   mbti: z.string(),
   keywordList: z

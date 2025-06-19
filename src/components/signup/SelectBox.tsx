@@ -21,7 +21,7 @@ export default function SelectBox({ type, value, onChange }: SelectBoxProps) {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <p className="ml-5 mb-1">{titleGroup[type]}</p>
+        <p className="ml-5 mb-1">*{titleGroup[type]}</p>
 
         <Select
           options={options}
