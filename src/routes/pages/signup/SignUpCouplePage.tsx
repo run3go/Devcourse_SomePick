@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import BackButton from "../../../components/common/BackButton";
-import Button from "../../../components/common/Button";
-import ProfileImgUpload from "../../../components/signup/ProfileImgUpload";
-import SignupInput from "../../../components/signup/SignupInput";
-import useCheckNickname from "../../../hooks/useCheckNickname";
-import { useSignUpStore } from "../../../stores/signUpStore";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { signupUser } from "../../../apis/auth";
-import { updateProfile } from "../../../apis/user";
+import { checkCouple, updateProfile } from "../../../apis/user";
 import { storeImage } from "../../../apis/util";
+import BackButton from "../../../components/common/BackButton";
+import Button from "../../../components/common/Button";
 import Icon from "../../../components/common/Icon";
 import { showWarnToast } from "../../../components/common/ShowToast";
 import InputBirthDate from "../../../components/signup/InputBirthDate";
+import ProfileImgUpload from "../../../components/signup/ProfileImgUpload";
+import SignupInput from "../../../components/signup/SignupInput";
+import useCheckNickname from "../../../hooks/useCheckNickname";
 import useSignupValidation from "../../../hooks/useSignupValidation";
+import { useSignUpStore } from "../../../stores/signUpStore";
 import supabase from "../../../utils/supabase";
 
 export default function SignUpCouplePage() {
@@ -81,6 +81,7 @@ export default function SignUpCouplePage() {
       partner_nickname: partner,
     };
     await updateProfile(fullPayload);
+    await checkCouple(partner || "", data.gender);
     navigate("/");
   };
 
