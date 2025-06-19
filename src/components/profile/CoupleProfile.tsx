@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
@@ -98,6 +98,28 @@ export default function CoupleProfile({
       ]);
     }
   };
+
+  useEffect(() => {
+    const header = document.querySelector(".header") as HTMLDivElement;
+    if (isFollowerModalOpen || isFollowingModalOpen) {
+      console.log("hi");
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.offsetWidth;
+      header.style.paddingRight = `${scrollbarWidth}px`;
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      header.style.paddingRight = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+
+    return () => {
+      header.style.paddingRight = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
+  }, [isFollowerModalOpen, isFollowingModalOpen]);
 
   return (
     <div className="w-full bg-[#FFFBFB] dark:bg-[var(--dark-bg-secondary)] p-9 pb-[60px]">

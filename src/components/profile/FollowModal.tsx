@@ -68,7 +68,7 @@ export default function FollowModal({
       <span className="text-center text-lg pb-[10px] w-full border-b border-[var(--primary-pink)]">
         {type}
       </span>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col overflow-y-scroll scrollbar-hide">
         {users.length ? (
           users.map((user) => (
             <li
