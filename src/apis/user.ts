@@ -125,3 +125,22 @@ export const checkCouple = async (
     console.error(e);
   }
 };
+export const deleteCouple = async (coupleId: string) => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const { error } = await supabase
+      .from("couples")
+      .delete()
+      .eq("id", Number(coupleId));
+    if (error) {
+      console.log("커플 제거 실패:", error.message);
+      return;
+    }
+    console.log("커플 제거 성공");
+  } catch (e) {
+    console.error(e);
+  }
+};

@@ -3,7 +3,7 @@ import { FormProvider } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { deleteMatching } from "../../apis/matching";
 import { deleteChatRoom } from "../../apis/message";
-import { checkCouple, updateProfile } from "../../apis/user";
+import { checkCouple, deleteCouple, updateProfile } from "../../apis/user";
 import { deleteImage, storeImage } from "../../apis/util";
 import { showWarnToast } from "../../components/common/ShowToast";
 import CoupleEdit from "../../components/profile/CoupleEdit";
@@ -64,6 +64,13 @@ export default function ProfileEditPage() {
         main_image: mainUrl || profile.main_image,
       };
       await updateProfile(payload);
+
+      if (
+        profile.couple_id &&
+        profile.partner_nickname !== data.partnerNickname
+      ) {
+        await deleteCouple(profile.couple_id);
+      }
       Promise.all([
         await checkCouple(data.partnerNickname, profile.gender),
         await deleteChatRoom(),
@@ -105,7 +112,6 @@ export default function ProfileEditPage() {
   const { handleSubmit, setValue, reset } = methods;
 
   useEffect(() => {
-    console.log(profile);
     reset(
       isSolo
         ? {
