@@ -1,130 +1,22 @@
-# React + TypeScript + Vite
+# 💘 커플, 솔로 모두를 위한 연애 플랫폼, SomePick
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 프로젝트 소개
 
-Currently, two official plugins are available:
+솔로와 커플 모두를 위한 맞춤형 연애 서비스, 관심사 기반 소개팅, 커플 일정 공유,
+연애 커뮤니티까지 연애 상황에 따라 맞춤 기능을 제공하는 소개팅 플랫폼
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ‘SomePick’은 사용자의 연애 상태(솔로/커플)에 따라 맞춤형 기능을 제공하는 연애 기반 플랫폼입니다.
+- 솔로에게는 이상형, 관심사, MBTI, 지역 등을 기반으로 한 소개팅과 하트/채팅 기능을 제공하고,
+- 커플에게는 기념일 및 일정공유 캘린더, 커플 프로필 등 연애 기록을 남겨 연인끼리 공유할 수 있습니다.
+- 더불어 커뮤니티, 게시판, 운세 확인, 프로필 탐색 등 다양한 기능을 통해
+- 사용자가 연애의 시작부터 관계의 유지를 모두 경험할 수 있도록 돕는 것이 목적입니다.
 
-## Expanding the ESLint configuration
+## 팀원 구성
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<div align="center">
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+|                                                               **박정수**                                                               |                                                               **권유정**                                                                |                                                               **이현우**                                                                |                                                                **정지유**                                                                |                                                                **한상아**                                                                |
+| :------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/106502312?v=4" height=150 width=150> <br/> @yeon1615](https://github.com/best106yj) | [<img src="https://avatars.githubusercontent.com/u/112460466?v=4" height=150 width=150> <br/> @best106yj](https://github.com/best106yj) | [<img src="https://avatars.githubusercontent.com/u/112460506?v=4" height=150 width=150> <br/> @heejiyang](https://github.com/heejiyang) | [<img src="https://avatars.githubusercontent.com/u/76766459?v=4" height=150 width=150> <br/> @journey-ji](https://github.com/journey-ji) | [<img src="https://avatars.githubusercontent.com/u/76766459?v=4" height=150 width=150> <br/> @journey-ji](https://github.com/journey-ji) |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
-
-```
-3_project
-├─ eslint.config.js
-├─ index.html
-├─ package.json
-├─ public
-│  ├─ emoji.png
-│  └─ vite.svg
-├─ README.md
-├─ src
-│  ├─ apis
-│  ├─ App.tsx
-│  ├─ assets
-│  │  └─ images
-│  │     ├─ 1.png
-│  │     ├─ 1a0c54a2-c7e0-4eda-bb9c-fe6a1658b9d5.jpg
-│  │     ├─ 2.png
-│  │     ├─ 3.png
-│  │     ├─ back1.png
-│  │     ├─ back2.png
-│  │     ├─ banner.png
-│  │     ├─ banner2.png
-│  │     ├─ calendar.png
-│  │     ├─ couple1.png
-│  │     ├─ logo.png
-│  │     ├─ logo_white.png
-│  │     ├─ PINK.png
-│  │     ├─ taro.png
-│  │     ├─ tarotarotaro.png
-│  │     └─ taro_couple.png
-│  ├─ components
-│  │  ├─ fortune
-│  │  │  └─ Fortune.tsx
-│  │  └─ main
-│  ├─ hooks
-│  ├─ main.tsx
-│  ├─ routes
-│  │  ├─ index.tsx
-│  │  ├─ layouts
-│  │  │  ├─ Footer.tsx
-│  │  │  ├─ Header.tsx
-│  │  │  └─ RootLayout.tsx
-│  │  ├─ loader
-│  │  └─ pages
-│  │     ├─ AuthPage.tsx
-│  │     ├─ CalendarPage.tsx
-│  │     ├─ LoginPage.tsx
-│  │     ├─ MainPage.tsx
-│  │     ├─ MatchingPage.tsx
-│  │     ├─ MessageDetailPage.tsx
-│  │     ├─ MessagePage.tsx
-│  │     ├─ NotFoundPage.tsx
-│  │     ├─ PostCreatePage.tsx
-│  │     ├─ PostDetailPage.tsx
-│  │     ├─ PostsPage.tsx
-│  │     ├─ ProfilePage.tsx
-│  │     ├─ SignUpPage.tsx
-│  │     └─ TodayFortunePage.tsx
-│  ├─ stores
-│  │  └─ authStore.ts
-│  ├─ styles
-│  │  ├─ icons.css
-│  │  ├─ index.css
-│  │  └─ tailwind.css
-│  ├─ types
-│  │  └─ type.d.ts
-│  ├─ utils
-│  │  └─ supabase.ts
-│  └─ vite-env.d.ts
-├─ tsconfig.app.json
-├─ tsconfig.json
-├─ tsconfig.node.json
-└─ vite.config.ts
-
-```
+</div>
