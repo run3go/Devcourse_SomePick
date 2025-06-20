@@ -235,16 +235,12 @@
 | ![Image](https://github.com/user-attachments/assets/728e0e52-9ca2-42c2-8bea-33847b5a5b60) |
 
 | 커플 헤더 |
-| --------- |
-
-| ![Image](https://github.com/user-attachments/assets/c6d78d88-5208-4674-8c79-ad10319b57cc)
-|
+| ----------------------------------------------------------------------------------------- |
+| ![Image](https://github.com/user-attachments/assets/c6d78d88-5208-4674-8c79-ad10319b57cc) |
 
 | 알림 |
-| ---- |
-
-| ![Image](https://github.com/user-attachments/assets/cb4281c9-f995-4d15-9769-162d2374974e)
-|
+| ----------------------------------------------------------------------------------------- |
+| ![Image](https://github.com/user-attachments/assets/cb4281c9-f995-4d15-9769-162d2374974e) |
 
 ### [오늘의 운세 페이지]
 
@@ -257,10 +253,8 @@
 - 이미 운세를 확인한 유저가 오늘의 운세 페이지에 재접속 시 이전에 확인한 운세가 그대로 표시됩니다.
 
 | 운세 페이지 |
-| ----------- |
-
-| ![Image](https://github.com/user-attachments/assets/9c400e7a-7fd9-40c8-bd3a-99b55976511d)
-|
+| ----------------------------------------------------------------------------------------- |
+| ![Image](https://github.com/user-attachments/assets/9c400e7a-7fd9-40c8-bd3a-99b55976511d) |
 
 ### [프로필 페이지]
 
