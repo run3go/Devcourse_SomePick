@@ -377,13 +377,13 @@
 | 게시글 상세 페이지 |
 | ------------------ |
 
-| ![Image](https://github.com/user-attachments/assets/15d4a0fa-9bee-4781-987e-42f93a2f2071)
+| ![Image](https://github.com/user-attachments/assets/15d4a0fa-9bee-4781-987e-42f93a2f2071)|
 |
 
 | 비로그인 시 |
 | ----------- |
 
-| ![Image](https://github.com/user-attachments/assets/9ef31ad2-b218-49a3-920f-addedb5f2ea3)
+| ![Image](https://github.com/user-attachments/assets/9ef31ad2-b218-49a3-920f-addedb5f2ea3)|
 |
 
 ### [메세지 페이지]
@@ -402,13 +402,13 @@
 | 메세지 페이지 (하트 수락/거절) |
 | ------------------------------ |
 
-| ![Image](https://github.com/user-attachments/assets/bca81a62-11cc-43ad-95f7-77463b5bceff)
+| ![Image](https://github.com/user-attachments/assets/bca81a62-11cc-43ad-95f7-77463b5bceff)|
 |
 
 | 메세지 페이지 (채팅) |
 | -------------------- |
 
-| ![Image](https://github.com/user-attachments/assets/713d9a42-b614-4699-b34a-209f65fe81e1)
+| ![Image](https://github.com/user-attachments/assets/713d9a42-b614-4699-b34a-209f65fe81e1)|
 |
 
 ## 트러블 슈팅
@@ -423,6 +423,7 @@
 채팅 입력 및 댓글 입력 구현<br>
 채팅 입력 후 ‘Enter’키로 전송했을 때 이벤트가 두번 실행되는 현상이 발생했습니다. 영어가 아닌 한글같은 조합형 문자입력 시스템에서 발생하는 오류였습니다.<br>
 이를 해결하기 위해 한글이 조합되는 동안은 ‘Enter’이벤트가 중복 실행되지 않도록 isComposing 상태 사용해 해결했습니다.
+<br>
 <img width="447" alt="image" src="https://github.com/user-attachments/assets/ed2d6696-1e94-451d-95d7-711e5ec464a3" />
 
 <br>
