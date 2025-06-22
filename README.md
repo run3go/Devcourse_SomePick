@@ -332,8 +332,7 @@
 
 | 이상형 50% 미만                                                                        |
 | ----------------------------------------------------------------------------------------- |
-| ![50미만](https://github.com/user-attachments/assets/31318d59-8ddc-45c7-a800-e2f3a53cef20)
- |
+| ![50미만](https://github.com/user-attachments/assets/31318d59-8ddc-45c7-a800-e2f3a53cef20) |
  
 
 <br>
