@@ -317,11 +317,12 @@
   * 카드 클릭 시, 모달 창이 나타나며 위의 카드 뒷면과 내용이 일치합니다.
 | 소개팅 하트 보내기                                                                        |
 | ----------------------------------------------------------------------------------------- |
-| ![Image](https://github.com/user-attachments/assets/8b5758dc-4aa6-408d-83d9-fdc351764173) 
+| ![Image](https://github.com/user-attachments/assets/8b5758dc-4aa6-408d-83d9-fdc351764173) |
 
 | 이상형 필터링                                                                        |
 | ----------------------------------------------------------------------------------------- |
-| ![Image](https://github.com/user-attachments/assets/71433f94-8e63-47a3-b127-433c23a19e07)
+| ![Image](https://github.com/user-attachments/assets/71433f94-8e63-47a3-b127-433c23a19e07) |
+
  
 
 <br>
